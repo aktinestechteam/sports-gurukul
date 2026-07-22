@@ -1,0 +1,64 @@
+# =========================
+# Sports Gurukul .gitignore
+# =========================
+
+# ----- OS -----
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ----- IDE -----
+.idea/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# ----- .NET / ASP.NET Core -----
+backend/**/bin/
+backend/**/obj/
+backend/**/*.user
+backend/**/*.suo
+backend/**/TestResults/
+backend/**/nupkg/
+backend/**/project.nuget.cache
+
+# ----- Node / React Admin -----
+web-admin/node_modules/
+web-admin/dist/
+web-admin/.vite/
+
+# ----- Python / FastAPI -----
+ai-services/__pycache__/
+ai-services/**/__pycache__/
+ai-services/*.pyc
+ai-services/.venv/
+ai-services/venv/
+ai-services/.env
+ai-services/*.egg-info/
+
+# ----- Flutter / Dart -----
+mobile/.dart_tool/
+mobile/.packages
+mobile/build/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/pubspec.lock
+mobile/.metadata
+
+# ----- Docker -----
+docker-compose.override.yml
+
+# ----- Environment -----
+.env
+.env.local
+.env.*.local
+
+# ----- Logs -----
+*.log
+logs/
+
+# ----- Coverage -----
+coverage/
+*.cover

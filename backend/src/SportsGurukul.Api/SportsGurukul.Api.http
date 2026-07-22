@@ -1,0 +1,6 @@
+@SportsGurukul.Api_HostAddress = http://localhost:5297
+
+GET {{SportsGurukul.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

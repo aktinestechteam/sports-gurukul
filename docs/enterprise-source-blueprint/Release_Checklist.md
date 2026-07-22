@@ -1,0 +1,6 @@
+- Version updated
+- Migrations reviewed
+- Tests passing
+- Documentation updated
+- Docker images built
+- Deployment approved

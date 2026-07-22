@@ -1,0 +1,9 @@
+{
+  "Jwt": {
+    "Issuer": "SportsGurukul",
+    "Audience": "SportsGurukul",
+    "AccessTokenMinutes": 60,
+    "RefreshTokenDays": 30,
+    "SigningKey": "<replace-with-secret>"
+  }
+}

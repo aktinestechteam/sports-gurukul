@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\SportsGurukul.Infrastructure\SportsGurukul.Infrastructure.csproj" />
+    <ProjectReference Include="..\SportsGurukul.Application\SportsGurukul.Application.csproj" />
+    <ProjectReference Include="..\SportsGurukul.Domain\SportsGurukul.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+</Project>

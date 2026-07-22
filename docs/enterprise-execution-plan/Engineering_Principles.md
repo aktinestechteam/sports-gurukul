@@ -1,0 +1,6 @@
+- Clean Architecture
+- SOLID
+- CQRS
+- DDD (where appropriate)
+- Test-Driven Development
+- Secure by Design

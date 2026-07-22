@@ -1,0 +1,129 @@
+openapi: 3.1.0
+info:
+  title: Sports Gurukul API
+  version: 1.0.0
+servers:
+  - url: https://api.sportsgurukul.com/api/v1
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    ApiResponse:
+      type: object
+      properties:
+        success: {type: boolean}
+        message: {type: string}
+        data: {}
+
+    LoginRequest:
+      type: object
+      properties:
+        email: {type: string}
+        password: {type: string}
+
+    Athlete:
+      type: object
+      properties:
+        id: {type: string}
+        fullName: {type: string}
+        sport: {type: string}
+
+security:
+  - bearerAuth: []
+
+paths:
+  /auth/login:
+    post:
+      summary: Login
+      requestBody:
+        required: true
+      responses:
+        "200":
+          description: Success
+
+  /athletes:
+    get:
+      summary: List athletes
+      responses:
+        "200":
+          description: Success
+    post:
+      summary: Create athlete
+      responses:
+        "201":
+          description: Created
+
+  /coaches:
+    get:
+      summary: List coaches
+      responses:
+        "200":
+          description: Success
+
+  /academies:
+    get:
+      summary: List academies
+      responses:
+        "200":
+          description: Success
+
+  /bookings:
+    post:
+      summary: Create booking
+      responses:
+        "201":
+          description: Created
+
+  /payments:
+    post:
+      summary: Initiate payment
+      responses:
+        "200":
+          description: Success
+
+  /tournaments:
+    get:
+      summary: Tournament list
+      responses:
+        "200":
+          description: Success
+
+  /community/posts:
+    get:
+      summary: Community feed
+      responses:
+        "200":
+          description: Success
+
+  /marketplace/products:
+    get:
+      summary: Product catalog
+      responses:
+        "200":
+          description: Success
+
+  /notifications:
+    get:
+      summary: Notifications
+      responses:
+        "200":
+          description: Success
+
+  /analytics/dashboard:
+    get:
+      summary: Dashboard metrics
+      responses:
+        "200":
+          description: Success
+
+  /admin/users:
+    get:
+      summary: Manage users
+      responses:
+        "200":
+          description: Success

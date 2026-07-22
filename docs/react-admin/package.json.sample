@@ -1,0 +1,12 @@
+{
+  "name":"sports-gurukul-admin",
+  "private":true,
+  "scripts":{"dev":"vite","build":"vite build"},
+  "dependencies":{
+    "react":"^19",
+    "react-dom":"^19",
+    "@tanstack/react-query":"latest",
+    "react-router-dom":"latest",
+    "axios":"latest"
+  }
+}
