@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +11,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using SportsGurukul.Api;
 using SportsGurukul.Application.Common.Interfaces;
+using SportsGurukul.Application.Features.UserManagement.DTOs;
+using SportsGurukul.Domain.Common;
 using SportsGurukul.Domain.Entities;
 using SportsGurukul.Domain.Enums;
 using SportsGurukul.Infrastructure.Authentication;
@@ -48,6 +51,7 @@ public class TestApplicationFactory : WebApplicationFactory<ApiMarker>
                 s.ServiceType == typeof(IRoleRepository) ||
                 s.ServiceType == typeof(IPermissionRepository) ||
                 s.ServiceType == typeof(IUserRoleRepository) ||
+                s.ServiceType == typeof(IUserProfileRepository) ||
                 s.ServiceType == typeof(IUnitOfWork) ||
                 s.ServiceType == typeof(IApplicationDbContext) ||
                 s.ServiceType == typeof(IEmailService) ||
@@ -72,6 +76,15 @@ public class TestApplicationFactory : WebApplicationFactory<ApiMarker>
             services.AddScoped<IRoleRepository>(_ => new InMemoryRoleRepository(_roles));
             services.AddScoped<IPermissionRepository>(_ => new InMemoryPermissionRepository());
             services.AddScoped<IUserRoleRepository>(_ => new InMemoryUserRoleRepository(_userRoles));
+
+            var userProfiles = new List<UserProfile>();
+            var contactInfos = new List<ContactInformation>();
+            var addresses = new List<Address>();
+            var userPreferences = new List<UserPreference>();
+            services.AddScoped<IUserProfileRepository>(_ => new InMemoryUserProfileRepository(userProfiles, contactInfos, addresses, userPreferences));
+            services.AddScoped<IRepository<ContactInformation>>(_ => new InMemoryGenericRepository<ContactInformation>(contactInfos));
+            services.AddScoped<IRepository<Address>>(_ => new InMemoryGenericRepository<Address>(addresses));
+            services.AddScoped<IRepository<UserPreference>>(_ => new InMemoryGenericRepository<UserPreference>(userPreferences));
         });
     }
 
@@ -426,4 +439,125 @@ public class InMemoryUserRoleRepository : IUserRoleRepository
         _userRoles.RemoveAll(ur => ur.UserId == userId);
         return Task.CompletedTask;
     }
+}
+
+public class InMemoryGenericRepository<T> : IRepository<T> where T : BaseEntity
+{
+    private readonly List<T> _entities;
+    public InMemoryGenericRepository(List<T> entities) => _entities = entities;
+
+    public Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        => Task.FromResult(_entities.FirstOrDefault(e => e.Id == id && !e.IsDeleted));
+
+    public Task<IReadOnlyList<T>> GetAllAsync(CancellationToken cancellationToken = default)
+        => Task.FromResult<IReadOnlyList<T>>(_entities.Where(e => !e.IsDeleted).ToList());
+
+    public Task<IReadOnlyList<T>> FindAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
+        => Task.FromResult<IReadOnlyList<T>>(_entities.Where(e => !e.IsDeleted).Where(predicate.Compile()).ToList());
+
+    public Task<T> AddAsync(T entity, CancellationToken cancellationToken = default)
+    {
+        _entities.Add(entity);
+        return Task.FromResult(entity);
+    }
+
+    public void Update(T entity) { }
+
+    public void Remove(T entity) => entity.IsDeleted = true;
+
+    public Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null, CancellationToken cancellationToken = default)
+    {
+        var query = _entities.Where(e => !e.IsDeleted);
+        if (predicate is not null) query = query.Where(predicate.Compile());
+        return Task.FromResult(query.Count());
+    }
+
+    public Task<bool> AnyAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
+        => Task.FromResult(_entities.Where(e => !e.IsDeleted).Any(predicate.Compile()));
+}
+
+public class InMemoryUserProfileRepository : IUserProfileRepository
+{
+    private readonly List<UserProfile> _profiles;
+    private readonly List<ContactInformation> _contacts;
+    private readonly List<Address> _addresses;
+    private readonly List<UserPreference> _preferences;
+
+    public InMemoryUserProfileRepository(
+        List<UserProfile> profiles,
+        List<ContactInformation> contacts,
+        List<Address> addresses,
+        List<UserPreference> preferences)
+    {
+        _profiles = profiles;
+        _contacts = contacts;
+        _addresses = addresses;
+        _preferences = preferences;
+    }
+
+    public Task<UserProfile?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        => Task.FromResult(_profiles.FirstOrDefault(p => p.Id == id && !p.IsDeleted));
+
+    public Task<UserProfile?> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
+        => Task.FromResult(_profiles.FirstOrDefault(p => p.UserId == userId && !p.IsDeleted));
+
+    public Task<UserProfile?> GetWithAddressesAsync(Guid userId, CancellationToken cancellationToken = default)
+    {
+        var profile = _profiles.FirstOrDefault(p => p.UserId == userId && !p.IsDeleted);
+        if (profile is not null)
+            profile.Addresses = _addresses.Where(a => a.UserProfileId == profile.Id && !a.IsDeleted).ToList();
+        return Task.FromResult(profile);
+    }
+
+    public Task<UserProfile?> GetWithContactInformationAsync(Guid userId, CancellationToken cancellationToken = default)
+    {
+        var profile = _profiles.FirstOrDefault(p => p.UserId == userId && !p.IsDeleted);
+        if (profile is not null)
+            profile.ContactInformation = _contacts.FirstOrDefault(c => c.UserProfileId == profile.Id && !c.IsDeleted);
+        return Task.FromResult(profile);
+    }
+
+    public Task<UserProfile?> GetFullProfileAsync(Guid userId, CancellationToken cancellationToken = default)
+    {
+        var profile = _profiles.FirstOrDefault(p => p.UserId == userId && !p.IsDeleted);
+        if (profile is not null)
+        {
+            profile.Addresses = _addresses.Where(a => a.UserProfileId == profile.Id && !a.IsDeleted).ToList();
+            profile.ContactInformation = _contacts.FirstOrDefault(c => c.UserProfileId == profile.Id && !c.IsDeleted);
+            profile.UserPreference = _preferences.FirstOrDefault(p => p.UserProfileId == profile.Id && !p.IsDeleted);
+        }
+        return Task.FromResult(profile);
+    }
+
+    public Task<(IReadOnlyList<UserSummaryDto> Users, int TotalCount)> SearchProfilesAsync(SearchUserRequest request, CancellationToken cancellationToken = default)
+    {
+        var profiles = _profiles.Where(p => !p.IsDeleted).ToList();
+        return Task.FromResult<(IReadOnlyList<UserSummaryDto>, int)>((new List<UserSummaryDto>(), profiles.Count));
+    }
+
+    public Task<IReadOnlyList<UserProfile>> GetAllAsync(CancellationToken cancellationToken = default)
+        => Task.FromResult<IReadOnlyList<UserProfile>>(_profiles.Where(p => !p.IsDeleted).ToList());
+
+    public Task<IReadOnlyList<UserProfile>> FindAsync(Expression<Func<UserProfile, bool>> predicate, CancellationToken cancellationToken = default)
+        => Task.FromResult<IReadOnlyList<UserProfile>>(_profiles.Where(p => !p.IsDeleted).Where(predicate.Compile()).ToList());
+
+    public Task<UserProfile> AddAsync(UserProfile entity, CancellationToken cancellationToken = default)
+    {
+        _profiles.Add(entity);
+        return Task.FromResult(entity);
+    }
+
+    public void Update(UserProfile entity) { }
+
+    public void Remove(UserProfile entity) => entity.IsDeleted = true;
+
+    public Task<int> CountAsync(Expression<Func<UserProfile, bool>>? predicate = null, CancellationToken cancellationToken = default)
+    {
+        var query = _profiles.Where(p => !p.IsDeleted);
+        if (predicate is not null) query = query.Where(predicate.Compile());
+        return Task.FromResult(query.Count());
+    }
+
+    public Task<bool> AnyAsync(Expression<Func<UserProfile, bool>> predicate, CancellationToken cancellationToken = default)
+        => Task.FromResult(_profiles.Where(p => !p.IsDeleted).Any(predicate.Compile()));
 }
