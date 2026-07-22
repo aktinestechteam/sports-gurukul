@@ -22,6 +22,11 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<EmailVerificationToken> EmailVerificationTokens => Set<EmailVerificationToken>();
     public DbSet<PasswordResetToken> PasswordResetTokens => Set<PasswordResetToken>();
 
+    public DbSet<UserProfile> UserProfiles => Set<UserProfile>();
+    public DbSet<Address> Addresses => Set<Address>();
+    public DbSet<ContactInformation> ContactInformation => Set<ContactInformation>();
+    public DbSet<UserPreference> UserPreferences => Set<UserPreference>();
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<BaseEntity>())

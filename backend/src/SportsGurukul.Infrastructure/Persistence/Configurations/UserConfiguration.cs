@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SportsGurukul.Domain.Entities;
+using SportsGurukul.Domain.Enums;
 
 namespace SportsGurukul.Infrastructure.Persistence.Configurations;
 
@@ -52,7 +53,25 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasIndex(u => u.IsDeleted)
             .HasDatabaseName("IX_Users_IsDeleted");
 
+        builder.Ignore(u => u.UserProfile);
         builder.Ignore(u => u.EmailVerificationTokens);
         builder.Ignore(u => u.PasswordResetTokens);
+
+        var adminUserId = Guid.Parse("f47ac10b-58cc-4372-a567-0e02b2c3d479");
+
+        builder.HasData(
+            new User
+            {
+                Id = adminUserId,
+                Email = "admin@sportsgurukul.com",
+                PhoneNumber = "+919000000001",
+                PasswordHash = "ADMIN_SEED_HASH_TO_BE_REPLACED_ON_FIRST_LOGIN",
+                FullName = "System Administrator",
+                Status = UserStatus.Active,
+                AuthMethod = AuthenticationMethod.EmailPassword,
+                IsEmailVerified = true,
+                FailedLoginAttempts = 0,
+                IsDeleted = false
+            });
     }
 }
