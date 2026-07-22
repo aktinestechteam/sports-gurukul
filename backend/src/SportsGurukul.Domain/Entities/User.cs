@@ -12,10 +12,13 @@ public class User : BaseEntity
     public string? ProfileImageUrl { get; set; }
     public UserStatus Status { get; set; }
     public AuthenticationMethod AuthMethod { get; set; }
+    public bool IsEmailVerified { get; set; }
     public DateTime? LastLoginAt { get; set; }
     public int FailedLoginAttempts { get; set; }
     public DateTime? LockoutEndAt { get; set; }
 
     public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
     public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+    public ICollection<EmailVerificationToken> EmailVerificationTokens { get; set; } = new List<EmailVerificationToken>();
+    public ICollection<PasswordResetToken> PasswordResetTokens { get; set; } = new List<PasswordResetToken>();
 }

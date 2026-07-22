@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SportsGurukul.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using SportsGurukul.Infrastructure.Persistence;
 namespace SportsGurukul.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260722073948_SeedRoles")]
+    partial class SeedRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,88 +24,6 @@ namespace SportsGurukul.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("SportsGurukul.Domain.Entities.EmailVerificationToken", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("ExpiresAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("UsedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Token")
-                        .IsUnique()
-                        .HasDatabaseName("IX_EmailVerificationTokens_Token");
-
-                    b.HasIndex("UserId")
-                        .HasDatabaseName("IX_EmailVerificationTokens_UserId");
-
-                    b.ToTable("EmailVerificationTokens", (string)null);
-                });
-
-            modelBuilder.Entity("SportsGurukul.Domain.Entities.PasswordResetToken", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("ExpiresAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("UsedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Token")
-                        .IsUnique()
-                        .HasDatabaseName("IX_PasswordResetTokens_Token");
-
-                    b.HasIndex("UserId")
-                        .HasDatabaseName("IX_PasswordResetTokens_UserId");
-
-                    b.ToTable("PasswordResetTokens", (string)null);
-                });
 
             modelBuilder.Entity("SportsGurukul.Domain.Entities.Permission", b =>
                 {
@@ -380,9 +301,6 @@ namespace SportsGurukul.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<bool>("IsEmailVerified")
-                        .HasColumnType("boolean");
-
                     b.Property<DateTime?>("LastLoginAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -451,28 +369,6 @@ namespace SportsGurukul.Infrastructure.Migrations
                     b.ToTable("UserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("SportsGurukul.Domain.Entities.EmailVerificationToken", b =>
-                {
-                    b.HasOne("SportsGurukul.Domain.Entities.User", "User")
-                        .WithMany("EmailVerificationTokens")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SportsGurukul.Domain.Entities.PasswordResetToken", b =>
-                {
-                    b.HasOne("SportsGurukul.Domain.Entities.User", "User")
-                        .WithMany("PasswordResetTokens")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("SportsGurukul.Domain.Entities.RefreshToken", b =>
                 {
                     b.HasOne("SportsGurukul.Domain.Entities.User", "User")
@@ -536,10 +432,6 @@ namespace SportsGurukul.Infrastructure.Migrations
 
             modelBuilder.Entity("SportsGurukul.Domain.Entities.User", b =>
                 {
-                    b.Navigation("EmailVerificationTokens");
-
-                    b.Navigation("PasswordResetTokens");
-
                     b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618

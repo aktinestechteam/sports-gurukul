@@ -52,7 +52,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasIndex(u => u.IsDeleted)
             .HasDatabaseName("IX_Users_IsDeleted");
 
-        builder.Ignore(u => u.UserRoles);
-        builder.Ignore(u => u.RefreshTokens);
+        builder.Ignore(u => u.EmailVerificationTokens);
+        builder.Ignore(u => u.PasswordResetTokens);
     }
 }
