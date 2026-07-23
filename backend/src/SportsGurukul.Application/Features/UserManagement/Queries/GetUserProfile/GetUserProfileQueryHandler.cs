@@ -4,7 +4,6 @@ using SportsGurukul.Application.Common.Interfaces;
 using SportsGurukul.Application.Common.Models;
 using SportsGurukul.Application.Features.UserManagement.Commands.CreateUserProfile;
 using SportsGurukul.Application.Features.UserManagement.DTOs;
-using System.Collections.Generic;
 
 namespace SportsGurukul.Application.Features.UserManagement.Queries.GetUserProfile;
 

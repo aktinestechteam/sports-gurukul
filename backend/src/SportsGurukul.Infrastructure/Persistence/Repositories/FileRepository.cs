@@ -14,6 +14,7 @@ public class FileRepository : Repository<UserFile>, IFileRepository
     public async Task<UserFile?> GetByUserIdAndTypeAsync(Guid userId, FileType fileType, CancellationToken cancellationToken = default)
     {
         return await DbSet
+            .AsNoTracking()
             .FirstOrDefaultAsync(uf =>
                 uf.UserId == userId &&
                 uf.FileType == fileType &&
@@ -24,6 +25,7 @@ public class FileRepository : Repository<UserFile>, IFileRepository
     public async Task<IReadOnlyList<UserFile>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         return await DbSet
+            .AsNoTracking()
             .Where(uf => uf.UserId == userId && !uf.IsDeleted)
             .OrderByDescending(uf => uf.CreatedAt)
             .ToListAsync(cancellationToken);
@@ -32,6 +34,7 @@ public class FileRepository : Repository<UserFile>, IFileRepository
     public async Task<UserFile?> GetActiveProfilePhotoAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         return await DbSet
+            .AsNoTracking()
             .FirstOrDefaultAsync(uf =>
                 uf.UserId == userId &&
                 uf.FileType == FileType.ProfilePhoto &&

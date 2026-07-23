@@ -57,6 +57,13 @@ public class UserProfileRepository : Repository<UserProfile>, IUserProfileReposi
             .FirstOrDefaultAsync(up => up.UserId == userId && !up.IsDeleted, cancellationToken);
     }
 
+    public async Task<UserProfile?> GetDeletedByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
+    {
+        return await Context.UserProfiles
+            .AsNoTracking()
+            .FirstOrDefaultAsync(up => up.UserId == userId && up.IsDeleted, cancellationToken);
+    }
+
     public async Task<(IReadOnlyList<UserListDto> Users, int TotalCount)> SearchProfilesAsync(
         UserSearchRequest request, CancellationToken cancellationToken = default)
     {

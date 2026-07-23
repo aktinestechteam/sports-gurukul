@@ -35,8 +35,7 @@ public class RestoreUserProfileCommandHandler : IRequestHandler<RestoreUserProfi
             return Result<Unit>.Failure("User not found.");
         }
 
-        var allProfiles = await _userProfileRepository.FindAsync(p => p.UserId == request.UserId, cancellationToken);
-        var deletedProfile = allProfiles.FirstOrDefault(p => p.IsDeleted);
+        var deletedProfile = await _userProfileRepository.GetDeletedByUserIdAsync(request.UserId, cancellationToken);
 
         if (deletedProfile is null)
         {

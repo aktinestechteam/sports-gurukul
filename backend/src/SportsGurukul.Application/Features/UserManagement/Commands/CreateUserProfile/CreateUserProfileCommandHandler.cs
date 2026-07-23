@@ -180,7 +180,20 @@ public class CreateUserProfileCommandHandler : IRequestHandler<CreateUserProfile
                 LinkedInUrl = profile.ContactInformation.LinkedInUrl,
                 YouTubeUrl = profile.ContactInformation.YouTubeUrl
             } : null,
-            Roles = user.UserRoles.Select(ur => ur.Role.Name).ToList()
+            Roles = user.UserRoles.Select(ur => ur.Role.Name).ToList(),
+            Preferences = profile.UserPreference is not null ? new UserPreferenceDto
+            {
+                Id = profile.UserPreference.Id,
+                Language = profile.UserPreference.Language,
+                Theme = profile.UserPreference.Theme,
+                TimeZone = profile.UserPreference.TimeZone,
+                EmailNotifications = profile.UserPreference.EmailNotifications,
+                PushNotifications = profile.UserPreference.PushNotifications,
+                SmsNotifications = profile.UserPreference.SmsNotifications,
+                MarketingEmails = profile.UserPreference.MarketingEmails,
+                ProfileVisibility = profile.UserPreference.ProfileVisibility,
+                ShowOnlineStatus = profile.UserPreference.ShowOnlineStatus
+            } : null
         };
 
         dto.ProfileCompletionPercentage = CalculateCompletionPercentage(dto);

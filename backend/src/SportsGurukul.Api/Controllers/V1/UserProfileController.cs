@@ -435,7 +435,7 @@ public class UserProfileController : ControllerBase
     /// <response code="401">Not authenticated</response>
     /// <response code="404">Profile not found</response>
     [HttpPost("me/photo")]
-    [DisableRequestSizeLimit]
+    [RequestSizeLimit(5 * 1024 * 1024)]
     [ProducesResponseType(typeof(ApiResponse<ProfilePhotoResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
@@ -578,7 +578,8 @@ public class UserProfileController : ControllerBase
             });
         }
 
-        if (error.Contains("already exists", StringComparison.OrdinalIgnoreCase))
+        if (error.Contains("already exists", StringComparison.OrdinalIgnoreCase) ||
+            error.Contains("already associated", StringComparison.OrdinalIgnoreCase))
         {
             return Conflict(new ProblemDetails
             {
@@ -586,6 +587,18 @@ public class UserProfileController : ControllerBase
                 Title = "Conflict",
                 Detail = error,
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.5.8"
+            });
+        }
+
+        if (error.Contains("deleted", StringComparison.OrdinalIgnoreCase) &&
+            error.Contains("restore", StringComparison.OrdinalIgnoreCase))
+        {
+            return BadRequest(new ProblemDetails
+            {
+                Status = StatusCodes.Status400BadRequest,
+                Title = "Bad Request",
+                Detail = error,
+                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
             });
         }
 

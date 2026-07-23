@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -53,8 +52,8 @@ public class RestoreUserProfileCommandHandlerTests
             .Setup(r => r.GetByIdAsync(_userId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(new User { Id = _userId });
         _userProfileRepositoryMock
-            .Setup(r => r.FindAsync(It.IsAny<Expression<Func<UserProfile, bool>>>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new List<UserProfile>());
+            .Setup(r => r.GetDeletedByUserIdAsync(_userId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync((UserProfile?)null);
 
         var result = await _handler.Handle(
             new RestoreUserProfileCommand { UserId = _userId },
@@ -78,8 +77,8 @@ public class RestoreUserProfileCommandHandlerTests
             .Setup(r => r.GetByIdAsync(_userId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(new User { Id = _userId });
         _userProfileRepositoryMock
-            .Setup(r => r.FindAsync(It.IsAny<Expression<Func<UserProfile, bool>>>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new List<UserProfile> { deletedProfile });
+            .Setup(r => r.GetDeletedByUserIdAsync(_userId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(deletedProfile);
         _unitOfWorkMock
             .Setup(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(1);
@@ -107,8 +106,8 @@ public class RestoreUserProfileCommandHandlerTests
             .Setup(r => r.GetByIdAsync(_userId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(new User { Id = _userId });
         _userProfileRepositoryMock
-            .Setup(r => r.FindAsync(It.IsAny<Expression<Func<UserProfile, bool>>>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new List<UserProfile> { deletedProfile });
+            .Setup(r => r.GetDeletedByUserIdAsync(_userId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(deletedProfile);
         _unitOfWorkMock
             .Setup(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(1);
@@ -123,19 +122,12 @@ public class RestoreUserProfileCommandHandlerTests
     [Fact]
     public async Task Handle_Should_ReturnFailure_When_OnlyActiveProfilesExist()
     {
-        var activeProfile = new UserProfile
-        {
-            Id = Guid.NewGuid(),
-            UserId = _userId,
-            IsDeleted = false
-        };
-
         _userRepositoryMock
             .Setup(r => r.GetByIdAsync(_userId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(new User { Id = _userId });
         _userProfileRepositoryMock
-            .Setup(r => r.FindAsync(It.IsAny<Expression<Func<UserProfile, bool>>>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new List<UserProfile> { activeProfile });
+            .Setup(r => r.GetDeletedByUserIdAsync(_userId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync((UserProfile?)null);
 
         var result = await _handler.Handle(
             new RestoreUserProfileCommand { UserId = _userId },
@@ -159,8 +151,8 @@ public class RestoreUserProfileCommandHandlerTests
             .Setup(r => r.GetByIdAsync(_userId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(new User { Id = _userId });
         _userProfileRepositoryMock
-            .Setup(r => r.FindAsync(It.IsAny<Expression<Func<UserProfile, bool>>>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new List<UserProfile> { deletedProfile });
+            .Setup(r => r.GetDeletedByUserIdAsync(_userId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(deletedProfile);
         _unitOfWorkMock
             .Setup(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(1);

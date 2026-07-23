@@ -546,6 +546,9 @@ public class InMemoryUserProfileRepository : IUserProfileRepository
         return Task.FromResult<(IReadOnlyList<UserListDto>, int)>((new List<UserListDto>(), profiles.Count));
     }
 
+    public Task<UserProfile?> GetDeletedByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
+        => Task.FromResult(_profiles.FirstOrDefault(p => p.UserId == userId && p.IsDeleted));
+
     public Task<IReadOnlyList<UserProfile>> GetAllAsync(CancellationToken cancellationToken = default)
         => Task.FromResult<IReadOnlyList<UserProfile>>(_profiles.Where(p => !p.IsDeleted).ToList());
 
