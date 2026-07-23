@@ -38,6 +38,10 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<MedicalProfile> MedicalProfiles => Set<MedicalProfile>();
     public DbSet<EmergencyContact> EmergencyContacts => Set<EmergencyContact>();
 
+    public DbSet<AthleteDocument> AthleteDocuments => Set<AthleteDocument>();
+    public DbSet<DocumentVersion> DocumentVersions => Set<DocumentVersion>();
+    public DbSet<DocumentAudit> DocumentAudits => Set<DocumentAudit>();
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<BaseEntity>())
