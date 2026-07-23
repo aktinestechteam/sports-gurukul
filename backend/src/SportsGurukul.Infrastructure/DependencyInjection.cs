@@ -35,6 +35,9 @@ public static class DependencyInjection
         services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepository>();
         services.AddScoped<IUserProfileRepository, UserProfileRepository>();
         services.AddScoped<IFileRepository, FileRepository>();
+        services.AddScoped<IAthleteRepository, AthleteRepository>();
+        services.AddScoped<ISportRepository, SportRepository>();
+        services.AddScoped<IAchievementRepository, AchievementRepository>();
 
         services.Configure<StorageOptions>(configuration.GetSection(StorageOptions.SectionName));
 

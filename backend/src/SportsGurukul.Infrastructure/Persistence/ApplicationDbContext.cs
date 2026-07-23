@@ -28,6 +28,16 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<UserPreference> UserPreferences => Set<UserPreference>();
     public DbSet<UserFile> UserFiles => Set<UserFile>();
 
+    public DbSet<Athlete> Athletes => Set<Athlete>();
+    public DbSet<Sport> Sports => Set<Sport>();
+    public DbSet<SportCategory> SportCategories => Set<SportCategory>();
+    public DbSet<AthleteSport> AthleteSports => Set<AthleteSport>();
+    public DbSet<Achievement> Achievements => Set<Achievement>();
+    public DbSet<AthleteAchievement> AthleteAchievements => Set<AthleteAchievement>();
+    public DbSet<Ranking> Rankings => Set<Ranking>();
+    public DbSet<MedicalProfile> MedicalProfiles => Set<MedicalProfile>();
+    public DbSet<EmergencyContact> EmergencyContacts => Set<EmergencyContact>();
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<BaseEntity>())
