@@ -14,7 +14,6 @@ using SportsGurukul.Application.Features.UserManagement.Commands.UpdateUserPrefe
 using SportsGurukul.Application.Features.UserManagement.Commands.UploadProfilePhoto;
 using SportsGurukul.Application.Features.UserManagement.DTOs;
 using SportsGurukul.Application.Features.UserManagement.Queries.GetCurrentUser;
-using SportsGurukul.Application.Features.UserManagement.Queries.GetPagedUsers;
 using SportsGurukul.Application.Features.UserManagement.Queries.GetProfilePhoto;
 using SportsGurukul.Application.Features.UserManagement.Queries.GetUserById;
 using SportsGurukul.Application.Features.UserManagement.Queries.SearchUsers;
@@ -253,87 +252,92 @@ public class UserProfileController : ControllerBase
     #region List & Search
 
     /// <summary>
-    /// Gets a paginated list of user profiles. Requires Admin or SuperAdmin role.
+    /// Searches and lists user profiles with filtering, sorting, and pagination.
+    /// Requires Admin or SuperAdmin role.
     /// </summary>
+    /// <remarks>
+    /// Supports full-text search across name, email, mobile, sport, and bio.
+    /// Filter by role, status, gender, country, state, city, email verified, active, and deleted.
+    /// Sort by name, email, role, createddate, or updateddate (ascending or descending).
+    /// </remarks>
+    /// <param name="searchTerm">Free-text search across name, email, mobile, sport, and bio</param>
+    /// <param name="name">Filter by name (partial match)</param>
+    /// <param name="email">Filter by email (partial match)</param>
+    /// <param name="mobile">Filter by mobile number (partial match)</param>
+    /// <param name="city">Filter by city (partial match)</param>
+    /// <param name="state">Filter by state (partial match)</param>
+    /// <param name="country">Filter by country (partial match)</param>
+    /// <param name="role">Filter by role type</param>
+    /// <param name="status">Filter by user status</param>
+    /// <param name="gender">Filter by gender</param>
+    /// <param name="emailVerified">Filter by email verification status</param>
+    /// <param name="isActive">Filter by active status</param>
+    /// <param name="isDeleted">Filter by deleted status</param>
+    /// <param name="createdFrom">Filter by created date (from)</param>
+    /// <param name="createdTo">Filter by created date (to)</param>
+    /// <param name="updatedFrom">Filter by updated date (from)</param>
+    /// <param name="updatedTo">Filter by updated date (to)</param>
+    /// <param name="sortBy">Sort field: name, email, role, createddate, or updateddate</param>
+    /// <param name="sortDescending">When true, sorts in descending order</param>
     /// <param name="page">Page number (1-based, default 1)</param>
     /// <param name="pageSize">Items per page (default 20, max 100)</param>
-    /// <param name="sortBy">Sort field: name, email, sport, status, or createdat</param>
-    /// <param name="sortDescending">When true, sorts in descending order</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Paginated list of user summaries</returns>
     /// <response code="200">Users retrieved successfully</response>
+    /// <response code="400">Validation error</response>
     /// <response code="401">Not authenticated</response>
     /// <response code="403">Insufficient permissions</response>
     [HttpGet]
     [Authorize(Roles = "Admin,SuperAdmin")]
-    [ProducesResponseType(typeof(ApiResponse<SearchUserResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<UserSearchResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> GetUsers(
-        [FromQuery] int page = 1,
-        [FromQuery] int pageSize = 20,
-        [FromQuery] string? sortBy = null,
-        [FromQuery] bool sortDescending = false,
-        CancellationToken cancellationToken = default)
-    {
-        _logger.LogInformation("User list requested");
-
-        var query = new GetPagedUsersQuery
-        {
-            Page = page,
-            PageSize = pageSize,
-            SortBy = sortBy,
-            SortDescending = sortDescending
-        };
-
-        var result = await _mediator.Send(query, cancellationToken);
-
-        if (!result.IsSuccess)
-            return HandleFailure(result.Error!);
-
-        return Ok(ApiResponse<SearchUserResponse>.SuccessResult(result.Value!, "Users retrieved successfully."));
-    }
-
-    /// <summary>
-    /// Searches user profiles with filtering and pagination. Requires Admin or SuperAdmin role.
-    /// </summary>
-    /// <param name="searchTerm">Free-text search across name, email, sport, and bio</param>
-    /// <param name="role">Filter by role type</param>
-    /// <param name="sport">Filter by preferred sport</param>
-    /// <param name="status">Filter by user status (Active, Inactive, Suspended, Locked)</param>
-    /// <param name="sortBy">Sort field: name, email, sport, status, or createdat</param>
-    /// <param name="sortDescending">When true, sorts in descending order</param>
-    /// <param name="page">Page number (1-based, default 1)</param>
-    /// <param name="pageSize">Items per page (default 20, max 100)</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>Paginated search results</returns>
-    /// <response code="200">Search completed successfully</response>
-    /// <response code="401">Not authenticated</response>
-    /// <response code="403">Insufficient permissions</response>
-    [HttpGet("search")]
-    [Authorize(Roles = "Admin,SuperAdmin")]
-    [ProducesResponseType(typeof(ApiResponse<SearchUserResponse>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
-    public async Task<IActionResult> SearchUsers(
         [FromQuery] string? searchTerm = null,
+        [FromQuery] string? name = null,
+        [FromQuery] string? email = null,
+        [FromQuery] string? mobile = null,
+        [FromQuery] string? city = null,
+        [FromQuery] string? state = null,
+        [FromQuery] string? country = null,
         [FromQuery] RoleType? role = null,
-        [FromQuery] string? sport = null,
         [FromQuery] UserStatus? status = null,
+        [FromQuery] Gender? gender = null,
+        [FromQuery] bool? emailVerified = null,
+        [FromQuery] bool? isActive = null,
+        [FromQuery] bool? isDeleted = null,
+        [FromQuery] DateTime? createdFrom = null,
+        [FromQuery] DateTime? createdTo = null,
+        [FromQuery] DateTime? updatedFrom = null,
+        [FromQuery] DateTime? updatedTo = null,
         [FromQuery] string? sortBy = null,
         [FromQuery] bool sortDescending = false,
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 20,
         CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation("User search initiated");
+        _logger.LogInformation("User search/list requested: Page={Page}, PageSize={PageSize}", page, pageSize);
 
         var query = new SearchUsersQuery
         {
             SearchTerm = searchTerm,
+            Name = name,
+            Email = email,
+            Mobile = mobile,
+            City = city,
+            State = state,
+            Country = country,
             Role = role,
-            Sport = sport,
             Status = status,
+            Gender = gender,
+            EmailVerified = emailVerified,
+            IsActive = isActive,
+            IsDeleted = isDeleted,
+            CreatedFrom = createdFrom,
+            CreatedTo = createdTo,
+            UpdatedFrom = updatedFrom,
+            UpdatedTo = updatedTo,
             SortBy = sortBy,
             SortDescending = sortDescending,
             Page = page,
@@ -345,7 +349,7 @@ public class UserProfileController : ControllerBase
         if (!result.IsSuccess)
             return HandleFailure(result.Error!);
 
-        return Ok(ApiResponse<SearchUserResponse>.SuccessResult(result.Value!, "Search completed successfully."));
+        return Ok(ApiResponse<UserSearchResponse>.SuccessResult(result.Value!, "Users retrieved successfully."));
     }
 
     #endregion

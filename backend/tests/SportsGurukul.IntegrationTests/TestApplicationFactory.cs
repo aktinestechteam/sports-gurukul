@@ -540,10 +540,10 @@ public class InMemoryUserProfileRepository : IUserProfileRepository
         return Task.FromResult(profile);
     }
 
-    public Task<(IReadOnlyList<UserSummaryDto> Users, int TotalCount)> SearchProfilesAsync(SearchUserRequest request, CancellationToken cancellationToken = default)
+    public Task<(IReadOnlyList<UserListDto> Users, int TotalCount)> SearchProfilesAsync(UserSearchRequest request, CancellationToken cancellationToken = default)
     {
         var profiles = _profiles.Where(p => !p.IsDeleted).ToList();
-        return Task.FromResult<(IReadOnlyList<UserSummaryDto>, int)>((new List<UserSummaryDto>(), profiles.Count));
+        return Task.FromResult<(IReadOnlyList<UserListDto>, int)>((new List<UserListDto>(), profiles.Count));
     }
 
     public Task<IReadOnlyList<UserProfile>> GetAllAsync(CancellationToken cancellationToken = default)

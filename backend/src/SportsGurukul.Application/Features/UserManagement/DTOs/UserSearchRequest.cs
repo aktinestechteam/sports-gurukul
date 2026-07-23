@@ -1,10 +1,8 @@
-using MediatR;
-using SportsGurukul.Application.Common.Models;
-using SportsGurukul.Application.Features.UserManagement.DTOs;
+using SportsGurukul.Domain.Enums;
 
-namespace SportsGurukul.Application.Features.UserManagement.Queries.SearchUsers;
+namespace SportsGurukul.Application.Features.UserManagement.DTOs;
 
-public class SearchUsersQuery : IRequest<Result<UserSearchResponse>>
+public class UserSearchRequest : PaginationRequest
 {
     public string? SearchTerm { get; set; }
     public string? Name { get; set; }
@@ -13,9 +11,9 @@ public class SearchUsersQuery : IRequest<Result<UserSearchResponse>>
     public string? City { get; set; }
     public string? State { get; set; }
     public string? Country { get; set; }
-    public Domain.Enums.RoleType? Role { get; set; }
-    public Domain.Enums.UserStatus? Status { get; set; }
-    public Domain.Enums.Gender? Gender { get; set; }
+    public RoleType? Role { get; set; }
+    public UserStatus? Status { get; set; }
+    public Gender? Gender { get; set; }
     public bool? EmailVerified { get; set; }
     public bool? IsActive { get; set; }
     public bool? IsDeleted { get; set; }
@@ -25,6 +23,4 @@ public class SearchUsersQuery : IRequest<Result<UserSearchResponse>>
     public DateTime? UpdatedTo { get; set; }
     public string? SortBy { get; set; }
     public bool SortDescending { get; set; }
-    public int Page { get; set; } = 1;
-    public int PageSize { get; set; } = 20;
 }

@@ -10,7 +10,7 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
     protected readonly ApplicationDbContext Context;
     protected readonly DbSet<T> DbSet;
 
-    protected Repository(ApplicationDbContext context)
+    public Repository(ApplicationDbContext context)
     {
         Context = context;
         DbSet = context.Set<T>();
