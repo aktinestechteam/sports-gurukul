@@ -39,7 +39,6 @@ public class SearchAthletesQueryHandler : IRequestHandler<SearchAthletesQuery, R
             MinExperience = request.MinExperience,
             MaxExperience = request.MaxExperience,
             Status = request.Status,
-            IsDeleted = request.IsDeleted,
             CreatedFrom = request.CreatedFrom,
             CreatedTo = request.CreatedTo,
             SortBy = request.SortBy,

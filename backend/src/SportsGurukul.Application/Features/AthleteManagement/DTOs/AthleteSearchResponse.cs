@@ -9,4 +9,6 @@ public class AthleteSearchResponse
     public int PageSize { get; set; }
     public bool HasPrevious => CurrentPage > 1;
     public bool HasNext => CurrentPage < TotalPages;
+    public string? NextCursor { get; set; }
+    public string? PreviousCursor { get; set; }
 }

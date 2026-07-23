@@ -23,14 +23,15 @@ public class GetAthleteRankingQueryHandler : IRequestHandler<GetAthleteRankingQu
     {
         _logger.LogInformation("Fetching ranking for athlete: {AthleteId}", request.AthleteId);
 
-        var athlete = await _athleteRepository.GetByIdWithDetailsAsync(request.AthleteId, cancellationToken);
+        var athlete = await _athleteRepository.GetByIdAsync(request.AthleteId, cancellationToken);
         if (athlete is null)
         {
             _logger.LogWarning("Athlete not found: {AthleteId}", request.AthleteId);
             return Result<RankingDto>.Failure("Athlete not found.");
         }
 
-        if (athlete.Ranking is null)
+        var ranking = await _athleteRepository.GetAthleteRankingAsync(request.AthleteId, cancellationToken);
+        if (ranking is null)
         {
             _logger.LogWarning("Ranking not found for athlete: {AthleteId}", request.AthleteId);
             return Result<RankingDto>.Failure("Ranking not found for this athlete.");
@@ -38,14 +39,14 @@ public class GetAthleteRankingQueryHandler : IRequestHandler<GetAthleteRankingQu
 
         var dto = new RankingDto
         {
-            Id = athlete.Ranking.Id,
-            CurrentRank = athlete.Ranking.CurrentRank,
-            StateRank = athlete.Ranking.StateRank,
-            NationalRank = athlete.Ranking.NationalRank,
-            InternationalRank = athlete.Ranking.InternationalRank,
-            RankingAuthority = athlete.Ranking.RankingAuthority,
-            CreatedAt = athlete.Ranking.CreatedAt,
-            UpdatedAt = athlete.Ranking.UpdatedAt
+            Id = ranking.Id,
+            CurrentRank = ranking.CurrentRank,
+            StateRank = ranking.StateRank,
+            NationalRank = ranking.NationalRank,
+            InternationalRank = ranking.InternationalRank,
+            RankingAuthority = ranking.RankingAuthority,
+            CreatedAt = ranking.CreatedAt,
+            UpdatedAt = ranking.UpdatedAt
         };
 
         return Result<RankingDto>.Success(dto);

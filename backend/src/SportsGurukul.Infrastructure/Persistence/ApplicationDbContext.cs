@@ -42,6 +42,9 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<DocumentVersion> DocumentVersions => Set<DocumentVersion>();
     public DbSet<DocumentAudit> DocumentAudits => Set<DocumentAudit>();
 
+    public DbSet<SavedSearch> SavedSearches => Set<SavedSearch>();
+    public DbSet<RecentSearch> RecentSearches => Set<RecentSearch>();
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<BaseEntity>())

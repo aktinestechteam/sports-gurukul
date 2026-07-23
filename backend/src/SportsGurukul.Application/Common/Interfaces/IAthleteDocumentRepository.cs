@@ -10,4 +10,6 @@ public interface IAthleteDocumentRepository : IRepository<AthleteDocument>
     Task<IReadOnlyList<DocumentVersion>> GetVersionsAsync(Guid documentId, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<DocumentAudit>> GetAuditTrailAsync(Guid documentId, CancellationToken cancellationToken = default);
     Task<int> GetMaxVersionNumberAsync(Guid documentId, CancellationToken cancellationToken = default);
+    Task AddVersionAsync(DocumentVersion version, CancellationToken cancellationToken = default);
+    Task AddAuditAsync(DocumentAudit audit, CancellationToken cancellationToken = default);
 }

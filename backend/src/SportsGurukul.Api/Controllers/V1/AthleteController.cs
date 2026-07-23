@@ -131,7 +131,6 @@ public class AthleteController : ControllerBase
     /// <param name="minExperience">Minimum years of experience</param>
     /// <param name="maxExperience">Maximum years of experience</param>
     /// <param name="status">Filter by athlete status</param>
-    /// <param name="isDeleted">Filter by deleted status</param>
     /// <param name="createdFrom">Filter by created date (from)</param>
     /// <param name="createdTo">Filter by created date (to)</param>
     /// <param name="sortBy">Sort field: name, athletecode, level, experience, createddate, or updateddate</param>
@@ -165,7 +164,6 @@ public class AthleteController : ControllerBase
         [FromQuery] int? minExperience = null,
         [FromQuery] int? maxExperience = null,
         [FromQuery] Domain.Enums.AthleteStatus? status = null,
-        [FromQuery] bool? isDeleted = null,
         [FromQuery] DateTime? createdFrom = null,
         [FromQuery] DateTime? createdTo = null,
         [FromQuery] string? sortBy = null,
@@ -192,7 +190,6 @@ public class AthleteController : ControllerBase
             MinExperience = minExperience,
             MaxExperience = maxExperience,
             Status = status,
-            IsDeleted = isDeleted,
             CreatedFrom = createdFrom,
             CreatedTo = createdTo,
             SortBy = sortBy,

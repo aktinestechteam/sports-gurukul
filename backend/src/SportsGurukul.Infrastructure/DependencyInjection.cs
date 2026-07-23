@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SportsGurukul.Application.Common.Interfaces;
+using SportsGurukul.Infrastructure.Caching;
 using SportsGurukul.Infrastructure.Email;
 using SportsGurukul.Infrastructure.Persistence;
 using SportsGurukul.Infrastructure.Persistence.Repositories;
@@ -39,6 +40,11 @@ public static class DependencyInjection
         services.AddScoped<ISportRepository, SportRepository>();
         services.AddScoped<IAchievementRepository, AchievementRepository>();
         services.AddScoped<IAthleteDocumentRepository, AthleteDocumentRepository>();
+        services.AddScoped<ISavedSearchRepository, SavedSearchRepository>();
+        services.AddScoped<IRecentSearchRepository, RecentSearchRepository>();
+
+        services.AddMemoryCache();
+        services.AddScoped<ICacheService, MemoryCacheService>();
 
         services.Configure<StorageOptions>(configuration.GetSection(StorageOptions.SectionName));
 

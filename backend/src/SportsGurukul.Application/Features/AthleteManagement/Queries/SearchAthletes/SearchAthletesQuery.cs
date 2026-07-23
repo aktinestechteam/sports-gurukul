@@ -21,7 +21,6 @@ public class SearchAthletesQuery : IRequest<Result<AthleteSearchResponse>>
     public int? MinExperience { get; set; }
     public int? MaxExperience { get; set; }
     public AthleteStatus? Status { get; set; }
-    public bool? IsDeleted { get; set; }
     public DateTime? CreatedFrom { get; set; }
     public DateTime? CreatedTo { get; set; }
     public string? SortBy { get; set; }

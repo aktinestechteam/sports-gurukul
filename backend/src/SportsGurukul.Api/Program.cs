@@ -118,9 +118,41 @@ builder.Services.AddRateLimiter(options =>
                 QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
                 QueueLimit = 0
             }));
+
+    options.AddPolicy("default", httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            factory: _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 100,
+                Window = TimeSpan.FromMinutes(1),
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                QueueLimit = 10
+            }));
 });
 
 builder.Services.AddHealthChecks();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowConfiguredOrigins", policy =>
+    {
+        var origins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
+        if (origins.Length > 0)
+        {
+            policy.WithOrigins(origins)
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+        }
+        else
+        {
+            policy.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        }
+    });
+});
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -185,9 +217,23 @@ if (app.Environment.IsDevelopment())
 
 app.UseExceptionHandler("/error");
 
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
+    context.Response.Headers.Append("X-Frame-Options", "DENY");
+    context.Response.Headers.Append("X-XSS-Protection", "1; mode=block");
+    context.Response.Headers.Append("Referrer-Policy", "strict-origin-when-cross-origin");
+    await next();
+});
+
 app.UseRateLimiter();
 
 app.UseStaticFiles();
+
+app.UseCors("AllowConfiguredOrigins");
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 var uploadsPath = Path.Combine(builder.Environment.ContentRootPath, "uploads");
 Directory.CreateDirectory(uploadsPath);
@@ -197,9 +243,6 @@ app.UseStaticFiles(new StaticFileOptions
     FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(uploadsPath),
     RequestPath = "/uploads"
 });
-
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.MapHealthChecks("/health");
 

@@ -23,14 +23,16 @@ public class GetAthleteAchievementsQueryHandler : IRequestHandler<GetAthleteAchi
     {
         _logger.LogInformation("Fetching achievements for athlete: {AthleteId}", request.AthleteId);
 
-        var athlete = await _athleteRepository.GetByIdWithDetailsAsync(request.AthleteId, cancellationToken);
+        var athlete = await _athleteRepository.GetByIdAsync(request.AthleteId, cancellationToken);
         if (athlete is null)
         {
             _logger.LogWarning("Athlete not found: {AthleteId}", request.AthleteId);
             return Result<IReadOnlyList<AthleteAchievementDto>>.Failure("Athlete not found.");
         }
 
-        var achievements = athlete.AthleteAchievements.Select(aa => new AthleteAchievementDto
+        var athleteAchievements = await _athleteRepository.GetAthleteAchievementsAsync(request.AthleteId, cancellationToken);
+
+        var achievements = athleteAchievements.Select(aa => new AthleteAchievementDto
         {
             Id = aa.Id,
             AchievementId = aa.AchievementId,

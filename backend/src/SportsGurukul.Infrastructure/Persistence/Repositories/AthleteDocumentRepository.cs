@@ -56,4 +56,14 @@ public class AthleteDocumentRepository : Repository<AthleteDocument>, IAthleteDo
             .Where(v => v.DocumentId == documentId)
             .MaxAsync(v => (int?)v.VersionNumber, cancellationToken) ?? 0;
     }
+
+    public async Task AddVersionAsync(DocumentVersion version, CancellationToken cancellationToken = default)
+    {
+        await Context.DocumentVersions.AddAsync(version, cancellationToken);
+    }
+
+    public async Task AddAuditAsync(DocumentAudit audit, CancellationToken cancellationToken = default)
+    {
+        await Context.DocumentAudits.AddAsync(audit, cancellationToken);
+    }
 }

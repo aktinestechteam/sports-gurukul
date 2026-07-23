@@ -10,7 +10,11 @@ public interface IAthleteRepository : IRepository<Athlete>
     Task<Athlete?> GetByUserIdWithDetailsAsync(Guid userId, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<Athlete>> GetAllWithUserAsync(CancellationToken cancellationToken = default);
     Task<Athlete?> GetDeletedByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
+    Task<Athlete?> GetDeletedByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<(IReadOnlyList<AthleteSummaryDto> Athletes, int TotalCount)> SearchAthletesAsync(AthleteSearchRequest request, CancellationToken cancellationToken = default);
     Task<Athlete?> GetByIdWithDetailsAsync(Guid id, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<AthleteSport>> GetAthleteSportsAsync(Guid athleteId, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<AthleteSearchSuggestionDto>> GetSearchSuggestionsAsync(string prefix, int limit, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<AthleteAchievement>> GetAthleteAchievementsAsync(Guid athleteId, CancellationToken cancellationToken = default);
+    Task<Ranking?> GetAthleteRankingAsync(Guid athleteId, CancellationToken cancellationToken = default);
 }

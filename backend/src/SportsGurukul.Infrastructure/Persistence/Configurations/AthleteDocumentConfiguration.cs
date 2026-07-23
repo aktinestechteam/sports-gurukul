@@ -67,6 +67,14 @@ public class AthleteDocumentConfiguration : IEntityTypeConfiguration<AthleteDocu
         builder.HasIndex(d => d.UploadedOn)
             .HasDatabaseName("IX_AthleteDocuments_UploadedOn");
 
+        builder.HasIndex(d => new { d.AthleteId, d.Category })
+            .HasDatabaseName("IX_AthleteDocuments_AthleteId_Category");
+
+        builder.HasIndex(d => new { d.AthleteId, d.IsDeleted })
+            .HasDatabaseName("IX_AthleteDocuments_AthleteId_IsDeleted");
+
+        builder.HasQueryFilter(d => !d.IsDeleted);
+
         builder.HasOne(d => d.Athlete)
             .WithMany()
             .HasForeignKey(d => d.AthleteId)

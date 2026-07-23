@@ -19,6 +19,7 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
             { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
             { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
             { typeof(NotFoundException), HandleNotFoundException },
+            { typeof(ConflictException), HandleConflictException },
         };
     }
 
@@ -108,6 +109,22 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
         return context.Result;
     }
 
+    private IActionResult HandleConflictException(ExceptionContext context)
+    {
+        var exception = (ConflictException)context.Exception;
+
+        var problemDetails = new ProblemDetails
+        {
+            Status = (int)HttpStatusCode.Conflict,
+            Title = "Conflict",
+            Detail = exception.Message,
+            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.8"
+        };
+
+        context.Result = new ConflictObjectResult(problemDetails);
+        return context.Result;
+    }
+
     private void HandleGenericException(ExceptionContext context)
     {
         _logger.LogError(context.Exception, "Unhandled exception occurred");
@@ -135,4 +152,9 @@ public class NotFoundException : Exception
 public class ForbiddenAccessException : Exception
 {
     public ForbiddenAccessException(string message = "Access denied.") : base(message) { }
+}
+
+public class ConflictException : Exception
+{
+    public ConflictException(string message) : base(message) { }
 }

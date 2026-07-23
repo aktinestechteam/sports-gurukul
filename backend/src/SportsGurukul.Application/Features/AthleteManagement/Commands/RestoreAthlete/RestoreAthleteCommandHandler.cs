@@ -33,7 +33,7 @@ public class RestoreAthleteCommandHandler : IRequestHandler<RestoreAthleteComman
             return Result<Unit>.Failure("Athlete is not deleted.");
         }
 
-        var deletedAthlete = await _athleteRepository.GetDeletedByUserIdAsync(request.AthleteId, cancellationToken);
+        var deletedAthlete = await _athleteRepository.GetDeletedByIdAsync(request.AthleteId, cancellationToken);
         if (deletedAthlete is null)
         {
             _logger.LogWarning("Deleted athlete not found: {AthleteId}", request.AthleteId);

@@ -11,6 +11,13 @@ namespace SportsGurukul.Application.Features.DocumentManagement.Commands.UploadA
 
 public class UploadAthleteDocumentCommandHandler : IRequestHandler<UploadAthleteDocumentCommand, Result<AthleteDocumentDto>>
 {
+    private static readonly HashSet<string> AllowedExtensions = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx",
+        ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp",
+        ".txt", ".csv", ".rtf", ".odt"
+    };
+
     private readonly IAthleteDocumentRepository _documentRepository;
     private readonly IAthleteRepository _athleteRepository;
     private readonly IFileStorageService _fileStorageService;
@@ -43,6 +50,9 @@ public class UploadAthleteDocumentCommandHandler : IRequestHandler<UploadAthlete
             return Result<AthleteDocumentDto>.Failure("Athlete not found.");
 
         var extension = Path.GetExtension(request.File.FileName).ToLowerInvariant();
+        if (!AllowedExtensions.Contains(extension))
+            return Result<AthleteDocumentDto>.Failure($"File type '{extension}' is not allowed. Supported types: {string.Join(", ", AllowedExtensions)}.");
+
         var category = GetFileCategory(request.Category);
 
         await using var stream = request.File.OpenReadStream();
@@ -99,7 +109,8 @@ public class UploadAthleteDocumentCommandHandler : IRequestHandler<UploadAthlete
             Details = $"Document uploaded: {request.File.FileName}"
         };
 
-        await _documentRepository.AddAsync(document, cancellationToken);
+        await _documentRepository.AddVersionAsync(version, cancellationToken);
+        await _documentRepository.AddAuditAsync(audit, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
@@ -116,7 +127,7 @@ public class UploadAthleteDocumentCommandHandler : IRequestHandler<UploadAthlete
 
     private static async Task<string> ComputeChecksumAsync(Stream stream, CancellationToken cancellationToken)
     {
-        var hash = await MD5.HashDataAsync(stream, cancellationToken);
+        var hash = await SHA256.HashDataAsync(stream, cancellationToken);
         return Convert.ToHexString(hash).ToLowerInvariant();
     }
 

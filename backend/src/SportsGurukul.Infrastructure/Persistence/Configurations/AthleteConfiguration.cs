@@ -58,6 +58,15 @@ public class AthleteConfiguration : IEntityTypeConfiguration<Athlete>
         builder.HasIndex(a => a.Status)
             .HasDatabaseName("IX_Athletes_Status");
 
+        builder.HasIndex(a => a.CurrentLevel)
+            .HasDatabaseName("IX_Athletes_CurrentLevel");
+
+        builder.HasIndex(a => new { a.Status, a.CurrentLevel })
+            .HasDatabaseName("IX_Athletes_Status_Level");
+
+        builder.HasIndex(a => new { a.Status, a.CreatedAt })
+            .HasDatabaseName("IX_Athletes_Status_CreatedAt");
+
         builder.HasOne(a => a.User)
             .WithOne()
             .HasForeignKey<Athlete>(a => a.UserId)
@@ -77,6 +86,8 @@ public class AthleteConfiguration : IEntityTypeConfiguration<Athlete>
             .WithOne(r => r.Athlete)
             .HasForeignKey<Ranking>(r => r.AthleteId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasQueryFilter(a => !a.IsDeleted);
 
         builder.Ignore(a => a.CreatedBy);
         builder.Ignore(a => a.UpdatedBy);
