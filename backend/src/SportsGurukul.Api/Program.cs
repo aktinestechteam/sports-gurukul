@@ -131,6 +131,9 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
     options.SuppressModelStateInvalidFilter = true;
 });
 
+builder.Services.Configure<SportsGurukul.Infrastructure.Storage.StorageOptions>(
+    builder.Configuration.GetSection(SportsGurukul.Infrastructure.Storage.StorageOptions.SectionName));
+
 var jwtOptions = new JwtOptions();
 builder.Configuration.GetSection(JwtOptions.SectionName).Bind(jwtOptions);
 
@@ -183,6 +186,17 @@ if (app.Environment.IsDevelopment())
 app.UseExceptionHandler("/error");
 
 app.UseRateLimiter();
+
+app.UseStaticFiles();
+
+var uploadsPath = Path.Combine(builder.Environment.ContentRootPath, "uploads");
+Directory.CreateDirectory(uploadsPath);
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(uploadsPath),
+    RequestPath = "/uploads"
+});
 
 app.UseAuthentication();
 app.UseAuthorization();

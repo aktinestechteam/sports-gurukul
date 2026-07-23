@@ -26,6 +26,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<Address> Addresses => Set<Address>();
     public DbSet<ContactInformation> ContactInformation => Set<ContactInformation>();
     public DbSet<UserPreference> UserPreferences => Set<UserPreference>();
+    public DbSet<UserFile> UserFiles => Set<UserFile>();
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

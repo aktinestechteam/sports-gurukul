@@ -6,13 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using SportsGurukul.Api.Common.Models;
 using SportsGurukul.Api.Common.Models.SwaggerExamples;
 using SportsGurukul.Application.Features.Authentication.DTOs.Responses;
+using SportsGurukul.Application.Features.UserManagement.Commands.DeleteProfilePhoto;
 using SportsGurukul.Application.Features.UserManagement.Commands.DeleteUserProfile;
 using SportsGurukul.Application.Features.UserManagement.Commands.RestoreUserProfile;
 using SportsGurukul.Application.Features.UserManagement.Commands.UpdateUserProfile;
 using SportsGurukul.Application.Features.UserManagement.Commands.UpdateUserPreference;
+using SportsGurukul.Application.Features.UserManagement.Commands.UploadProfilePhoto;
 using SportsGurukul.Application.Features.UserManagement.DTOs;
 using SportsGurukul.Application.Features.UserManagement.Queries.GetCurrentUser;
 using SportsGurukul.Application.Features.UserManagement.Queries.GetPagedUsers;
+using SportsGurukul.Application.Features.UserManagement.Queries.GetProfilePhoto;
 using SportsGurukul.Application.Features.UserManagement.Queries.GetUserById;
 using SportsGurukul.Application.Features.UserManagement.Queries.SearchUsers;
 using SportsGurukul.Domain.Enums;
@@ -407,6 +410,143 @@ public class UserProfileController : ControllerBase
         _logger.LogInformation("Preferences updated for current user");
 
         return Ok(ApiResponse<UserPreferenceDto>.SuccessResult(result.Value!, "Preferences updated successfully."));
+    }
+
+    #endregion
+
+    #region Profile Photo
+
+    /// <summary>
+    /// Uploads a profile photo for the currently authenticated user.
+    /// </summary>
+    /// <remarks>
+    /// Accepts JPEG, PNG, or WebP images up to 5 MB. Replaces any existing profile photo.
+    /// The file is stored using the configured storage provider (local, Azure Blob, or S3).
+    /// </remarks>
+    /// <param name="file">The image file to upload</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Uploaded file metadata</returns>
+    /// <response code="200">Photo uploaded successfully</response>
+    /// <response code="400">Invalid file type or size</response>
+    /// <response code="401">Not authenticated</response>
+    /// <response code="404">Profile not found</response>
+    [HttpPost("me/photo")]
+    [DisableRequestSizeLimit]
+    [ProducesResponseType(typeof(ApiResponse<ProfilePhotoResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UploadProfilePhoto(
+        IFormFile file,
+        CancellationToken cancellationToken)
+    {
+        var userId = GetUserId();
+        if (userId is null)
+            return Unauthorized(new ProblemDetails
+            {
+                Status = StatusCodes.Status401Unauthorized,
+                Title = "Unauthorized",
+                Detail = "Invalid user identity.",
+                Type = "https://tools.ietf.org/html/rfc7235#section-3.1"
+            });
+
+        _logger.LogInformation("Profile photo upload requested for current user");
+
+        byte[] fileContent;
+        using (var memoryStream = new MemoryStream())
+        {
+            await file.CopyToAsync(memoryStream, cancellationToken);
+            fileContent = memoryStream.ToArray();
+        }
+
+        var command = new UploadProfilePhotoCommand
+        {
+            UserId = userId.Value,
+            FileName = file.FileName,
+            ContentType = file.ContentType,
+            FileContent = fileContent
+        };
+
+        var result = await _mediator.Send(command, cancellationToken);
+
+        if (!result.IsSuccess)
+            return HandleFailure(result.Error!);
+
+        _logger.LogInformation("Profile photo uploaded for current user");
+
+        return Ok(ApiResponse<ProfilePhotoResponse>.SuccessResult(result.Value!, "Profile photo uploaded successfully."));
+    }
+
+    /// <summary>
+    /// Gets the profile photo metadata for the currently authenticated user.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Profile photo metadata including URL</returns>
+    /// <response code="200">Photo metadata retrieved</response>
+    /// <response code="401">Not authenticated</response>
+    /// <response code="404">No profile photo found</response>
+    [HttpGet("me/photo")]
+    [ProducesResponseType(typeof(ApiResponse<ProfilePhotoResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetProfilePhoto(CancellationToken cancellationToken)
+    {
+        var userId = GetUserId();
+        if (userId is null)
+            return Unauthorized(new ProblemDetails
+            {
+                Status = StatusCodes.Status401Unauthorized,
+                Title = "Unauthorized",
+                Detail = "Invalid user identity.",
+                Type = "https://tools.ietf.org/html/rfc7235#section-3.1"
+            });
+
+        _logger.LogInformation("Profile photo retrieval requested for current user");
+
+        var query = new GetProfilePhotoQuery { UserId = userId.Value };
+        var result = await _mediator.Send(query, cancellationToken);
+
+        if (!result.IsSuccess)
+            return HandleFailure(result.Error!);
+
+        return Ok(ApiResponse<ProfilePhotoResponse>.SuccessResult(result.Value!, "Profile photo retrieved successfully."));
+    }
+
+    /// <summary>
+    /// Deletes the profile photo of the currently authenticated user.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>No content</returns>
+    /// <response code="204">Photo deleted successfully</response>
+    /// <response code="401">Not authenticated</response>
+    /// <response code="404">No profile photo found</response>
+    [HttpDelete("me/photo")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteProfilePhoto(CancellationToken cancellationToken)
+    {
+        var userId = GetUserId();
+        if (userId is null)
+            return Unauthorized(new ProblemDetails
+            {
+                Status = StatusCodes.Status401Unauthorized,
+                Title = "Unauthorized",
+                Detail = "Invalid user identity.",
+                Type = "https://tools.ietf.org/html/rfc7235#section-3.1"
+            });
+
+        _logger.LogInformation("Profile photo deletion requested for current user");
+
+        var command = new DeleteProfilePhotoCommand { UserId = userId.Value };
+        var result = await _mediator.Send(command, cancellationToken);
+
+        if (!result.IsSuccess)
+            return HandleFailure(result.Error!);
+
+        _logger.LogInformation("Profile photo deleted for current user");
+
+        return NoContent();
     }
 
     #endregion

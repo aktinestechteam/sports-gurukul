@@ -16,6 +16,7 @@ using SportsGurukul.Domain.Common;
 using SportsGurukul.Domain.Entities;
 using SportsGurukul.Domain.Enums;
 using SportsGurukul.Infrastructure.Authentication;
+using SportsGurukul.Infrastructure.Storage;
 
 namespace SportsGurukul.IntegrationTests;
 
@@ -85,6 +86,16 @@ public class TestApplicationFactory : WebApplicationFactory<ApiMarker>
             services.AddScoped<IRepository<ContactInformation>>(_ => new InMemoryGenericRepository<ContactInformation>(contactInfos));
             services.AddScoped<IRepository<Address>>(_ => new InMemoryGenericRepository<Address>(addresses));
             services.AddScoped<IRepository<UserPreference>>(_ => new InMemoryGenericRepository<UserPreference>(userPreferences));
+
+            var userFiles = new List<UserFile>();
+            services.AddScoped<IFileRepository>(_ => new InMemoryFileRepository(userFiles));
+            services.AddScoped<IFileStorageService, InMemoryFileStorageService>();
+
+            services.Configure<StorageOptions>(opts =>
+            {
+                opts.Provider = StorageProvider.Local;
+                opts.BasePath = "test-uploads";
+            });
         });
     }
 
@@ -560,4 +571,87 @@ public class InMemoryUserProfileRepository : IUserProfileRepository
 
     public Task<bool> AnyAsync(Expression<Func<UserProfile, bool>> predicate, CancellationToken cancellationToken = default)
         => Task.FromResult(_profiles.Where(p => !p.IsDeleted).Any(predicate.Compile()));
+}
+
+public class InMemoryFileRepository : IFileRepository
+{
+    private readonly List<UserFile> _files;
+    public InMemoryFileRepository(List<UserFile> files) => _files = files;
+
+    public Task<UserFile?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        => Task.FromResult(_files.FirstOrDefault(f => f.Id == id && !f.IsDeleted));
+
+    public Task<IReadOnlyList<UserFile>> GetAllAsync(CancellationToken cancellationToken = default)
+        => Task.FromResult<IReadOnlyList<UserFile>>(_files.Where(f => !f.IsDeleted).ToList());
+
+    public Task<IReadOnlyList<UserFile>> FindAsync(Expression<Func<UserFile, bool>> predicate, CancellationToken cancellationToken = default)
+        => Task.FromResult<IReadOnlyList<UserFile>>(_files.Where(f => !f.IsDeleted).Where(predicate.Compile()).ToList());
+
+    public Task<UserFile> AddAsync(UserFile entity, CancellationToken cancellationToken = default)
+    {
+        _files.Add(entity);
+        return Task.FromResult(entity);
+    }
+
+    public void Update(UserFile entity) { }
+
+    public void Remove(UserFile entity) => entity.IsDeleted = true;
+
+    public Task<int> CountAsync(Expression<Func<UserFile, bool>>? predicate = null, CancellationToken cancellationToken = default)
+    {
+        var query = _files.Where(f => !f.IsDeleted);
+        if (predicate is not null) query = query.Where(predicate.Compile());
+        return Task.FromResult(query.Count());
+    }
+
+    public Task<bool> AnyAsync(Expression<Func<UserFile, bool>> predicate, CancellationToken cancellationToken = default)
+        => Task.FromResult(_files.Where(f => !f.IsDeleted).Any(predicate.Compile()));
+
+    public Task<UserFile?> GetByUserIdAndTypeAsync(Guid userId, FileType fileType, CancellationToken cancellationToken = default)
+        => Task.FromResult(_files.FirstOrDefault(f => f.UserId == userId && f.FileType == fileType && !f.IsDeleted));
+
+    public Task<IReadOnlyList<UserFile>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
+        => Task.FromResult<IReadOnlyList<UserFile>>(_files.Where(f => f.UserId == userId && !f.IsDeleted).OrderByDescending(f => f.CreatedAt).ToList());
+
+    public Task<UserFile?> GetActiveProfilePhotoAsync(Guid userId, CancellationToken cancellationToken = default)
+        => Task.FromResult(_files.FirstOrDefault(f => f.UserId == userId && f.FileType == FileType.ProfilePhoto && !f.IsDeleted));
+}
+
+public class InMemoryFileStorageService : IFileStorageService
+{
+    private readonly Dictionary<string, byte[]> _storedFiles = new();
+
+    public Task<FileStorageResult> UploadAsync(Stream fileStream, string fileName, string contentType, FileCategory category, CancellationToken cancellationToken = default)
+    {
+        var storedFileName = $"{Guid.NewGuid()}{Path.GetExtension(fileName)}";
+        using var ms = new MemoryStream();
+        fileStream.CopyTo(ms);
+        var content = ms.ToArray();
+        _storedFiles[storedFileName] = content;
+
+        return Task.FromResult(new FileStorageResult
+        {
+            StoredFileName = storedFileName,
+            StoragePath = $"/uploads/{category.ToString().ToLowerInvariant()}/{storedFileName}",
+            PublicUrl = $"/uploads/{category.ToString().ToLowerInvariant()}/{storedFileName}",
+            FileSize = content.Length
+        });
+    }
+
+    public Task<Stream?> GetAsync(string storagePath, CancellationToken cancellationToken = default)
+    {
+        var fileName = Path.GetFileName(storagePath);
+        if (!_storedFiles.TryGetValue(fileName, out var content))
+            return Task.FromResult<Stream?>(null);
+
+        return Task.FromResult<Stream?>(new MemoryStream(content));
+    }
+
+    public Task<bool> DeleteAsync(string storagePath, CancellationToken cancellationToken = default)
+    {
+        var fileName = Path.GetFileName(storagePath);
+        return Task.FromResult(_storedFiles.Remove(fileName));
+    }
+
+    public string GetPublicUrl(string storagePath) => storagePath;
 }
