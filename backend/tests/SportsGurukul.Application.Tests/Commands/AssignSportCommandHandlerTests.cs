@@ -1,7 +1,7 @@
 using FluentAssertions;
 using Moq;
 using SportsGurukul.Application.Common.Interfaces;
-using SportsGurukul.Application.Features.AthleteManagement.Commands.AssignSport;
+using SportsGurukul.Application.Features.CoachManagement.Commands.AssignSport;
 using SportsGurukul.Application.Tests.Common;
 using SportsGurukul.Domain.Entities;
 
@@ -9,9 +9,9 @@ namespace SportsGurukul.Application.Tests.Commands;
 
 public class AssignSportCommandHandlerTests
 {
-    private readonly Mock<IAthleteRepository> _athleteRepositoryMock = TestMocks.CreateAthleteRepository();
+    private readonly Mock<ICoachRepository> _coachRepositoryMock = TestMocks.CreateCoachRepository();
     private readonly Mock<ISportRepository> _sportRepositoryMock = TestMocks.CreateSportRepository();
-    private readonly Mock<IRepository<AthleteSport>> _athleteSportRepositoryMock = TestMocks.CreateAthleteSportRepository();
+    private readonly Mock<IRepository<CoachSport>> _coachSportRepositoryMock = TestMocks.CreateCoachSportRepository();
     private readonly Mock<IUnitOfWork> _unitOfWorkMock = TestMocks.CreateUnitOfWork();
     private readonly Mock<ILogger<AssignSportCommandHandler>> _loggerMock = TestMocks.CreateLogger<AssignSportCommandHandler>();
     private readonly AssignSportCommandHandler _handler;
@@ -19,41 +19,41 @@ public class AssignSportCommandHandlerTests
     public AssignSportCommandHandlerTests()
     {
         _handler = new AssignSportCommandHandler(
-            _athleteRepositoryMock.Object,
+            _coachRepositoryMock.Object,
             _sportRepositoryMock.Object,
-            _athleteSportRepositoryMock.Object,
+            _coachSportRepositoryMock.Object,
             _unitOfWorkMock.Object,
             _loggerMock.Object);
     }
 
     [Fact]
-    public async Task Handle_AthleteNotFound_ReturnsFailure()
+    public async Task Handle_CoachNotFound_ReturnsFailure()
     {
-        _athleteRepositoryMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync((Athlete?)null);
+        _coachRepositoryMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((Coach?)null);
 
         var result = await _handler.Handle(new AssignSportCommand
         {
-            AthleteId = Guid.NewGuid(),
+            CoachId = Guid.NewGuid(),
             SportId = Guid.NewGuid()
         }, CancellationToken.None);
 
         result.IsSuccess.Should().BeFalse();
-        result.Error.Should().Be("Athlete not found.");
+        result.Error.Should().Be("Coach not found.");
     }
 
     [Fact]
     public async Task Handle_SportNotFound_ReturnsFailure()
     {
-        var athleteId = Guid.NewGuid();
-        _athleteRepositoryMock.Setup(r => r.GetByIdAsync(athleteId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(TestDataBuilder.CreateAthlete(id: athleteId));
+        var coachId = Guid.NewGuid();
+        _coachRepositoryMock.Setup(r => r.GetByIdAsync(coachId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(TestDataBuilder.CreateCoach(id: coachId));
         _sportRepositoryMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((Sport?)null);
 
         var result = await _handler.Handle(new AssignSportCommand
         {
-            AthleteId = athleteId,
+            CoachId = coachId,
             SportId = Guid.NewGuid()
         }, CancellationToken.None);
 
@@ -62,85 +62,54 @@ public class AssignSportCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handle_SportAlreadyAssigned_ReturnsFailure()
+    public async Task Handle_DuplicateSport_ReturnsFailure()
     {
-        var athleteId = Guid.NewGuid();
+        var coachId = Guid.NewGuid();
         var sportId = Guid.NewGuid();
-        var athlete = TestDataBuilder.CreateAthlete(id: athleteId);
+        var coach = TestDataBuilder.CreateCoach(id: coachId);
         var sport = TestDataBuilder.CreateSport(id: sportId);
-        var existingSports = new List<AthleteSport>
+        var existingSports = new List<CoachSport>
         {
-            TestDataBuilder.CreateAthleteSport(athleteId, sportId)
+            TestDataBuilder.CreateCoachSport(coachId, sportId)
         };
 
-        _athleteRepositoryMock.Setup(r => r.GetByIdAsync(athleteId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(athlete);
+        _coachRepositoryMock.Setup(r => r.GetByIdAsync(coachId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(coach);
         _sportRepositoryMock.Setup(r => r.GetByIdAsync(sportId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(sport);
-        _athleteRepositoryMock.Setup(r => r.GetAthleteSportsAsync(athleteId, It.IsAny<CancellationToken>()))
+        _coachRepositoryMock.Setup(r => r.GetCoachSportsAsync(coachId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(existingSports);
 
         var result = await _handler.Handle(new AssignSportCommand
         {
-            AthleteId = athleteId,
+            CoachId = coachId,
             SportId = sportId
         }, CancellationToken.None);
 
         result.IsSuccess.Should().BeFalse();
-        result.Error.Should().Be("This sport is already assigned to the athlete.");
+        result.Error.Should().Be("This sport is already assigned to the coach.");
     }
 
     [Fact]
-    public async Task Handle_NewPrimarySport_UnsetsCurrentPrimary()
+    public async Task Handle_NewSport_AssignsAndReturnsSuccess()
     {
-        var athleteId = Guid.NewGuid();
+        var coachId = Guid.NewGuid();
         var sportId = Guid.NewGuid();
-        var athlete = TestDataBuilder.CreateAthlete(id: athleteId);
+        var coach = TestDataBuilder.CreateCoach(id: coachId);
         var sport = TestDataBuilder.CreateSport(id: sportId);
-        var currentPrimary = TestDataBuilder.CreateAthleteSport(athleteId);
-        currentPrimary.IsPrimarySport = true;
 
-        _athleteRepositoryMock.Setup(r => r.GetByIdAsync(athleteId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(athlete);
+        _coachRepositoryMock.Setup(r => r.GetByIdAsync(coachId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(coach);
         _sportRepositoryMock.Setup(r => r.GetByIdAsync(sportId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(sport);
-        _athleteRepositoryMock.Setup(r => r.GetAthleteSportsAsync(athleteId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new List<AthleteSport> { currentPrimary });
+        _coachRepositoryMock.Setup(r => r.GetCoachSportsAsync(coachId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<CoachSport>());
         _unitOfWorkMock.Setup(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(1);
 
         var result = await _handler.Handle(new AssignSportCommand
         {
-            AthleteId = athleteId,
-            SportId = sportId,
-            IsPrimarySport = true
-        }, CancellationToken.None);
-
-        result.IsSuccess.Should().BeTrue();
-        currentPrimary.IsPrimarySport.Should().BeFalse();
-        _athleteSportRepositoryMock.Verify(r => r.Update(currentPrimary), Times.Once);
-    }
-
-    [Fact]
-    public async Task Handle_ValidAssignment_CreatesAndReturnsSuccess()
-    {
-        var athleteId = Guid.NewGuid();
-        var sportId = Guid.NewGuid();
-        var athlete = TestDataBuilder.CreateAthlete(id: athleteId);
-        var sport = TestDataBuilder.CreateSport(id: sportId);
-
-        _athleteRepositoryMock.Setup(r => r.GetByIdAsync(athleteId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(athlete);
-        _sportRepositoryMock.Setup(r => r.GetByIdAsync(sportId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(sport);
-        _athleteRepositoryMock.Setup(r => r.GetAthleteSportsAsync(athleteId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new List<AthleteSport>());
-        _unitOfWorkMock.Setup(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()))
-            .ReturnsAsync(1);
-
-        var result = await _handler.Handle(new AssignSportCommand
-        {
-            AthleteId = athleteId,
+            CoachId = coachId,
             SportId = sportId,
             IsPrimarySport = true
         }, CancellationToken.None);
@@ -149,6 +118,37 @@ public class AssignSportCommandHandlerTests
         result.Value.Should().NotBeNull();
         result.Value!.Name.Should().Be("Cricket");
         result.Value.IsPrimarySport.Should().BeTrue();
-        _athleteSportRepositoryMock.Verify(r => r.AddAsync(It.IsAny<AthleteSport>(), It.IsAny<CancellationToken>()), Times.Once);
+        _coachSportRepositoryMock.Verify(r => r.AddAsync(It.IsAny<CoachSport>(), It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [Fact]
+    public async Task Handle_PrimarySport_UnmarksPrevious()
+    {
+        var coachId = Guid.NewGuid();
+        var sportId = Guid.NewGuid();
+        var coach = TestDataBuilder.CreateCoach(id: coachId);
+        var sport = TestDataBuilder.CreateSport(id: sportId);
+        var currentPrimary = TestDataBuilder.CreateCoachSport(coachId);
+        currentPrimary.IsPrimarySport = true;
+
+        _coachRepositoryMock.Setup(r => r.GetByIdAsync(coachId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(coach);
+        _sportRepositoryMock.Setup(r => r.GetByIdAsync(sportId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(sport);
+        _coachRepositoryMock.Setup(r => r.GetCoachSportsAsync(coachId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<CoachSport> { currentPrimary });
+        _unitOfWorkMock.Setup(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(1);
+
+        var result = await _handler.Handle(new AssignSportCommand
+        {
+            CoachId = coachId,
+            SportId = sportId,
+            IsPrimarySport = true
+        }, CancellationToken.None);
+
+        result.IsSuccess.Should().BeTrue();
+        currentPrimary.IsPrimarySport.Should().BeFalse();
+        _coachSportRepositoryMock.Verify(r => r.Update(currentPrimary), Times.Once);
     }
 }

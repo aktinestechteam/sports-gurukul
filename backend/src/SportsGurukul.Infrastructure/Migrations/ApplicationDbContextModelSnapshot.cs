@@ -8,7 +8,7 @@ using SportsGurukul.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace SportsGurukul.Infrastructure.Persistence.Migrations
+namespace SportsGurukul.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -219,12 +219,21 @@ namespace SportsGurukul.Infrastructure.Persistence.Migrations
                         .IsUnique()
                         .HasDatabaseName("IX_Athletes_AthleteCode");
 
+                    b.HasIndex("CurrentLevel")
+                        .HasDatabaseName("IX_Athletes_CurrentLevel");
+
                     b.HasIndex("Status")
                         .HasDatabaseName("IX_Athletes_Status");
 
                     b.HasIndex("UserId")
                         .IsUnique()
                         .HasDatabaseName("IX_Athletes_UserId");
+
+                    b.HasIndex("Status", "CreatedAt")
+                        .HasDatabaseName("IX_Athletes_Status_CreatedAt");
+
+                    b.HasIndex("Status", "CurrentLevel")
+                        .HasDatabaseName("IX_Athletes_Status_Level");
 
                     b.ToTable("Athletes", (string)null);
                 });
@@ -272,6 +281,124 @@ namespace SportsGurukul.Infrastructure.Persistence.Migrations
                     b.ToTable("AthleteAchievements", (string)null);
                 });
 
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AthleteDocument", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AthleteId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Checksum")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<DateTime?>("ExpiryDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Extension")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MimeType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("OriginalFileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("StoragePath")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("StorageProvider")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("StoredFileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UploadedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("UploadedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("VerifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("VerifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AthleteId")
+                        .HasDatabaseName("IX_AthleteDocuments_AthleteId");
+
+                    b.HasIndex("Category")
+                        .HasDatabaseName("IX_AthleteDocuments_Category");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_AthleteDocuments_Status");
+
+                    b.HasIndex("UploadedOn")
+                        .HasDatabaseName("IX_AthleteDocuments_UploadedOn");
+
+                    b.HasIndex("AthleteId", "Category")
+                        .HasDatabaseName("IX_AthleteDocuments_AthleteId_Category");
+
+                    b.HasIndex("AthleteId", "IsDeleted")
+                        .HasDatabaseName("IX_AthleteDocuments_AthleteId_IsDeleted");
+
+                    b.ToTable("AthleteDocuments", (string)null);
+                });
+
             modelBuilder.Entity("SportsGurukul.Domain.Entities.AthleteSport", b =>
                 {
                     b.Property<Guid>("Id")
@@ -312,6 +439,673 @@ namespace SportsGurukul.Infrastructure.Persistence.Migrations
                         .HasDatabaseName("IX_AthleteSports_AthleteId_SportId");
 
                     b.ToTable("AthleteSports", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.Coach", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Biography")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("CoachCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("CoachingLevel")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CurrentOrganization")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("HighestQualification")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("PreferredLanguage")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("VerificationStatus")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<int>("YearsOfExperience")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoachCode")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Coaches_CoachCode");
+
+                    b.HasIndex("CoachingLevel")
+                        .HasDatabaseName("IX_Coaches_CoachingLevel");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_Coaches_Status");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Coaches_UserId");
+
+                    b.HasIndex("VerificationStatus")
+                        .HasDatabaseName("IX_Coaches_VerificationStatus");
+
+                    b.HasIndex("Status", "CoachingLevel")
+                        .HasDatabaseName("IX_Coaches_Status_CoachingLevel");
+
+                    b.HasIndex("Status", "CreatedAt")
+                        .HasDatabaseName("IX_Coaches_Status_CreatedAt");
+
+                    b.ToTable("Coaches", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("d1000000-0000-0000-0000-000000000001"),
+                            Biography = "Seed coach profile for development.",
+                            CoachCode = "COACH-20250101-SEED01",
+                            CoachingLevel = "Senior",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            RegistrationDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            RowVersion = new byte[0],
+                            Status = "Active",
+                            UserId = new Guid("f47ac10b-58cc-4372-a567-0e02b2c3d479"),
+                            VerificationStatus = "Verified",
+                            YearsOfExperience = 5
+                        });
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachAvailability", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CoachId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("OfflineAvailable")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("OnlineAvailable")
+                        .HasColumnType("boolean");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("TimeSlots")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<int?>("TravelDistance")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("WeeklySchedule")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoachId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_CoachAvailabilities_CoachId");
+
+                    b.ToTable("CoachAvailabilities", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b2000000-0000-0000-0000-000000000001"),
+                            CoachId = new Guid("d1000000-0000-0000-0000-000000000001"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            OfflineAvailable = true,
+                            OnlineAvailable = true,
+                            RowVersion = new byte[0],
+                            TimeSlots = "[\"06:00-08:00\",\"08:00-10:00\",\"10:00-12:00\",\"12:00-14:00\",\"14:00-16:00\",\"16:00-18:00\"]",
+                            TravelDistance = 25,
+                            WeeklySchedule = "{\"monday\":{\"start\":\"06:00\",\"end\":\"18:00\"},\"tuesday\":{\"start\":\"06:00\",\"end\":\"18:00\"},\"wednesday\":{\"start\":\"06:00\",\"end\":\"18:00\"},\"thursday\":{\"start\":\"06:00\",\"end\":\"18:00\"},\"friday\":{\"start\":\"06:00\",\"end\":\"18:00\"},\"saturday\":{\"start\":\"08:00\",\"end\":\"14:00\"}}"
+                        });
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachCertification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CertificateNumber")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("CertificateUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("CertificationName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<Guid>("CoachId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("ExpiryDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("IssueDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("IssuingAuthority")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("VerificationStatus")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoachId")
+                        .HasDatabaseName("IX_CoachCertifications_CoachId");
+
+                    b.HasIndex("VerificationStatus")
+                        .HasDatabaseName("IX_CoachCertifications_VerificationStatus");
+
+                    b.HasIndex("CoachId", "CertificationName")
+                        .HasDatabaseName("IX_CoachCertifications_CoachId_Name");
+
+                    b.ToTable("CoachCertifications", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("e1000000-0000-0000-0000-000000000001"),
+                            CertificateNumber = "BCCI-LA-2024-001",
+                            CertificationName = "BCCI Level A Coaching",
+                            CoachId = new Guid("d1000000-0000-0000-0000-000000000001"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ExpiryDate = new DateTime(2027, 6, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsDeleted = false,
+                            IssueDate = new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IssuingAuthority = "Board of Control for Cricket in India",
+                            RowVersion = new byte[0],
+                            VerificationStatus = "Verified"
+                        });
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachDocument", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Checksum")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<Guid>("CoachId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<DateTime?>("ExpiryDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Extension")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MimeType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("OriginalFileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("StoragePath")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("StorageProvider")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("StoredFileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UploadedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("UploadedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("VerifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("VerifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Category")
+                        .HasDatabaseName("IX_CoachDocuments_Category");
+
+                    b.HasIndex("CoachId")
+                        .HasDatabaseName("IX_CoachDocuments_CoachId");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_CoachDocuments_Status");
+
+                    b.HasIndex("UploadedOn")
+                        .HasDatabaseName("IX_CoachDocuments_UploadedOn");
+
+                    b.HasIndex("CoachId", "Category")
+                        .HasDatabaseName("IX_CoachDocuments_CoachId_Category");
+
+                    b.HasIndex("CoachId", "IsDeleted")
+                        .HasDatabaseName("IX_CoachDocuments_CoachId_IsDeleted");
+
+                    b.ToTable("CoachDocuments", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachEducation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CoachId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Degree")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("FieldOfStudy")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Institution")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("YearCompleted")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoachId")
+                        .HasDatabaseName("IX_CoachEducation_CoachId");
+
+                    b.ToTable("CoachEducation", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a2000000-0000-0000-0000-000000000001"),
+                            CoachId = new Guid("d1000000-0000-0000-0000-000000000001"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Degree = "Bachelor of Physical Education",
+                            FieldOfStudy = "Sports Coaching",
+                            Institution = "National Institute of Sports",
+                            IsDeleted = false,
+                            YearCompleted = 2018
+                        });
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachExperience", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CoachId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Organization")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Role")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Sport")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoachId")
+                        .HasDatabaseName("IX_CoachExperiences_CoachId");
+
+                    b.ToTable("CoachExperiences", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("f1000000-0000-0000-0000-000000000001"),
+                            CoachId = new Guid("d1000000-0000-0000-0000-000000000001"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Led state-level cricket training program.",
+                            EndDate = new DateTime(2024, 3, 31, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsDeleted = false,
+                            Organization = "State Cricket Academy",
+                            Role = "Head Coach",
+                            Sport = "Cricket",
+                            StartDate = new DateTime(2020, 4, 1, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachLocation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("City")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<Guid>("CoachId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Country")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("District")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<decimal?>("Latitude")
+                        .HasPrecision(10, 8)
+                        .HasColumnType("numeric(10,8)");
+
+                    b.Property<decimal?>("Longitude")
+                        .HasPrecision(11, 8)
+                        .HasColumnType("numeric(11,8)");
+
+                    b.Property<string>("State")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoachId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_CoachLocations_CoachId");
+
+                    b.HasIndex("State", "City")
+                        .HasDatabaseName("IX_CoachLocations_State_City");
+
+                    b.ToTable("CoachLocations", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("c2000000-0000-0000-0000-000000000001"),
+                            City = "Mumbai",
+                            CoachId = new Guid("d1000000-0000-0000-0000-000000000001"),
+                            Country = "India",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            District = "Mumbai City",
+                            IsDeleted = false,
+                            Latitude = 19.0760m,
+                            Longitude = 72.8777m,
+                            State = "Maharashtra"
+                        });
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachSpecialization", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CoachId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("SpecializationName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoachId")
+                        .HasDatabaseName("IX_CoachSpecializations_CoachId");
+
+                    b.HasIndex("CoachId", "SpecializationName")
+                        .IsUnique()
+                        .HasDatabaseName("IX_CoachSpecializations_CoachId_Name");
+
+                    b.ToTable("CoachSpecializations", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("d2000000-0000-0000-0000-000000000001"),
+                            CoachId = new Guid("d1000000-0000-0000-0000-000000000001"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Specialized in pace and swing bowling techniques.",
+                            IsDeleted = false,
+                            SpecializationName = "Fast Bowling"
+                        },
+                        new
+                        {
+                            Id = new Guid("d2000000-0000-0000-0000-000000000002"),
+                            CoachId = new Guid("d1000000-0000-0000-0000-000000000001"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Specialized in fielding drills and athleticism.",
+                            IsDeleted = false,
+                            SpecializationName = "Fielding"
+                        });
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachSport", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CoachId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPrimarySport")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("JoinedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("SportId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoachId")
+                        .HasDatabaseName("IX_CoachSports_CoachId");
+
+                    b.HasIndex("SportId")
+                        .HasDatabaseName("IX_CoachSports_SportId");
+
+                    b.HasIndex("CoachId", "SportId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_CoachSports_CoachId_SportId");
+
+                    b.ToTable("CoachSports", (string)null);
                 });
 
             modelBuilder.Entity("SportsGurukul.Domain.Entities.ContactInformation", b =>
@@ -391,6 +1185,107 @@ namespace SportsGurukul.Infrastructure.Persistence.Migrations
                         .HasDatabaseName("IX_ContactInformation_UserProfileId");
 
                     b.ToTable("ContactInformation", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.DocumentAudit", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Details")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<Guid>("DocumentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(45)
+                        .HasColumnType("character varying(45)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("PerformedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("PerformedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentId")
+                        .HasDatabaseName("IX_DocumentAudits_DocumentId");
+
+                    b.HasIndex("PerformedOn")
+                        .HasDatabaseName("IX_DocumentAudits_PerformedOn");
+
+                    b.ToTable("DocumentAudits", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.DocumentVersion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Checksum")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("DocumentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("StoragePath")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("StoredFileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UploadedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("VersionNumber")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentId")
+                        .HasDatabaseName("IX_DocumentVersions_DocumentId");
+
+                    b.HasIndex("DocumentId", "VersionNumber")
+                        .IsUnique()
+                        .HasDatabaseName("IX_DocumentVersions_DocumentId_VersionNumber");
+
+                    b.ToTable("DocumentVersions", (string)null);
                 });
 
             modelBuilder.Entity("SportsGurukul.Domain.Entities.EmailVerificationToken", b =>
@@ -688,6 +1583,53 @@ namespace SportsGurukul.Infrastructure.Persistence.Migrations
                     b.ToTable("Rankings", (string)null);
                 });
 
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.RecentSearch", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FiltersJson")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("QueryText")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<int>("ResultCount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<DateTime>("SearchedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("IX_RecentSearches_UserId");
+
+                    b.HasIndex("UserId", "SearchedAt")
+                        .HasDatabaseName("IX_RecentSearches_UserId_SearchedAt");
+
+                    b.ToTable("RecentSearches", (string)null);
+                });
+
             modelBuilder.Entity("SportsGurukul.Domain.Entities.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
@@ -882,6 +1824,50 @@ namespace SportsGurukul.Infrastructure.Persistence.Migrations
                         .HasDatabaseName("IX_RolePermissions_PermissionId");
 
                     b.ToTable("RolePermissions", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.SavedSearch", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FiltersJson")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("UsageCount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .HasDatabaseName("IX_SavedSearches_Name");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("IX_SavedSearches_UserId");
+
+                    b.ToTable("SavedSearches", (string)null);
                 });
 
             modelBuilder.Entity("SportsGurukul.Domain.Entities.Sport", b =>
@@ -1523,6 +2509,17 @@ namespace SportsGurukul.Infrastructure.Persistence.Migrations
                     b.Navigation("Athlete");
                 });
 
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AthleteDocument", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Athlete", "Athlete")
+                        .WithMany()
+                        .HasForeignKey("AthleteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Athlete");
+                });
+
             modelBuilder.Entity("SportsGurukul.Domain.Entities.AthleteSport", b =>
                 {
                     b.HasOne("SportsGurukul.Domain.Entities.Athlete", "Athlete")
@@ -1542,6 +2539,113 @@ namespace SportsGurukul.Infrastructure.Persistence.Migrations
                     b.Navigation("Sport");
                 });
 
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.Coach", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.User", "User")
+                        .WithOne()
+                        .HasForeignKey("SportsGurukul.Domain.Entities.Coach", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachAvailability", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Coach", "Coach")
+                        .WithOne("Availability")
+                        .HasForeignKey("SportsGurukul.Domain.Entities.CoachAvailability", "CoachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Coach");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachCertification", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Coach", "Coach")
+                        .WithMany("Certifications")
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Coach");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachDocument", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Coach", "Coach")
+                        .WithMany("Documents")
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Coach");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachEducation", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Coach", "Coach")
+                        .WithMany("Education")
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Coach");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachExperience", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Coach", "Coach")
+                        .WithMany("Experiences")
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Coach");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachLocation", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Coach", "Coach")
+                        .WithOne("Location")
+                        .HasForeignKey("SportsGurukul.Domain.Entities.CoachLocation", "CoachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Coach");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachSpecialization", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Coach", "Coach")
+                        .WithMany("Specializations")
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Coach");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachSport", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Coach", "Coach")
+                        .WithMany("CoachSports")
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Sport", "Sport")
+                        .WithMany("CoachSports")
+                        .HasForeignKey("SportId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Coach");
+
+                    b.Navigation("Sport");
+                });
+
             modelBuilder.Entity("SportsGurukul.Domain.Entities.ContactInformation", b =>
                 {
                     b.HasOne("SportsGurukul.Domain.Entities.UserProfile", "UserProfile")
@@ -1551,6 +2655,28 @@ namespace SportsGurukul.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.DocumentAudit", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AthleteDocument", "Document")
+                        .WithMany("AuditTrail")
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.DocumentVersion", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AthleteDocument", "Document")
+                        .WithMany("Versions")
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
                 });
 
             modelBuilder.Entity("SportsGurukul.Domain.Entities.EmailVerificationToken", b =>
@@ -1608,6 +2734,17 @@ namespace SportsGurukul.Infrastructure.Persistence.Migrations
                     b.Navigation("Athlete");
                 });
 
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.RecentSearch", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SportsGurukul.Domain.Entities.RefreshToken", b =>
                 {
                     b.HasOne("SportsGurukul.Domain.Entities.User", "User")
@@ -1636,6 +2773,17 @@ namespace SportsGurukul.Infrastructure.Persistence.Migrations
                     b.Navigation("Permission");
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.SavedSearch", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SportsGurukul.Domain.Entities.Sport", b =>
@@ -1719,6 +2867,32 @@ namespace SportsGurukul.Infrastructure.Persistence.Migrations
                     b.Navigation("Ranking");
                 });
 
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AthleteDocument", b =>
+                {
+                    b.Navigation("AuditTrail");
+
+                    b.Navigation("Versions");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.Coach", b =>
+                {
+                    b.Navigation("Availability");
+
+                    b.Navigation("Certifications");
+
+                    b.Navigation("CoachSports");
+
+                    b.Navigation("Documents");
+
+                    b.Navigation("Education");
+
+                    b.Navigation("Experiences");
+
+                    b.Navigation("Location");
+
+                    b.Navigation("Specializations");
+                });
+
             modelBuilder.Entity("SportsGurukul.Domain.Entities.Permission", b =>
                 {
                     b.Navigation("RolePermissions");
@@ -1734,6 +2908,8 @@ namespace SportsGurukul.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("SportsGurukul.Domain.Entities.Sport", b =>
                 {
                     b.Navigation("AthleteSports");
+
+                    b.Navigation("CoachSports");
                 });
 
             modelBuilder.Entity("SportsGurukul.Domain.Entities.SportCategory", b =>

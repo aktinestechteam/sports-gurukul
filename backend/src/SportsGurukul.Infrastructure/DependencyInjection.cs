@@ -42,6 +42,9 @@ public static class DependencyInjection
         services.AddScoped<IAthleteDocumentRepository, AthleteDocumentRepository>();
         services.AddScoped<ISavedSearchRepository, SavedSearchRepository>();
         services.AddScoped<IRecentSearchRepository, RecentSearchRepository>();
+        services.AddScoped<ICoachRepository, CoachRepository>();
+        services.AddScoped<ICoachCertificationRepository, CoachCertificationRepository>();
+        services.AddScoped<ICoachAvailabilityRepository, CoachAvailabilityRepository>();
 
         services.AddMemoryCache();
         services.AddScoped<ICacheService, MemoryCacheService>();

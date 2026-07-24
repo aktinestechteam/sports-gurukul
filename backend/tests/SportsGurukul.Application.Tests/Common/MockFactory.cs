@@ -19,6 +19,14 @@ public static class TestMocks
     public static Mock<ICacheService> CreateCacheService() => new();
     public static Mock<IRecentSearchRepository> CreateRecentSearchRepository() => new();
     public static Mock<ISavedSearchRepository> CreateSavedSearchRepository() => new();
+    public static Mock<ICoachRepository> CreateCoachRepository() => new();
+    public static Mock<ICoachAvailabilityRepository> CreateCoachAvailabilityRepository() => new();
+    public static Mock<ICoachCertificationRepository> CreateCoachCertificationRepository() => new();
+    public static Mock<IRepository<Domain.Entities.CoachSport>> CreateCoachSportRepository() => new();
+    public static Mock<IRepository<Domain.Entities.CoachExperience>> CreateCoachExperienceRepository() => new();
+    public static Mock<IRepository<Domain.Entities.CoachEducation>> CreateCoachEducationRepository() => new();
+    public static Mock<IRepository<Domain.Entities.CoachLocation>> CreateCoachLocationRepository() => new();
+    public static Mock<IRepository<Domain.Entities.CoachAthlete>> CreateCoachAthleteRepository() => new();
 
     public static Mock<ILogger<T>> CreateLogger<T>() where T : class => new();
 }

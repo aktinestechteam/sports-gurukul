@@ -42,6 +42,16 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<DocumentVersion> DocumentVersions => Set<DocumentVersion>();
     public DbSet<DocumentAudit> DocumentAudits => Set<DocumentAudit>();
 
+    public DbSet<Coach> Coaches => Set<Coach>();
+    public DbSet<CoachSport> CoachSports => Set<CoachSport>();
+    public DbSet<CoachCertification> CoachCertifications => Set<CoachCertification>();
+    public DbSet<CoachExperience> CoachExperiences => Set<CoachExperience>();
+    public DbSet<CoachEducation> CoachEducation => Set<CoachEducation>();
+    public DbSet<CoachAvailability> CoachAvailabilities => Set<CoachAvailability>();
+    public DbSet<CoachLocation> CoachLocations => Set<CoachLocation>();
+    public DbSet<CoachSpecialization> CoachSpecializations => Set<CoachSpecialization>();
+    public DbSet<CoachDocument> CoachDocuments => Set<CoachDocument>();
+
     public DbSet<SavedSearch> SavedSearches => Set<SavedSearch>();
     public DbSet<RecentSearch> RecentSearches => Set<RecentSearch>();
 

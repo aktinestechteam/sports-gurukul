@@ -153,4 +153,177 @@ public static class TestDataBuilder
         JoinedDate = DateTime.UtcNow,
         Sport = CreateSport(sportId)
     };
+
+    public static Coach CreateCoach(Guid? id = null, Guid? userId = null, bool isDeleted = false) => new()
+    {
+        Id = id ?? Guid.NewGuid(),
+        UserId = userId ?? Guid.NewGuid(),
+        CoachCode = $"COACH-{DateTime.UtcNow:yyyyMMdd}-TEST01",
+        RegistrationDate = DateTime.UtcNow,
+        Biography = "Test coach biography",
+        YearsOfExperience = 5,
+        CurrentOrganization = "Test Academy",
+        HighestQualification = "Masters in Sports",
+        PreferredLanguage = "English",
+        CoachingLevel = CoachingLevel.Senior,
+        Status = CoachStatus.Active,
+        VerificationStatus = VerificationStatus.Verified,
+        IsDeleted = isDeleted,
+        User = CreateUser(),
+        CoachSports = new List<CoachSport>(),
+        Certifications = new List<CoachCertification>(),
+        Experiences = new List<CoachExperience>(),
+        Education = new List<CoachEducation>()
+    };
+
+    public static Coach CreateCoachWithDetails(Guid? id = null, Guid? userId = null) => new()
+    {
+        Id = id ?? Guid.NewGuid(),
+        UserId = userId ?? Guid.NewGuid(),
+        CoachCode = $"COACH-{DateTime.UtcNow:yyyyMMdd}-DTL01",
+        RegistrationDate = DateTime.UtcNow,
+        Biography = "Detailed coach biography",
+        YearsOfExperience = 10,
+        CurrentOrganization = "Elite Academy",
+        HighestQualification = "PhD in Sports Science",
+        PreferredLanguage = "English",
+        CoachingLevel = CoachingLevel.Elite,
+        Status = CoachStatus.Active,
+        VerificationStatus = VerificationStatus.Verified,
+        User = CreateUser(),
+        Availability = new CoachAvailability
+        {
+            Id = Guid.NewGuid(),
+            WeeklySchedule = "{}",
+            TimeSlots = "[]",
+            OnlineAvailable = true,
+            OfflineAvailable = true,
+            TravelDistance = 25
+        },
+        Location = new CoachLocation
+        {
+            Id = Guid.NewGuid(),
+            Country = "India",
+            State = "Maharashtra",
+            City = "Mumbai",
+            District = "Mumbai City",
+            Latitude = 19.076m,
+            Longitude = 72.877m
+        },
+        CoachSports = new List<CoachSport>
+        {
+            new()
+            {
+                Id = Guid.NewGuid(),
+                SportId = Guid.NewGuid(),
+                IsPrimarySport = true,
+                JoinedDate = DateTime.UtcNow.AddYears(-3),
+                Sport = CreateSport()
+            }
+        },
+        Certifications = new List<CoachCertification>
+        {
+            new()
+            {
+                Id = Guid.NewGuid(),
+                CertificationName = "BCCI Level A",
+                IssuingAuthority = "BCCI",
+                CertificateNumber = "BCCI-001",
+                IssueDate = DateTime.UtcNow.AddYears(-2),
+                ExpiryDate = DateTime.UtcNow.AddYears(3),
+                VerificationStatus = VerificationStatus.Verified
+            }
+        },
+        Experiences = new List<CoachExperience>
+        {
+            new()
+            {
+                Id = Guid.NewGuid(),
+                Organization = "State Cricket Academy",
+                Role = "Head Coach",
+                Sport = "Cricket",
+                StartDate = DateTime.UtcNow.AddYears(-5),
+                EndDate = DateTime.UtcNow.AddYears(-1)
+            }
+        },
+        Education = new List<CoachEducation>
+        {
+            new()
+            {
+                Id = Guid.NewGuid(),
+                Degree = "BPEd",
+                Institution = "NIS",
+                FieldOfStudy = "Sports Coaching",
+                YearCompleted = 2018
+            }
+        }
+    };
+
+    public static CoachSport CreateCoachSport(Guid? coachId = null, Guid? sportId = null) => new()
+    {
+        Id = Guid.NewGuid(),
+        CoachId = coachId ?? Guid.NewGuid(),
+        SportId = sportId ?? Guid.NewGuid(),
+        IsPrimarySport = false,
+        JoinedDate = DateTime.UtcNow,
+        Sport = CreateSport(sportId)
+    };
+
+    public static CoachCertification CreateCoachCertification(Guid? coachId = null) => new()
+    {
+        Id = Guid.NewGuid(),
+        CoachId = coachId ?? Guid.NewGuid(),
+        CertificationName = "Test Certification",
+        IssuingAuthority = "Test Authority",
+        VerificationStatus = VerificationStatus.Pending
+    };
+
+    public static CoachExperience CreateCoachExperience(Guid? coachId = null) => new()
+    {
+        Id = Guid.NewGuid(),
+        CoachId = coachId ?? Guid.NewGuid(),
+        Organization = "Test Org",
+        Role = "Coach",
+        StartDate = DateTime.UtcNow.AddYears(-3)
+    };
+
+    public static CoachEducation CreateCoachEducation(Guid? coachId = null) => new()
+    {
+        Id = Guid.NewGuid(),
+        CoachId = coachId ?? Guid.NewGuid(),
+        Degree = "BPEd",
+        Institution = "NIS"
+    };
+
+    public static CoachAvailability CreateCoachAvailability(Guid? coachId = null) => new()
+    {
+        Id = Guid.NewGuid(),
+        CoachId = coachId ?? Guid.NewGuid(),
+        WeeklySchedule = "{}",
+        TimeSlots = "[]",
+        OnlineAvailable = true,
+        OfflineAvailable = true,
+        TravelDistance = 25
+    };
+
+    public static CoachLocation CreateCoachLocation(Guid? coachId = null) => new()
+    {
+        Id = Guid.NewGuid(),
+        CoachId = coachId ?? Guid.NewGuid(),
+        Country = "India",
+        State = "Maharashtra",
+        City = "Mumbai",
+        Latitude = 19.076m,
+        Longitude = 72.877m
+    };
+
+    public static CoachAthlete CreateCoachAthlete(Guid? coachId = null, Guid? athleteId = null) => new()
+    {
+        Id = Guid.NewGuid(),
+        CoachId = coachId ?? Guid.NewGuid(),
+        AthleteId = athleteId ?? Guid.NewGuid(),
+        AssignedDate = DateTime.UtcNow,
+        IsActive = true,
+        Athlete = CreateAthlete(id: athleteId)
+    };
 }
