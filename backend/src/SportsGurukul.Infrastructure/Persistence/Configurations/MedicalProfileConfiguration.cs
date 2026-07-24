@@ -34,7 +34,8 @@ public class MedicalProfileConfiguration : IEntityTypeConfiguration<MedicalProfi
             .HasMaxLength(50);
 
         builder.Property(m => m.RowVersion)
-            .IsRowVersion();
+            .IsRowVersion()
+            .HasDefaultValueSql("E'\\\\x00'::bytea");
 
         builder.HasIndex(m => m.AthleteId)
             .IsUnique()

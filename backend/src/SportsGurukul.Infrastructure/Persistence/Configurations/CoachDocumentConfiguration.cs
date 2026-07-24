@@ -13,47 +13,92 @@ public class CoachDocumentConfiguration : IEntityTypeConfiguration<CoachDocument
 
         builder.HasKey(d => d.Id);
 
-        builder.Property(d => d.Title)
-            .HasMaxLength(200)
-            .IsRequired();
-
-        builder.Property(d => d.Description)
-            .HasMaxLength(1000);
-
-        builder.Property(d => d.OriginalFileName)
-            .HasMaxLength(255)
-            .IsRequired();
-
-        builder.Property(d => d.StoredFileName)
-            .HasMaxLength(255)
-            .IsRequired();
-
-        builder.Property(d => d.StorageProvider)
-            .HasMaxLength(50)
-            .IsRequired();
-
-        builder.Property(d => d.StoragePath)
-            .HasMaxLength(500)
-            .IsRequired();
-
-        builder.Property(d => d.MimeType)
-            .HasMaxLength(100)
-            .IsRequired();
-
-        builder.Property(d => d.Extension)
-            .HasMaxLength(20)
+        builder.Property(d => d.CoachId)
             .IsRequired();
 
         builder.Property(d => d.Category)
             .HasConversion<string>()
             .HasMaxLength(50);
 
-        builder.Property(d => d.Status)
-            .HasConversion<string>()
-            .HasMaxLength(30);
+        builder.Property(d => d.Title)
+            .IsRequired()
+            .HasMaxLength(200);
+
+        builder.Property(d => d.Description)
+            .HasMaxLength(1000);
+
+        builder.Property(d => d.OriginalFileName)
+            .IsRequired()
+            .HasMaxLength(255);
+
+        builder.Property(d => d.StoredFileName)
+            .IsRequired()
+            .HasMaxLength(255);
+
+        builder.Property(d => d.StorageProvider)
+            .IsRequired()
+            .HasMaxLength(50);
+
+        builder.Property(d => d.StoragePath)
+            .IsRequired()
+            .HasMaxLength(500);
+
+        builder.Property(d => d.MimeType)
+            .IsRequired()
+            .HasMaxLength(100);
+
+        builder.Property(d => d.Extension)
+            .IsRequired()
+            .HasMaxLength(10);
+
+        builder.Property(d => d.FileSize)
+            .IsRequired();
 
         builder.Property(d => d.Checksum)
-            .HasMaxLength(64);
+            .HasMaxLength(255);
+
+        builder.Property(d => d.Version)
+            .IsRequired();
+
+        builder.Property(d => d.Status)
+            .HasConversion<string>()
+            .HasMaxLength(50);
+
+        builder.Property(d => d.UploadedBy)
+            .IsRequired()
+            .HasMaxLength(450);
+
+        builder.Property(d => d.UploadedOn)
+            .IsRequired();
+
+        builder.Property(d => d.VerifiedBy)
+            .HasMaxLength(450);
+
+        builder.Property(d => d.ExpiryDate);
+
+        builder.Property(d => d.Remarks)
+            .HasMaxLength(500);
+
+        builder.Property(d => d.IsPublic)
+            .IsRequired();
+
+        builder.Ignore(d => d.CreatedBy);
+        builder.Ignore(d => d.UpdatedBy);
+
+        builder.HasOne(d => d.Coach)
+            .WithMany()
+            .HasForeignKey(d => d.CoachId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(d => d.Versions)
+            .WithOne(v => v.Document)
+            .HasForeignKey(v => v.DocumentId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(d => d.AuditTrail)
+            .WithOne(a => a.Document)
+            .HasForeignKey(a => a.DocumentId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasIndex(d => d.CoachId)
             .HasDatabaseName("IX_CoachDocuments_CoachId");
@@ -74,13 +119,5 @@ public class CoachDocumentConfiguration : IEntityTypeConfiguration<CoachDocument
             .HasDatabaseName("IX_CoachDocuments_CoachId_IsDeleted");
 
         builder.HasQueryFilter(d => !d.IsDeleted);
-
-        builder.HasOne(d => d.Coach)
-            .WithMany(c => c.Documents)
-            .HasForeignKey(d => d.CoachId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder.Ignore(d => d.CreatedBy);
-        builder.Ignore(d => d.UpdatedBy);
     }
 }

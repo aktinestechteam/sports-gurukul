@@ -41,7 +41,8 @@ public class CoachConfiguration : IEntityTypeConfiguration<Coach>
             .HasMaxLength(30);
 
         builder.Property(c => c.RowVersion)
-            .IsRowVersion();
+            .IsRowVersion()
+            .HasDefaultValueSql("E'\\\\x00'::bytea");
 
         builder.HasIndex(c => c.UserId)
             .IsUnique()
@@ -65,6 +66,9 @@ public class CoachConfiguration : IEntityTypeConfiguration<Coach>
 
         builder.HasIndex(c => new { c.Status, c.CreatedAt })
             .HasDatabaseName("IX_Coaches_Status_CreatedAt");
+
+        builder.HasIndex(c => c.YearsOfExperience)
+            .HasDatabaseName("IX_Coaches_YearsOfExperience");
 
         builder.HasOne(c => c.User)
             .WithOne()

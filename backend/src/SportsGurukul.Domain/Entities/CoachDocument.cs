@@ -24,7 +24,10 @@ public class CoachDocument : BaseEntity
     public Guid? VerifiedBy { get; set; }
     public DateTime? VerifiedOn { get; set; }
     public DateTime? ExpiryDate { get; set; }
+    public string? Remarks { get; set; }
     public bool IsPublic { get; set; }
 
     public Coach Coach { get; set; } = null!;
+    public ICollection<CoachDocumentVersion> Versions { get; set; } = new List<CoachDocumentVersion>();
+    public ICollection<CoachDocumentAudit> AuditTrail { get; set; } = new List<CoachDocumentAudit>();
 }

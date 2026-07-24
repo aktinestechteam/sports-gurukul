@@ -45,6 +45,8 @@ public static class DependencyInjection
         services.AddScoped<ICoachRepository, CoachRepository>();
         services.AddScoped<ICoachCertificationRepository, CoachCertificationRepository>();
         services.AddScoped<ICoachAvailabilityRepository, CoachAvailabilityRepository>();
+        services.AddScoped<ICoachDocumentRepository, CoachDocumentRepository>();
+        services.AddScoped<ICoachSearchRepository, CoachSearchRepository>();
 
         services.AddMemoryCache();
         services.AddScoped<ICacheService, MemoryCacheService>();

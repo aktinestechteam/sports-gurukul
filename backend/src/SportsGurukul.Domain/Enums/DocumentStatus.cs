@@ -3,7 +3,8 @@ namespace SportsGurukul.Domain.Enums;
 public enum DocumentStatus
 {
     Pending = 0,
-    Verified = 1,
-    Rejected = 2,
-    Expired = 3
+    UnderReview = 1,
+    Verified = 2,
+    Rejected = 3,
+    Expired = 4
 }

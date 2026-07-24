@@ -51,6 +51,8 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<CoachLocation> CoachLocations => Set<CoachLocation>();
     public DbSet<CoachSpecialization> CoachSpecializations => Set<CoachSpecialization>();
     public DbSet<CoachDocument> CoachDocuments => Set<CoachDocument>();
+    public DbSet<CoachDocumentVersion> CoachDocumentVersions => Set<CoachDocumentVersion>();
+    public DbSet<CoachDocumentAudit> CoachDocumentAudits => Set<CoachDocumentAudit>();
 
     public DbSet<SavedSearch> SavedSearches => Set<SavedSearch>();
     public DbSet<RecentSearch> RecentSearches => Set<RecentSearch>();

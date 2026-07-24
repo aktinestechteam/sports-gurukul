@@ -21,7 +21,8 @@ public class CoachAvailabilityConfiguration : IEntityTypeConfiguration<CoachAvai
             .IsRequired();
 
         builder.Property(a => a.RowVersion)
-            .IsRowVersion();
+            .IsRowVersion()
+            .HasDefaultValueSql("E'\\\\x00'::bytea");
 
         builder.HasIndex(a => a.CoachId)
             .IsUnique()

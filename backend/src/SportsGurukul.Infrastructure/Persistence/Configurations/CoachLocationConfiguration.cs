@@ -37,6 +37,12 @@ public class CoachLocationConfiguration : IEntityTypeConfiguration<CoachLocation
         builder.HasIndex(l => new { l.State, l.City })
             .HasDatabaseName("IX_CoachLocations_State_City");
 
+        builder.HasIndex(l => l.Country)
+            .HasDatabaseName("IX_CoachLocations_Country");
+
+        builder.HasIndex(l => new { l.Latitude, l.Longitude })
+            .HasDatabaseName("IX_CoachLocations_LatLon");
+
         builder.HasOne(l => l.Coach)
             .WithOne(c => c.Location)
             .HasForeignKey<CoachLocation>(l => l.CoachId)

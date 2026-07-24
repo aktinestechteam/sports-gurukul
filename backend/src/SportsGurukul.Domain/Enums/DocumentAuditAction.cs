@@ -7,5 +7,6 @@ public enum DocumentAuditAction
     Updated = 2,
     Deleted = 3,
     Verified = 4,
-    Restored = 5
+    Restored = 5,
+    Rejected = 6
 }

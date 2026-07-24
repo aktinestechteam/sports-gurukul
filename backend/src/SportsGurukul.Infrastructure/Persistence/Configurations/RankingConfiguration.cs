@@ -28,7 +28,8 @@ public class RankingConfiguration : IEntityTypeConfiguration<Ranking>
             .HasMaxLength(200);
 
         builder.Property(r => r.RowVersion)
-            .IsRowVersion();
+            .IsRowVersion()
+            .HasDefaultValueSql("E'\\\\x00'::bytea");
 
         builder.HasIndex(r => r.AthleteId)
             .IsUnique()

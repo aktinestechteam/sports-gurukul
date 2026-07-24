@@ -22,7 +22,8 @@ public class SportConfiguration : IEntityTypeConfiguration<Sport>
             .HasMaxLength(500);
 
         builder.Property(s => s.RowVersion)
-            .IsRowVersion();
+            .IsRowVersion()
+            .HasDefaultValueSql("E'\\\\x00'::bytea");
 
         builder.HasIndex(s => s.Name)
             .IsUnique()

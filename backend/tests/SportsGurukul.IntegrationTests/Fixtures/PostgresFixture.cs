@@ -9,7 +9,7 @@ public sealed class PostgresFixture : IAsyncLifetime
         .WithDatabase("sportsgurukul_test")
         .WithUsername("test")
         .WithPassword("test")
-        .WithPortBinding(5432, 0)
+        .WithPortBinding(5432, true)
         .Build();
 
     public string ConnectionString { get; private set; } = string.Empty;

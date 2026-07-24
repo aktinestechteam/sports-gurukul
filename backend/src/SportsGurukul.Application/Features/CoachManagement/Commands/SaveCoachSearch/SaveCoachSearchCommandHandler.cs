@@ -1,0 +1,51 @@
+using MediatR;
+using Microsoft.Extensions.Logging;
+using SportsGurukul.Application.Common.Interfaces;
+using SportsGurukul.Application.Common.Models;
+using SportsGurukul.Application.Features.CoachManagement.DTOs;
+using SportsGurukul.Domain.Entities;
+
+namespace SportsGurukul.Application.Features.CoachManagement.Commands.SaveCoachSearch;
+
+public class SaveCoachSearchCommandHandler : IRequestHandler<SaveCoachSearchCommand, Result<SavedSearchDto>>
+{
+    private readonly ISavedSearchRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly ILogger<SaveCoachSearchCommandHandler> _logger;
+
+    public SaveCoachSearchCommandHandler(
+        ISavedSearchRepository repository,
+        IUnitOfWork unitOfWork,
+        ILogger<SaveCoachSearchCommandHandler> logger)
+    {
+        _repository = repository;
+        _unitOfWork = unitOfWork;
+        _logger = logger;
+    }
+
+    public async Task<Result<SavedSearchDto>> Handle(SaveCoachSearchCommand request, CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("Saving coach search for user: {UserId}, Name: {Name}", request.UserId, request.Name);
+
+        var savedSearch = new SavedSearch
+        {
+            Id = Guid.NewGuid(),
+            UserId = request.UserId,
+            Name = request.Name,
+            FiltersJson = request.FiltersJson,
+            UsageCount = 0
+        };
+
+        await _repository.AddAsync(savedSearch, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return Result<SavedSearchDto>.Success(new SavedSearchDto
+        {
+            Id = savedSearch.Id,
+            Name = savedSearch.Name,
+            FiltersJson = savedSearch.FiltersJson,
+            UsageCount = savedSearch.UsageCount,
+            CreatedAt = savedSearch.CreatedAt
+        });
+    }
+}

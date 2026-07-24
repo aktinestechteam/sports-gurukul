@@ -34,6 +34,7 @@ public abstract class AthleteIntegrationTestBase : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
+        await Factory.InitializeAsync();
         await Factory.ResetDatabaseAsync();
         await SeedDatabaseAsync();
         SetAuthHeaders();

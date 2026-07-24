@@ -196,7 +196,8 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -486,7 +487,8 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -526,6 +528,9 @@ namespace SportsGurukul.Infrastructure.Migrations
                     b.HasIndex("VerificationStatus")
                         .HasDatabaseName("IX_Coaches_VerificationStatus");
 
+                    b.HasIndex("YearsOfExperience")
+                        .HasDatabaseName("IX_Coaches_YearsOfExperience");
+
                     b.HasIndex("Status", "CoachingLevel")
                         .HasDatabaseName("IX_Coaches_Status_CoachingLevel");
 
@@ -550,6 +555,48 @@ namespace SportsGurukul.Infrastructure.Migrations
                             VerificationStatus = "Verified",
                             YearsOfExperience = 5
                         });
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachAthlete", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("AssignedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("AthleteId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CoachId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AthleteId");
+
+                    b.HasIndex("CoachId");
+
+                    b.ToTable("CoachAthlete");
                 });
 
             modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachAvailability", b =>
@@ -577,7 +624,8 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
 
                     b.Property<string>("TimeSlots")
                         .IsRequired()
@@ -661,7 +709,8 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -713,10 +762,13 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("Checksum")
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.Property<Guid>("CoachId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CoachId1")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
@@ -731,8 +783,8 @@ namespace SportsGurukul.Infrastructure.Migrations
 
                     b.Property<string>("Extension")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
 
                     b.Property<long>("FileSize")
                         .HasColumnType("bigint");
@@ -753,10 +805,14 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("character varying(30)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("StoragePath")
                         .IsRequired()
@@ -781,13 +837,15 @@ namespace SportsGurukul.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("UploadedBy")
+                    b.Property<Guid>("UploadedBy")
+                        .HasMaxLength(450)
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("UploadedOn")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("VerifiedBy")
+                        .HasMaxLength(450)
                         .HasColumnType("uuid");
 
                     b.Property<DateTime?>("VerifiedOn")
@@ -804,6 +862,8 @@ namespace SportsGurukul.Infrastructure.Migrations
                     b.HasIndex("CoachId")
                         .HasDatabaseName("IX_CoachDocuments_CoachId");
 
+                    b.HasIndex("CoachId1");
+
                     b.HasIndex("Status")
                         .HasDatabaseName("IX_CoachDocuments_Status");
 
@@ -817,6 +877,105 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .HasDatabaseName("IX_CoachDocuments_CoachId_IsDeleted");
 
                     b.ToTable("CoachDocuments", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachDocumentAudit", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Details")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<Guid>("DocumentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(45)
+                        .HasColumnType("character varying(45)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("PerformedBy")
+                        .HasMaxLength(450)
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("PerformedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentId")
+                        .HasDatabaseName("IX_CoachDocumentAudits_DocumentId");
+
+                    b.HasIndex("PerformedOn")
+                        .HasDatabaseName("IX_CoachDocumentAudits_PerformedOn");
+
+                    b.ToTable("CoachDocumentAudits", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachDocumentVersion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Checksum")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("DocumentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("StoragePath")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("StoredFileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UploadedBy")
+                        .HasMaxLength(450)
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("VersionNumber")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentId")
+                        .HasDatabaseName("IX_CoachDocumentVersions_DocumentId");
+
+                    b.ToTable("CoachDocumentVersions", (string)null);
                 });
 
             modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachEducation", b =>
@@ -985,6 +1144,12 @@ namespace SportsGurukul.Infrastructure.Migrations
                     b.HasIndex("CoachId")
                         .IsUnique()
                         .HasDatabaseName("IX_CoachLocations_CoachId");
+
+                    b.HasIndex("Country")
+                        .HasDatabaseName("IX_CoachLocations_Country");
+
+                    b.HasIndex("Latitude", "Longitude")
+                        .HasDatabaseName("IX_CoachLocations_LatLon");
 
                     b.HasIndex("State", "City")
                         .HasDatabaseName("IX_CoachLocations_State_City");
@@ -1367,7 +1532,8 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -1428,7 +1594,8 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -1565,7 +1732,8 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
 
                     b.Property<string>("StateRank")
                         .HasMaxLength(50)
@@ -1903,7 +2071,8 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
 
                     b.Property<Guid>("SportCategoryId")
                         .HasColumnType("uuid");
@@ -2550,6 +2719,25 @@ namespace SportsGurukul.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachAthlete", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Athlete", "Athlete")
+                        .WithMany()
+                        .HasForeignKey("AthleteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Coach", "Coach")
+                        .WithMany("CoachAthletes")
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Athlete");
+
+                    b.Navigation("Coach");
+                });
+
             modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachAvailability", b =>
                 {
                     b.HasOne("SportsGurukul.Domain.Entities.Coach", "Coach")
@@ -2575,12 +2763,38 @@ namespace SportsGurukul.Infrastructure.Migrations
             modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachDocument", b =>
                 {
                     b.HasOne("SportsGurukul.Domain.Entities.Coach", "Coach")
-                        .WithMany("Documents")
+                        .WithMany()
                         .HasForeignKey("CoachId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SportsGurukul.Domain.Entities.Coach", null)
+                        .WithMany("Documents")
+                        .HasForeignKey("CoachId1");
+
                     b.Navigation("Coach");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachDocumentAudit", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.CoachDocument", "Document")
+                        .WithMany("AuditTrail")
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachDocumentVersion", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.CoachDocument", "Document")
+                        .WithMany("Versions")
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
                 });
 
             modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachEducation", b =>
@@ -2880,6 +3094,8 @@ namespace SportsGurukul.Infrastructure.Migrations
 
                     b.Navigation("Certifications");
 
+                    b.Navigation("CoachAthletes");
+
                     b.Navigation("CoachSports");
 
                     b.Navigation("Documents");
@@ -2891,6 +3107,13 @@ namespace SportsGurukul.Infrastructure.Migrations
                     b.Navigation("Location");
 
                     b.Navigation("Specializations");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.CoachDocument", b =>
+                {
+                    b.Navigation("AuditTrail");
+
+                    b.Navigation("Versions");
                 });
 
             modelBuilder.Entity("SportsGurukul.Domain.Entities.Permission", b =>

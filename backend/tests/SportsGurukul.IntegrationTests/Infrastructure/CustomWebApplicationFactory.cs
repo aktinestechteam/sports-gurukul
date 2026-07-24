@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Npgsql;
 using SportsGurukul.Api;
 using SportsGurukul.Application.Common.Interfaces;
 using SportsGurukul.Infrastructure;
@@ -69,7 +70,8 @@ public class CustomWebApplicationFactory : WebApplicationFactory<ApiMarker>, IAs
                 s.ServiceType == typeof(IAchievementRepository) ||
                 s.ServiceType == typeof(IAthleteDocumentRepository) ||
                 s.ServiceType == typeof(ISavedSearchRepository) ||
-                s.ServiceType == typeof(IRecentSearchRepository)).ToList();
+                s.ServiceType == typeof(IRecentSearchRepository) ||
+                s.ServiceType == typeof(ICoachSearchRepository)).ToList();
             foreach (var d in specificRepoDescriptors)
                 services.Remove(d);
 
@@ -118,8 +120,15 @@ public class CustomWebApplicationFactory : WebApplicationFactory<ApiMarker>, IAs
 
         foreach (var tableName in tableNames)
         {
-            await dbContext.Database.ExecuteSqlRawAsync(
-                $"TRUNCATE TABLE \"{tableName}\" CASCADE");
+            try
+            {
+                await dbContext.Database.ExecuteSqlRawAsync(
+                    $"TRUNCATE TABLE \"{tableName}\" CASCADE");
+            }
+            catch (PostgresException ex) when (ex.SqlState == "42P01")
+            {
+                // Table doesn't exist yet, skip it
+            }
         }
     }
 
@@ -139,6 +148,11 @@ public static class InfrastructureServiceExtensionsForTest
         services.AddScoped<IAthleteDocumentRepository, AthleteDocumentRepository>();
         services.AddScoped<ISavedSearchRepository, SavedSearchRepository>();
         services.AddScoped<IRecentSearchRepository, RecentSearchRepository>();
+        services.AddScoped<ICoachRepository, CoachRepository>();
+        services.AddScoped<ICoachCertificationRepository, CoachCertificationRepository>();
+        services.AddScoped<ICoachAvailabilityRepository, CoachAvailabilityRepository>();
+        services.AddScoped<ICoachDocumentRepository, CoachDocumentRepository>();
+        services.AddScoped<ICoachSearchRepository, CoachSearchRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRoleRepository, RoleRepository>();
         services.AddScoped<IUserRoleRepository, UserRoleRepository>();

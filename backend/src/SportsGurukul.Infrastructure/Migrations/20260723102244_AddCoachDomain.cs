@@ -417,18 +417,18 @@ namespace SportsGurukul.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Coaches",
-                columns: new[] { "Id", "Biography", "CoachCode", "CoachingLevel", "CreatedAt", "CurrentOrganization", "HighestQualification", "IsDeleted", "PreferredLanguage", "RegistrationDate", "Status", "UpdatedAt", "UserId", "VerificationStatus", "YearsOfExperience" },
-                values: new object[] { new Guid("d1000000-0000-0000-0000-000000000001"), "Seed coach profile for development.", "COACH-20250101-SEED01", "Senior", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, false, null, new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Active", null, new Guid("f47ac10b-58cc-4372-a567-0e02b2c3d479"), "Verified", 5 });
+                columns: new[] { "Id", "Biography", "CoachCode", "CoachingLevel", "CreatedAt", "CurrentOrganization", "HighestQualification", "IsDeleted", "PreferredLanguage", "RegistrationDate", "RowVersion", "Status", "UpdatedAt", "UserId", "VerificationStatus", "YearsOfExperience" },
+                values: new object[] { new Guid("d1000000-0000-0000-0000-000000000001"), "Seed coach profile for development.", "COACH-20250101-SEED01", "Senior", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, false, null, new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new byte[0], "Active", null, new Guid("f47ac10b-58cc-4372-a567-0e02b2c3d479"), "Verified", 5 });
 
             migrationBuilder.InsertData(
                 table: "CoachAvailabilities",
-                columns: new[] { "Id", "CoachId", "CreatedAt", "IsDeleted", "OfflineAvailable", "OnlineAvailable", "TimeSlots", "TravelDistance", "UpdatedAt", "WeeklySchedule" },
-                values: new object[] { new Guid("b2000000-0000-0000-0000-000000000001"), new Guid("d1000000-0000-0000-0000-000000000001"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, true, true, "[\"06:00-08:00\",\"08:00-10:00\",\"10:00-12:00\",\"12:00-14:00\",\"14:00-16:00\",\"16:00-18:00\"]", 25, null, "{\"monday\":{\"start\":\"06:00\",\"end\":\"18:00\"},\"tuesday\":{\"start\":\"06:00\",\"end\":\"18:00\"},\"wednesday\":{\"start\":\"06:00\",\"end\":\"18:00\"},\"thursday\":{\"start\":\"06:00\",\"end\":\"18:00\"},\"friday\":{\"start\":\"06:00\",\"end\":\"18:00\"},\"saturday\":{\"start\":\"08:00\",\"end\":\"14:00\"}}" });
+                columns: new[] { "Id", "CoachId", "CreatedAt", "IsDeleted", "OfflineAvailable", "OnlineAvailable", "RowVersion", "TimeSlots", "TravelDistance", "UpdatedAt", "WeeklySchedule" },
+                values: new object[] { new Guid("b2000000-0000-0000-0000-000000000001"), new Guid("d1000000-0000-0000-0000-000000000001"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, true, true, new byte[0], "[\"06:00-08:00\",\"08:00-10:00\",\"10:00-12:00\",\"12:00-14:00\",\"14:00-16:00\",\"16:00-18:00\"]", 25, null, "{\"monday\":{\"start\":\"06:00\",\"end\":\"18:00\"},\"tuesday\":{\"start\":\"06:00\",\"end\":\"18:00\"},\"wednesday\":{\"start\":\"06:00\",\"end\":\"18:00\"},\"thursday\":{\"start\":\"06:00\",\"end\":\"18:00\"},\"friday\":{\"start\":\"06:00\",\"end\":\"18:00\"},\"saturday\":{\"start\":\"08:00\",\"end\":\"14:00\"}}" });
 
             migrationBuilder.InsertData(
                 table: "CoachCertifications",
-                columns: new[] { "Id", "CertificateNumber", "CertificateUrl", "CertificationName", "CoachId", "CreatedAt", "ExpiryDate", "IsDeleted", "IssueDate", "IssuingAuthority", "UpdatedAt", "VerificationStatus" },
-                values: new object[] { new Guid("e1000000-0000-0000-0000-000000000001"), "BCCI-LA-2024-001", null, "BCCI Level A Coaching", new Guid("d1000000-0000-0000-0000-000000000001"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2027, 6, 15, 0, 0, 0, 0, DateTimeKind.Utc), false, new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Utc), "Board of Control for Cricket in India", null, "Verified" });
+                columns: new[] { "Id", "CertificateNumber", "CertificateUrl", "CertificationName", "CoachId", "CreatedAt", "ExpiryDate", "IsDeleted", "IssueDate", "IssuingAuthority", "RowVersion", "UpdatedAt", "VerificationStatus" },
+                values: new object[] { new Guid("e1000000-0000-0000-0000-000000000001"), "BCCI-LA-2024-001", null, "BCCI Level A Coaching", new Guid("d1000000-0000-0000-0000-000000000001"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2027, 6, 15, 0, 0, 0, 0, DateTimeKind.Utc), false, new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Utc), "Board of Control for Cricket in India", new byte[0], null, "Verified" });
 
             migrationBuilder.InsertData(
                 table: "CoachEducation",

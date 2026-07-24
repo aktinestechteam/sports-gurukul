@@ -31,7 +31,8 @@ public class CoachCertificationConfiguration : IEntityTypeConfiguration<CoachCer
             .HasMaxLength(30);
 
         builder.Property(c => c.RowVersion)
-            .IsRowVersion();
+            .IsRowVersion()
+            .HasDefaultValueSql("E'\\\\x00'::bytea");
 
         builder.HasIndex(c => c.CoachId)
             .HasDatabaseName("IX_CoachCertifications_CoachId");
