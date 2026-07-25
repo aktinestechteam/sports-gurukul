@@ -79,18 +79,19 @@ public class UploadCoachDocumentCommandHandler : IRequestHandler<UploadCoachDocu
             return Result<CoachDocumentDto>.Failure("File size must not exceed 20 MB.");
         }
 
-        var checksum = await ComputeChecksumAsync(file.OpenReadStream(), cancellationToken);
+        await using var memoryStream = new MemoryStream();
+        await file.OpenReadStream().CopyToAsync(memoryStream, cancellationToken);
+        memoryStream.Position = 0;
+        var checksum = await ComputeChecksumAsync(memoryStream, cancellationToken);
+        memoryStream.Position = 0;
 
-        FileStorageResult storageResult;
-        await using (var stream = file.OpenReadStream())
-        {
-            storageResult = await _fileStorageService.UploadAsync(
-                stream,
-                file.FileName,
-                file.ContentType,
-                FileCategory.Document,
-                cancellationToken);
-        }
+        var sanitizedFileName = Path.GetFileName(file.FileName);
+        var storageResult = await _fileStorageService.UploadAsync(
+            memoryStream,
+            sanitizedFileName,
+            file.ContentType,
+            FileCategory.Document,
+            cancellationToken);
 
         var documentId = Guid.NewGuid();
         var now = DateTime.UtcNow;
@@ -161,7 +162,7 @@ public class UploadCoachDocumentCommandHandler : IRequestHandler<UploadCoachDocu
 
     private static async Task<string?> ComputeChecksumAsync(Stream stream, CancellationToken cancellationToken)
     {
-        var hash = await MD5.HashDataAsync(stream, cancellationToken);
+        var hash = await SHA256.HashDataAsync(stream, cancellationToken);
         return Convert.ToHexString(hash).ToLowerInvariant();
     }
 

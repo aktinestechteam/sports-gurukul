@@ -59,6 +59,13 @@ public class CoachController : ControllerBase
         _mediator = mediator;
     }
 
+    private IActionResult HandleResult<T>(Result<T> result, Func<T, IActionResult> onSuccess)
+    {
+        if (!result.IsSuccess)
+            return NotFound(new ApiResponse<T> { Success = false, Message = result.Error ?? "Resource not found." });
+        return onSuccess(result.Value!);
+    }
+
     #region Profile Management
 
     /// <summary>
@@ -98,15 +105,11 @@ public class CoachController : ControllerBase
 
         var result = await _mediator.Send(command, cancellationToken);
 
-        return CreatedAtAction(
-            nameof(GetCoachProfile),
-            new { coachId = result.Value!.Id },
-            new ApiResponse<CoachDto>
-            {
-                Success = true,
-                Message = "Coach profile created successfully.",
-                Data = result.Value
-            });
+        return HandleResult(result, coach =>
+            CreatedAtAction(
+                nameof(GetCoachProfile),
+                new { coachId = coach.Id },
+                ApiResponse<CoachDto>.SuccessResult(coach, "Coach profile created successfully.")));
     }
 
     /// <summary>
@@ -131,12 +134,8 @@ public class CoachController : ControllerBase
         var query = new GetCoachProfileQuery { CoachId = coachId };
         var result = await _mediator.Send(query, cancellationToken);
 
-        return Ok(new ApiResponse<CoachProfileDto>
-        {
-            Success = true,
-            Message = "Coach profile retrieved successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, profile =>
+            Ok(ApiResponse<CoachProfileDto>.SuccessResult(profile, "Coach profile retrieved successfully.")));
     }
 
     /// <summary>
@@ -161,12 +160,8 @@ public class CoachController : ControllerBase
         var query = new GetCoachByIdQuery { CoachId = coachId };
         var result = await _mediator.Send(query, cancellationToken);
 
-        return Ok(new ApiResponse<CoachDto>
-        {
-            Success = true,
-            Message = "Coach retrieved successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, coach =>
+            Ok(ApiResponse<CoachDto>.SuccessResult(coach, "Coach retrieved successfully.")));
     }
 
     /// <summary>
@@ -191,12 +186,13 @@ public class CoachController : ControllerBase
         var query = new GetCoachByUserIdQuery { UserId = userId };
         var result = await _mediator.Send(query, cancellationToken);
 
-        return Ok(new ApiResponse<CoachDto>
-        {
-            Success = true,
-            Message = "Coach retrieved successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, coach =>
+            Ok(new ApiResponse<CoachDto>
+            {
+                Success = true,
+                Message = "Coach retrieved successfully.",
+                Data = coach
+            }));
     }
 
     /// <summary>
@@ -238,12 +234,13 @@ public class CoachController : ControllerBase
 
         var result = await _mediator.Send(command, cancellationToken);
 
-        return Ok(new ApiResponse<CoachDto>
-        {
-            Success = true,
-            Message = "Coach profile updated successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, coach =>
+            Ok(new ApiResponse<CoachDto>
+            {
+                Success = true,
+                Message = "Coach profile updated successfully.",
+                Data = coach
+            }));
     }
 
     /// <summary>
@@ -269,6 +266,9 @@ public class CoachController : ControllerBase
     {
         var command = new DeleteCoachCommand { CoachId = coachId };
         var result = await _mediator.Send(command, cancellationToken);
+
+        if (!result.IsSuccess)
+            return NotFound(new ApiResponse<MessageResponse> { Success = false, Message = result.Error ?? "Resource not found." });
 
         return Ok(new ApiResponse<MessageResponse>
         {
@@ -300,6 +300,9 @@ public class CoachController : ControllerBase
     {
         var command = new RestoreCoachCommand { CoachId = coachId };
         var result = await _mediator.Send(command, cancellationToken);
+
+        if (!result.IsSuccess)
+            return NotFound(new ApiResponse<MessageResponse> { Success = false, Message = result.Error ?? "Resource not found." });
 
         return Ok(new ApiResponse<MessageResponse>
         {
@@ -348,15 +351,16 @@ public class CoachController : ControllerBase
         };
         var result = await _mediator.Send(command, cancellationToken);
 
-        return CreatedAtAction(
-            nameof(GetCoachSports),
-            new { coachId },
-            new ApiResponse<SportDto>
-            {
-                Success = true,
-                Message = "Sport assigned successfully.",
-                Data = result.Value!
-            });
+        return HandleResult(result, sport =>
+            CreatedAtAction(
+                nameof(GetCoachSports),
+                new { coachId },
+                new ApiResponse<SportDto>
+                {
+                    Success = true,
+                    Message = "Sport assigned successfully.",
+                    Data = sport
+                }));
     }
 
     /// <summary>
@@ -385,6 +389,9 @@ public class CoachController : ControllerBase
         var command = new RemoveSportCommand { CoachId = coachId, SportId = sportId };
         var result = await _mediator.Send(command, cancellationToken);
 
+        if (!result.IsSuccess)
+            return NotFound(new ApiResponse<MessageResponse> { Success = false, Message = result.Error ?? "Resource not found." });
+
         return Ok(new ApiResponse<MessageResponse>
         {
             Success = true,
@@ -412,12 +419,13 @@ public class CoachController : ControllerBase
         var query = new GetCoachSportsQuery { CoachId = coachId };
         var result = await _mediator.Send(query, cancellationToken);
 
-        return Ok(new ApiResponse<IReadOnlyList<SportDto>>
-        {
-            Success = true,
-            Message = "Coach sports retrieved successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, sports =>
+            Ok(new ApiResponse<IReadOnlyList<SportDto>>
+            {
+                Success = true,
+                Message = "Coach sports retrieved successfully.",
+                Data = sports
+            }));
     }
 
     #endregion
@@ -465,15 +473,16 @@ public class CoachController : ControllerBase
 
         var result = await _mediator.Send(command, cancellationToken);
 
-        return CreatedAtAction(
-            nameof(GetCoachCertifications),
-            new { coachId },
-            new ApiResponse<CertificationDto>
-            {
-                Success = true,
-                Message = "Certification added successfully.",
-                Data = result.Value!
-            });
+        return HandleResult(result, cert =>
+            CreatedAtAction(
+                nameof(GetCoachCertifications),
+                new { coachId },
+                new ApiResponse<CertificationDto>
+                {
+                    Success = true,
+                    Message = "Certification added successfully.",
+                    Data = cert
+                }));
     }
 
     /// <summary>
@@ -517,12 +526,13 @@ public class CoachController : ControllerBase
 
         var result = await _mediator.Send(command, cancellationToken);
 
-        return Ok(new ApiResponse<CertificationDto>
-        {
-            Success = true,
-            Message = "Certification updated successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, cert =>
+            Ok(new ApiResponse<CertificationDto>
+            {
+                Success = true,
+                Message = "Certification updated successfully.",
+                Data = cert
+            }));
     }
 
     /// <summary>
@@ -551,6 +561,9 @@ public class CoachController : ControllerBase
         var command = new DeleteCertificationCommand { CertificationId = certificationId };
         var result = await _mediator.Send(command, cancellationToken);
 
+        if (!result.IsSuccess)
+            return NotFound(new ApiResponse<MessageResponse> { Success = false, Message = result.Error ?? "Resource not found." });
+
         return Ok(new ApiResponse<MessageResponse>
         {
             Success = true,
@@ -578,12 +591,13 @@ public class CoachController : ControllerBase
         var query = new GetCoachCertificationsQuery { CoachId = coachId };
         var result = await _mediator.Send(query, cancellationToken);
 
-        return Ok(new ApiResponse<IReadOnlyList<CertificationDto>>
-        {
-            Success = true,
-            Message = "Coach certifications retrieved successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, certs =>
+            Ok(new ApiResponse<IReadOnlyList<CertificationDto>>
+            {
+                Success = true,
+                Message = "Coach certifications retrieved successfully.",
+                Data = certs
+            }));
     }
 
     /// <summary>
@@ -621,12 +635,13 @@ public class CoachController : ControllerBase
         };
         var result = await _mediator.Send(command, cancellationToken);
 
-        return Ok(new ApiResponse<CertificationDto>
-        {
-            Success = true,
-            Message = "Certification verification updated successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, cert =>
+            Ok(new ApiResponse<CertificationDto>
+            {
+                Success = true,
+                Message = "Certification verification updated successfully.",
+                Data = cert
+            }));
     }
 
     #endregion
@@ -672,15 +687,16 @@ public class CoachController : ControllerBase
 
         var result = await _mediator.Send(command, cancellationToken);
 
-        return CreatedAtAction(
-            nameof(GetCoachExperience),
-            new { coachId },
-            new ApiResponse<ExperienceDto>
-            {
-                Success = true,
-                Message = "Experience added successfully.",
-                Data = result.Value!
-            });
+        return HandleResult(result, exp =>
+            CreatedAtAction(
+                nameof(GetCoachExperience),
+                new { coachId },
+                new ApiResponse<ExperienceDto>
+                {
+                    Success = true,
+                    Message = "Experience added successfully.",
+                    Data = exp
+                }));
     }
 
     /// <summary>
@@ -724,12 +740,13 @@ public class CoachController : ControllerBase
 
         var result = await _mediator.Send(command, cancellationToken);
 
-        return Ok(new ApiResponse<ExperienceDto>
-        {
-            Success = true,
-            Message = "Experience updated successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, exp =>
+            Ok(new ApiResponse<ExperienceDto>
+            {
+                Success = true,
+                Message = "Experience updated successfully.",
+                Data = exp
+            }));
     }
 
     /// <summary>
@@ -758,6 +775,9 @@ public class CoachController : ControllerBase
         var command = new DeleteExperienceCommand { ExperienceId = experienceId };
         var result = await _mediator.Send(command, cancellationToken);
 
+        if (!result.IsSuccess)
+            return NotFound(new ApiResponse<MessageResponse> { Success = false, Message = result.Error ?? "Resource not found." });
+
         return Ok(new ApiResponse<MessageResponse>
         {
             Success = true,
@@ -785,12 +805,13 @@ public class CoachController : ControllerBase
         var query = new GetCoachExperienceQuery { CoachId = coachId };
         var result = await _mediator.Send(query, cancellationToken);
 
-        return Ok(new ApiResponse<IReadOnlyList<ExperienceDto>>
-        {
-            Success = true,
-            Message = "Coach experience retrieved successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, experience =>
+            Ok(new ApiResponse<IReadOnlyList<ExperienceDto>>
+            {
+                Success = true,
+                Message = "Coach experience retrieved successfully.",
+                Data = experience
+            }));
     }
 
     #endregion
@@ -836,15 +857,16 @@ public class CoachController : ControllerBase
 
         var result = await _mediator.Send(command, cancellationToken);
 
-        return CreatedAtAction(
-            nameof(GetCoachEducation),
-            new { coachId },
-            new ApiResponse<EducationDto>
-            {
-                Success = true,
-                Message = "Education added successfully.",
-                Data = result.Value!
-            });
+        return HandleResult(result, edu =>
+            CreatedAtAction(
+                nameof(GetCoachEducation),
+                new { coachId },
+                new ApiResponse<EducationDto>
+                {
+                    Success = true,
+                    Message = "Education added successfully.",
+                    Data = edu
+                }));
     }
 
     /// <summary>
@@ -886,12 +908,13 @@ public class CoachController : ControllerBase
 
         var result = await _mediator.Send(command, cancellationToken);
 
-        return Ok(new ApiResponse<EducationDto>
-        {
-            Success = true,
-            Message = "Education updated successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, edu =>
+            Ok(new ApiResponse<EducationDto>
+            {
+                Success = true,
+                Message = "Education updated successfully.",
+                Data = edu
+            }));
     }
 
     /// <summary>
@@ -920,6 +943,9 @@ public class CoachController : ControllerBase
         var command = new DeleteEducationCommand { EducationId = educationId };
         var result = await _mediator.Send(command, cancellationToken);
 
+        if (!result.IsSuccess)
+            return NotFound(new ApiResponse<MessageResponse> { Success = false, Message = result.Error ?? "Resource not found." });
+
         return Ok(new ApiResponse<MessageResponse>
         {
             Success = true,
@@ -947,12 +973,13 @@ public class CoachController : ControllerBase
         var query = new GetCoachEducationQuery { CoachId = coachId };
         var result = await _mediator.Send(query, cancellationToken);
 
-        return Ok(new ApiResponse<IReadOnlyList<EducationDto>>
-        {
-            Success = true,
-            Message = "Coach education retrieved successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, education =>
+            Ok(new ApiResponse<IReadOnlyList<EducationDto>>
+            {
+                Success = true,
+                Message = "Coach education retrieved successfully.",
+                Data = education
+            }));
     }
 
     #endregion
@@ -997,12 +1024,13 @@ public class CoachController : ControllerBase
 
         var result = await _mediator.Send(command, cancellationToken);
 
-        return Ok(new ApiResponse<AvailabilityDto>
-        {
-            Success = true,
-            Message = "Availability updated successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, availability =>
+            Ok(new ApiResponse<AvailabilityDto>
+            {
+                Success = true,
+                Message = "Availability updated successfully.",
+                Data = availability
+            }));
     }
 
     /// <summary>
@@ -1025,12 +1053,13 @@ public class CoachController : ControllerBase
         var query = new GetCoachAvailabilityQuery { CoachId = coachId };
         var result = await _mediator.Send(query, cancellationToken);
 
-        return Ok(new ApiResponse<AvailabilityDto>
-        {
-            Success = true,
-            Message = "Coach availability retrieved successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, availability =>
+            Ok(new ApiResponse<AvailabilityDto>
+            {
+                Success = true,
+                Message = "Coach availability retrieved successfully.",
+                Data = availability
+            }));
     }
 
     #endregion
@@ -1076,12 +1105,13 @@ public class CoachController : ControllerBase
 
         var result = await _mediator.Send(command, cancellationToken);
 
-        return Ok(new ApiResponse<LocationDto>
-        {
-            Success = true,
-            Message = "Location updated successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, location =>
+            Ok(new ApiResponse<LocationDto>
+            {
+                Success = true,
+                Message = "Location updated successfully.",
+                Data = location
+            }));
     }
 
     #endregion
@@ -1118,12 +1148,13 @@ public class CoachController : ControllerBase
         var command = new AssignAthleteCommand { CoachId = coachId, AthleteId = athleteId };
         var result = await _mediator.Send(command, cancellationToken);
 
-        return Ok(new ApiResponse<AssignedAthleteDto>
-        {
-            Success = true,
-            Message = "Athlete assigned successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, athlete =>
+            Ok(new ApiResponse<AssignedAthleteDto>
+            {
+                Success = true,
+                Message = "Athlete assigned successfully.",
+                Data = athlete
+            }));
     }
 
     /// <summary>
@@ -1151,6 +1182,9 @@ public class CoachController : ControllerBase
     {
         var command = new RemoveAthleteCommand { CoachId = coachId, AthleteId = athleteId };
         var result = await _mediator.Send(command, cancellationToken);
+
+        if (!result.IsSuccess)
+            return NotFound(new ApiResponse<MessageResponse> { Success = false, Message = result.Error ?? "Resource not found." });
 
         return Ok(new ApiResponse<MessageResponse>
         {
@@ -1183,12 +1217,13 @@ public class CoachController : ControllerBase
         var query = new GetAssignedAthletesQuery { CoachId = coachId };
         var result = await _mediator.Send(query, cancellationToken);
 
-        return Ok(new ApiResponse<IReadOnlyList<AssignedAthleteDto>>
-        {
-            Success = true,
-            Message = "Assigned athletes retrieved successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, athletes =>
+            Ok(new ApiResponse<IReadOnlyList<AssignedAthleteDto>>
+            {
+                Success = true,
+                Message = "Assigned athletes retrieved successfully.",
+                Data = athletes
+            }));
     }
 
     #endregion
@@ -1210,6 +1245,8 @@ public class CoachController : ControllerBase
         [FromQuery] SearchCoachesRequest request,
         CancellationToken cancellationToken)
     {
+        request.PageSize = Math.Clamp(request.PageSize, 1, 100);
+
         var query = new SearchCoachesQuery
         {
             SearchTerm = request.SearchTerm,
@@ -1236,12 +1273,13 @@ public class CoachController : ControllerBase
         };
         var result = await _mediator.Send(query, cancellationToken);
 
-        return Ok(new ApiResponse<CoachSearchResponse>
-        {
-            Success = true,
-            Message = "Coach search completed successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, searchResult =>
+            Ok(new ApiResponse<CoachSearchResponse>
+            {
+                Success = true,
+                Message = "Coach search completed successfully.",
+                Data = searchResult
+            }));
     }
 
     /// <summary>
@@ -1265,6 +1303,8 @@ public class CoachController : ControllerBase
         [FromQuery] bool sortDescending = false,
         CancellationToken cancellationToken = default)
     {
+        pageSize = Math.Clamp(pageSize, 1, 100);
+
         var query = new GetPagedCoachesQuery
         {
             Page = page,
@@ -1275,12 +1315,13 @@ public class CoachController : ControllerBase
 
         var result = await _mediator.Send(query, cancellationToken);
 
-        return Ok(new ApiResponse<CoachSearchResponse>
-        {
-            Success = true,
-            Message = "Coaches retrieved successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, pagedResult =>
+            Ok(new ApiResponse<CoachSearchResponse>
+            {
+                Success = true,
+                Message = "Coaches retrieved successfully.",
+                Data = pagedResult
+            }));
     }
 
     #endregion
@@ -1311,12 +1352,13 @@ public class CoachController : ControllerBase
         var command = new ActivateCoachCommand { CoachId = coachId };
         var result = await _mediator.Send(command, cancellationToken);
 
-        return Ok(new ApiResponse<CoachDto>
-        {
-            Success = true,
-            Message = "Coach activated successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, coach =>
+            Ok(new ApiResponse<CoachDto>
+            {
+                Success = true,
+                Message = "Coach activated successfully.",
+                Data = coach
+            }));
     }
 
     /// <summary>
@@ -1343,12 +1385,13 @@ public class CoachController : ControllerBase
         var command = new DeactivateCoachCommand { CoachId = coachId };
         var result = await _mediator.Send(command, cancellationToken);
 
-        return Ok(new ApiResponse<CoachDto>
-        {
-            Success = true,
-            Message = "Coach deactivated successfully.",
-            Data = result.Value!
-        });
+        return HandleResult(result, coach =>
+            Ok(new ApiResponse<CoachDto>
+            {
+                Success = true,
+                Message = "Coach deactivated successfully.",
+                Data = coach
+            }));
     }
 
     #endregion

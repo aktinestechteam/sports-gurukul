@@ -10,13 +10,16 @@ namespace SportsGurukul.Application.Features.CoachManagement.Queries.GetAssigned
 public class GetAssignedAthletesQueryHandler : IRequestHandler<GetAssignedAthletesQuery, Result<IReadOnlyList<AssignedAthleteDto>>>
 {
     private readonly IRepository<CoachAthlete> _coachAthleteRepository;
+    private readonly IAthleteRepository _athleteRepository;
     private readonly ILogger<GetAssignedAthletesQueryHandler> _logger;
 
     public GetAssignedAthletesQueryHandler(
         IRepository<CoachAthlete> coachAthleteRepository,
+        IAthleteRepository athleteRepository,
         ILogger<GetAssignedAthletesQueryHandler> logger)
     {
         _coachAthleteRepository = coachAthleteRepository;
+        _athleteRepository = athleteRepository;
         _logger = logger;
     }
 
@@ -28,21 +31,28 @@ public class GetAssignedAthletesQueryHandler : IRequestHandler<GetAssignedAthlet
             x => x.CoachId == request.CoachId && x.IsActive && !x.IsDeleted,
             cancellationToken);
 
-        var dtos = coachAthletes.Select(ca => new AssignedAthleteDto
+        var dtos = new List<AssignedAthleteDto>();
+        foreach (var ca in coachAthletes)
         {
-            Id = ca.Id,
-            AthleteId = ca.AthleteId,
-            AthleteCode = ca.Athlete.AthleteCode,
-            FullName = ca.Athlete.User.FullName,
-            Email = ca.Athlete.User.Email,
-            PhoneNumber = ca.Athlete.User.PhoneNumber,
-            ProfileImageUrl = ca.Athlete.User.ProfileImageUrl,
-            CurrentLevel = ca.Athlete.CurrentLevel.ToString(),
-            Status = ca.Athlete.Status.ToString(),
-            PrimarySport = ca.Athlete.AthleteSports?
-                .FirstOrDefault(s => s.IsPrimarySport)?.Sport?.Name,
-            AssignedDate = ca.AssignedDate
-        }).ToList();
+            var athlete = await _athleteRepository.GetByIdWithDetailsAsync(ca.AthleteId, cancellationToken);
+            if (athlete is null) continue;
+
+            dtos.Add(new AssignedAthleteDto
+            {
+                Id = ca.Id,
+                AthleteId = athlete.Id,
+                AthleteCode = athlete.AthleteCode,
+                FullName = athlete.User.FullName,
+                Email = athlete.User.Email,
+                PhoneNumber = athlete.User.PhoneNumber,
+                ProfileImageUrl = athlete.User.ProfileImageUrl,
+                CurrentLevel = athlete.CurrentLevel.ToString(),
+                Status = athlete.Status.ToString(),
+                PrimarySport = athlete.AthleteSports?
+                    .FirstOrDefault(s => s.IsPrimarySport)?.Sport?.Name,
+                AssignedDate = ca.AssignedDate
+            });
+        }
 
         _logger.LogInformation("Retrieved {Count} assigned athletes for coach: {CoachId}", dtos.Count, request.CoachId);
 

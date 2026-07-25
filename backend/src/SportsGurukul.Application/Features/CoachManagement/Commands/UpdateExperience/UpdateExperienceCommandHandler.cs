@@ -10,17 +10,23 @@ namespace SportsGurukul.Application.Features.CoachManagement.Commands.UpdateExpe
 public class UpdateExperienceCommandHandler : IRequestHandler<UpdateExperienceCommand, Result<ExperienceDto>>
 {
     private readonly IRepository<CoachExperience> _coachExperienceRepository;
+    private readonly ICoachRepository _coachRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<UpdateExperienceCommandHandler> _logger;
+    private readonly ICurrentUser _currentUser;
 
     public UpdateExperienceCommandHandler(
         IRepository<CoachExperience> coachExperienceRepository,
+        ICoachRepository coachRepository,
         IUnitOfWork unitOfWork,
-        ILogger<UpdateExperienceCommandHandler> logger)
+        ILogger<UpdateExperienceCommandHandler> logger,
+        ICurrentUser currentUser)
     {
         _coachExperienceRepository = coachExperienceRepository;
+        _coachRepository = coachRepository;
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _currentUser = currentUser;
     }
 
     public async Task<Result<ExperienceDto>> Handle(UpdateExperienceCommand request, CancellationToken cancellationToken)
@@ -33,6 +39,10 @@ public class UpdateExperienceCommandHandler : IRequestHandler<UpdateExperienceCo
             _logger.LogWarning("Experience not found: {ExperienceId}", request.ExperienceId);
             return Result<ExperienceDto>.Failure("Experience not found.");
         }
+
+        var coach = await _coachRepository.GetByIdAsync(experience.CoachId, cancellationToken);
+        if (coach is not null && _currentUser.Roles.Contains("Coach") && coach.UserId != _currentUser.UserId)
+            return Result<ExperienceDto>.Failure("You are not authorized to modify this coach's data.");
 
         if (request.Organization is not null) experience.Organization = request.Organization;
         if (request.Role is not null) experience.Role = request.Role;

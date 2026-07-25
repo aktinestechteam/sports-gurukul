@@ -13,17 +13,20 @@ public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationComman
     private readonly IRepository<CoachLocation> _locationRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<UpdateLocationCommandHandler> _logger;
+    private readonly ICurrentUser _currentUser;
 
     public UpdateLocationCommandHandler(
         ICoachRepository coachRepository,
         IRepository<CoachLocation> locationRepository,
         IUnitOfWork unitOfWork,
-        ILogger<UpdateLocationCommandHandler> logger)
+        ILogger<UpdateLocationCommandHandler> logger,
+        ICurrentUser currentUser)
     {
         _coachRepository = coachRepository;
         _locationRepository = locationRepository;
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _currentUser = currentUser;
     }
 
     public async Task<Result<LocationDto>> Handle(UpdateLocationCommand request, CancellationToken cancellationToken)
@@ -33,6 +36,9 @@ public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationComman
         var coach = await _coachRepository.GetByIdAsync(request.CoachId, cancellationToken);
         if (coach is null)
             return Result<LocationDto>.Failure("Coach not found.");
+
+        if (_currentUser.Roles.Contains("Coach") && coach.UserId != _currentUser.UserId)
+            return Result<LocationDto>.Failure("You are not authorized to modify this coach's data.");
 
         if (request.Latitude.HasValue && (request.Latitude < -90 || request.Latitude > 90))
             return Result<LocationDto>.Failure("Latitude must be between -90 and 90.");

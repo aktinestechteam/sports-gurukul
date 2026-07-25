@@ -256,7 +256,8 @@ public class AuthorizationTests : AthleteIntegrationTestBase
     [Fact]
     public async Task CoachRole_CanAccessAthleteListAndSearch()
     {
-        var athlete = await CreateTestAthleteAsync();
+        var athleteId = SeedData.AthleteId;
+        athleteId.Should().NotBe(Guid.Empty, "athlete must be seeded");
 
         var listResponse = await CoachClient.GetAsync("/api/v1/athletes?page=1&pageSize=5");
         listResponse.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -264,13 +265,13 @@ public class AuthorizationTests : AthleteIntegrationTestBase
         var searchResponse = await CoachClient.GetAsync("/api/v1/athletes/search?searchTerm=test");
         searchResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var getByIdResponse = await CoachClient.GetAsync($"/api/v1/athletes/{athlete!.Id}");
+        var getByIdResponse = await CoachClient.GetAsync($"/api/v1/athletes/{athleteId}");
         getByIdResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var sportsResponse = await CoachClient.GetAsync($"/api/v1/athletes/{athlete.Id}/sports");
+        var sportsResponse = await CoachClient.GetAsync($"/api/v1/athletes/{athleteId}/sports");
         sportsResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var achievementsResponse = await CoachClient.GetAsync($"/api/v1/athletes/{athlete.Id}/achievements");
+        var achievementsResponse = await CoachClient.GetAsync($"/api/v1/athletes/{athleteId}/achievements");
         achievementsResponse.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 }

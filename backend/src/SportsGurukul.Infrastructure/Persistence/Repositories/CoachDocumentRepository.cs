@@ -16,7 +16,10 @@ public class CoachDocumentRepository : Repository<CoachDocument>, ICoachDocument
     public async Task<IReadOnlyList<CoachDocument>> GetByCoachIdAsync(Guid coachId, CancellationToken cancellationToken = default)
     {
         return await _context.CoachDocuments
+            .AsNoTracking()
             .Where(d => d.CoachId == coachId && !d.IsDeleted)
+            .Include(d => d.Versions)
+            .Include(d => d.AuditTrail)
             .OrderByDescending(d => d.UploadedOn)
             .ToListAsync(cancellationToken);
     }
@@ -48,11 +51,10 @@ public class CoachDocumentRepository : Repository<CoachDocument>, ICoachDocument
 
     public async Task<int> GetMaxVersionNumberAsync(Guid documentId, CancellationToken cancellationToken = default)
     {
-        var versions = await _context.CoachDocumentVersions
+        return await _context.CoachDocumentVersions
             .Where(v => v.DocumentId == documentId)
-            .ToListAsync(cancellationToken);
-
-        return versions.Any() ? versions.Max(v => v.VersionNumber) : 0;
+            .Select(v => (int?)v.VersionNumber)
+            .MaxAsync(cancellationToken) ?? 0;
     }
 
     public async Task AddVersionAsync(CoachDocumentVersion version, CancellationToken cancellationToken = default)

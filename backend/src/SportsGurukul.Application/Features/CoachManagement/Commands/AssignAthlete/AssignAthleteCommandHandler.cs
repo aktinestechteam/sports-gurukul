@@ -15,19 +15,22 @@ public class AssignAthleteCommandHandler : IRequestHandler<AssignAthleteCommand,
     private readonly IRepository<CoachAthlete> _coachAthleteRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<AssignAthleteCommandHandler> _logger;
+    private readonly ICurrentUser _currentUser;
 
     public AssignAthleteCommandHandler(
         ICoachRepository coachRepository,
         IAthleteRepository athleteRepository,
         IRepository<CoachAthlete> coachAthleteRepository,
         IUnitOfWork unitOfWork,
-        ILogger<AssignAthleteCommandHandler> logger)
+        ILogger<AssignAthleteCommandHandler> logger,
+        ICurrentUser currentUser)
     {
         _coachRepository = coachRepository;
         _athleteRepository = athleteRepository;
         _coachAthleteRepository = coachAthleteRepository;
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _currentUser = currentUser;
     }
 
     public async Task<Result<AssignedAthleteDto>> Handle(AssignAthleteCommand request, CancellationToken cancellationToken)
@@ -38,13 +41,16 @@ public class AssignAthleteCommandHandler : IRequestHandler<AssignAthleteCommand,
         if (coach is null)
             return Result<AssignedAthleteDto>.Failure("Coach not found.");
 
+        if (_currentUser.Roles.Contains("Coach") && coach.UserId != _currentUser.UserId)
+            return Result<AssignedAthleteDto>.Failure("You are not authorized to modify this coach's data.");
+
         if (coach.Status != CoachStatus.Active)
             return Result<AssignedAthleteDto>.Failure("Coach must be active to assign athletes.");
 
         if (coach.VerificationStatus != VerificationStatus.Verified)
             return Result<AssignedAthleteDto>.Failure("Coach must be verified to assign athletes.");
 
-        var athlete = await _athleteRepository.GetByIdAsync(request.AthleteId, cancellationToken);
+        var athlete = await _athleteRepository.GetByIdWithDetailsAsync(request.AthleteId, cancellationToken);
         if (athlete is null)
             return Result<AssignedAthleteDto>.Failure("Athlete not found.");
 

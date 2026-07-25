@@ -13,24 +13,30 @@ public class UpdateCoachProfileCommandHandler : IRequestHandler<UpdateCoachProfi
     private readonly ICoachRepository _coachRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<UpdateCoachProfileCommandHandler> _logger;
+    private readonly ICurrentUser _currentUser;
 
     public UpdateCoachProfileCommandHandler(
         ICoachRepository coachRepository,
         IUnitOfWork unitOfWork,
-        ILogger<UpdateCoachProfileCommandHandler> logger)
+        ILogger<UpdateCoachProfileCommandHandler> logger,
+        ICurrentUser currentUser)
     {
         _coachRepository = coachRepository;
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _currentUser = currentUser;
     }
 
     public async Task<Result<CoachDto>> Handle(UpdateCoachProfileCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Updating coach profile for CoachId: {CoachId}", request.CoachId);
 
-        var coach = await _coachRepository.GetByIdWithDetailsAsync(request.CoachId);
+        var coach = await _coachRepository.GetByIdWithDetailsAsync(request.CoachId, cancellationToken);
         if (coach is null)
             return Result<CoachDto>.Failure("Coach not found.");
+
+        if (_currentUser.Roles.Contains("Coach") && coach.UserId != _currentUser.UserId)
+            return Result<CoachDto>.Failure("You are not authorized to modify this coach's data.");
 
         if (request.Biography is not null)
             coach.Biography = request.Biography;

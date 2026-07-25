@@ -12,22 +12,32 @@ public class RemoveSportCommandHandler : IRequestHandler<RemoveSportCommand, Res
     private readonly IRepository<CoachSport> _coachSportRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<RemoveSportCommandHandler> _logger;
+    private readonly ICurrentUser _currentUser;
 
     public RemoveSportCommandHandler(
         ICoachRepository coachRepository,
         IRepository<CoachSport> coachSportRepository,
         IUnitOfWork unitOfWork,
-        ILogger<RemoveSportCommandHandler> logger)
+        ILogger<RemoveSportCommandHandler> logger,
+        ICurrentUser currentUser)
     {
         _coachRepository = coachRepository;
         _coachSportRepository = coachSportRepository;
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _currentUser = currentUser;
     }
 
     public async Task<Result<Unit>> Handle(RemoveSportCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Removing sport {SportId} from coach {CoachId}", request.SportId, request.CoachId);
+
+        var coach = await _coachRepository.GetByIdAsync(request.CoachId, cancellationToken);
+        if (coach is null)
+            return Result<Unit>.Failure("Coach not found.");
+
+        if (_currentUser.Roles.Contains("Coach") && coach.UserId != _currentUser.UserId)
+            return Result<Unit>.Failure("You are not authorized to modify this coach's data.");
 
         var coachSports = await _coachRepository.GetCoachSportsAsync(request.CoachId, cancellationToken);
         var coachSport = coachSports.FirstOrDefault(s => s.SportId == request.SportId && !s.IsDeleted);

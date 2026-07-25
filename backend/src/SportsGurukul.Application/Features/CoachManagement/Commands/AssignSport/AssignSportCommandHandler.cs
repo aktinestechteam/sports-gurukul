@@ -14,19 +14,22 @@ public class AssignSportCommandHandler : IRequestHandler<AssignSportCommand, Res
     private readonly IRepository<CoachSport> _coachSportRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<AssignSportCommandHandler> _logger;
+    private readonly ICurrentUser _currentUser;
 
     public AssignSportCommandHandler(
         ICoachRepository coachRepository,
         ISportRepository sportRepository,
         IRepository<CoachSport> coachSportRepository,
         IUnitOfWork unitOfWork,
-        ILogger<AssignSportCommandHandler> logger)
+        ILogger<AssignSportCommandHandler> logger,
+        ICurrentUser currentUser)
     {
         _coachRepository = coachRepository;
         _sportRepository = sportRepository;
         _coachSportRepository = coachSportRepository;
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _currentUser = currentUser;
     }
 
     public async Task<Result<SportDto>> Handle(AssignSportCommand request, CancellationToken cancellationToken)
@@ -39,6 +42,9 @@ public class AssignSportCommandHandler : IRequestHandler<AssignSportCommand, Res
             _logger.LogWarning("Coach not found: {CoachId}", request.CoachId);
             return Result<SportDto>.Failure("Coach not found.");
         }
+
+        if (_currentUser.Roles.Contains("Coach") && coach.UserId != _currentUser.UserId)
+            return Result<SportDto>.Failure("You are not authorized to modify this coach's data.");
 
         var sport = await _sportRepository.GetByIdAsync(request.SportId, cancellationToken);
         if (sport is null)

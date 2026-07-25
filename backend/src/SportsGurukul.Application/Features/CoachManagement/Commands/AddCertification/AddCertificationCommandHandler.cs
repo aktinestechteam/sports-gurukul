@@ -14,17 +14,20 @@ public class AddCertificationCommandHandler : IRequestHandler<AddCertificationCo
     private readonly ICoachCertificationRepository _coachCertificationRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<AddCertificationCommandHandler> _logger;
+    private readonly ICurrentUser _currentUser;
 
     public AddCertificationCommandHandler(
         ICoachRepository coachRepository,
         ICoachCertificationRepository coachCertificationRepository,
         IUnitOfWork unitOfWork,
-        ILogger<AddCertificationCommandHandler> logger)
+        ILogger<AddCertificationCommandHandler> logger,
+        ICurrentUser currentUser)
     {
         _coachRepository = coachRepository;
         _coachCertificationRepository = coachCertificationRepository;
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _currentUser = currentUser;
     }
 
     public async Task<Result<CertificationDto>> Handle(AddCertificationCommand request, CancellationToken cancellationToken)
@@ -37,6 +40,9 @@ public class AddCertificationCommandHandler : IRequestHandler<AddCertificationCo
             _logger.LogWarning("Coach not found: {CoachId}", request.CoachId);
             return Result<CertificationDto>.Failure("Coach not found.");
         }
+
+        if (_currentUser.Roles.Contains("Coach") && coach.UserId != _currentUser.UserId)
+            return Result<CertificationDto>.Failure("You are not authorized to modify this coach's data.");
 
         var existingCertifications = await _coachCertificationRepository.GetByCoachIdAsync(request.CoachId, cancellationToken);
         if (existingCertifications.Any(c => c.CertificationName == request.CertificationName && !c.IsDeleted))

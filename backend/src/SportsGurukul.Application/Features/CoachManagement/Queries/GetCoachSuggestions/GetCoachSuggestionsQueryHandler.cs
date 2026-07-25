@@ -27,6 +27,9 @@ public class GetCoachSuggestionsQueryHandler : IRequestHandler<GetCoachSuggestio
     public async Task<Result<IReadOnlyList<CoachSearchSuggestionDto>>> Handle(
         GetCoachSuggestionsQuery request, CancellationToken cancellationToken)
     {
+        if (string.IsNullOrWhiteSpace(request.Prefix))
+            return Result<IReadOnlyList<CoachSearchSuggestionDto>>.Success(Array.Empty<CoachSearchSuggestionDto>());
+
         var cacheKey = $"{CachePrefix}{request.Prefix.ToLowerInvariant()}_{request.Limit}";
 
         var cached = await _cacheService.GetAsync<List<CoachSearchSuggestionDto>>(cacheKey, cancellationToken);

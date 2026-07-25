@@ -147,9 +147,10 @@ builder.Services.AddCors(options =>
         }
         else
         {
-            policy.AllowAnyOrigin()
+            policy.WithOrigins("https://localhost:3000", "https://localhost:5001")
                 .AllowAnyHeader()
-                .AllowAnyMethod();
+                .AllowAnyMethod()
+                .AllowCredentials();
         }
     });
 });
@@ -200,6 +201,8 @@ builder.Services.AddAuthorization(options =>
 
 var app = builder.Build();
 
+app.UseHttpsRedirection();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger(options =>
@@ -223,6 +226,11 @@ app.Use(async (context, next) =>
     context.Response.Headers.Append("X-Frame-Options", "DENY");
     context.Response.Headers.Append("X-XSS-Protection", "1; mode=block");
     context.Response.Headers.Append("Referrer-Policy", "strict-origin-when-cross-origin");
+    context.Response.Headers.Append("Content-Security-Policy", "default-src 'self'");
+    if (!context.Request.Path.StartsWithSegments("/swagger"))
+    {
+        context.Response.Headers.Append("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+    }
     await next();
 });
 

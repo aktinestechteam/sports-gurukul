@@ -13,17 +13,20 @@ public class UpdateAvailabilityCommandHandler : IRequestHandler<UpdateAvailabili
     private readonly ICoachAvailabilityRepository _availabilityRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<UpdateAvailabilityCommandHandler> _logger;
+    private readonly ICurrentUser _currentUser;
 
     public UpdateAvailabilityCommandHandler(
         ICoachRepository coachRepository,
         ICoachAvailabilityRepository availabilityRepository,
         IUnitOfWork unitOfWork,
-        ILogger<UpdateAvailabilityCommandHandler> logger)
+        ILogger<UpdateAvailabilityCommandHandler> logger,
+        ICurrentUser currentUser)
     {
         _coachRepository = coachRepository;
         _availabilityRepository = availabilityRepository;
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _currentUser = currentUser;
     }
 
     public async Task<Result<AvailabilityDto>> Handle(UpdateAvailabilityCommand request, CancellationToken cancellationToken)
@@ -33,6 +36,9 @@ public class UpdateAvailabilityCommandHandler : IRequestHandler<UpdateAvailabili
         var coach = await _coachRepository.GetByIdAsync(request.CoachId, cancellationToken);
         if (coach is null)
             return Result<AvailabilityDto>.Failure("Coach not found.");
+
+        if (_currentUser.Roles.Contains("Coach") && coach.UserId != _currentUser.UserId)
+            return Result<AvailabilityDto>.Failure("You are not authorized to modify this coach's data.");
 
         var availability = await _availabilityRepository.GetByCoachIdAsync(request.CoachId, cancellationToken);
 

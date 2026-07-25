@@ -13,17 +13,20 @@ public class DownloadCoachDocumentQueryHandler : IRequestHandler<DownloadCoachDo
     private readonly ICoachDocumentRepository _coachDocumentRepository;
     private readonly IFileStorageService _fileStorageService;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ICurrentUser _currentUser;
     private readonly ILogger<DownloadCoachDocumentQueryHandler> _logger;
 
     public DownloadCoachDocumentQueryHandler(
         ICoachDocumentRepository coachDocumentRepository,
         IFileStorageService fileStorageService,
         IUnitOfWork unitOfWork,
+        ICurrentUser currentUser,
         ILogger<DownloadCoachDocumentQueryHandler> logger)
     {
         _coachDocumentRepository = coachDocumentRepository;
         _fileStorageService = fileStorageService;
         _unitOfWork = unitOfWork;
+        _currentUser = currentUser;
         _logger = logger;
     }
 
@@ -37,6 +40,9 @@ public class DownloadCoachDocumentQueryHandler : IRequestHandler<DownloadCoachDo
         {
             return Result<CoachDocumentDownloadDto>.Failure("Document not found.");
         }
+
+        if (_currentUser.Roles.Contains("Coach") && document.Coach?.UserId != _currentUser.UserId)
+            return Result<CoachDocumentDownloadDto>.Failure("You are not authorized to download this document.");
 
         var stream = await _fileStorageService.GetAsync(document.StoragePath, cancellationToken);
 

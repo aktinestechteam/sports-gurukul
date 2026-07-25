@@ -39,6 +39,8 @@ public class GetSimilarCoachesQueryHandler : IRequestHandler<GetSimilarCoachesQu
         var coaches = await _searchRepository.GetSimilarCoachesAsync(
             request.CoachId, request.Limit, cancellationToken);
 
+        var referenceSportIds = coaches.SelectMany(c => c.CoachSports?.Select(cs => cs.SportId) ?? Enumerable.Empty<Guid>()).ToHashSet();
+
         var dtos = coaches.Select(c => new SimilarCoachDto
         {
             Id = c.Id,
@@ -51,8 +53,7 @@ public class GetSimilarCoachesQueryHandler : IRequestHandler<GetSimilarCoachesQu
             City = c.Location?.City,
             State = c.Location?.State,
             IsVerified = c.VerificationStatus == VerificationStatus.Verified,
-            MatchScore = c.CoachSports?.Count(cs =>
-                coaches.Any(sc => sc.CoachSports.Any(scs => scs.SportId == cs.SportId))) ?? 0
+            MatchScore = c.CoachSports?.Count(cs => referenceSportIds.Contains(cs.SportId)) ?? 0
         }).ToList();
 
         await _cacheService.SetAsync(cacheKey, dtos, TimeSpan.FromMinutes(10), cancellationToken);

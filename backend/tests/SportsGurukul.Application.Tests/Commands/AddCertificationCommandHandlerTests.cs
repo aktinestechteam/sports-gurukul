@@ -14,15 +14,20 @@ public class AddCertificationCommandHandlerTests
     private readonly Mock<ICoachCertificationRepository> _coachCertificationRepositoryMock = TestMocks.CreateCoachCertificationRepository();
     private readonly Mock<IUnitOfWork> _unitOfWorkMock = TestMocks.CreateUnitOfWork();
     private readonly Mock<ILogger<AddCertificationCommandHandler>> _loggerMock = TestMocks.CreateLogger<AddCertificationCommandHandler>();
+    private readonly Mock<ICurrentUser> _currentUserMock = new();
+    private readonly Guid _testUserId = Guid.NewGuid();
     private readonly AddCertificationCommandHandler _handler;
 
     public AddCertificationCommandHandlerTests()
     {
+        _currentUserMock.Setup(u => u.Roles).Returns(new List<string> { "Coach" });
+        _currentUserMock.Setup(u => u.UserId).Returns(_testUserId);
         _handler = new AddCertificationCommandHandler(
             _coachRepositoryMock.Object,
             _coachCertificationRepositoryMock.Object,
             _unitOfWorkMock.Object,
-            _loggerMock.Object);
+            _loggerMock.Object,
+            _currentUserMock.Object);
     }
 
     [Fact]
@@ -45,7 +50,7 @@ public class AddCertificationCommandHandlerTests
     public async Task Handle_DuplicateCertification_ReturnsFailure()
     {
         var coachId = Guid.NewGuid();
-        var coach = TestDataBuilder.CreateCoach(id: coachId);
+        var coach = TestDataBuilder.CreateCoach(id: coachId, userId: _testUserId);
         var existingCerts = new List<CoachCertification>
         {
             TestDataBuilder.CreateCoachCertification(coachId)
@@ -71,7 +76,7 @@ public class AddCertificationCommandHandlerTests
     public async Task Handle_NewCertification_AddsAndReturnsSuccess()
     {
         var coachId = Guid.NewGuid();
-        var coach = TestDataBuilder.CreateCoach(id: coachId);
+        var coach = TestDataBuilder.CreateCoach(id: coachId, userId: _testUserId);
 
         _coachRepositoryMock.Setup(r => r.GetByIdAsync(coachId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(coach);

@@ -53,6 +53,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<CoachDocument> CoachDocuments => Set<CoachDocument>();
     public DbSet<CoachDocumentVersion> CoachDocumentVersions => Set<CoachDocumentVersion>();
     public DbSet<CoachDocumentAudit> CoachDocumentAudits => Set<CoachDocumentAudit>();
+    public DbSet<CoachAthlete> CoachAthletes => Set<CoachAthlete>();
 
     public DbSet<SavedSearch> SavedSearches => Set<SavedSearch>();
     public DbSet<RecentSearch> RecentSearches => Set<RecentSearch>();

@@ -10,17 +10,23 @@ namespace SportsGurukul.Application.Features.CoachManagement.Commands.UpdateEduc
 public class UpdateEducationCommandHandler : IRequestHandler<UpdateEducationCommand, Result<EducationDto>>
 {
     private readonly IRepository<CoachEducation> _educationRepository;
+    private readonly ICoachRepository _coachRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<UpdateEducationCommandHandler> _logger;
+    private readonly ICurrentUser _currentUser;
 
     public UpdateEducationCommandHandler(
         IRepository<CoachEducation> educationRepository,
+        ICoachRepository coachRepository,
         IUnitOfWork unitOfWork,
-        ILogger<UpdateEducationCommandHandler> logger)
+        ILogger<UpdateEducationCommandHandler> logger,
+        ICurrentUser currentUser)
     {
         _educationRepository = educationRepository;
+        _coachRepository = coachRepository;
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _currentUser = currentUser;
     }
 
     public async Task<Result<EducationDto>> Handle(UpdateEducationCommand request, CancellationToken cancellationToken)
@@ -30,6 +36,10 @@ public class UpdateEducationCommandHandler : IRequestHandler<UpdateEducationComm
         var education = await _educationRepository.GetByIdAsync(request.EducationId, cancellationToken);
         if (education is null)
             return Result<EducationDto>.Failure("Education not found.");
+
+        var coach = await _coachRepository.GetByIdAsync(education.CoachId, cancellationToken);
+        if (coach is not null && _currentUser.Roles.Contains("Coach") && coach.UserId != _currentUser.UserId)
+            return Result<EducationDto>.Failure("You are not authorized to modify this coach's data.");
 
         if (request.Degree is not null)
             education.Degree = request.Degree;

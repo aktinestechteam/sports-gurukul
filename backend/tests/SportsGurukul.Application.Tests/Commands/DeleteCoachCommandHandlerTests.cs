@@ -13,14 +13,19 @@ public class DeleteCoachCommandHandlerTests
     private readonly Mock<ICoachRepository> _coachRepositoryMock = TestMocks.CreateCoachRepository();
     private readonly Mock<IUnitOfWork> _unitOfWorkMock = TestMocks.CreateUnitOfWork();
     private readonly Mock<ILogger<DeleteCoachCommandHandler>> _loggerMock = TestMocks.CreateLogger<DeleteCoachCommandHandler>();
+    private readonly Mock<ICurrentUser> _currentUserMock = new();
+    private readonly Guid _testUserId = Guid.NewGuid();
     private readonly DeleteCoachCommandHandler _handler;
 
     public DeleteCoachCommandHandlerTests()
     {
+        _currentUserMock.Setup(u => u.Roles).Returns(new List<string> { "Coach" });
+        _currentUserMock.Setup(u => u.UserId).Returns(_testUserId);
         _handler = new DeleteCoachCommandHandler(
             _coachRepositoryMock.Object,
             _unitOfWorkMock.Object,
-            _loggerMock.Object);
+            _loggerMock.Object,
+            _currentUserMock.Object);
     }
 
     [Fact]
@@ -38,7 +43,7 @@ public class DeleteCoachCommandHandlerTests
     [Fact]
     public async Task Handle_CoachAlreadyDeleted_ReturnsFailure()
     {
-        var coach = TestDataBuilder.CreateCoach(isDeleted: true);
+        var coach = TestDataBuilder.CreateCoach(isDeleted: true, userId: _testUserId);
         _coachRepositoryMock.Setup(r => r.GetByIdAsync(coach.Id, It.IsAny<CancellationToken>()))
             .ReturnsAsync(coach);
 
@@ -51,7 +56,7 @@ public class DeleteCoachCommandHandlerTests
     [Fact]
     public async Task Handle_ValidCoach_SoftDeletesAndReturnsSuccess()
     {
-        var coach = TestDataBuilder.CreateCoach();
+        var coach = TestDataBuilder.CreateCoach(userId: _testUserId);
         _coachRepositoryMock.Setup(r => r.GetByIdAsync(coach.Id, It.IsAny<CancellationToken>()))
             .ReturnsAsync(coach);
         _unitOfWorkMock.Setup(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()))

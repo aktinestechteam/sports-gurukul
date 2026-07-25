@@ -14,16 +14,21 @@ public class AssignSportCommandHandlerTests
     private readonly Mock<IRepository<CoachSport>> _coachSportRepositoryMock = TestMocks.CreateCoachSportRepository();
     private readonly Mock<IUnitOfWork> _unitOfWorkMock = TestMocks.CreateUnitOfWork();
     private readonly Mock<ILogger<AssignSportCommandHandler>> _loggerMock = TestMocks.CreateLogger<AssignSportCommandHandler>();
+    private readonly Mock<ICurrentUser> _currentUserMock = new();
+    private readonly Guid _testUserId = Guid.NewGuid();
     private readonly AssignSportCommandHandler _handler;
 
     public AssignSportCommandHandlerTests()
     {
+        _currentUserMock.Setup(u => u.Roles).Returns(new List<string> { "Coach" });
+        _currentUserMock.Setup(u => u.UserId).Returns(_testUserId);
         _handler = new AssignSportCommandHandler(
             _coachRepositoryMock.Object,
             _sportRepositoryMock.Object,
             _coachSportRepositoryMock.Object,
             _unitOfWorkMock.Object,
-            _loggerMock.Object);
+            _loggerMock.Object,
+            _currentUserMock.Object);
     }
 
     [Fact]
@@ -47,7 +52,7 @@ public class AssignSportCommandHandlerTests
     {
         var coachId = Guid.NewGuid();
         _coachRepositoryMock.Setup(r => r.GetByIdAsync(coachId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(TestDataBuilder.CreateCoach(id: coachId));
+            .ReturnsAsync(TestDataBuilder.CreateCoach(id: coachId, userId: _testUserId));
         _sportRepositoryMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((Sport?)null);
 
@@ -66,7 +71,7 @@ public class AssignSportCommandHandlerTests
     {
         var coachId = Guid.NewGuid();
         var sportId = Guid.NewGuid();
-        var coach = TestDataBuilder.CreateCoach(id: coachId);
+        var coach = TestDataBuilder.CreateCoach(id: coachId, userId: _testUserId);
         var sport = TestDataBuilder.CreateSport(id: sportId);
         var existingSports = new List<CoachSport>
         {
@@ -95,7 +100,7 @@ public class AssignSportCommandHandlerTests
     {
         var coachId = Guid.NewGuid();
         var sportId = Guid.NewGuid();
-        var coach = TestDataBuilder.CreateCoach(id: coachId);
+        var coach = TestDataBuilder.CreateCoach(id: coachId, userId: _testUserId);
         var sport = TestDataBuilder.CreateSport(id: sportId);
 
         _coachRepositoryMock.Setup(r => r.GetByIdAsync(coachId, It.IsAny<CancellationToken>()))
@@ -126,7 +131,7 @@ public class AssignSportCommandHandlerTests
     {
         var coachId = Guid.NewGuid();
         var sportId = Guid.NewGuid();
-        var coach = TestDataBuilder.CreateCoach(id: coachId);
+        var coach = TestDataBuilder.CreateCoach(id: coachId, userId: _testUserId);
         var sport = TestDataBuilder.CreateSport(id: sportId);
         var currentPrimary = TestDataBuilder.CreateCoachSport(coachId);
         currentPrimary.IsPrimarySport = true;

@@ -15,16 +15,21 @@ public class AssignAthleteCommandHandlerTests
     private readonly Mock<IRepository<CoachAthlete>> _coachAthleteRepositoryMock = TestMocks.CreateCoachAthleteRepository();
     private readonly Mock<IUnitOfWork> _unitOfWorkMock = TestMocks.CreateUnitOfWork();
     private readonly Mock<ILogger<AssignAthleteCommandHandler>> _loggerMock = TestMocks.CreateLogger<AssignAthleteCommandHandler>();
+    private readonly Guid _testUserId = Guid.NewGuid();
+    private readonly Mock<ICurrentUser> _currentUserMock = new();
     private readonly AssignAthleteCommandHandler _handler;
 
     public AssignAthleteCommandHandlerTests()
     {
+        _currentUserMock.Setup(u => u.Roles).Returns(new List<string> { "Coach" });
+        _currentUserMock.Setup(u => u.UserId).Returns(_testUserId);
         _handler = new AssignAthleteCommandHandler(
             _coachRepositoryMock.Object,
             _athleteRepositoryMock.Object,
             _coachAthleteRepositoryMock.Object,
             _unitOfWorkMock.Object,
-            _loggerMock.Object);
+            _loggerMock.Object,
+            _currentUserMock.Object);
     }
 
     [Fact]
@@ -44,30 +49,10 @@ public class AssignAthleteCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handle_CoachNotVerified_ReturnsFailure()
-    {
-        var coachId = Guid.NewGuid();
-        var coach = TestDataBuilder.CreateCoach(id: coachId);
-        coach.VerificationStatus = VerificationStatus.Pending;
-
-        _coachRepositoryMock.Setup(r => r.GetByIdAsync(coachId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(coach);
-
-        var result = await _handler.Handle(new AssignAthleteCommand
-        {
-            CoachId = coachId,
-            AthleteId = Guid.NewGuid()
-        }, CancellationToken.None);
-
-        result.IsSuccess.Should().BeFalse();
-        result.Error.Should().Be("Coach must be verified to assign athletes.");
-    }
-
-    [Fact]
     public async Task Handle_CoachNotActive_ReturnsFailure()
     {
         var coachId = Guid.NewGuid();
-        var coach = TestDataBuilder.CreateCoach(id: coachId);
+        var coach = TestDataBuilder.CreateCoach(id: coachId, userId: _testUserId);
         coach.Status = CoachStatus.Inactive;
 
         _coachRepositoryMock.Setup(r => r.GetByIdAsync(coachId, It.IsAny<CancellationToken>()))
@@ -84,14 +69,34 @@ public class AssignAthleteCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handle_AthleteNotFound_ReturnsFailure()
+    public async Task Handle_CoachNotVerified_ReturnsFailure()
     {
         var coachId = Guid.NewGuid();
-        var coach = TestDataBuilder.CreateCoach(id: coachId);
+        var coach = TestDataBuilder.CreateCoach(id: coachId, userId: _testUserId);
+        coach.VerificationStatus = VerificationStatus.Pending;
 
         _coachRepositoryMock.Setup(r => r.GetByIdAsync(coachId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(coach);
-        _athleteRepositoryMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+
+        var result = await _handler.Handle(new AssignAthleteCommand
+        {
+            CoachId = coachId,
+            AthleteId = Guid.NewGuid()
+        }, CancellationToken.None);
+
+        result.IsSuccess.Should().BeFalse();
+        result.Error.Should().Be("Coach must be verified to assign athletes.");
+    }
+
+    [Fact]
+    public async Task Handle_AthleteNotFound_ReturnsFailure()
+    {
+        var coachId = Guid.NewGuid();
+        var coach = TestDataBuilder.CreateCoach(id: coachId, userId: _testUserId);
+
+        _coachRepositoryMock.Setup(r => r.GetByIdAsync(coachId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(coach);
+        _athleteRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((Athlete?)null);
 
         var result = await _handler.Handle(new AssignAthleteCommand
@@ -109,13 +114,13 @@ public class AssignAthleteCommandHandlerTests
     {
         var coachId = Guid.NewGuid();
         var athleteId = Guid.NewGuid();
-        var coach = TestDataBuilder.CreateCoach(id: coachId);
+        var coach = TestDataBuilder.CreateCoach(id: coachId, userId: _testUserId);
         var athlete = TestDataBuilder.CreateAthlete(id: athleteId);
         athlete.Status = AthleteStatus.Inactive;
 
         _coachRepositoryMock.Setup(r => r.GetByIdAsync(coachId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(coach);
-        _athleteRepositoryMock.Setup(r => r.GetByIdAsync(athleteId, It.IsAny<CancellationToken>()))
+        _athleteRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync(athleteId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(athlete);
 
         var result = await _handler.Handle(new AssignAthleteCommand
@@ -133,12 +138,12 @@ public class AssignAthleteCommandHandlerTests
     {
         var coachId = Guid.NewGuid();
         var athleteId = Guid.NewGuid();
-        var coach = TestDataBuilder.CreateCoach(id: coachId);
+        var coach = TestDataBuilder.CreateCoach(id: coachId, userId: _testUserId);
         var athlete = TestDataBuilder.CreateAthlete(id: athleteId);
 
         _coachRepositoryMock.Setup(r => r.GetByIdAsync(coachId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(coach);
-        _athleteRepositoryMock.Setup(r => r.GetByIdAsync(athleteId, It.IsAny<CancellationToken>()))
+        _athleteRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync(athleteId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(athlete);
         _coachAthleteRepositoryMock.Setup(r => r.AnyAsync(
             It.IsAny<System.Linq.Expressions.Expression<Func<CoachAthlete, bool>>>(),
@@ -160,12 +165,12 @@ public class AssignAthleteCommandHandlerTests
     {
         var coachId = Guid.NewGuid();
         var athleteId = Guid.NewGuid();
-        var coach = TestDataBuilder.CreateCoach(id: coachId);
+        var coach = TestDataBuilder.CreateCoach(id: coachId, userId: _testUserId);
         var athlete = TestDataBuilder.CreateAthlete(id: athleteId);
 
         _coachRepositoryMock.Setup(r => r.GetByIdAsync(coachId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(coach);
-        _athleteRepositoryMock.Setup(r => r.GetByIdAsync(athleteId, It.IsAny<CancellationToken>()))
+        _athleteRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync(athleteId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(athlete);
         _coachAthleteRepositoryMock.Setup(r => r.AnyAsync(
             It.IsAny<System.Linq.Expressions.Expression<Func<CoachAthlete, bool>>>(),

@@ -13,15 +13,20 @@ public class UpdateLocationCommandHandlerTests
     private readonly Mock<IRepository<CoachLocation>> _locationRepositoryMock = TestMocks.CreateCoachLocationRepository();
     private readonly Mock<IUnitOfWork> _unitOfWorkMock = TestMocks.CreateUnitOfWork();
     private readonly Mock<ILogger<UpdateLocationCommandHandler>> _loggerMock = TestMocks.CreateLogger<UpdateLocationCommandHandler>();
+    private readonly Mock<ICurrentUser> _currentUserMock = new();
+    private readonly Guid _testUserId = Guid.NewGuid();
     private readonly UpdateLocationCommandHandler _handler;
 
     public UpdateLocationCommandHandlerTests()
     {
+        _currentUserMock.Setup(u => u.Roles).Returns(new List<string> { "Coach" });
+        _currentUserMock.Setup(u => u.UserId).Returns(_testUserId);
         _handler = new UpdateLocationCommandHandler(
             _coachRepositoryMock.Object,
             _locationRepositoryMock.Object,
             _unitOfWorkMock.Object,
-            _loggerMock.Object);
+            _loggerMock.Object,
+            _currentUserMock.Object);
     }
 
     [Fact]
@@ -40,7 +45,7 @@ public class UpdateLocationCommandHandlerTests
     public async Task Handle_InvalidLatitude_ReturnsFailure()
     {
         var coachId = Guid.NewGuid();
-        var coach = TestDataBuilder.CreateCoach(id: coachId);
+        var coach = TestDataBuilder.CreateCoach(id: coachId, userId: _testUserId);
 
         _coachRepositoryMock.Setup(r => r.GetByIdAsync(coachId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(coach);
@@ -60,7 +65,7 @@ public class UpdateLocationCommandHandlerTests
     public async Task Handle_InvalidLongitude_ReturnsFailure()
     {
         var coachId = Guid.NewGuid();
-        var coach = TestDataBuilder.CreateCoach(id: coachId);
+        var coach = TestDataBuilder.CreateCoach(id: coachId, userId: _testUserId);
 
         _coachRepositoryMock.Setup(r => r.GetByIdAsync(coachId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(coach);
@@ -80,7 +85,7 @@ public class UpdateLocationCommandHandlerTests
     public async Task Handle_ValidLocation_CreatesAndReturnsSuccess()
     {
         var coachId = Guid.NewGuid();
-        var coach = TestDataBuilder.CreateCoach(id: coachId);
+        var coach = TestDataBuilder.CreateCoach(id: coachId, userId: _testUserId);
 
         _coachRepositoryMock.Setup(r => r.GetByIdAsync(coachId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(coach);

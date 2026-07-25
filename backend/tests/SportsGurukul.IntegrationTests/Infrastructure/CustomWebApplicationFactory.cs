@@ -97,6 +97,24 @@ public class CustomWebApplicationFactory : WebApplicationFactory<ApiMarker>, IAs
                 opts.Audience = JwtTestHelper.TestAudience;
                 opts.SigningKey = JwtTestHelper.TestSigningKey;
             });
+
+            services.PostConfigure<Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions>(
+                Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme,
+                opts =>
+                {
+                    opts.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = JwtTestHelper.TestIssuer,
+                        ValidAudience = JwtTestHelper.TestAudience,
+                        IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(
+                            System.Text.Encoding.UTF8.GetBytes(JwtTestHelper.TestSigningKey)),
+                        ClockSkew = TimeSpan.FromMinutes(1)
+                    };
+                });
         });
     }
 
@@ -104,6 +122,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<ApiMarker>, IAs
     {
         using var scope = Services.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        await dbContext.Database.EnsureDeletedAsync();
         await dbContext.Database.EnsureCreatedAsync();
     }
 

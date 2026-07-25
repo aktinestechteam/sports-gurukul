@@ -8,6 +8,14 @@ public class SportRepository : Repository<Sport>, ISportRepository
 {
     public SportRepository(ApplicationDbContext context) : base(context) { }
 
+    public override async Task<Sport?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await Context.Sports
+            .AsNoTracking()
+            .Include(s => s.SportCategory)
+            .FirstOrDefaultAsync(s => s.Id == id && !s.IsDeleted, cancellationToken);
+    }
+
     public async Task<Sport?> GetByNameAsync(string name, CancellationToken cancellationToken = default)
     {
         return await Context.Sports

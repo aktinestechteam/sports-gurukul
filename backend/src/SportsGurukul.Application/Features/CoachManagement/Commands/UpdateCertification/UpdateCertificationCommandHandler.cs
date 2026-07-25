@@ -9,17 +9,23 @@ namespace SportsGurukul.Application.Features.CoachManagement.Commands.UpdateCert
 public class UpdateCertificationCommandHandler : IRequestHandler<UpdateCertificationCommand, Result<CertificationDto>>
 {
     private readonly ICoachCertificationRepository _coachCertificationRepository;
+    private readonly ICoachRepository _coachRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<UpdateCertificationCommandHandler> _logger;
+    private readonly ICurrentUser _currentUser;
 
     public UpdateCertificationCommandHandler(
         ICoachCertificationRepository coachCertificationRepository,
+        ICoachRepository coachRepository,
         IUnitOfWork unitOfWork,
-        ILogger<UpdateCertificationCommandHandler> logger)
+        ILogger<UpdateCertificationCommandHandler> logger,
+        ICurrentUser currentUser)
     {
         _coachCertificationRepository = coachCertificationRepository;
+        _coachRepository = coachRepository;
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _currentUser = currentUser;
     }
 
     public async Task<Result<CertificationDto>> Handle(UpdateCertificationCommand request, CancellationToken cancellationToken)
@@ -32,6 +38,10 @@ public class UpdateCertificationCommandHandler : IRequestHandler<UpdateCertifica
             _logger.LogWarning("Certification not found: {CertificationId}", request.CertificationId);
             return Result<CertificationDto>.Failure("Certification not found.");
         }
+
+        var coach = await _coachRepository.GetByIdAsync(certification.CoachId, cancellationToken);
+        if (coach is not null && _currentUser.Roles.Contains("Coach") && coach.UserId != _currentUser.UserId)
+            return Result<CertificationDto>.Failure("You are not authorized to modify this coach's data.");
 
         if (request.CertificationName is not null) certification.CertificationName = request.CertificationName;
         if (request.IssuingAuthority is not null) certification.IssuingAuthority = request.IssuingAuthority;

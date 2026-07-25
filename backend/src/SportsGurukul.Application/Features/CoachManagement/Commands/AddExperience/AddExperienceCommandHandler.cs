@@ -13,17 +13,20 @@ public class AddExperienceCommandHandler : IRequestHandler<AddExperienceCommand,
     private readonly IRepository<CoachExperience> _coachExperienceRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<AddExperienceCommandHandler> _logger;
+    private readonly ICurrentUser _currentUser;
 
     public AddExperienceCommandHandler(
         ICoachRepository coachRepository,
         IRepository<CoachExperience> coachExperienceRepository,
         IUnitOfWork unitOfWork,
-        ILogger<AddExperienceCommandHandler> logger)
+        ILogger<AddExperienceCommandHandler> logger,
+        ICurrentUser currentUser)
     {
         _coachRepository = coachRepository;
         _coachExperienceRepository = coachExperienceRepository;
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _currentUser = currentUser;
     }
 
     public async Task<Result<ExperienceDto>> Handle(AddExperienceCommand request, CancellationToken cancellationToken)
@@ -36,6 +39,9 @@ public class AddExperienceCommandHandler : IRequestHandler<AddExperienceCommand,
             _logger.LogWarning("Coach not found: {CoachId}", request.CoachId);
             return Result<ExperienceDto>.Failure("Coach not found.");
         }
+
+        if (_currentUser.Roles.Contains("Coach") && coach.UserId != _currentUser.UserId)
+            return Result<ExperienceDto>.Failure("You are not authorized to modify this coach's data.");
 
         var experience = new CoachExperience
         {

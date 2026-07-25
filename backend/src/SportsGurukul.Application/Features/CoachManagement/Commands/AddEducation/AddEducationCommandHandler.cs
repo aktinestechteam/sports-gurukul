@@ -13,17 +13,20 @@ public class AddEducationCommandHandler : IRequestHandler<AddEducationCommand, R
     private readonly IRepository<CoachEducation> _educationRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<AddEducationCommandHandler> _logger;
+    private readonly ICurrentUser _currentUser;
 
     public AddEducationCommandHandler(
         ICoachRepository coachRepository,
         IRepository<CoachEducation> educationRepository,
         IUnitOfWork unitOfWork,
-        ILogger<AddEducationCommandHandler> logger)
+        ILogger<AddEducationCommandHandler> logger,
+        ICurrentUser currentUser)
     {
         _coachRepository = coachRepository;
         _educationRepository = educationRepository;
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _currentUser = currentUser;
     }
 
     public async Task<Result<EducationDto>> Handle(AddEducationCommand request, CancellationToken cancellationToken)
@@ -33,6 +36,9 @@ public class AddEducationCommandHandler : IRequestHandler<AddEducationCommand, R
         var coach = await _coachRepository.GetByIdAsync(request.CoachId, cancellationToken);
         if (coach is null)
             return Result<EducationDto>.Failure("Coach not found.");
+
+        if (_currentUser.Roles.Contains("Coach") && coach.UserId != _currentUser.UserId)
+            return Result<EducationDto>.Failure("You are not authorized to modify this coach's data.");
 
         var education = new CoachEducation
         {

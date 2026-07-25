@@ -13,14 +13,19 @@ public class UpdateCoachProfileCommandHandlerTests
     private readonly Mock<ICoachRepository> _coachRepositoryMock = TestMocks.CreateCoachRepository();
     private readonly Mock<IUnitOfWork> _unitOfWorkMock = TestMocks.CreateUnitOfWork();
     private readonly Mock<ILogger<UpdateCoachProfileCommandHandler>> _loggerMock = TestMocks.CreateLogger<UpdateCoachProfileCommandHandler>();
+    private readonly Mock<ICurrentUser> _currentUserMock = new();
+    private readonly Guid _testUserId = Guid.NewGuid();
     private readonly UpdateCoachProfileCommandHandler _handler;
 
     public UpdateCoachProfileCommandHandlerTests()
     {
+        _currentUserMock.Setup(u => u.Roles).Returns(new List<string> { "Coach" });
+        _currentUserMock.Setup(u => u.UserId).Returns(_testUserId);
         _handler = new UpdateCoachProfileCommandHandler(
             _coachRepositoryMock.Object,
             _unitOfWorkMock.Object,
-            _loggerMock.Object);
+            _loggerMock.Object,
+            _currentUserMock.Object);
     }
 
     [Fact]
@@ -38,7 +43,7 @@ public class UpdateCoachProfileCommandHandlerTests
     [Fact]
     public async Task Handle_UpdateFields_UpdatesAndReturnsSuccess()
     {
-        var coach = TestDataBuilder.CreateCoachWithDetails();
+        var coach = TestDataBuilder.CreateCoachWithDetails(userId: _testUserId);
         _coachRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync(coach.Id, It.IsAny<CancellationToken>()))
             .ReturnsAsync(coach);
         _unitOfWorkMock.Setup(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()))
@@ -71,7 +76,7 @@ public class UpdateCoachProfileCommandHandlerTests
     [Fact]
     public async Task Handle_NullFields_DoesNotOverwrite()
     {
-        var coach = TestDataBuilder.CreateCoachWithDetails();
+        var coach = TestDataBuilder.CreateCoachWithDetails(userId: _testUserId);
         var originalBiography = coach.Biography;
         var originalExperience = coach.YearsOfExperience;
         var originalOrganization = coach.CurrentOrganization;

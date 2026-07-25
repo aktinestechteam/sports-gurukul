@@ -28,7 +28,7 @@ public class ActivateCoachCommandHandler : IRequestHandler<ActivateCoachCommand,
     {
         _logger.LogInformation("Activating coach with Id: {CoachId}", request.CoachId);
 
-        var coach = await _coachRepository.GetByIdWithDetailsAsync(request.CoachId);
+        var coach = await _coachRepository.GetByIdWithDetailsAsync(request.CoachId, cancellationToken);
         if (coach is null)
             return Result<CoachDto>.Failure("Coach not found.");
 

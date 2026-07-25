@@ -9,17 +9,23 @@ namespace SportsGurukul.Application.Features.CoachManagement.Commands.DeleteExpe
 public class DeleteExperienceCommandHandler : IRequestHandler<DeleteExperienceCommand, Result<Unit>>
 {
     private readonly IRepository<CoachExperience> _experienceRepository;
+    private readonly ICoachRepository _coachRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<DeleteExperienceCommandHandler> _logger;
+    private readonly ICurrentUser _currentUser;
 
     public DeleteExperienceCommandHandler(
         IRepository<CoachExperience> experienceRepository,
+        ICoachRepository coachRepository,
         IUnitOfWork unitOfWork,
-        ILogger<DeleteExperienceCommandHandler> logger)
+        ILogger<DeleteExperienceCommandHandler> logger,
+        ICurrentUser currentUser)
     {
         _experienceRepository = experienceRepository;
+        _coachRepository = coachRepository;
         _unitOfWork = unitOfWork;
         _logger = logger;
+        _currentUser = currentUser;
     }
 
     public async Task<Result<Unit>> Handle(DeleteExperienceCommand request, CancellationToken cancellationToken)
@@ -29,6 +35,10 @@ public class DeleteExperienceCommandHandler : IRequestHandler<DeleteExperienceCo
         var experience = await _experienceRepository.GetByIdAsync(request.ExperienceId, cancellationToken);
         if (experience is null)
             return Result<Unit>.Failure("Experience not found.");
+
+        var coach = await _coachRepository.GetByIdAsync(experience.CoachId, cancellationToken);
+        if (coach is not null && _currentUser.Roles.Contains("Coach") && coach.UserId != _currentUser.UserId)
+            return Result<Unit>.Failure("You are not authorized to modify this coach's data.");
 
         _experienceRepository.Remove(experience);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
