@@ -47,6 +47,18 @@ public static class DependencyInjection
         services.AddScoped<ICoachAvailabilityRepository, CoachAvailabilityRepository>();
         services.AddScoped<ICoachDocumentRepository, CoachDocumentRepository>();
         services.AddScoped<ICoachSearchRepository, CoachSearchRepository>();
+        services.AddScoped<IAcademyRepository, AcademyRepository>();
+        services.AddScoped<IAcademyBranchRepository, AcademyBranchRepository>();
+        services.AddScoped<IAcademyFacilityRepository, AcademyFacilityRepository>();
+        services.AddScoped<IAcademyMembershipRepository, AcademyMembershipRepository>();
+        services.AddScoped<ICoachAcademyRepository, CoachAcademyRepository>();
+        services.AddScoped<IAthleteAcademyRepository, AthleteAcademyRepository>();
+        services.AddScoped<IFacilityRepository, FacilityRepository>();
+        services.AddScoped<IFacilityCourtRepository, FacilityCourtRepository>();
+        services.AddScoped<IFacilityEquipmentRepository, FacilityEquipmentRepository>();
+        services.AddScoped<IFacilityScheduleRepository, FacilityScheduleRepository>();
+        services.AddScoped<IFacilityPricingRepository, FacilityPricingRepository>();
+        services.AddScoped<IAcademySearchRepository, AcademySearchRepository>();
 
         services.AddMemoryCache();
         services.AddScoped<ICacheService, MemoryCacheService>();

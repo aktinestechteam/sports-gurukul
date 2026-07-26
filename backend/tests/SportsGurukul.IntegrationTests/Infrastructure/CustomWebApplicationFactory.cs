@@ -71,7 +71,19 @@ public class CustomWebApplicationFactory : WebApplicationFactory<ApiMarker>, IAs
                 s.ServiceType == typeof(IAthleteDocumentRepository) ||
                 s.ServiceType == typeof(ISavedSearchRepository) ||
                 s.ServiceType == typeof(IRecentSearchRepository) ||
-                s.ServiceType == typeof(ICoachSearchRepository)).ToList();
+                s.ServiceType == typeof(ICoachSearchRepository) ||
+                s.ServiceType == typeof(IAcademyRepository) ||
+                s.ServiceType == typeof(IAcademyBranchRepository) ||
+                s.ServiceType == typeof(IAcademyFacilityRepository) ||
+                s.ServiceType == typeof(IAcademyMembershipRepository) ||
+                s.ServiceType == typeof(ICoachAcademyRepository) ||
+                s.ServiceType == typeof(IAthleteAcademyRepository) ||
+                s.ServiceType == typeof(IAcademySearchRepository) ||
+                s.ServiceType == typeof(IFacilityRepository) ||
+                s.ServiceType == typeof(IFacilityCourtRepository) ||
+                s.ServiceType == typeof(IFacilityEquipmentRepository) ||
+                s.ServiceType == typeof(IFacilityScheduleRepository) ||
+                s.ServiceType == typeof(IFacilityPricingRepository)).ToList();
             foreach (var d in specificRepoDescriptors)
                 services.Remove(d);
 
@@ -172,6 +184,18 @@ public static class InfrastructureServiceExtensionsForTest
         services.AddScoped<ICoachAvailabilityRepository, CoachAvailabilityRepository>();
         services.AddScoped<ICoachDocumentRepository, CoachDocumentRepository>();
         services.AddScoped<ICoachSearchRepository, CoachSearchRepository>();
+        services.AddScoped<IAcademyRepository, AcademyRepository>();
+        services.AddScoped<IAcademyBranchRepository, AcademyBranchRepository>();
+        services.AddScoped<IAcademyFacilityRepository, AcademyFacilityRepository>();
+        services.AddScoped<IAcademyMembershipRepository, AcademyMembershipRepository>();
+        services.AddScoped<ICoachAcademyRepository, CoachAcademyRepository>();
+        services.AddScoped<IAthleteAcademyRepository, AthleteAcademyRepository>();
+        services.AddScoped<IAcademySearchRepository, AcademySearchRepository>();
+        services.AddScoped<IFacilityRepository, FacilityRepository>();
+        services.AddScoped<IFacilityCourtRepository, FacilityCourtRepository>();
+        services.AddScoped<IFacilityEquipmentRepository, FacilityEquipmentRepository>();
+        services.AddScoped<IFacilityScheduleRepository, FacilityScheduleRepository>();
+        services.AddScoped<IFacilityPricingRepository, FacilityPricingRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRoleRepository, RoleRepository>();
         services.AddScoped<IUserRoleRepository, UserRoleRepository>();

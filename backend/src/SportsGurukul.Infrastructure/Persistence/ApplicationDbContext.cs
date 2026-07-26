@@ -58,6 +58,37 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<SavedSearch> SavedSearches => Set<SavedSearch>();
     public DbSet<RecentSearch> RecentSearches => Set<RecentSearch>();
 
+    public DbSet<SavedAcademySearch> SavedAcademySearches => Set<SavedAcademySearch>();
+    public DbSet<RecentAcademySearch> RecentAcademySearches => Set<RecentAcademySearch>();
+    public DbSet<AcademyView> AcademyViews => Set<AcademyView>();
+
+    public DbSet<Academy> Academies => Set<Academy>();
+    public DbSet<AcademyBranch> AcademyBranches => Set<AcademyBranch>();
+    public DbSet<AcademySport> AcademySports => Set<AcademySport>();
+    public DbSet<AcademyFacility> AcademyFacilities => Set<AcademyFacility>();
+    public DbSet<AcademyOperatingHours> AcademyOperatingHours => Set<AcademyOperatingHours>();
+    public DbSet<AcademyContact> AcademyContacts => Set<AcademyContact>();
+    public DbSet<AcademySocialLink> AcademySocialLinks => Set<AcademySocialLink>();
+    public DbSet<AcademyMembership> AcademyMemberships => Set<AcademyMembership>();
+    public DbSet<AcademyVerification> AcademyVerifications => Set<AcademyVerification>();
+    public DbSet<AcademyDocument> AcademyDocuments => Set<AcademyDocument>();
+    public DbSet<AcademyGallery> AcademyGalleries => Set<AcademyGallery>();
+
+    public DbSet<CoachAcademy> CoachAcademies => Set<CoachAcademy>();
+    public DbSet<AthleteAcademy> AthleteAcademies => Set<AthleteAcademy>();
+
+    // Facility & Infrastructure
+    public DbSet<Facility> Facilities => Set<Facility>();
+    public DbSet<FacilityArea> FacilityAreas => Set<FacilityArea>();
+    public DbSet<FacilityCourt> FacilityCourts => Set<FacilityCourt>();
+    public DbSet<FacilityEquipment> FacilityEquipment => Set<FacilityEquipment>();
+    public DbSet<EquipmentMaintenance> EquipmentMaintenance => Set<EquipmentMaintenance>();
+    public DbSet<FacilitySchedule> FacilitySchedules => Set<FacilitySchedule>();
+    public DbSet<FacilityPricing> FacilityPricing => Set<FacilityPricing>();
+    public DbSet<FacilityImage> FacilityImages => Set<FacilityImage>();
+    public DbSet<FacilityAmenity> FacilityAmenities => Set<FacilityAmenity>();
+    public DbSet<FacilityReview> FacilityReviews => Set<FacilityReview>();
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<BaseEntity>())

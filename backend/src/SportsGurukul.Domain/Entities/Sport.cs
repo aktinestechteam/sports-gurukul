@@ -14,4 +14,5 @@ public class Sport : BaseEntity
     public SportCategory SportCategory { get; set; } = null!;
     public ICollection<AthleteSport> AthleteSports { get; set; } = new List<AthleteSport>();
     public ICollection<CoachSport> CoachSports { get; set; } = new List<CoachSport>();
+    public ICollection<AcademySport> AcademySports { get; set; } = new List<AcademySport>();
 }
