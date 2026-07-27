@@ -6,6 +6,7 @@ using SportsGurukul.Application.Common.Interfaces;
 using SportsGurukul.Application.Features.BookingSchedulingManagement.Calendar.Abstractions;
 using SportsGurukul.Application.Features.BookingSchedulingManagement.Calendar.Ics;
 using SportsGurukul.Application.Features.BookingSchedulingManagement.Services;
+using SportsGurukul.Application.Features.TournamentManagement.Services;
 
 namespace SportsGurukul.Application;
 
@@ -40,6 +41,12 @@ public static class DependencyInjection
 
         services.AddTransient<ICalendarExporter, IcsExporter>();
         services.AddTransient<ICalendarImporter, IcsImporter>();
+
+        services.AddTransient<IBracketGenerationService, StubBracketGenerationService>();
+        services.AddTransient<IFixtureGenerationService, StubFixtureGenerationService>();
+        services.AddTransient<ISeedingService, StubSeedingService>();
+        services.AddTransient<IRankingCalculationService, StubRankingCalculationService>();
+        services.AddTransient<IScoringService, StubScoringService>();
 
         return services;
     }

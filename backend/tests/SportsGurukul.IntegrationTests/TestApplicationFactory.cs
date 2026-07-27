@@ -116,6 +116,16 @@ public class TestApplicationFactory : WebApplicationFactory<ApiMarker>
 public class InMemoryUnitOfWork : IUnitOfWork, IApplicationDbContext
 {
     public DbSet<TrainingCertificate> Certificates { get; } = null!;
+    public DbSet<Tournament> Tournaments { get; } = null!;
+    public DbSet<TournamentMatch> TournamentMatches { get; } = null!;
+    public DbSet<TournamentRegistration> TournamentRegistrations { get; } = null!;
+    public DbSet<TournamentBracket> TournamentBrackets { get; } = null!;
+    public DbSet<TournamentRanking> TournamentRankings { get; } = null!;
+    public DbSet<TournamentParticipant> TournamentParticipants { get; } = null!;
+    public DbSet<TournamentFixture> TournamentFixtures { get; } = null!;
+    public DbSet<TournamentResult> TournamentResults { get; } = null!;
+    public DbSet<TournamentAward> TournamentAwards { get; } = null!;
+    public DbSet<TournamentOfficial> TournamentOfficials { get; } = null!;
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) => Task.FromResult(1);
     public void Dispose() { }
 }

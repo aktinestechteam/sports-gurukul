@@ -72,6 +72,13 @@ public static class DependencyInjection
         services.AddScoped<IConflictRepository, ConflictRepository>();
         services.AddScoped<IWaitlistRepository, WaitlistRepository>();
 
+        // Tournament Management
+        services.AddScoped<ITournamentRepository, TournamentRepository>();
+        services.AddScoped<IMatchRepository, MatchRepository>();
+        services.AddScoped<IRegistrationRepository, RegistrationRepository>();
+        services.AddScoped<IBracketRepository, BracketRepository>();
+        services.AddScoped<IRankingRepository, RankingRepository>();
+
         services.AddMemoryCache();
         services.AddScoped<ICacheService, MemoryCacheService>();
 

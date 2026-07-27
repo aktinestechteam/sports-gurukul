@@ -121,6 +121,32 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<BookingHistory> BookingHistories => Set<BookingHistory>();
     public DbSet<BookingAttachment> BookingAttachments => Set<BookingAttachment>();
 
+    // Tournament Management
+    public DbSet<Tournament> Tournaments => Set<Tournament>();
+    public DbSet<TournamentCategory> TournamentCategories => Set<TournamentCategory>();
+    public DbSet<TournamentSport> TournamentSports => Set<TournamentSport>();
+    public DbSet<TournamentDivision> TournamentDivisions => Set<TournamentDivision>();
+    public DbSet<TournamentVenue> TournamentVenues => Set<TournamentVenue>();
+    public DbSet<TournamentCourt> TournamentCourts => Set<TournamentCourt>();
+    public DbSet<TournamentStage> TournamentStages => Set<TournamentStage>();
+    public DbSet<TournamentRound> TournamentRounds => Set<TournamentRound>();
+    public DbSet<TournamentMatch> TournamentMatches => Set<TournamentMatch>();
+    public DbSet<TournamentMatchSet> TournamentMatchSets => Set<TournamentMatchSet>();
+    public DbSet<TournamentFixture> TournamentFixtures => Set<TournamentFixture>();
+    public DbSet<TournamentParticipant> TournamentParticipants => Set<TournamentParticipant>();
+    public DbSet<TournamentTeam> TournamentTeams => Set<TournamentTeam>();
+    public DbSet<TournamentRegistration> TournamentRegistrations => Set<TournamentRegistration>();
+    public DbSet<TournamentSeed> TournamentSeeds => Set<TournamentSeed>();
+    public DbSet<TournamentBracket> TournamentBrackets => Set<TournamentBracket>();
+    public DbSet<TournamentResult> TournamentResults => Set<TournamentResult>();
+    public DbSet<TournamentRanking> TournamentRankings => Set<TournamentRanking>();
+    public DbSet<TournamentAward> TournamentAwards => Set<TournamentAward>();
+    public DbSet<TournamentOfficial> TournamentOfficials => Set<TournamentOfficial>();
+    public DbSet<TournamentSponsor> TournamentSponsors => Set<TournamentSponsor>();
+    public DbSet<TournamentDocument> TournamentDocuments => Set<TournamentDocument>();
+    public DbSet<TournamentGallery> TournamentGallery_ => Set<TournamentGallery>();
+    public DbSet<TournamentRule> TournamentRules => Set<TournamentRule>();
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<BaseEntity>())
