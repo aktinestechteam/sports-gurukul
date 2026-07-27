@@ -12,6 +12,7 @@ using SportsGurukul.Api.Common.Filters;
 using SportsGurukul.Application;
 using SportsGurukul.Infrastructure;
 using SportsGurukul.Infrastructure.Authentication;
+using SportsGurukul.Platform.Competition;
 using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -160,6 +161,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddAuthenticationServices(builder.Configuration);
+builder.Services.AddCompetitionEngine();
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {

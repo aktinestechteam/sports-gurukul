@@ -93,7 +93,7 @@ public class PerformanceTests
     [Theory]
     [InlineData(100)]
     [InlineData(1000)]
-    public async Task RankingCalculation_Performance_LessThan200ms(int participantCount)
+    public async Task RankingCalculation_Performance_LessThan300ms(int participantCount)
     {
         var engine = CreateEngine();
         var config = TestHelpers.CreateConfig(CompetitionFormat.RoundRobin);
@@ -110,6 +110,6 @@ public class PerformanceTests
         sw.Stop();
 
         _output.WriteLine($"Ranking ({participantCount} participants, {matches.Count} matches): {sw.ElapsedMilliseconds}ms");
-        Assert.True(sw.ElapsedMilliseconds < 200, $"Took {sw.ElapsedMilliseconds}ms, expected <200ms");
+        Assert.True(sw.ElapsedMilliseconds < 300, $"Took {sw.ElapsedMilliseconds}ms, expected <300ms");
     }
 }

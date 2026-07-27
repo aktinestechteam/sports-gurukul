@@ -5,6 +5,7 @@ using SportsGurukul.Platform.Competition.Interfaces;
 using SportsGurukul.Platform.Competition.Models.Enums;
 using SportsGurukul.Platform.Competition.Seeding;
 using SportsGurukul.Platform.Competition.Services;
+using SportsGurukul.Platform.Competition.Services.Providers;
 
 namespace SportsGurukul.Platform.Competition;
 
@@ -35,6 +36,23 @@ public static class DependencyInjection
         services.AddScoped<IMatchScheduler, MatchScheduler>();
         services.AddScoped<IRankingCalculator, RankingCalculator>();
         services.AddScoped<ICompetitionEngine, CompetitionEngine>();
+
+        services.AddSingleton<MemoryMatchStore>();
+        services.AddSingleton<ILiveUpdatePublisher, SignalRLiveUpdatePublisher>();
+        services.AddSingleton<ILiveScoreCache, RedisLiveScoreCache>();
+        services.AddSingleton<ISportRuleProvider, FootballSportRuleProvider>();
+        services.AddSingleton<ISportRuleProvider, CricketSportRuleProvider>();
+        services.AddSingleton<ISportRuleProvider, BadmintonSportRuleProvider>();
+        services.AddSingleton<ISportRuleProvider, ChessSportRuleProvider>();
+        services.AddSingleton<ISportRuleProvider, AthleticsSportRuleProvider>();
+        services.AddSingleton<ISportRuleProvider, SwimmingSportRuleProvider>();
+        services.AddScoped<ILiveScoringService, LiveScoringService>();
+        services.AddScoped<IMatchLifecycleService, MatchLifecycleService>();
+        services.AddScoped<IRankingService, RankingService>();
+        services.AddScoped<IStandingsService, StandingsService>();
+        services.AddScoped<IMedalService, MedalService>();
+        services.AddScoped<ILeaderboardService, LeaderboardService>();
+        services.AddScoped<IStatisticsService, StatisticsService>();
 
         return services;
     }

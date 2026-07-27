@@ -1,0 +1,10 @@
+global using Xunit;
+global using Moq;
+global using FluentAssertions;
+global using Microsoft.Extensions.Logging;
+global using SportsGurukul.Application.Common.Interfaces;
+global using SportsGurukul.Application.Common.Models;
+global using SportsGurukul.Domain.Enums;
+global using SportsGurukul.Domain.Entities;
+global using TournamentEntity = SportsGurukul.Domain.Entities.Tournament;
+global using TournamentTestShared;
