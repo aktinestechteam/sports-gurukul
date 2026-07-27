@@ -84,7 +84,11 @@ public class TestWebApplicationFactory : WebApplicationFactory<ApiMarker>, IAsyn
                 s.ServiceType == typeof(IFacilityCourtRepository) ||
                 s.ServiceType == typeof(IFacilityEquipmentRepository) ||
                 s.ServiceType == typeof(IFacilityScheduleRepository) ||
-                s.ServiceType == typeof(IFacilityPricingRepository)).ToList();
+                s.ServiceType == typeof(IFacilityPricingRepository) ||
+                s.ServiceType == typeof(IBookingRepository) ||
+                s.ServiceType == typeof(IBookingScheduleRepository) ||
+                s.ServiceType == typeof(IConflictRepository) ||
+                s.ServiceType == typeof(IWaitlistRepository)).ToList();
             foreach (var d in specificRepoDescriptors)
                 services.Remove(d);
 
@@ -206,6 +210,10 @@ public static class InfrastructureServiceExtensionsForTest
         services.AddScoped<IPermissionRepository, PermissionRepository>();
         services.AddScoped<IUserProfileRepository, UserProfileRepository>();
         services.AddScoped<IFileRepository, FileRepository>();
+        services.AddScoped<IBookingRepository, BookingRepository>();
+        services.AddScoped<IBookingScheduleRepository, BookingScheduleRepository>();
+        services.AddScoped<IConflictRepository, ConflictRepository>();
+        services.AddScoped<IWaitlistRepository, WaitlistRepository>();
         services.AddMemoryCache();
         services.AddScoped<ICacheService, MemoryCacheService>();
         services.AddScoped<LocalStorageService>();

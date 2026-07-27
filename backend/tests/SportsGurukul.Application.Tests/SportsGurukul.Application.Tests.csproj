@@ -5,6 +5,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+    <CollectCoverage>true</CollectCoverage>
+    <CoverletOutputFormat>lcov,cobertura</CoverletOutputFormat>
+    <CoverletOutput>./TestResults/coverage</CoverletOutput>
+    <Exclude>[SportsGurukul.Api]*,[SportsGurukul.Infrastructure]*</Exclude>
+    <Include>[SportsGurukul.Application]*,[SportsGurukul.Domain]*</Include>
   </PropertyGroup>
 
   <ItemGroup>
