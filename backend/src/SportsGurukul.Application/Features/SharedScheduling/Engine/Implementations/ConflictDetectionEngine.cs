@@ -6,20 +6,15 @@ namespace SportsGurukul.Application.Features.SharedScheduling.Engine;
 
 public class ConflictDetectionEngine : IConflictDetectionEngine
 {
-    private readonly IAvailabilityEngine _availabilityEngine;
     private readonly ILogger<ConflictDetectionEngine> _logger;
-
     private readonly List<ConflictInfo> _conflictStore = [];
 
-    public ConflictDetectionEngine(
-        IAvailabilityEngine availabilityEngine,
-        ILogger<ConflictDetectionEngine> logger)
+    public ConflictDetectionEngine(ILogger<ConflictDetectionEngine> logger)
     {
-        _availabilityEngine = availabilityEngine;
         _logger = logger;
     }
 
-    public async Task<IReadOnlyList<ConflictInfo>> DetectConflictsAsync(
+    public Task<IReadOnlyList<ConflictInfo>> DetectConflictsAsync(
         TimeSlot slot, IReadOnlyList<ResourceRequirement> resources,
         SchedulingContext context, Guid? excludeItemId = null,
         CancellationToken cancellationToken = default)
@@ -82,10 +77,10 @@ public class ConflictDetectionEngine : IConflictDetectionEngine
             conflicts.Count, slot.Date, slot.StartTime, slot.EndTime);
 
         _conflictStore.AddRange(conflicts);
-        return conflicts;
+        return Task.FromResult<IReadOnlyList<ConflictInfo>>(conflicts);
     }
 
-    public async Task<IReadOnlyList<ConflictInfo>> DetectConflictsForMultipleSlotsAsync(
+    public Task<IReadOnlyList<ConflictInfo>> DetectConflictsForMultipleSlotsAsync(
         IReadOnlyList<TimeSlot> slots, IReadOnlyList<ResourceRequirement> resources,
         SchedulingContext context, Guid? excludeItemId = null,
         CancellationToken cancellationToken = default)
@@ -93,21 +88,21 @@ public class ConflictDetectionEngine : IConflictDetectionEngine
         var allConflicts = new List<ConflictInfo>();
         foreach (var slot in slots)
         {
-            var conflicts = await DetectConflictsAsync(
-                slot, resources, context, excludeItemId, cancellationToken);
+            var conflicts = DetectConflictsAsync(
+                slot, resources, context, excludeItemId, cancellationToken).Result;
             allConflicts.AddRange(conflicts);
         }
-        return allConflicts;
+        return Task.FromResult<IReadOnlyList<ConflictInfo>>(allConflicts);
     }
 
-    public async Task<bool> HasConflictAsync(
+    public Task<bool> HasConflictAsync(
         TimeSlot slot, IReadOnlyList<ResourceRequirement> resources,
         SchedulingContext context, Guid? excludeItemId = null,
         CancellationToken cancellationToken = default)
     {
-        var conflicts = await DetectConflictsAsync(
-            slot, resources, context, excludeItemId, cancellationToken);
-        return conflicts.Count > 0;
+        var conflicts = DetectConflictsAsync(
+            slot, resources, context, excludeItemId, cancellationToken).Result;
+        return Task.FromResult(conflicts.Count > 0);
     }
 
     public Task<IReadOnlyList<ConflictInfo>> GetUnresolvedConflictsAsync(

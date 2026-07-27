@@ -8,18 +8,15 @@ public class AvailabilityEngine : IAvailabilityEngine
 {
     private readonly ITimeSlotGenerator _slotGenerator;
     private readonly IBusinessHoursProvider _businessHoursProvider;
-    private readonly IConflictDetectionEngine _conflictDetectionEngine;
     private readonly ILogger<AvailabilityEngine> _logger;
 
     public AvailabilityEngine(
         ITimeSlotGenerator slotGenerator,
         IBusinessHoursProvider businessHoursProvider,
-        IConflictDetectionEngine conflictDetectionEngine,
         ILogger<AvailabilityEngine> logger)
     {
         _slotGenerator = slotGenerator;
         _businessHoursProvider = businessHoursProvider;
-        _conflictDetectionEngine = conflictDetectionEngine;
         _logger = logger;
     }
 

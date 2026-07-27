@@ -5,220 +5,251 @@ using SportsGurukul.Api.Common.Models;
 using SportsGurukul.Application.Features.BookingSchedulingManagement.DTOs;
 using SportsGurukul.Domain.Enums;
 
-namespace Booking.IntegrationTests;
+namespace Booking.IntegrationTests.Tests.Approval;
 
 [Collection("Postgres")]
-public class BookingTests : BaseIntegrationTest
+public class ApprovalWorkflowTests : BaseIntegrationTest
 {
-    public BookingTests(TestWebApplicationFactory factory) : base(factory)
+    public ApprovalWorkflowTests(TestWebApplicationFactory factory) : base(factory)
     {
     }
 
+    #region Approve Booking
+
     [Fact]
-    public async Task CreateBooking_ReturnsSuccessStatusCodeAndBookingId()
+    public async Task ApproveBooking_PendingBooking_ApprovesSuccessfully()
     {
-        var request = new
+        var createResponse = await HttpClient.PostAsJsonAsync("/api/v1/bookings", new
         {
             BookingType = BookingType.FacilityReservation,
-            Title = "Test Booking",
-            Description = "Integration test booking",
+            Title = "Approvable Booking",
             AcademyId = Guid.NewGuid(),
-            FacilityId = Guid.NewGuid(),
-            CoachId = Guid.NewGuid(),
-            AthleteId = Guid.NewGuid(),
             BookingDate = DateTime.UtcNow.Date.AddDays(1),
             StartTime = new TimeSpan(9, 0, 0),
             EndTime = new TimeSpan(10, 30, 0)
-        };
+        });
 
-        var response = await HttpClient.PostAsJsonAsync("/api/v1/bookings", request);
+        createResponse.StatusCode.Should().Be(HttpStatusCode.Created);
+        var createContent = await createResponse.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
+        var bookingId = createContent!.Data!.Id;
 
-        response.StatusCode.Should().Be(HttpStatusCode.Created);
+        var response = await HttpClient.PostAsJsonAsync($"/api/v1/bookings/{bookingId}/approval/approve", new
+        {
+            Comments = "Approved for upcoming session"
+        });
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
         var content = await response.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
-        content.Should().NotBeNull();
         content!.Success.Should().BeTrue();
-        content.Data.Should().NotBeNull();
-        content.Data!.Title.Should().Be("Test Booking");
-        content.Data.Status.Should().Be(BookingStatus.Pending.ToString());
     }
 
     [Fact]
-    public async Task UpdateBooking_ExistingBooking_UpdatesSuccessfully()
+    public async Task ApproveBooking_AlreadyApproved_ReturnsBadRequest()
     {
         var createResponse = await HttpClient.PostAsJsonAsync("/api/v1/bookings", new
         {
             BookingType = BookingType.FacilityReservation,
-            Title = "Original Title",
+            Title = "Double Approve Booking",
             AcademyId = Guid.NewGuid(),
             BookingDate = DateTime.UtcNow.Date.AddDays(1),
             StartTime = new TimeSpan(9, 0, 0),
             EndTime = new TimeSpan(10, 30, 0)
         });
+
         createResponse.StatusCode.Should().Be(HttpStatusCode.Created);
         var createContent = await createResponse.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
         var bookingId = createContent!.Data!.Id;
 
-        var updateResponse = await HttpClient.PutAsJsonAsync($"/api/v1/bookings/{bookingId}", new
+        await HttpClient.PostAsJsonAsync($"/api/v1/bookings/{bookingId}/approval/approve", new
         {
-            Title = "Updated Title"
+            Comments = "First approval"
         });
 
-        updateResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-        var updateContent = await updateResponse.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
-        updateContent!.Success.Should().BeTrue();
-        updateContent.Data!.Title.Should().Be("Updated Title");
+        var secondApprovalResponse = await HttpClient.PostAsJsonAsync($"/api/v1/bookings/{bookingId}/approval/approve", new
+        {
+            Comments = "Second approval"
+        });
+
+        secondApprovalResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 
+    #endregion
+
+    #region Reject Booking
+
     [Fact]
-    public async Task GetBookingById_ExistingBooking_ReturnsBooking()
+    public async Task RejectBooking_PendingBooking_RejectsSuccessfully()
     {
         var createResponse = await HttpClient.PostAsJsonAsync("/api/v1/bookings", new
         {
             BookingType = BookingType.FacilityReservation,
-            Title = "Get Booking Test",
+            Title = "Rejectable Booking",
             AcademyId = Guid.NewGuid(),
             BookingDate = DateTime.UtcNow.Date.AddDays(1),
             StartTime = new TimeSpan(9, 0, 0),
             EndTime = new TimeSpan(10, 30, 0)
         });
+
         createResponse.StatusCode.Should().Be(HttpStatusCode.Created);
         var createContent = await createResponse.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
         var bookingId = createContent!.Data!.Id;
 
-        var getResponse = await HttpClient.GetAsync($"/api/v1/bookings/{bookingId}");
+        var response = await HttpClient.PostAsJsonAsync($"/api/v1/bookings/{bookingId}/approval/reject", new
+        {
+            Reason = "Facility unavailable"
+        });
 
-        getResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-        var getContent = await getResponse.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
-        getContent!.Success.Should().BeTrue();
-        getContent.Data!.Id.Should().Be(bookingId);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        var content = await response.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
+        content!.Success.Should().BeTrue();
     }
 
     [Fact]
-    public async Task GetBookingById_NonExisting_ReturnsNotFound()
-    {
-        var response = await HttpClient.GetAsync($"/api/v1/bookings/{Guid.NewGuid()}");
-        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-    }
-
-    [Fact]
-    public async Task DeleteBooking_ExistingBooking_DeletesSuccessfully()
+    public async Task RejectBooking_NotPending_ReturnsBadRequest()
     {
         var createResponse = await HttpClient.PostAsJsonAsync("/api/v1/bookings", new
         {
             BookingType = BookingType.FacilityReservation,
-            Title = "Deletable Booking",
+            Title = "Non-Pending Booking",
             AcademyId = Guid.NewGuid(),
             BookingDate = DateTime.UtcNow.Date.AddDays(1),
             StartTime = new TimeSpan(9, 0, 0),
             EndTime = new TimeSpan(10, 30, 0)
         });
-        createResponse.StatusCode.Should().Be(HttpStatusCode.Created);
-        var createContent = await createResponse.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
-        var bookingId = createContent!.Data!.Id;
 
-        var deleteResponse = await HttpClient.DeleteAsync($"/api/v1/bookings/{bookingId}");
-        deleteResponse.StatusCode.Should().Be(HttpStatusCode.NoContent);
-
-        var getResponse = await HttpClient.GetAsync($"/api/v1/bookings/{bookingId}");
-        getResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
-    }
-
-    [Fact]
-    public async Task CancelBooking_PendingBooking_CancelsSuccessfully()
-    {
-        var createResponse = await HttpClient.PostAsJsonAsync("/api/v1/bookings", new
-        {
-            BookingType = BookingType.FacilityReservation,
-            Title = "Cancellable Booking",
-            AcademyId = Guid.NewGuid(),
-            BookingDate = DateTime.UtcNow.Date.AddDays(1),
-            StartTime = new TimeSpan(9, 0, 0),
-            EndTime = new TimeSpan(10, 30, 0)
-        });
-        createResponse.StatusCode.Should().Be(HttpStatusCode.Created);
-        var createContent = await createResponse.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
-        var bookingId = createContent!.Data!.Id;
-
-        var cancelResponse = await HttpClient.PostAsJsonAsync($"/api/v1/bookings/{bookingId}/cancel", new
-        {
-            Reason = "Schedule conflict",
-            Notes = "Will reschedule"
-        });
-
-        cancelResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-        var cancelContent = await cancelResponse.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
-        cancelContent!.Success.Should().BeTrue();
-        cancelContent.Data!.Status.Should().Be(BookingStatus.Cancelled.ToString());
-    }
-
-    [Fact]
-    public async Task ConfirmBooking_PendingBooking_ConfirmsSuccessfully()
-    {
-        var createResponse = await HttpClient.PostAsJsonAsync("/api/v1/bookings", new
-        {
-            BookingType = BookingType.FacilityReservation,
-            Title = "Confirmable Booking",
-            AcademyId = Guid.NewGuid(),
-            BookingDate = DateTime.UtcNow.Date.AddDays(1),
-            StartTime = new TimeSpan(9, 0, 0),
-            EndTime = new TimeSpan(10, 30, 0)
-        });
-        createResponse.StatusCode.Should().Be(HttpStatusCode.Created);
-        var createContent = await createResponse.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
-        var bookingId = createContent!.Data!.Id;
-
-        var confirmResponse = await HttpClient.PostAsync($"/api/v1/bookings/{bookingId}/confirm", null);
-        confirmResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-        var confirmContent = await confirmResponse.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
-        confirmContent!.Success.Should().BeTrue();
-        confirmContent.Data!.Status.Should().Be(BookingStatus.Confirmed.ToString());
-    }
-
-    [Fact]
-    public async Task CompleteBooking_ConfirmedBooking_CompletesSuccessfully()
-    {
-        var createResponse = await HttpClient.PostAsJsonAsync("/api/v1/bookings", new
-        {
-            BookingType = BookingType.FacilityReservation,
-            Title = "Completable Booking",
-            AcademyId = Guid.NewGuid(),
-            BookingDate = DateTime.UtcNow.Date.AddDays(1),
-            StartTime = new TimeSpan(9, 0, 0),
-            EndTime = new TimeSpan(10, 30, 0)
-        });
         createResponse.StatusCode.Should().Be(HttpStatusCode.Created);
         var createContent = await createResponse.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
         var bookingId = createContent!.Data!.Id;
 
         await HttpClient.PostAsync($"/api/v1/bookings/{bookingId}/confirm", null);
 
-        var completeResponse = await HttpClient.PostAsync($"/api/v1/bookings/{bookingId}/complete", null);
-        completeResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-        var completeContent = await completeResponse.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
-        completeContent!.Success.Should().BeTrue();
-        completeContent.Data!.Status.Should().Be(BookingStatus.Completed.ToString());
+        var rejectResponse = await HttpClient.PostAsJsonAsync($"/api/v1/bookings/{bookingId}/approval/reject", new
+        {
+            Reason = "Cannot reject confirmed"
+        });
+
+        rejectResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 
+    #endregion
+
+    #region Unauthorized Approval
+
     [Fact]
-    public async Task ExpireBooking_PendingBooking_ExpiresSuccessfully()
+    public async Task ApproveBooking_AthleteRole_ReturnsForbidden()
     {
         var createResponse = await HttpClient.PostAsJsonAsync("/api/v1/bookings", new
         {
             BookingType = BookingType.FacilityReservation,
-            Title = "Expirable Booking",
+            Title = "Unauthorized Approve",
             AcademyId = Guid.NewGuid(),
             BookingDate = DateTime.UtcNow.Date.AddDays(1),
             StartTime = new TimeSpan(9, 0, 0),
             EndTime = new TimeSpan(10, 30, 0)
         });
+
         createResponse.StatusCode.Should().Be(HttpStatusCode.Created);
         var createContent = await createResponse.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
         var bookingId = createContent!.Data!.Id;
 
-        var expireResponse = await HttpClient.PostAsync($"/api/v1/bookings/{bookingId}/expire", null);
-        expireResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-        var expireContent = await expireResponse.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
-        expireContent!.Success.Should().BeTrue();
-        expireContent.Data!.Status.Should().Be(BookingStatus.Expired.ToString());
+        var athleteClient = AuthenticatedHttpClientFactory.CreateClientWithClaims(
+            Factory.CreateClient(), Guid.NewGuid(), "athlete@test.com", "Athlete User", "Athlete");
+
+        var response = await athleteClient.PostAsJsonAsync($"/api/v1/bookings/{bookingId}/approval/approve", new
+        {
+            Comments = "Athlete approving"
+        });
+
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
     }
+
+    [Fact]
+    public async Task RejectBooking_CoachRole_ReturnsForbidden()
+    {
+        var createResponse = await HttpClient.PostAsJsonAsync("/api/v1/bookings", new
+        {
+            BookingType = BookingType.FacilityReservation,
+            Title = "Unauthorized Reject",
+            AcademyId = Guid.NewGuid(),
+            BookingDate = DateTime.UtcNow.Date.AddDays(1),
+            StartTime = new TimeSpan(9, 0, 0),
+            EndTime = new TimeSpan(10, 30, 0)
+        });
+
+        createResponse.StatusCode.Should().Be(HttpStatusCode.Created);
+        var createContent = await createResponse.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
+        var bookingId = createContent!.Data!.Id;
+
+        var coachClient = AuthenticatedHttpClientFactory.CreateClientWithClaims(
+            Factory.CreateClient(), Guid.NewGuid(), "coach@test.com", "Coach User", "Coach");
+
+        var response = await coachClient.PostAsJsonAsync($"/api/v1/bookings/{bookingId}/approval/reject", new
+        {
+            Reason = "Coach rejecting"
+        });
+
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+    }
+
+    #endregion
+
+    #region Role-based Authorization
+
+    [Fact]
+    public async Task ApproveBooking_SystemAdmin_ApprovesSuccessfully()
+    {
+        var createResponse = await HttpClient.PostAsJsonAsync("/api/v1/bookings", new
+        {
+            BookingType = BookingType.FacilityReservation,
+            Title = "System Admin Approve",
+            AcademyId = Guid.NewGuid(),
+            BookingDate = DateTime.UtcNow.Date.AddDays(1),
+            StartTime = new TimeSpan(9, 0, 0),
+            EndTime = new TimeSpan(10, 30, 0)
+        });
+
+        createResponse.StatusCode.Should().Be(HttpStatusCode.Created);
+        var createContent = await createResponse.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
+        var bookingId = createContent!.Data!.Id;
+
+        var adminClient = AuthenticatedHttpClientFactory.CreateClientWithClaims(
+            Factory.CreateClient(), Guid.NewGuid(), "admin@test.com", "System Admin", "System Admin");
+
+        var response = await adminClient.PostAsJsonAsync($"/api/v1/bookings/{bookingId}/approval/approve", new
+        {
+            Comments = "System admin approved"
+        });
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+
+    [Fact]
+    public async Task ApproveBooking_AcademyAdmin_ApprovesSuccessfully()
+    {
+        var createResponse = await HttpClient.PostAsJsonAsync("/api/v1/bookings", new
+        {
+            BookingType = BookingType.FacilityReservation,
+            Title = "Academy Admin Approve",
+            AcademyId = Guid.NewGuid(),
+            BookingDate = DateTime.UtcNow.Date.AddDays(1),
+            StartTime = new TimeSpan(9, 0, 0),
+            EndTime = new TimeSpan(10, 30, 0)
+        });
+
+        createResponse.StatusCode.Should().Be(HttpStatusCode.Created);
+        var createContent = await createResponse.Content.ReadFromJsonAsync<ApiResponse<BookingDto>>();
+        var bookingId = createContent!.Data!.Id;
+
+        var academyAdminClient = AuthenticatedHttpClientFactory.CreateClientWithClaims(
+            Factory.CreateClient(), Guid.NewGuid(), "academy@test.com", "Academy Admin", "Academy Admin");
+
+        var response = await academyAdminClient.PostAsJsonAsync($"/api/v1/bookings/{bookingId}/approval/approve", new
+        {
+            Comments = "Academy admin approved"
+        });
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+
+    #endregion
 }

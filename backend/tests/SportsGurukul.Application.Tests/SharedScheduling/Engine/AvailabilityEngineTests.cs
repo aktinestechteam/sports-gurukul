@@ -19,7 +19,6 @@ public class AvailabilityEngineTests
         _engine = new AvailabilityEngine(
             _slotGeneratorMock.Object,
             _businessHoursMock.Object,
-            _conflictEngineMock.Object,
             _loggerMock.Object);
     }
 

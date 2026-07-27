@@ -1,67 +1,60 @@
-using Xunit;
-using Microsoft.AspNetCore.Mvc.Testing;
-using System.Net.Http;
-using System.Threading.Tasks;
-using SportsGurukul.Api;
-using FluentAssertions;
 using Respawn;
 using Npgsql;
-using Testcontainers.PostgreSql;
-using Xunit.Sdk;
 
-namespace Booking.IntegrationTests
+namespace Booking.IntegrationTests;
+
+public abstract class BaseIntegrationTest : IClassFixture<TestWebApplicationFactory>, IAsyncLifetime
 {
-    public abstract class BaseIntegrationTest : IClassFixture<TestWebApplicationFactory>, IAsyncLifetime
+    protected readonly HttpClient HttpClient;
+    protected readonly TestWebApplicationFactory Factory;
+
+    private static Respawner? _respawner;
+    private static readonly SemaphoreSlim _semaphore = new(1, 1);
+
+    protected BaseIntegrationTest(TestWebApplicationFactory factory)
     {
-        private readonly WebApplicationFactory<Program> _factory;
-        protected readonly HttpClient HttpClient;
-        private readonly PostgreSqlContainer _postgreSqlContainer;
-        private static Respawner _respawner = null!;
-
-        protected BaseIntegrationTest(TestWebApplicationFactory factory)
+        Factory = factory;
+        HttpClient = factory.CreateClient(new WebApplicationFactoryClientOptions
         {
-            _factory = factory;
-            HttpClient = _factory.CreateClient();
-            _postgreSqlContainer = factory.PostgreSqlContainer;
-        }
+            AllowAutoRedirect = false
+        });
+    }
 
-        public async Task InitializeAsync()
-        {
-            await _postgreSqlContainer.StartAsync();
+    public async Task InitializeAsync()
+    {
+        await ResetDatabaseAsync();
+    }
 
-            await InitializeRespawner();
+    public Task DisposeAsync()
+    {
+        return Task.CompletedTask;
+    }
 
-            await ResetDatabase();
-        }
+    protected async Task ResetDatabaseAsync()
+    {
+        var connectionString = Factory.ConnectionString;
 
-        public async Task DisposeAsync()
-        {
-            await _postgreSqlContainer.StopAsync();
-        }
-
-        private async Task InitializeRespawner()
+        await _semaphore.WaitAsync();
+        try
         {
             if (_respawner == null)
             {
-                var connection = new NpgsqlConnection(_postgreSqlContainer.GetConnectionString());
-                await connection.OpenAsync();
-
-                _respawner = await Respawner.CreateAsync(connection, new RespawnerOptions
+                await using var conn = new NpgsqlConnection(connectionString);
+                await conn.OpenAsync();
+                _respawner = await Respawner.CreateAsync(conn, new RespawnerOptions
                 {
                     DbAdapter = DbAdapter.Postgres,
-                    TablesToIgnore = new Respawn.Graph.Table[] { "__EFMigrationsHistory" }
+                    TablesToIgnore = ["__EFMigrationsHistory"]
                 });
-
-                await connection.CloseAsync();
             }
         }
-
-        protected async Task ResetDatabase()
+        finally
         {
-            var connection = new NpgsqlConnection(_postgreSqlContainer.GetConnectionString());
-            await connection.OpenAsync();
-            await _respawner.ResetAsync(connection);
-            await connection.CloseAsync();
+            _semaphore.Release();
         }
+
+        await using var dbConn = new NpgsqlConnection(connectionString);
+        await dbConn.OpenAsync();
+        await _respawner!.ResetAsync(dbConn);
     }
 }

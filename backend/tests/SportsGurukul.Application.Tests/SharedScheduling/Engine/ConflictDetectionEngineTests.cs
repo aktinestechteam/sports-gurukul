@@ -14,7 +14,7 @@ public class ConflictDetectionEngineTests
 
     public ConflictDetectionEngineTests()
     {
-        _engine = new ConflictDetectionEngine(_availabilityEngineMock.Object, _loggerMock.Object);
+        _engine = new ConflictDetectionEngine(_loggerMock.Object);
     }
 
     [Fact]

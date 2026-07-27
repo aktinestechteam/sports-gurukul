@@ -36,6 +36,7 @@ public static class DependencyInjection
         services.AddTransient<Features.SharedScheduling.Engine.IRecurrenceEngine, Features.SharedScheduling.Engine.RecurrenceEngine>();
         services.AddTransient<Features.SharedScheduling.Engine.ITimeSlotGenerator, Features.SharedScheduling.Engine.TimeSlotGenerator>();
         services.AddTransient<Features.SharedScheduling.Engine.ITimeZoneService, Features.SharedScheduling.Engine.TimeZoneService>();
+        services.AddTransient<Features.SharedScheduling.Engine.ISchedulingEngine, Features.SharedScheduling.Engine.SchedulingEngine>();
 
         services.AddTransient<ICalendarExporter, IcsExporter>();
         services.AddTransient<ICalendarImporter, IcsImporter>();

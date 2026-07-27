@@ -7,69 +7,70 @@ using SportsGurukul.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using SportsGurukul.Api;
 
-namespace Booking.IntegrationTests
+namespace Booking.IntegrationTests;
+
+public class TestWebApplicationFactory : WebApplicationFactory<ApiMarker>, IAsyncLifetime
 {
-    public class TestWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
+    private readonly PostgreSqlContainer _postgreSqlContainer;
+
+    public string ConnectionString => _postgreSqlContainer.GetConnectionString();
+
+    public PostgreSqlContainer PostgreSqlContainer => _postgreSqlContainer;
+
+    public TestWebApplicationFactory()
     {
-        public PostgreSqlContainer PostgreSqlContainer { get; private set; }
+        _postgreSqlContainer = new PostgreSqlBuilder("postgres:16-alpine")
+            .WithDatabase("SportsGurukulTestDb")
+            .WithUsername("test")
+            .WithPassword("test")
+            .WithPortBinding(5432, true)
+            .Build();
+    }
 
-        public TestWebApplicationFactory()
+    protected override void ConfigureWebHost(IWebHostBuilder builder)
+    {
+        builder.ConfigureAppConfiguration((context, config) =>
         {
-            PostgreSqlContainer = new PostgreSqlBuilder()
-                .WithImage("postgres:latest")
-                .WithDatabase("SportsGurukulTestDb")
-                .WithUsername("admin")
-                .WithPassword("admin")
-                .Build();
-        }
-
-        protected override void ConfigureWebHost(IWebHostBuilder builder)
-        {
-            builder.ConfigureAppConfiguration((context, config) =>
+            config.AddInMemoryCollection(new Dictionary<string, string?>
             {
-                config.AddInMemoryCollection(new Dictionary<string, string?>
-                {
-                    {"ConnectionStrings:DefaultConnection", PostgreSqlContainer.GetConnectionString()}
-                });
+                {"ConnectionStrings:DefaultConnection", _postgreSqlContainer.GetConnectionString()}
+            });
+        });
+
+        builder.ConfigureServices(services =>
+        {
+            var descriptor = services.SingleOrDefault(
+                d => d.ServiceType == typeof(DbContextOptions<ApplicationDbContext>));
+
+            if (descriptor != null)
+            {
+                services.Remove(descriptor);
+            }
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseNpgsql(_postgreSqlContainer.GetConnectionString());
             });
 
-            builder.ConfigureServices(services =>
+            var sp = services.BuildServiceProvider();
+
+            using (var scope = sp.CreateScope())
             {
-                // Remove the existing DbContext registration
-                var descriptor = services.SingleOrDefault(
-                    d => d.ServiceType == typeof(DbContextOptions<ApplicationDbContext>));
+                var scopedServices = scope.ServiceProvider;
+                var db = scopedServices.GetRequiredService<ApplicationDbContext>();
+                db.Database.Migrate();
+            }
+        });
+    }
 
-                if (descriptor != null)
-                {
-                    services.Remove(descriptor);
-                }
+    public async Task InitializeAsync()
+    {
+        await _postgreSqlContainer.StartAsync();
+    }
 
-                // Add DbContext using the Testcontainers connection string
-                services.AddDbContext<ApplicationDbContext>(options =>
-                {
-                    options.UseNpgsql(PostgreSqlContainer.GetConnectionString());
-                });
-
-                var sp = services.BuildServiceProvider();
-
-                using (var scope = sp.CreateScope())
-                {
-                    var scopedServices = scope.ServiceProvider;
-                    var db = scopedServices.GetRequiredService<ApplicationDbContext>();
-                    db.Database.Migrate(); // Apply migrations
-                }
-            });
-        }
-
-        public async Task InitializeAsync()
-        {
-            await PostgreSqlContainer.StartAsync();
-        }
-
-        public new async Task DisposeAsync()
-        {
-            await PostgreSqlContainer.StopAsync();
-            await base.DisposeAsync();
-        }
+    public new async Task DisposeAsync()
+    {
+        await _postgreSqlContainer.StopAsync();
+        await base.DisposeAsync();
     }
 }
