@@ -8,6 +8,7 @@ using SportsGurukul.Application.Features.Authentication.DTOs.Responses;
 using SportsGurukul.Domain.Enums;
 using SportsGurukul.IntegrationTests.Bases;
 using SportsGurukul.IntegrationTests.Fixtures;
+using Xunit;
 
 namespace SportsGurukul.IntegrationTests.Tests;
 

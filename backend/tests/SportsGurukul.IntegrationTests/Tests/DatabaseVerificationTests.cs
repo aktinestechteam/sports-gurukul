@@ -9,6 +9,7 @@ using SportsGurukul.Domain.Enums;
 using SportsGurukul.IntegrationTests.Bases;
 using SportsGurukul.IntegrationTests.Fixtures;
 using SportsGurukul.IntegrationTests.Infrastructure;
+using Xunit;
 
 namespace SportsGurukul.IntegrationTests.Tests;
 
@@ -265,4 +266,3 @@ public class DatabaseVerificationTests : AthleteIntegrationTestBase
         dbRanking.RankingAuthority.Should().Be("DB Verify Authority");
     }
 }
-

@@ -5,6 +5,7 @@ using SportsGurukul.Api.Common.Models;
 using SportsGurukul.Application.Features.AthleteManagement.DTOs;
 using SportsGurukul.IntegrationTests.Bases;
 using SportsGurukul.IntegrationTests.Fixtures;
+using Xunit;
 
 namespace SportsGurukul.IntegrationTests.Tests;
 
@@ -169,4 +170,3 @@ public class AthleteSportsTests : AthleteIntegrationTestBase
         content.Data!.Count(s => s.IsPrimarySport).Should().Be(1);
     }
 }
-

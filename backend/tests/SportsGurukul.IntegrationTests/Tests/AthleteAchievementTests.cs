@@ -6,6 +6,7 @@ using SportsGurukul.Application.Features.AthleteManagement.DTOs;
 using SportsGurukul.Domain.Enums;
 using SportsGurukul.IntegrationTests.Bases;
 using SportsGurukul.IntegrationTests.Fixtures;
+using Xunit;
 
 namespace SportsGurukul.IntegrationTests.Tests;
 
@@ -206,4 +207,3 @@ public class AthleteAchievementTests : AthleteIntegrationTestBase
         finalContent!.Data.Should().BeEmpty();
     }
 }
-

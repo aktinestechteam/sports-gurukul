@@ -1,371 +1,238 @@
-# Security Assessment — Academy Module
+# Security Assessment
 
-**Date:** 2026-07-25
-**Module:** Academy Management
-**Assessor:** OpenCode Security Review
-**Overall Score:** 70/100 — PASS with Concerns
-
----
-
-## Executive Summary
-
-The Academy module implements security best practices for authentication and authorization. However, several concerns exist around input validation, rate limiting, and error handling consistency.
-
-**Key Strengths:**
-- JWT Bearer authentication properly configured
-- Role-based access control (RBAC) on all endpoints
-- `[Authorize]` at class level on all controllers
-- System Admin role required for sensitive operations (Verify Academy)
-
-**Critical Concerns:**
-1. **LIKE injection** in search queries (potential data exfiltration)
-2. **No rate limiting** on search/discovery endpoints
-3. **HandleFailure string-matching** could expose internal error messages
-4. **No input sanitization** for LIKE wildcards
+> **Module:** TrainingProgramManagement
+> **Date:** 2026-07-26
+> **Assessment Type:** Static Code Analysis
+> **Severity Scale:** Critical > High > Medium > Low
 
 ---
 
-## Authentication
+## Findings Summary
 
-### JWT Configuration
-
-**Status:** ✅ PASS
-
-**Implementation:**
-- JWT Bearer authentication configured in `Program.cs`
-- Token validation for issuer, audience, and lifetime
-- Secure key storage (environment variables)
-
-**Findings:**
-- ✅ Token expiration enforced
-- ✅ Signature validation enabled
-- ✅ HTTPS required for token transmission
-- ⚠️ No token refresh mechanism documented
-- ⚠️ No key rotation strategy documented
-
-**Recommendations:**
-1. Implement JWT key rotation (quarterly)
-2. Add token refresh endpoint
-3. Document key management procedures
+| Severity | Count | Details |
+|----------|-------|---------|
+| Critical | 2 | Hardcoded secrets, missing input validation |
+| High | 3 | CORS misconfiguration risk, no rate limiting, search exposes internal IDs |
+| Medium | 4 | Fragile error handling leaks internal details, no request logging, health check unauthenticated, SaveToken=true |
+| Low | 3 | No anti-forgery (acceptable for JWT-only), HSTS manual instead of `UseHSTS`, ClockSkew |
 
 ---
 
-## Authorization
+## Critical Findings
 
-### Role-Based Access Control (RBAC)
+### SEC-001: JWT Signing Key Hardcoded
 
-**Status:** ✅ PASS
+| Field | Value |
+|-------|-------|
+| **Severity** | Critical |
+| **CVSS** | 9.8 |
+| **Location** | `appsettings.json:17` |
+| **Risk** | Full token forgery if repository is compromised. An attacker with the signing key can mint valid JWTs for any user and any role. |
 
-**Implementation:**
-- `[Authorize(Roles = "...")]` on all endpoints
-- Roles: System Admin, Academy Admin, Coach, Athlete
-- Class-level `[Authorize]` on all controllers
+**Remediation:**
 
-**Endpoint Matrix:**
-
-| Endpoint | System Admin | Academy Admin | Coach | Athlete |
-|----------|--------------|---------------|-------|---------|
-| Create Academy | ✅ | ❌ | ❌ | ❌ |
-| Verify Academy | ✅ | ❌ | ❌ | ❌ |
-| Update Academy | ✅ | ✅ | ❌ | ❌ |
-| Delete Academy | ✅ | ✅ | ❌ | ❌ |
-| Get Academy | ✅ | ✅ | ✅ | ✅ |
-| Assign Coach | ✅ | ✅ | ❌ | ❌ |
-| Register Athlete | ✅ | ✅ | ❌ | ❌ |
-| Search Academies | ✅ | ✅ | ✅ | ✅ |
-
-**Findings:**
-- ✅ All write operations require elevated privileges
-- ✅ Read operations accessible to authenticated users
-- ✅ System Admin can verify academies
-- ⚠️ No ownership validation (Academy Admin can update any academy)
-
-**Recommendations:**
-1. Add ownership validation (Academy Admin can only update their academy)
-2. Add resource-based authorization
-3. Document RBAC model
+- Move the JWT signing key to Azure Key Vault, AWS Secrets Manager, or environment variables
+- Rotate the key immediately upon externalization
+- Never commit secrets to source control — add `appsettings.json` to `.gitignore` if it contains secrets
 
 ---
 
-## Input Validation
+### SEC-002: Database Credentials Hardcoded
 
-### FluentValidation
+| Field | Value |
+|-------|-------|
+| **Severity** | Critical |
+| **CVSS** | 9.8 |
+| **Location** | `appsettings.json:10` |
+| **Risk** | Direct database access if repository is compromised. Full data exfiltration or destruction possible. |
 
-**Status:** ✅ PASS
+**Remediation:**
 
-**Implementation:**
-- 29 validators for all AcademyManagement commands
-- Validation pipeline behavior in MediatR
-- RFC7807 ProblemDetails for validation errors
-
-**Findings:**
-- ✅ All commands have validators
-- ✅ Required fields enforced
-- ✅ String length limits enforced
-- ✅ Email format validated
-- ✅ GUID format validated
-
-**Sample Validator:**
-```csharp
-public class CreateAcademyValidator : AbstractValidator<CreateAcademyCommand>
-{
-    public CreateAcademyValidator()
-    {
-        RuleFor(x => x.Name)
-            .NotEmpty().WithMessage("Academy name is required.")
-            .MaximumLength(200).WithMessage("Academy name must not exceed 200 characters.");
-    }
-}
-```
-
-**Recommendations:**
-1. Add XSS protection for rich text fields
-2. Add SQL injection prevention (already using parameterized queries)
-3. Add input sanitization for LIKE patterns
+- Use secrets manager or environment variables for connection strings
+- Enable Transparent Data Encryption (TDE) on the database
+- Restrict database access to application subnet only
 
 ---
 
-## SQL Injection Prevention
+## High Findings
 
-### Parameterized Queries
+### SEC-003: CORS Fallback to Localhost
 
-**Status:** ✅ PASS
+| Field | Value |
+|-------|-------|
+| **Severity** | High |
+| **Location** | `Program.cs:140-158` |
+| **Risk** | If CORS configuration is empty or misconfigured, localhost origins are allowed with credentials. This enables CSRF-like attacks from local development tools. |
 
-**Implementation:**
-- EF Core parameterized queries
-- No raw SQL usage
-- `EF.Functions.Like()` with parameterized inputs
+**Remediation:**
 
-**Findings:**
-- ✅ All queries use parameterized execution
-- ✅ No string concatenation for SQL
-- ✅ EF Core prevents SQL injection
-
-**⚠️ Exception — LIKE Injection:**
-```csharp
-// Current (VULNERABLE):
-var term = searchTerm.ToLowerInvariant();
-query = query.Where(a =>
-    EF.Functions.Like(a.Name.ToLower(), $"%{term}%"));
-
-// Attack: Search term "%password%" matches all records
-```
-
-**Recommendation:**
-Escape LIKE special characters:
-```csharp
-private static string EscapeLike(string input) =>
-    input.Replace("%", "\\%").Replace("_", "\\_");
-
-var term = EscapeLike(searchTerm.ToLowerInvariant());
-```
+- Fail fast in production if no CORS origins are explicitly configured
+- Never include localhost in production CORS policy
+- Validate CORS configuration at startup
 
 ---
 
-## Error Handling
+### SEC-004: No Rate Limiting on Training Endpoints
 
-### Global Exception Handler
+| Field | Value |
+|-------|-------|
+| **Severity** | High |
+| **Location** | All training controllers |
+| **Risk** | API abuse and denial-of-service. Unbounded request rates can exhaust database connections, memory, and CPU. |
 
-**Status:** ⚠️ CONDITIONAL
+**Remediation:**
 
-**Implementation:**
-- Global exception handler in `Program.cs`
-- RFC7807 ProblemDetails for errors
-- Logging of exceptions
-
-**Findings:**
-- ✅ Global exception handler catches unhandled exceptions
-- ✅ RFC7807 ProblemDetails format
-- ✅ Exception details logged
-- ⚠️ `HandleFailure` string-matching could expose internal messages
-- ⚠️ Inconsistent error handling across controllers
-
-**Risks:**
-- Error messages could contain sensitive information
-- String-matching could silently change HTTP status codes
-- Different controllers handle errors differently
-
-**Recommendation:**
-1. Replace string-matching with typed error codes
-2. Sanitize error messages before returning to client
-3. Standardize error handling across all controllers
+- Add `[EnableRateLimiting]` attributes to all training controllers
+- Configure rate limit policies per endpoint tier (search: 30/min, writes: 60/min, reads: 120/min)
+- Implement global rate limiting as a fallback
 
 ---
 
-## Rate Limiting
+### SEC-005: Search Endpoint Exposes Internal Academy IDs
 
-### Current State
+| Field | Value |
+|-------|-------|
+| **Severity** | High |
+| **Location** | `TrainingProgramsController.cs:87-116` |
+| **Risk** | Unauthenticated enumeration of internal academy IDs via the public search endpoint. Attackers can map the academy structure. |
 
-**Status:** ❌ FAIL
+**Remediation:**
 
-**Implementation:** None
-
-**Findings:**
-- ❌ No rate limiting on any endpoints
-- ❌ No protection against brute force attacks
-- ❌ No protection against scraping
-- ❌ No protection against DoS attacks
-
-**Risks:**
-- Search endpoints could be abused for data exfiltration
-- Brute force attacks on authentication endpoints
-- Service degradation under load
-
-**Recommendations:**
-1. Add rate limiting to all endpoints (30 req/min per user)
-2. Add stricter limits on sensitive endpoints (5 req/min)
-3. Add CAPTCHA for anonymous users
-4. Add IP-based rate limiting for public endpoints
+- Remove `academyId` from public search responses, or
+- Add rate limiting specifically to the search endpoint
+- Consider using opaque identifiers instead of sequential/database IDs
 
 ---
 
-## Data Protection
+## Medium Findings
 
-### Sensitive Data Handling
+### SEC-006: HandleFailure Leaks Internal IDs via Error Messages
 
-**Status:** ✅ PASS
+| Field | Value |
+|-------|-------|
+| **Severity** | Medium |
+| **Location** | All 8 training controllers |
+| **Risk** | The `error.Contains("not found")` pattern passes raw GUIDs in 404 responses, exposing internal database identifiers. |
 
-**Implementation:**
-- Soft delete for data retention
-- Audit fields for data tracking
-- HTTPS for data transmission
+**Remediation:**
 
-**Findings:**
-- ✅ No sensitive data in logs (PII)
-- ✅ Passwords hashed (using Identity)
-- ✅ Tokens not logged
-- ⚠️ No data encryption at rest
-- ⚠️ No data masking for sensitive fields
-
-**Recommendations:**
-1. Implement field-level encryption for sensitive data (GST Number, Registration Number)
-2. Add data masking for PII in logs
-3. Document data retention policies
+- Return generic "Resource not found" messages in production
+- Log the full error (with IDs) server-side for debugging
+- Use a shared error mapping utility
 
 ---
 
-## API Security
+### SEC-007: No Structured Request Logging
 
-### Swagger/OpenAPI
+| Field | Value |
+|-------|-------|
+| **Severity** | Medium |
+| **Location** | Application pipeline |
+| **Risk** | No middleware for request/response logging. Cannot audit who accessed what, when, or detect abuse patterns. |
 
-**Status:** ✅ PASS
+**Remediation:**
 
-**Implementation:**
-- Swagger UI enabled in development
-- JWT Bearer token support in Swagger
-- API versioning
-
-**Findings:**
-- ✅ Swagger UI for API exploration
-- ✅ JWT token support
-- ✅ API versioning (v1)
-- ⚠️ Swagger exposed in production (should be disabled)
-
-**Recommendations:**
-1. Disable Swagger in production
-2. Add API key authentication for external consumers
-3. Document API security requirements
+- Add structured request logging middleware (method, path, status, duration, user)
+- Integrate with centralized logging (Serilog + Seq / ELK / CloudWatch)
+- Redact sensitive fields (passwords, tokens) from logs
 
 ---
 
-## Security Checklist
+### SEC-008: Health Check Endpoint Unauthenticated
 
-| Category | Item | Status | Priority |
-|----------|------|--------|----------|
-| Authentication | JWT configured | ✅ | - |
-| Authentication | Token expiration | ✅ | - |
-| Authentication | Key rotation | ❌ | P2 |
-| Authorization | RBAC implemented | ✅ | - |
-| Authorization | Ownership validation | ❌ | P2 |
-| Input Validation | FluentValidation | ✅ | - |
-| Input Validation | LIKE injection prevention | ❌ | P2 |
-| SQL Injection | Parameterized queries | ✅ | - |
-| Error Handling | Global exception handler | ✅ | - |
-| Error Handling | Typed error codes | ❌ | P1 |
-| Rate Limiting | Endpoint rate limiting | ❌ | P1 |
-| Data Protection | Soft delete | ✅ | - |
-| Data Protection | Audit fields | ✅ | - |
-| Data Protection | Encryption at rest | ❌ | P3 |
-| API Security | Swagger disabled in prod | ❌ | P2 |
+| Field | Value |
+|-------|-------|
+| **Severity** | Medium |
+| **Location** | `/health` endpoint |
+| **Risk** | Exposes system status (database connectivity, dependency health) without authentication. |
+
+**Remediation:**
+
+- Keep `/health` unauthenticated for load balancer probes
+- Add a separate `/health/detailed` endpoint with authentication for operational visibility
+- Restrict `/health` to internal network only if possible
 
 ---
 
-## Vulnerability Summary
+### SEC-009: SaveToken=true Wastes Memory
 
-| Severity | Count | Status |
-|----------|-------|--------|
-| Critical | 0 | - |
-| High | 2 | OPEN |
-| Medium | 4 | OPEN |
-| Low | 3 | OPEN |
+| Field | Value |
+|-------|-------|
+| **Severity** | Medium |
+| **Location** | Authentication configuration |
+| **Risk** | JWT stored in `HttpContext` unnecessarily, consuming memory per request. Minor but unnecessary attack surface. |
 
-### High Vulnerabilities
+**Remediation:**
 
-1. **LIKE Injection (H-001)**
-   - **File:** `AcademySearchRepository.cs`
-   - **Risk:** Data exfiltration, performance degradation
-   - **Fix:** Escape LIKE special characters
-   - **Effort:** 2-3 hours
-
-2. **No Rate Limiting (H-002)**
-   - **Files:** All controllers
-   - **Risk:** DoS, scraping, brute force
-   - **Fix:** Add rate limiting middleware
-   - **Effort:** 3-4 hours
-
-### Medium Vulnerabilities
-
-1. **HandleFailure String-Matching (M-001)**
-   - **Files:** 5 controllers
-   - **Risk:** Inconsistent HTTP status codes
-   - **Fix:** Use typed error codes
-   - **Effort:** 6-8 hours
-
-2. **No Ownership Validation (M-002)**
-   - **Files:** AcademyController
-   - **Risk:** Unauthorized modifications
-   - **Fix:** Add resource-based authorization
-   - **Effort:** 4-6 hours
-
-3. **Swagger in Production (M-003)**
-   - **File:** `Program.cs`
-   - **Risk:** API exposure
-   - **Fix:** Disable Swagger in production
-   - **Effort:** 1 hour
-
-4. **No Data Masking (M-004)**
-   - **Files:** Logging
-   - **Risk:** PII exposure in logs
-   - **Fix:** Add data masking
-   - **Effort:** 2-3 hours
-
-### Low Vulnerabilities
-
-1. **No Key Rotation (L-001)**
-2. **No Encryption at Rest (L-002)**
-3. **No CAPTCHA (L-003)**
+- Set `SaveToken = false` if the token is not needed in `HttpContext`
+- Access the token from the `Authorization` header directly
 
 ---
 
-## Recommendations
+## Low Findings
 
-### Immediate (Pre-Deployment)
-1. **P1:** Add rate limiting to search endpoints
-2. **P1:** Replace HandleFailure string-matching with typed error codes
-3. **P1:** Escape LIKE special characters in search queries
+### SEC-010: No Anti-Forgery Token Configuration
 
-### Short-Term (Post-Deploy)
-1. **P2:** Add ownership validation for Academy Admin
-2. **P2:** Disable Swagger in production
-3. **P2:** Add data masking for PII in logs
-4. **P2:** Implement JWT key rotation
+| Field | Value |
+|-------|-------|
+| **Severity** | Low |
+| **Risk** | No anti-forgery tokens configured. **Acceptable** for a JWT-only API where CSRF is not applicable. |
 
-### Long-Term (Future Sprints)
-1. **P3:** Add field-level encryption for sensitive data
-2. **P3:** Add CAPTCHA for anonymous users
-3. **P3:** Implement API key authentication
+No action required for JWT-only APIs. Re-evaluate if cookie-based auth is added.
 
 ---
 
-*Security Assessment generated by OpenCode Security Review*
-*Next review: After P1 fixes are implemented*
+### SEC-011: HSTS Configured Manually
+
+| Field | Value |
+|-------|-------|
+| **Severity** | Low |
+| **Location** | Security headers middleware |
+| **Risk** | HSTS header set manually instead of using `app.UseHSTS()`. Minor deviation from ASP.NET Core best practices. |
+
+**Remediation:** Replace manual HSTS header with `app.UseHSTS()`.
+
+---
+
+### SEC-012: JWT ClockSkew
+
+| Field | Value |
+|-------|-------|
+| **Severity** | Low |
+| **Risk** | Default `ClockSkew` of 5 minutes allows expired tokens to remain valid. |
+
+**Remediation:** Set `ClockSkew = TimeSpan.Zero` or a small value (30s) and ensure server clocks are synchronized via NTP.
+
+---
+
+## Positive Security Controls
+
+| Control | Status | Notes |
+|---------|--------|-------|
+| JWT Authentication | ✅ Implemented | Proper signing with HMAC-SHA256 |
+| Role-Based Authorization | ✅ Implemented | All training endpoints require roles |
+| Swagger Gating | ✅ Implemented | Only accessible in Development environment |
+| HTTPS Enforcement | ✅ Configured | `UseHttpsRedirection` present |
+| Security Headers Middleware | ✅ Present | Custom middleware adds security headers |
+| FluentValidation | ✅ Implemented | All command objects validated |
+| Soft Delete Pattern | ✅ Implemented | `IsDeleted` flag on entities |
+| Global Exception Handler | ✅ Present | Returns generic errors in production |
+
+---
+
+## Remediation Priority
+
+| Finding | Severity | Effort | Priority |
+|---------|----------|--------|----------|
+| SEC-001: JWT Key Hardcoded | Critical | 2h | P0 |
+| SEC-002: DB Credentials Hardcoded | Critical | 2h | P0 |
+| SEC-003: CORS Fallback | High | 1h | P0 |
+| SEC-004: No Rate Limiting | High | 4h | P1 |
+| SEC-005: Search Exposes IDs | High | 2h | P1 |
+| SEC-006: Error Message Leaks | Medium | 3h | P2 |
+| SEC-007: No Request Logging | Medium | 4h | P2 |
+| SEC-008: Health Check Auth | Medium | 1h | P2 |
+| SEC-009: SaveToken | Medium | 30m | P2 |
+| SEC-010: Anti-Forgery | Low | 0 | N/A |
+| SEC-011: HSTS | Low | 30m | P3 |
+| SEC-012: ClockSkew | Low | 15m | P3 |

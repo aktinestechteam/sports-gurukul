@@ -14,10 +14,11 @@ using SportsGurukul.Infrastructure.Persistence;
 using SportsGurukul.Infrastructure.Persistence.Repositories;
 using SportsGurukul.Infrastructure.Storage;
 using SportsGurukul.IntegrationTests.Infrastructure;
+using Xunit;
 
 namespace SportsGurukul.IntegrationTests.Infrastructure;
 
-public class CustomWebApplicationFactory : WebApplicationFactory<ApiMarker>, IAsyncLifetime
+public class TestWebApplicationFactory : WebApplicationFactory<ApiMarker>, IAsyncLifetime
 {
     private string _connectionString = string.Empty;
 

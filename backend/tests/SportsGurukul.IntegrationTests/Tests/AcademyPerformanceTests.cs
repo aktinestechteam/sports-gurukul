@@ -6,6 +6,7 @@ using SportsGurukul.Api.Common.Models;
 using SportsGurukul.Application.Features.AcademyManagement.DTOs;
 using SportsGurukul.IntegrationTests.Bases;
 using SportsGurukul.IntegrationTests.Fixtures;
+using Xunit;
 
 namespace SportsGurukul.IntegrationTests.Tests;
 

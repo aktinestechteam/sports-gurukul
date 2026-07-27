@@ -8,6 +8,7 @@ using SportsGurukul.Application.Features.AcademyManagement.DTOs;
 using SportsGurukul.Infrastructure.Persistence;
 using SportsGurukul.IntegrationTests.Bases;
 using SportsGurukul.IntegrationTests.Fixtures;
+using Xunit;
 
 namespace SportsGurukul.IntegrationTests.Tests;
 

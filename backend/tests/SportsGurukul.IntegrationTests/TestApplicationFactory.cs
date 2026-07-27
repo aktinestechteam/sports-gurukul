@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -114,6 +115,7 @@ public class TestApplicationFactory : WebApplicationFactory<ApiMarker>
 
 public class InMemoryUnitOfWork : IUnitOfWork, IApplicationDbContext
 {
+    public DbSet<TrainingCertificate> Certificates { get; } = null!;
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) => Task.FromResult(1);
     public void Dispose() { }
 }

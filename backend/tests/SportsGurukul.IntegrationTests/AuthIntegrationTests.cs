@@ -8,6 +8,7 @@ using SportsGurukul.Application.Features.Authentication.DTOs.Requests;
 using SportsGurukul.Application.Features.Authentication.DTOs.Responses;
 using SportsGurukul.Domain.Entities;
 using SportsGurukul.Domain.Enums;
+using Xunit;
 
 namespace SportsGurukul.IntegrationTests;
 

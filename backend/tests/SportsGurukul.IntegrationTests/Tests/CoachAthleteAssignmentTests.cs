@@ -9,6 +9,7 @@ using SportsGurukul.Domain.Enums;
 using SportsGurukul.Infrastructure.Persistence;
 using SportsGurukul.IntegrationTests.Bases;
 using SportsGurukul.IntegrationTests.Fixtures;
+using Xunit;
 
 namespace SportsGurukul.IntegrationTests.Tests;
 

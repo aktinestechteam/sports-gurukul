@@ -28,6 +28,9 @@ public static class TestMocks
     public static Mock<IRepository<Domain.Entities.CoachLocation>> CreateCoachLocationRepository() => new();
     public static Mock<IRepository<Domain.Entities.CoachAthlete>> CreateCoachAthleteRepository() => new();
     public static Mock<ICoachSearchRepository> CreateCoachSearchRepository() => new();
+    public static Mock<IBookingRepository> CreateBookingRepository() => new();
+    public static Mock<IConflictRepository> CreateConflictRepository() => new();
+    public static Mock<IWaitlistRepository> CreateWaitlistRepository() => new();
 
     public static Mock<ILogger<T>> CreateLogger<T>() where T : class => new();
 }

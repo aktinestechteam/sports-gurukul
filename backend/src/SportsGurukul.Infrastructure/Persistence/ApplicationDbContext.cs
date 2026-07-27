@@ -77,6 +77,23 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<CoachAcademy> CoachAcademies => Set<CoachAcademy>();
     public DbSet<AthleteAcademy> AthleteAcademies => Set<AthleteAcademy>();
 
+    // Training Programs & Sessions
+    public DbSet<TrainingProgram> TrainingPrograms => Set<TrainingProgram>();
+    public DbSet<TrainingProgramSport> TrainingProgramSports => Set<TrainingProgramSport>();
+    public DbSet<TrainingBatch> TrainingBatches => Set<TrainingBatch>();
+    public DbSet<TrainingSession> TrainingSessions => Set<TrainingSession>();
+    public DbSet<SessionSchedule> SessionSchedules => Set<SessionSchedule>();
+    public DbSet<TrainingEnrollment> TrainingEnrollments => Set<TrainingEnrollment>();
+    public DbSet<Attendance> Attendances => Set<Attendance>();
+    public DbSet<TrainingAssessment> TrainingAssessments => Set<TrainingAssessment>();
+    public DbSet<AssessmentResult> AssessmentResults => Set<AssessmentResult>();
+    public DbSet<TrainingGoal> TrainingGoals => Set<TrainingGoal>();
+    public DbSet<TrainingMilestone> TrainingMilestones => Set<TrainingMilestone>();
+    public DbSet<TrainingProgress> TrainingProgresses => Set<TrainingProgress>();
+    public DbSet<TrainingCertificate> TrainingCertificates => Set<TrainingCertificate>();
+    public DbSet<TrainingCertificate> Certificates => Set<TrainingCertificate>();
+    public DbSet<TrainingMaterial> TrainingMaterials => Set<TrainingMaterial>();
+
     // Facility & Infrastructure
     public DbSet<Facility> Facilities => Set<Facility>();
     public DbSet<FacilityArea> FacilityAreas => Set<FacilityArea>();
@@ -88,6 +105,21 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<FacilityImage> FacilityImages => Set<FacilityImage>();
     public DbSet<FacilityAmenity> FacilityAmenities => Set<FacilityAmenity>();
     public DbSet<FacilityReview> FacilityReviews => Set<FacilityReview>();
+
+    // Booking & Scheduling
+    public DbSet<Booking> Bookings => Set<Booking>();
+    public DbSet<BookingItem> BookingItems => Set<BookingItem>();
+    public DbSet<BookingParticipant> BookingParticipants => Set<BookingParticipant>();
+    public DbSet<BookingSchedule> BookingSchedules => Set<BookingSchedule>();
+    public DbSet<BookingRecurrence> BookingRecurrences => Set<BookingRecurrence>();
+    public DbSet<BookingWaitlist> BookingWaitlists => Set<BookingWaitlist>();
+    public DbSet<BookingCancellation> BookingCancellations => Set<BookingCancellation>();
+    public DbSet<BookingReschedule> BookingReschedules => Set<BookingReschedule>();
+    public DbSet<BookingReminder> BookingReminders => Set<BookingReminder>();
+    public DbSet<BookingApproval> BookingApprovals => Set<BookingApproval>();
+    public DbSet<BookingConflict> BookingConflicts => Set<BookingConflict>();
+    public DbSet<BookingHistory> BookingHistories => Set<BookingHistory>();
+    public DbSet<BookingAttachment> BookingAttachments => Set<BookingAttachment>();
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

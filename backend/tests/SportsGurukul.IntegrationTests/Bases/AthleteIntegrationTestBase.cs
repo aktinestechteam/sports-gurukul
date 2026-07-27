@@ -8,13 +8,14 @@ using SportsGurukul.Application.Features.AthleteManagement.DTOs;
 using SportsGurukul.Infrastructure.Persistence;
 using SportsGurukul.IntegrationTests.Fixtures;
 using SportsGurukul.IntegrationTests.Infrastructure;
+using Xunit;
 
 namespace SportsGurukul.IntegrationTests.Bases;
 
 [Collection("Postgres")]
 public abstract class AthleteIntegrationTestBase : IAsyncLifetime
 {
-    protected readonly CustomWebApplicationFactory Factory;
+    protected readonly TestWebApplicationFactory Factory;
     protected readonly HttpClient AdminClient;
     protected readonly HttpClient CoachClient;
     protected readonly HttpClient AthleteClient;
@@ -23,7 +24,7 @@ public abstract class AthleteIntegrationTestBase : IAsyncLifetime
 
     protected AthleteIntegrationTestBase(PostgresFixture postgresFixture)
     {
-        Factory = new CustomWebApplicationFactory();
+        Factory = new TestWebApplicationFactory();
         Factory.SetConnectionString(postgresFixture.ConnectionString);
 
         AdminClient = Factory.CreateClient();

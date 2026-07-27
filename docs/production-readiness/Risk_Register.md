@@ -1,360 +1,80 @@
-# Risk Register — Academy Module
+# Risk Register
 
-**Date:** 2026-07-25
-**Module:** Academy Management
-**Total Risks:** 12
-**Risk Score:** 6.2/10 (Medium-High)
-
----
-
-## Risk Matrix
-
-| Risk ID | Category | Risk | Probability | Impact | Score | Status |
-|---------|----------|------|-------------|--------|-------|--------|
-| R-001 | Performance | In-memory pagination causes OOM | High | Critical | 9 | OPEN |
-| R-002 | Reliability | HandleFailure inconsistency returns wrong HTTP status | High | High | 8 | OPEN |
-| R-003 | Security | LIKE injection in search queries | Medium | High | 6 | OPEN |
-| R-004 | Scalability | No rate limiting on search endpoints | High | Medium | 6 | OPEN |
-| R-005 | Reliability | UnitOfWork bypass causes partial writes | Medium | High | 6 | OPEN |
-| R-006 | Reliability | Missing RowVersion causes data loss | Medium | High | 6 | OPEN |
-| R-007 | Quality | Integration tests unvalidated | High | Medium | 6 | OPEN |
-| R-008 | Performance | No database indexes for search | Medium | Medium | 4 | OPEN |
-| R-009 | Reliability | No retry logic for transient failures | Medium | Medium | 4 | OPEN |
-| R-010 | Maintainability | 35+ parameter search method | Medium | Low | 3 | OPEN |
-| R-011 | Observability | No distributed tracing | Low | Medium | 2 | OPEN |
-| R-012 | Observability | No health check endpoints | Low | Low | 1 | OPEN |
-
-**Risk Score = Probability (1-3) × Impact (1-3)**
+> **Project:** SportsGurukul Training Module  
+> **Last Updated:** 2026-07-26  
+> **Total Risks:** 12  
+> **High:** 6 | **Medium:** 4 | **Low:** 2
 
 ---
 
-## Detailed Risk Analysis
+## Risk Scoring Matrix
 
-### R-001: In-Memory Pagination Causes OOM
-
-**Category:** Performance
-**Probability:** High (3/3) — Will occur with 10K+ academies
-**Impact:** Critical (3/3) — Application crash, service outage
-**Risk Score:** 9/9
-
-**Description:**
-`GetPagedAcademiesQueryHandler` loads ALL academies into memory via `GetAllAsync()`. With 10K+ academies, this will cause:
-- Memory spike (potentially 100MB+ per request)
-- Garbage collection pressure
-- Out-of-memory exception under load
-
-**Triggers:**
-- Academy count exceeds 10K
-- Multiple concurrent requests
-- Memory-constrained environment (container with 512MB limit)
-
-**Mitigation:**
-- P0 fix: Replace with DB-level pagination
-- Add memory monitoring and alerts
-- Set container memory limits
-
-**Residual Risk:** Low (1/3) after fix
+| | Impact: Low | Impact: Medium | Impact: High | Impact: Critical |
+|---|---|---|---|---|
+| **Probability: Certain** | Medium | High | Critical | Critical |
+| **Probability: High** | Low | Medium | High | Critical |
+| **Probability: Medium** | Low | Medium | Medium | High |
+| **Probability: Low** | Low | Low | Medium | Medium |
 
 ---
 
-### R-002: HandleFailure Inconsistency
+## High Risks
 
-**Category:** Reliability
-**Probability:** High (3/3) — Error messages change frequently
-**Impact:** High (3/3) — Wrong HTTP status codes, client confusion
-**Risk Score:** 8/9
-
-**Description:**
-`HandleFailure` uses string-matching on error messages. When error messages change (e.g., during refactoring), HTTP status codes silently change:
-- "Academy not found" → 404 ✅
-- "Academy not found by ID" → 400 ❌ (should be 404)
-- "Already registered" → 409 in AthletesController, 400 in others
-
-**Triggers:**
-- Error message refactoring
-- New error messages added
-- Localization (different languages)
-
-**Mitigation:**
-- P0 fix: Use typed error codes
-- Add integration tests for HTTP status codes
-- Document error message contracts
-
-**Residual Risk:** Low (1/3) after fix
+| Risk ID | Description | Probability | Impact | Score | Mitigation Strategy | Owner | Status |
+|---------|-------------|-------------|--------|-------|---------------------|-------|--------|
+| R-001 | **Data loss from missing `SaveChangesAsync`.** 26 of 32 command handlers never call `SaveChangesAsync`, meaning all write operations silently discard data. Every user action that creates, updates, or deletes a record is lost. | Certain | Critical | Critical | Fix all 26 handlers before any deployment. Add integration tests that verify data persistence after each command. | Backend Team | Open |
+| R-002 | **Database breach from hardcoded secrets.** Connection strings with credentials are stored in source code (e.g., `appsettings.json` or handler files). Secrets are exposed in version control history, CI logs, and deployment artifacts. | Medium | Critical | High | Externalize all secrets to Azure Key Vault or environment variables. Rotate credentials immediately. Add pre-commit hooks to block secret commits. | DevOps | Open |
+| R-003 | **OOM / service crash from N+1 queries and in-memory filtering.** N+1 patterns cause O(N) database round-trips per query. In-memory filtering loads entire tables. Under production load, both will exhaust memory and database connections. | High | High | High | Replace N+1 patterns with `Include()` / projection queries. Replace in-memory filtering with `IQueryable`-based SQL `WHERE` clauses. Add query performance tests. | Backend Team | Open |
+| R-004 | **Data corruption from missing concurrency tokens.** 6 entities lack `RowVersion` columns. Concurrent updates silently overwrite each other without detection, causing silent data loss. | Medium | High | Medium | Add `RowVersion` column and `IsRowVersion()` configuration to all 6 entities. Handle `DbUpdateConcurrencyException` in handlers. | Backend Team | Open |
+| R-005 | **Soft-deleted data leak into production queries.** 8 entity configurations are missing `HasQueryFilter(e => !e.IsDeleted)`. Soft-deleted records appear in all default queries, exposing data that should be hidden. | Certain | Medium | High | Add `HasQueryFilter` to all 8 entity configurations. Add integration tests that verify soft-deleted records are excluded. | Backend Team | Open |
+| R-006 | **500 errors from null reference in re-fetched entities.** 12+ handlers use null-forgiving operators on entities re-fetched from the database. If the entity was deleted between the initial fetch and re-fetch, a `NullReferenceException` produces an unhandled 500 error. | Medium | Medium | Medium | Add null checks after re-fetch or map DTOs from the initially-fetched in-memory entity instead of re-querying. Return 404 when entity is not found. | Backend Team | Open |
 
 ---
 
-### R-003: LIKE Injection in Search Queries
+## Medium Risks
 
-**Category:** Security
-**Probability:** Medium (2/3) — Requires malicious user input
-**Impact:** High (3/3) — Data exfiltration, performance degradation
-**Risk Score:** 6/9
-
-**Description:**
-User input is passed directly to `EF.Functions.Like()` without escaping `%` and `_` characters. An attacker could:
-- Use `%` to match all records (data exfiltration)
-- Use `_` to match single characters (pattern matching)
-- Craft complex patterns to extract sensitive data
-
-**Example Attack:**
-```
-Search term: %password%
-Result: Returns all academies (bypasses search filter)
-```
-
-**Mitigation:**
-- P2 fix: Escape LIKE special characters
-- Add input validation (max length, allowed characters)
-- Rate limit search endpoints
-
-**Residual Risk:** Low (1/3) after fix
+| Risk ID | Description | Probability | Impact | Score | Mitigation Strategy | Owner | Status |
+|---------|-------------|-------------|--------|-------|---------------------|-------|--------|
+| R-007 | **Silent HTTP status code changes from string-matching error handling.** The `HandleFailure` method in 8 controllers maps error messages to HTTP status codes using string comparison. Any message change silently alters the returned status code, breaking API consumers. | High | Low | Medium | Implement typed error codes or an enum-based error system. Return structured error responses with machine-readable codes instead of relying on message text. | Backend Team | Open |
+| R-008 | **API abuse from missing rate limiting.** No `[EnableRateLimiting]` attributes on any training controller. Endpoints are vulnerable to traffic spikes, scraping, and denial-of-service patterns. | Medium | Medium | Medium | Add `[EnableRateLimiting]` to all training controllers. Configure appropriate throttle limits in `Program.cs` based on endpoint sensitivity. | Backend Team | Open |
+| R-009 | **Unbounded responses from missing pagination.** 4 list endpoints return all matching records in a single response. As data grows, responses will exceed memory limits and saturate network bandwidth. | Medium | Medium | Medium | Add `pageNumber` and `pageSize` query parameters to all list endpoints. Default to a reasonable page size (e.g., 25). Return total count in response metadata. | Backend Team | Open |
+| R-010 | **Invalid data from missing controller-level validation.** Inline request records have no `FluentValidation` validators. Invalid or malicious input reaches handlers and database without sanitization. | Medium | Low | Low | Create `AbstractValidator<T>` classes for all inline request types. Register validators in DI. Return 400 with validation errors before handler execution. | Backend Team | Open |
 
 ---
 
-### R-004: No Rate Limiting on Search Endpoints
+## Low Risks
 
-**Category:** Scalability
-**Probability:** High (3/3) — Search endpoints are public-facing
-**Impact:** Medium (2/3) — Performance degradation, potential outage
-**Risk Score:** 6/9
-
-**Description:**
-Search and discovery endpoints have no rate limiting. Attackers or bots could:
-- Scrape all academy data
-- Cause database overload
-- Degrade service for legitimate users
-
-**Triggers:**
-- Bot traffic
-- Scraper scripts
-- DoS attacks
-
-**Mitigation:**
-- P2 fix: Add rate limiting (30 req/min per user)
-- Add CAPTCHA for anonymous users
-- Monitor request patterns
-
-**Residual Risk:** Low (1/3) after fix
+| Risk ID | Description | Probability | Impact | Score | Mitigation Strategy | Owner | Status |
+|---------|-------------|-------------|--------|-------|---------------------|-------|--------|
+| R-011 | **Duplicate records from race conditions.** Check-then-act patterns in program creation, enrollment, and transfer are not protected by database constraints or application-level locks. Concurrent requests can produce duplicate records. | Low | Medium | Low | Add unique database constraints on natural keys (e.g., program name + batch). Alternatively, use distributed locking (`IDistributedLock`) for critical operations. | Backend Team | Open |
+| R-012 | **Feature non-functional: `PublishAssessmentResults`.** The handler returns a success response without performing any work. Callers (including the controller) believe assessment results were published when they were not. | Certain | Low | Medium | Implement the actual publishing logic in `PublishAssessmentResultsCommandHandler`. Add integration tests that verify side effects. | Backend Team | Open |
 
 ---
 
-### R-005: UnitOfWork Bypass
+## Risk Summary
 
-**Category:** Reliability
-**Probability:** Medium (2/3) — Occurs on every search write
-**Impact:** High (3/3) — Partial writes, data inconsistency
-**Risk Score:** 6/9
-
-**Description:**
-`AcademySearchRepository` bypasses `IUnitOfWork.SaveChangesAsync()`, causing:
-- No transaction isolation
-- No audit logging
-- No event publishing
-- Partial writes on failure
-
-**Triggers:**
-- Database failure during save
-- Concurrent modifications
-- Audit requirement
-
-**Mitigation:**
-- P1 fix: Route through IUnitOfWork
-- Add transaction logging
-- Monitor write consistency
-
-**Residual Risk:** Low (1/3) after fix
+| Category | Count | Critical | High | Medium | Low |
+|----------|-------|----------|------|--------|-----|
+| Data Integrity | 4 | 1 | 2 | 1 | 0 |
+| Security | 1 | 0 | 1 | 0 | 0 |
+| Performance | 1 | 0 | 1 | 0 | 0 |
+| Reliability | 2 | 0 | 1 | 0 | 1 |
+| API Quality | 3 | 0 | 0 | 2 | 1 |
+| Feature Completeness | 1 | 0 | 0 | 0 | 1 |
+| **Total** | **12** | **1** | **5** | **3** | **2** |
 
 ---
 
-### R-006: Missing RowVersion
+## Remediation Timeline
 
-**Category:** Reliability
-**Probability:** Medium (2/3) — Concurrent updates likely
-**Impact:** High (3/3) — Data loss (last-write-wins)
-**Risk Score:** 6/9
-
-**Description:**
-10 Academy entities lack `RowVersion` for optimistic concurrency. Concurrent updates can cause:
-- Silent data overwrites
-- Lost updates
-- Data inconsistency
-
-**Triggers:**
-- Multiple users editing same entity
-- Bulk import operations
-- Race conditions
-
-**Mitigation:**
-- P1 fix: Add RowVersion to all entities
-- Add conflict detection in handlers
-- Add retry logic for conflicts
-
-**Residual Risk:** Low (1/3) after fix
+| Phase | Risks | Target | Dependencies |
+|-------|-------|--------|--------------|
+| **Phase 1 — Ship Blockers** | R-001, R-002 | Before any deployment | None |
+| **Phase 2 — Data Safety** | R-004, R-005, R-006 | Week 1 | Phase 1 |
+| **Phase 3 — Performance** | R-003, R-009 | Week 2 | Phase 1 |
+| **Phase 4 — Hardening** | R-007, R-008, R-010 | Week 3 | None |
+| **Phase 5 — Polish** | R-011, R-012 | Week 4 | None |
 
 ---
 
-### R-007: Integration Tests Unvalidated
-
-**Category:** Quality
-**Probability:** High (3/3) — Docker not running
-**Impact:** Medium (2/3) — Unknown bugs in production
-**Risk Score:** 6/9
-
-**Description:**
-166 integration test cases are written but never executed. Unknown bugs could exist in:
-- Database migrations
-- Repository implementations
-- Controller logic
-- Authentication/authorization
-
-**Triggers:**
-- Docker unavailable
-- Test environment issues
-- CI/CD pipeline gaps
-
-**Mitigation:**
-- P0 fix: Start Docker, run tests
-- Add integration tests to CI/CD
-- Monitor test coverage
-
-**Residual Risk:** Low (1/3) after fix
-
----
-
-### R-008: Missing Database Indexes
-
-**Category:** Performance
-**Probability:** Medium (2/3) — Search queries will slow down
-**Impact:** Medium (2/3) — Slow response times
-**Risk Score:** 4/9
-
-**Description:**
-No composite indexes for common search patterns. Queries will degrade as data grows:
-- Full table scans on Name, Email
-- Slow JOIN operations
-- Poor query plan optimization
-
-**Triggers:**
-- Academy count exceeds 1K
-- Complex search queries
-- High concurrent load
-
-**Mitigation:**
-- P1 fix: Add indexes for search columns
-- Monitor query performance
-- Use EXPLAIN to validate plans
-
-**Residual Risk:** Low (1/3) after fix
-
----
-
-### R-009: No Retry Logic
-
-**Category:** Reliability
-**Probability:** Medium (2/3) — Transient failures occur
-**Impact:** Medium (2/3) — Service unavailability
-**Risk Score:** 4/9
-
-**Description:**
-No Polly retry policies for transient database failures:
-- Connection timeouts
-- Deadlocks
-- Network glitches
-
-**Triggers:**
-- Database overload
-- Network issues
-- Connection pool exhaustion
-
-**Mitigation:**
-- P1 fix: Add retry-on-failure (3 retries, exponential backoff)
-- Add circuit breaker for external services
-- Monitor failure rates
-
-**Residual Risk:** Low (1/3) after fix
-
----
-
-### R-010: 35+ Parameter Search Method
-
-**Category:** Maintainability
-**Probability:** Medium (2/3) — Changes require signature updates
-**Impact:** Low (1/3) — Developer productivity
-**Risk Score:** 3/9
-
-**Description:**
-`SearchAcademiesAsync` has 35+ parameters, making it:
-- Difficult to maintain
-- Error-prone (wrong parameter order)
-- Hard to extend (adding new filters)
-
-**Mitigation:**
-- P2 fix: Refactor to query object pattern
-- Add unit tests for parameter validation
-- Document API contract
-
-**Residual Risk:** Low (1/3) after fix
-
----
-
-### R-011: No Distributed Tracing
-
-**Category:** Observability
-**Probability:** Low (1/3) — Infrastructure issue
-**Impact:** Medium (2/3) — Difficult debugging
-**Risk Score:** 2/9
-
-**Description:**
-No OpenTelemetry or distributed tracing. Difficult to:
-- Trace requests across services
-- Identify bottlenecks
-- Debug production issues
-
-**Mitigation:**
-- P3 fix: Add OpenTelemetry
-- Add correlation IDs
-- Monitor request flow
-
-**Residual Risk:** Low (1/3) after fix
-
----
-
-### R-012: No Health Check Endpoints
-
-**Category:** Observability
-**Probability:** Low (1/3) — Infrastructure issue
-**Impact:** Low (1/3) — Delayed detection
-**Risk Score:** 1/9
-
-**Description:**
-No health check endpoints for:
-- Database connectivity
-- External service availability
-- Application readiness
-
-**Mitigation:**
-- P3 fix: Add `/health` and `/ready` endpoints
-- Add Kubernetes liveness/readiness probes
-- Monitor health status
-
-**Residual Risk:** Low (1/3) after fix
-
----
-
-## Risk Trends
-
-| Metric | Value |
-|--------|-------|
-| Total Risks | 12 |
-| Critical (9) | 1 |
-| High (6-8) | 1 |
-| Medium (4-5) | 4 |
-| Low (1-3) | 6 |
-| Open Risks | 12 |
-| Mitigated Risks | 0 |
-
----
-
-*Register maintained by OpenCode Risk Management*
-*Review cycle: Weekly*
+*This register should be reviewed weekly. Risks that have been mitigated should be marked as **Closed** with the date and verification method.*

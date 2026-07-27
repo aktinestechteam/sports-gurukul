@@ -6,6 +6,7 @@ using SportsGurukul.Application.Features.AthleteManagement.DTOs;
 using SportsGurukul.Domain.Enums;
 using SportsGurukul.IntegrationTests.Bases;
 using SportsGurukul.IntegrationTests.Fixtures;
+using Xunit;
 
 namespace SportsGurukul.IntegrationTests.Tests;
 
@@ -275,4 +276,3 @@ public class AuthorizationTests : AthleteIntegrationTestBase
         achievementsResponse.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 }
-

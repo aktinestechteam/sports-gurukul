@@ -7,6 +7,7 @@ using SportsGurukul.Application.Features.FacilityManagement.DTOs;
 using SportsGurukul.Domain.Enums;
 using SportsGurukul.IntegrationTests.Bases;
 using SportsGurukul.IntegrationTests.Fixtures;
+using Xunit;
 
 namespace SportsGurukul.IntegrationTests.Tests;
 
