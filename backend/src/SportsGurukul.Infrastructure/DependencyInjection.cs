@@ -79,8 +79,16 @@ public static class DependencyInjection
         services.AddScoped<IBracketRepository, BracketRepository>();
         services.AddScoped<IRankingRepository, RankingRepository>();
 
+        // Event Management
+        services.AddScoped<IEventRepository, EventRepository>();
+        services.AddScoped<IEventSearchRepository, EventSearchRepository>();
+        services.AddScoped<IEventRegistrationRepository, EventRegistrationRepository>();
+        services.AddScoped<IEventAttendanceRepository, EventAttendanceRepository>();
+        services.AddScoped<IEventFeedbackRepository, EventFeedbackRepository>();
+
         services.AddMemoryCache();
-        services.AddScoped<ICacheService, MemoryCacheService>();
+        services.AddDistributedMemoryCache();
+        services.AddScoped<ICacheService, SearchCacheService>();
 
         services.Configure<StorageOptions>(configuration.GetSection(StorageOptions.SectionName));
 

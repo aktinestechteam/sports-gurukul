@@ -6,6 +6,7 @@ using SportsGurukul.Application.Common.Interfaces;
 using SportsGurukul.Application.Features.BookingSchedulingManagement.Calendar.Abstractions;
 using SportsGurukul.Application.Features.BookingSchedulingManagement.Calendar.Ics;
 using SportsGurukul.Application.Features.BookingSchedulingManagement.Services;
+using SportsGurukul.Application.Features.EventManagement.Services;
 using SportsGurukul.Application.Features.TournamentManagement.Services;
 
 namespace SportsGurukul.Application;
@@ -47,6 +48,27 @@ public static class DependencyInjection
         services.AddTransient<ISeedingService, StubSeedingService>();
         services.AddTransient<IRankingCalculationService, StubRankingCalculationService>();
         services.AddTransient<IScoringService, StubScoringService>();
+
+        services.AddTransient<IEventLifecycleService, EventLifecycleService>();
+        services.AddTransient<IEventRegistrationService, EventRegistrationService>();
+        services.AddTransient<IEventAttendanceService, EventAttendanceService>();
+        services.AddTransient<IEventCertificateService, EventCertificateService>();
+        services.AddTransient<IEventFeedbackService, EventFeedbackService>();
+        services.AddTransient<IEventAnnouncementService, EventAnnouncementService>();
+
+        services.AddTransient<Features.RegistrationAttendancePlatform.Engines.IRegistrationEngine, Features.RegistrationAttendancePlatform.Engines.RegistrationEngine>();
+        services.AddTransient<Features.RegistrationAttendancePlatform.Engines.IAttendanceEngine, Features.RegistrationAttendancePlatform.Engines.AttendanceEngine>();
+        services.AddTransient<Features.RegistrationAttendancePlatform.Engines.ICheckInService, Features.RegistrationAttendancePlatform.Engines.CheckInService>();
+        services.AddTransient<Features.RegistrationAttendancePlatform.Engines.ICheckOutService, Features.RegistrationAttendancePlatform.Engines.CheckOutService>();
+        services.AddTransient<Features.RegistrationAttendancePlatform.Engines.ICertificateEngine, Features.RegistrationAttendancePlatform.Engines.CertificateEngine>();
+        services.AddTransient<Features.RegistrationAttendancePlatform.Engines.IQrCodeService, Features.RegistrationAttendancePlatform.Engines.QrCodeService>();
+        services.AddTransient<Features.RegistrationAttendancePlatform.Engines.ICapacityManagementService, Features.RegistrationAttendancePlatform.Engines.CapacityManagementService>();
+        services.AddTransient<Features.RegistrationAttendancePlatform.Engines.IWaitlistEngine, Features.RegistrationAttendancePlatform.Engines.WaitlistEngine>();
+
+        services.AddTransient<Features.EventSearchDiscovery.Engines.IRecommendationEngine, Features.EventSearchDiscovery.Engines.RecommendationEngine>();
+        services.AddTransient<Features.EventSearchDiscovery.Engines.IPersonalizationService, Features.EventSearchDiscovery.Engines.PersonalizationService>();
+        services.AddTransient<Features.EventSearchDiscovery.Engines.IRecommendationStrategy, Features.EventSearchDiscovery.Engines.EventScoringEngine>();
+        services.AddTransient<Features.EventSearchDiscovery.Engines.IRecommendationStrategy, Features.EventSearchDiscovery.Engines.PopularityScoringEngine>();
 
         return services;
     }
