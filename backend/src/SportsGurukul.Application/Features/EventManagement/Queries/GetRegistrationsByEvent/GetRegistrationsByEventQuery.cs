@@ -1,0 +1,14 @@
+using MediatR;
+using SportsGurukul.Application.Common.Models;
+using SportsGurukul.Application.Features.EventManagement.DTOs;
+using SportsGurukul.Domain.Enums;
+
+namespace SportsGurukul.Application.Features.EventManagement.Queries.GetRegistrationsByEvent;
+
+public class GetRegistrationsByEventQuery : IRequest<Result<PagedResult<RegistrationDto>>>
+{
+    public Guid EventId { get; set; }
+    public EventRegistrationStatus? Status { get; set; }
+    public int Page { get; set; } = 1;
+    public int PageSize { get; set; } = 20;
+}

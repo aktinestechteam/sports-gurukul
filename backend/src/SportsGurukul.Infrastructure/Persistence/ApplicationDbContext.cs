@@ -147,6 +147,32 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<TournamentGallery> TournamentGallery_ => Set<TournamentGallery>();
     public DbSet<TournamentRule> TournamentRules => Set<TournamentRule>();
 
+    // Event Management
+    public DbSet<Event> Events => Set<Event>();
+    public DbSet<EventTypeEntity> EventTypes => Set<EventTypeEntity>();
+    public DbSet<EventCategory> EventCategories => Set<EventCategory>();
+    public DbSet<EventSchedule> EventSchedules => Set<EventSchedule>();
+    public DbSet<EventVenue> EventVenues => Set<EventVenue>();
+    public DbSet<EventRegistration> EventRegistrations => Set<EventRegistration>();
+    public DbSet<EventParticipant> EventParticipants => Set<EventParticipant>();
+    public DbSet<EventSpeaker> EventSpeakers => Set<EventSpeaker>();
+    public DbSet<EventCoach> EventCoaches => Set<EventCoach>();
+    public DbSet<EventVolunteer> EventVolunteers => Set<EventVolunteer>();
+    public DbSet<EventSponsor> EventSponsors => Set<EventSponsor>();
+    public DbSet<EventSession> EventSessions => Set<EventSession>();
+    public DbSet<EventAgenda> EventAgendas => Set<EventAgenda>();
+    public DbSet<EventTicket> EventTickets => Set<EventTicket>();
+    public DbSet<EventAttendance> EventAttendances => Set<EventAttendance>();
+    public DbSet<EventCertificate> EventCertificates => Set<EventCertificate>();
+    public DbSet<EventFeedback> EventFeedbacks => Set<EventFeedback>();
+    public DbSet<EventMedia> EventMedia => Set<EventMedia>();
+    public DbSet<EventDocument> EventDocuments => Set<EventDocument>();
+    public DbSet<EventAnnouncement> EventAnnouncements => Set<EventAnnouncement>();
+
+    // Event Search & Discovery
+    public DbSet<EventSavedSearch> EventSavedSearches => Set<EventSavedSearch>();
+    public DbSet<EventRecentSearch> EventRecentSearches => Set<EventRecentSearch>();
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<BaseEntity>())

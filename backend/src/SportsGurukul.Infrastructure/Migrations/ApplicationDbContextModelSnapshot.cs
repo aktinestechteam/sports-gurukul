@@ -3580,6 +3580,1838 @@ namespace SportsGurukul.Infrastructure.Migrations
                     b.ToTable("EquipmentMaintenance", (string)null);
                 });
 
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.Event", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AcademyId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("BannerUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("CancellationPolicy")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("ContactEmail")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ContactPhone")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(5000)
+                        .HasColumnType("character varying(5000)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("EventCategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("EventCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("EventName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<Guid>("EventTypeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsFeatured")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("MaxParticipants")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MinParticipants")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("RegistrationCloseDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal?>("RegistrationFee")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.Property<DateTime>("RegistrationOpenDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RegistrationType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("Requirements")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("ShortDescription")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<Guid>("SportId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("Tags")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Website")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("WhatToBring")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AcademyId")
+                        .HasDatabaseName("IX_Events_AcademyId");
+
+                    b.HasIndex("EventCategoryId")
+                        .HasDatabaseName("IX_Events_EventCategoryId");
+
+                    b.HasIndex("EventCode")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Events_EventCode");
+
+                    b.HasIndex("EventTypeId")
+                        .HasDatabaseName("IX_Events_EventTypeId");
+
+                    b.HasIndex("SportId")
+                        .HasDatabaseName("IX_Events_SportId");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_Events_Status");
+
+                    b.HasIndex("AcademyId", "Status")
+                        .HasDatabaseName("IX_Events_AcademyId_Status");
+
+                    b.HasIndex("SportId", "Status")
+                        .HasDatabaseName("IX_Events_SportId_Status");
+
+                    b.HasIndex("StartDate", "EndDate")
+                        .HasDatabaseName("IX_Events_StartDate_EndDate");
+
+                    b.ToTable("Events", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventAgenda", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Location")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<Guid?>("SessionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("SpeakerName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("StartTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId")
+                        .HasDatabaseName("IX_EventAgendas_EventId");
+
+                    b.HasIndex("SessionId")
+                        .HasDatabaseName("IX_EventAgendas_SessionId");
+
+                    b.HasIndex("EventId", "DisplayOrder")
+                        .HasDatabaseName("IX_EventAgendas_EventId_DisplayOrder");
+
+                    b.ToTable("EventAgendas", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventAnnouncement", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(5000)
+                        .HasColumnType("character varying(5000)");
+
+                    b.Property<string>("Priority")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTime?>("PublishedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("PublishedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<bool>("SendNotification")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId")
+                        .HasDatabaseName("IX_EventAnnouncements_EventId");
+
+                    b.HasIndex("IsPublished")
+                        .HasDatabaseName("IX_EventAnnouncements_IsPublished");
+
+                    b.HasIndex("EventId", "IsPublished")
+                        .HasDatabaseName("IX_EventAnnouncements_EventId_IsPublished");
+
+                    b.ToTable("EventAnnouncements", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventAttendance", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("CheckInTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("CheckOutTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MarkedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<Guid>("ParticipantId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<Guid?>("SessionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId")
+                        .HasDatabaseName("IX_EventAttendances_EventId");
+
+                    b.HasIndex("ParticipantId")
+                        .HasDatabaseName("IX_EventAttendances_ParticipantId");
+
+                    b.HasIndex("SessionId")
+                        .HasDatabaseName("IX_EventAttendances_SessionId");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_EventAttendances_Status");
+
+                    b.HasIndex("EventId", "ParticipantId")
+                        .HasDatabaseName("IX_EventAttendances_EventId_ParticipantId");
+
+                    b.HasIndex("SessionId", "ParticipantId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_EventAttendances_SessionId_ParticipantId")
+                        .HasFilter("\"SessionId\" IS NOT NULL");
+
+                    b.ToTable("EventAttendances", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CategoryType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryType")
+                        .HasDatabaseName("IX_EventCategories_CategoryType");
+
+                    b.HasIndex("Code")
+                        .IsUnique()
+                        .HasDatabaseName("IX_EventCategories_Code");
+
+                    b.ToTable("EventCategories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("ec000000-0000-0000-0000-000000000001"),
+                            CategoryType = "SportsTraining",
+                            Code = "SPORTS_TRAINING",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Events focused on sports skill development",
+                            DisplayOrder = 1,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Sports Training",
+                            RowVersion = new byte[0]
+                        },
+                        new
+                        {
+                            Id = new Guid("ec000000-0000-0000-0000-000000000002"),
+                            CategoryType = "Education",
+                            Code = "EDUCATION",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Educational events including seminars and workshops",
+                            DisplayOrder = 2,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Education",
+                            RowVersion = new byte[0]
+                        },
+                        new
+                        {
+                            Id = new Guid("ec000000-0000-0000-0000-000000000003"),
+                            CategoryType = "Networking",
+                            Code = "NETWORKING",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Events for professional networking",
+                            DisplayOrder = 3,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Networking",
+                            RowVersion = new byte[0]
+                        },
+                        new
+                        {
+                            Id = new Guid("ec000000-0000-0000-0000-000000000004"),
+                            CategoryType = "Health",
+                            Code = "HEALTH",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Health and wellness focused events",
+                            DisplayOrder = 4,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Health",
+                            RowVersion = new byte[0]
+                        },
+                        new
+                        {
+                            Id = new Guid("ec000000-0000-0000-0000-000000000005"),
+                            CategoryType = "TalentDevelopment",
+                            Code = "TALENT_DEV",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Talent identification and development programs",
+                            DisplayOrder = 5,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Talent Development",
+                            RowVersion = new byte[0]
+                        },
+                        new
+                        {
+                            Id = new Guid("ec000000-0000-0000-0000-000000000006"),
+                            CategoryType = "CommunityOutreach",
+                            Code = "COMMUNITY_OUTREACH",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Community engagement and outreach events",
+                            DisplayOrder = 6,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Community Outreach",
+                            RowVersion = new byte[0]
+                        },
+                        new
+                        {
+                            Id = new Guid("ec000000-0000-0000-0000-000000000007"),
+                            CategoryType = "Professional",
+                            Code = "PROFESSIONAL",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Professional development events",
+                            DisplayOrder = 7,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Professional",
+                            RowVersion = new byte[0]
+                        },
+                        new
+                        {
+                            Id = new Guid("ec000000-0000-0000-0000-000000000008"),
+                            CategoryType = "Recreational",
+                            Code = "RECREATIONAL",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Fun and recreational events",
+                            DisplayOrder = 8,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Recreational",
+                            RowVersion = new byte[0]
+                        },
+                        new
+                        {
+                            Id = new Guid("ec000000-0000-0000-0000-000000000009"),
+                            CategoryType = "Competitive",
+                            Code = "COMPETITIVE",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Competitive events and tournaments",
+                            DisplayOrder = 9,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Competitive",
+                            RowVersion = new byte[0]
+                        },
+                        new
+                        {
+                            Id = new Guid("ec000000-0000-0000-0000-000000000010"),
+                            CategoryType = "Mixed",
+                            Code = "MIXED",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Multi-purpose events combining multiple categories",
+                            DisplayOrder = 10,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Mixed",
+                            RowVersion = new byte[0]
+                        });
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventCertificate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CertificateNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("CertificateType")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DocumentUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPrinted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsSent")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("IssuedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime>("IssuedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<Guid>("ParticipantId")
+                        .HasColumnType("uuid");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CertificateNumber")
+                        .IsUnique()
+                        .HasDatabaseName("IX_EventCertificates_CertificateNumber");
+
+                    b.HasIndex("EventId")
+                        .HasDatabaseName("IX_EventCertificates_EventId");
+
+                    b.HasIndex("ParticipantId")
+                        .HasDatabaseName("IX_EventCertificates_ParticipantId");
+
+                    b.ToTable("EventCertificates", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventCoach", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CoachId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsLeadCoach")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("Responsibility")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Role")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoachId")
+                        .HasDatabaseName("IX_EventCoaches_CoachId");
+
+                    b.HasIndex("EventId")
+                        .HasDatabaseName("IX_EventCoaches_EventId");
+
+                    b.HasIndex("EventId", "CoachId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_EventCoaches_EventId_CoachId");
+
+                    b.ToTable("EventCoaches", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventDocument", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ContentType")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("DocumentType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("FileName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<long?>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("boolean");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UploadedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentType")
+                        .HasDatabaseName("IX_EventDocuments_DocumentType");
+
+                    b.HasIndex("EventId")
+                        .HasDatabaseName("IX_EventDocuments_EventId");
+
+                    b.HasIndex("EventId", "DocumentType")
+                        .HasDatabaseName("IX_EventDocuments_EventId_DocumentType");
+
+                    b.ToTable("EventDocuments", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventFeedback", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Comments")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("ContentRating")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsAnonymous")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("OrganizationRating")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("OverallRating")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<Guid?>("ParticipantId")
+                        .HasColumnType("uuid");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("SpeakerRating")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Suggestions")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("VenueRating")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<bool>("WouldRecommend")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId")
+                        .HasDatabaseName("IX_EventFeedbacks_EventId");
+
+                    b.HasIndex("OverallRating")
+                        .HasDatabaseName("IX_EventFeedbacks_OverallRating");
+
+                    b.HasIndex("ParticipantId")
+                        .HasDatabaseName("IX_EventFeedbacks_ParticipantId");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("IX_EventFeedbacks_UserId");
+
+                    b.HasIndex("EventId", "UserId")
+                        .HasDatabaseName("IX_EventFeedbacks_EventId_UserId");
+
+                    b.ToTable("EventFeedbacks", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventMedia", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ContentType")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("FileName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<long?>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsFeatured")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MediaType")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("ThumbnailUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UploadedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId")
+                        .HasDatabaseName("IX_EventMedia_EventId");
+
+                    b.HasIndex("MediaType")
+                        .HasDatabaseName("IX_EventMedia_MediaType");
+
+                    b.HasIndex("EventId", "MediaType")
+                        .HasDatabaseName("IX_EventMedia_EventId_MediaType");
+
+                    b.ToTable("EventMedia", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventParticipant", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AthleteId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AttendanceStatus")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DietaryRequirements")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Organization")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ParticipantName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<Guid?>("RegistrationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Role")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("SpecialNeeds")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AthleteId")
+                        .HasDatabaseName("IX_EventParticipants_AthleteId");
+
+                    b.HasIndex("AttendanceStatus")
+                        .HasDatabaseName("IX_EventParticipants_AttendanceStatus");
+
+                    b.HasIndex("EventId")
+                        .HasDatabaseName("IX_EventParticipants_EventId");
+
+                    b.HasIndex("RegistrationId")
+                        .HasDatabaseName("IX_EventParticipants_RegistrationId");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("IX_EventParticipants_UserId");
+
+                    b.HasIndex("EventId", "AthleteId")
+                        .HasDatabaseName("IX_EventParticipants_EventId_AthleteId");
+
+                    b.ToTable("EventParticipants", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventRegistration", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal?>("AmountPaid")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.Property<DateTime?>("ApprovalDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("AthleteId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("PaymentReference")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("RegistrationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RegistrationNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("RejectionReason")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("WaitlistPosition")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AthleteId")
+                        .HasDatabaseName("IX_EventRegistrations_AthleteId");
+
+                    b.HasIndex("EventId")
+                        .HasDatabaseName("IX_EventRegistrations_EventId");
+
+                    b.HasIndex("RegistrationNumber")
+                        .IsUnique()
+                        .HasDatabaseName("IX_EventRegistrations_RegistrationNumber");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_EventRegistrations_Status");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("IX_EventRegistrations_UserId");
+
+                    b.HasIndex("EventId", "AthleteId")
+                        .HasDatabaseName("IX_EventRegistrations_EventId_AthleteId");
+
+                    b.HasIndex("EventId", "Status")
+                        .HasDatabaseName("IX_EventRegistrations_EventId_Status");
+
+                    b.ToTable("EventRegistrations", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventSchedule", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("interval");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsAllDay")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("RecurrenceRule")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<DateTime>("ScheduleDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("interval");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId")
+                        .HasDatabaseName("IX_EventSchedules_EventId");
+
+                    b.HasIndex("EventId", "ScheduleDate")
+                        .HasDatabaseName("IX_EventSchedules_EventId_ScheduleDate");
+
+                    b.ToTable("EventSchedules", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventSession", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("Capacity")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("CoachId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("CurrentAttendeeCount")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("interval");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsBreak")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("SessionCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime>("SessionDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("SpeakerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("interval");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("VenueId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoachId")
+                        .HasDatabaseName("IX_EventSessions_CoachId");
+
+                    b.HasIndex("EventId")
+                        .HasDatabaseName("IX_EventSessions_EventId");
+
+                    b.HasIndex("SessionCode")
+                        .IsUnique()
+                        .HasDatabaseName("IX_EventSessions_SessionCode");
+
+                    b.HasIndex("SpeakerId")
+                        .HasDatabaseName("IX_EventSessions_SpeakerId");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_EventSessions_Status");
+
+                    b.HasIndex("VenueId")
+                        .HasDatabaseName("IX_EventSessions_VenueId");
+
+                    b.HasIndex("EventId", "SessionDate")
+                        .HasDatabaseName("IX_EventSessions_EventId_SessionDate");
+
+                    b.ToTable("EventSessions", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventSpeaker", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Bio")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<Guid?>("CoachId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Organization")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("ProfileImageUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("SpeakerName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Topic")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoachId")
+                        .HasDatabaseName("IX_EventSpeakers_CoachId");
+
+                    b.HasIndex("EventId")
+                        .HasDatabaseName("IX_EventSpeakers_EventId");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("IX_EventSpeakers_UserId");
+
+                    b.ToTable("EventSpeakers", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventSponsor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ContactEmail")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ContactPerson")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ContactPhone")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<decimal?>("ContributionAmount")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("numeric(12,2)");
+
+                    b.Property<string>("ContributionDescription")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("LogoUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("SponsorName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Tier")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Website")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId")
+                        .HasDatabaseName("IX_EventSponsors_EventId");
+
+                    b.ToTable("EventSponsors", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventTicket", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("MaxPerPerson")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.Property<int>("QuantityAvailable")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuantitySold")
+                        .HasColumnType("integer");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<DateTime?>("SaleEndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("SaleStartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("TicketCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("TicketType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId")
+                        .HasDatabaseName("IX_EventTickets_EventId");
+
+                    b.HasIndex("TicketCode")
+                        .IsUnique()
+                        .HasDatabaseName("IX_EventTickets_TicketCode");
+
+                    b.HasIndex("EventId", "TicketType")
+                        .HasDatabaseName("IX_EventTickets_EventId_TicketType");
+
+                    b.ToTable("EventTickets", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventTypeEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique()
+                        .HasDatabaseName("IX_EventTypes_Code");
+
+                    b.HasIndex("Name")
+                        .HasDatabaseName("IX_EventTypes_Name");
+
+                    b.ToTable("EventTypes", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("e1000000-0000-0000-0000-000000000001"),
+                            Code = "CAMP",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Sports camps for training and skill development",
+                            DisplayOrder = 1,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Camp",
+                            RowVersion = new byte[0]
+                        },
+                        new
+                        {
+                            Id = new Guid("e1000000-0000-0000-0000-000000000002"),
+                            Code = "WORKSHOP",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Interactive workshops for hands-on learning",
+                            DisplayOrder = 2,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Workshop",
+                            RowVersion = new byte[0]
+                        },
+                        new
+                        {
+                            Id = new Guid("e1000000-0000-0000-0000-000000000003"),
+                            Code = "SEMINAR",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Educational seminars and lectures",
+                            DisplayOrder = 3,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Seminar",
+                            RowVersion = new byte[0]
+                        },
+                        new
+                        {
+                            Id = new Guid("e1000000-0000-0000-0000-000000000004"),
+                            Code = "COACHING_CLINIC",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Professional coaching clinics for athletes and coaches",
+                            DisplayOrder = 4,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Coaching Clinic",
+                            RowVersion = new byte[0]
+                        },
+                        new
+                        {
+                            Id = new Guid("e1000000-0000-0000-0000-000000000005"),
+                            Code = "TRIAL",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Athlete trials and assessments",
+                            DisplayOrder = 5,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Trial",
+                            RowVersion = new byte[0]
+                        },
+                        new
+                        {
+                            Id = new Guid("e1000000-0000-0000-0000-000000000006"),
+                            Code = "TALENT_HUNT",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Talent identification and scouting programs",
+                            DisplayOrder = 6,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Talent Hunt",
+                            RowVersion = new byte[0]
+                        },
+                        new
+                        {
+                            Id = new Guid("e1000000-0000-0000-0000-000000000007"),
+                            Code = "COMPETITION",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Sports competitions and meets",
+                            DisplayOrder = 7,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Competition",
+                            RowVersion = new byte[0]
+                        },
+                        new
+                        {
+                            Id = new Guid("e1000000-0000-0000-0000-000000000008"),
+                            Code = "COMMUNITY_EVENT",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Community engagement and outreach events",
+                            DisplayOrder = 8,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Community Event",
+                            RowVersion = new byte[0]
+                        },
+                        new
+                        {
+                            Id = new Guid("e1000000-0000-0000-0000-000000000009"),
+                            Code = "SPORTS_FESTIVAL",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Multi-sport festivals and celebrations",
+                            DisplayOrder = 9,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Sports Festival",
+                            RowVersion = new byte[0]
+                        },
+                        new
+                        {
+                            Id = new Guid("e1000000-0000-0000-0000-000000000010"),
+                            Code = "WEBINAR",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Online webinars and virtual sessions",
+                            DisplayOrder = 10,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Webinar",
+                            RowVersion = new byte[0]
+                        });
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventVenue", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<int?>("Capacity")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("City")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Country")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("FacilityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Instructions")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPrimary")
+                        .HasColumnType("boolean");
+
+                    b.Property<decimal?>("Latitude")
+                        .HasPrecision(10, 7)
+                        .HasColumnType("numeric(10,7)");
+
+                    b.Property<decimal?>("Longitude")
+                        .HasPrecision(10, 7)
+                        .HasColumnType("numeric(10,7)");
+
+                    b.Property<string>("MapUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("PostalCode")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("State")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("VenueName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId")
+                        .HasDatabaseName("IX_EventVenues_EventId");
+
+                    b.HasIndex("FacilityId")
+                        .HasDatabaseName("IX_EventVenues_FacilityId");
+
+                    b.ToTable("EventVenues", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventVolunteer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Assignment")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime?>("CheckInTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("CheckOutTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("VolunteerName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId")
+                        .HasDatabaseName("IX_EventVolunteers_EventId");
+
+                    b.HasIndex("Role")
+                        .HasDatabaseName("IX_EventVolunteers_Role");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("IX_EventVolunteers_UserId");
+
+                    b.ToTable("EventVolunteers", (string)null);
+                });
+
             modelBuilder.Entity("SportsGurukul.Domain.Entities.Facility", b =>
                 {
                     b.Property<Guid>("Id")
@@ -5066,6 +6898,1665 @@ namespace SportsGurukul.Infrastructure.Migrations
                             IsDeleted = false,
                             Name = "Aquatic Sports"
                         });
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.Tournament", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AcademyId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ContactEmail")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ContactPhone")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("MaxParticipants")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MinParticipants")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("RegistrationCloseDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal?>("RegistrationFee")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.Property<DateTime>("RegistrationOpenDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RegistrationType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("Rules")
+                        .HasMaxLength(5000)
+                        .HasColumnType("character varying(5000)");
+
+                    b.Property<Guid>("SportId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("TournamentCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("TournamentName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("TournamentType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Venue")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Website")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AcademyId")
+                        .HasDatabaseName("IX_Tournaments_AcademyId");
+
+                    b.HasIndex("SportId")
+                        .HasDatabaseName("IX_Tournaments_SportId");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_Tournaments_Status");
+
+                    b.HasIndex("TournamentCode")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Tournaments_TournamentCode");
+
+                    b.HasIndex("TournamentType")
+                        .HasDatabaseName("IX_Tournaments_TournamentType");
+
+                    b.HasIndex("StartDate", "EndDate")
+                        .HasDatabaseName("IX_Tournaments_StartDate_EndDate");
+
+                    b.ToTable("Tournaments", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentAward", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AwardName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("AwardType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("CertificateUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("ParticipantId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ParticipantName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<decimal?>("PrizeMoney")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<Guid?>("TeamId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("TeamName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AwardType")
+                        .HasDatabaseName("IX_TournamentAwards_AwardType");
+
+                    b.HasIndex("ParticipantId")
+                        .HasDatabaseName("IX_TournamentAwards_ParticipantId");
+
+                    b.HasIndex("TeamId")
+                        .HasDatabaseName("IX_TournamentAwards_TeamId");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentAwards_TournamentId");
+
+                    b.ToTable("TournamentAwards", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentBracket", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("BracketData")
+                        .HasMaxLength(10000)
+                        .HasColumnType("character varying(10000)");
+
+                    b.Property<string>("BracketName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("BracketType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DivisionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<int?>("TotalRounds")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DivisionId")
+                        .HasDatabaseName("IX_TournamentBrackets_DivisionId");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentBrackets_TournamentId");
+
+                    b.ToTable("TournamentBrackets", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("CategoryType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("Gender")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("MaxAge")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MaxSkillLevel")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MinAge")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MinSkillLevel")
+                        .HasColumnType("integer");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryType")
+                        .HasDatabaseName("IX_TournamentCategories_CategoryType");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentCategories_TournamentId");
+
+                    b.ToTable("TournamentCategories", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentCourt", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CourtName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("CourtType")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<int?>("SurfaceRating")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("TournamentVenueId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TournamentVenueId")
+                        .HasDatabaseName("IX_TournamentCourts_TournamentVenueId");
+
+                    b.ToTable("TournamentCourts", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentDivision", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("DivisionName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("MaxTeams")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MinTeams")
+                        .HasColumnType("integer");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId")
+                        .HasDatabaseName("IX_TournamentDivisions_CategoryId");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentDivisions_TournamentId");
+
+                    b.ToTable("TournamentDivisions", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentDocument", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ContentType")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("DocumentName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("DocumentType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("FileName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<long?>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("FileUrl")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("boolean");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentType")
+                        .HasDatabaseName("IX_TournamentDocuments_DocumentType");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentDocuments_TournamentId");
+
+                    b.ToTable("TournamentDocuments", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentFixture", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AwayTeamName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<Guid?>("CourtId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("FixtureNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("HomeTeamName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<DateTime?>("ScheduledDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<TimeSpan?>("ScheduledTime")
+                        .HasPrecision(0)
+                        .HasColumnType("interval(0)");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("TournamentStageId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("VenueId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourtId")
+                        .HasDatabaseName("IX_TournamentFixtures_CourtId");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentFixtures_TournamentId");
+
+                    b.HasIndex("TournamentStageId")
+                        .HasDatabaseName("IX_TournamentFixtures_TournamentStageId");
+
+                    b.HasIndex("VenueId")
+                        .HasDatabaseName("IX_TournamentFixtures_VenueId");
+
+                    b.HasIndex("TournamentId", "FixtureNumber")
+                        .IsUnique()
+                        .HasDatabaseName("IX_TournamentFixtures_TournamentId_FixtureNumber");
+
+                    b.ToTable("TournamentFixtures", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentGallery", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Caption")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsFeatured")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MediaType")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("MediaUrl")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("ThumbnailUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MediaType")
+                        .HasDatabaseName("IX_TournamentGallery_MediaType");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentGallery_TournamentId");
+
+                    b.ToTable("TournamentGallery", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentMatch", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AwayParticipantId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AwayParticipantName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int?>("AwayScore")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("HomeParticipantId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("HomeParticipantName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int?>("HomeScore")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("MatchNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<DateTime?>("ScheduledDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<TimeSpan?>("ScheduledTime")
+                        .HasPrecision(0)
+                        .HasColumnType("interval(0)");
+
+                    b.Property<string>("ScoreDetails")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<Guid?>("TournamentCourtId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("TournamentCourtId1")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("TournamentRoundId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("TournamentStageId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("TournamentVenueId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("WinnerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("WinnerName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AwayParticipantId");
+
+                    b.HasIndex("HomeParticipantId");
+
+                    b.HasIndex("ScheduledDate")
+                        .HasDatabaseName("IX_TournamentMatches_ScheduledDate");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_TournamentMatches_Status");
+
+                    b.HasIndex("TournamentCourtId")
+                        .HasDatabaseName("IX_TournamentMatches_TournamentCourtId");
+
+                    b.HasIndex("TournamentCourtId1");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentMatches_TournamentId");
+
+                    b.HasIndex("TournamentRoundId")
+                        .HasDatabaseName("IX_TournamentMatches_TournamentRoundId");
+
+                    b.HasIndex("TournamentStageId")
+                        .HasDatabaseName("IX_TournamentMatches_TournamentStageId");
+
+                    b.HasIndex("TournamentVenueId")
+                        .HasDatabaseName("IX_TournamentMatches_TournamentVenueId");
+
+                    b.HasIndex("WinnerId");
+
+                    b.HasIndex("TournamentId", "MatchNumber")
+                        .IsUnique()
+                        .HasDatabaseName("IX_TournamentMatches_TournamentId_MatchNumber");
+
+                    b.ToTable("TournamentMatches", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentMatchSet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("AwayScore")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("HomeScore")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("SetDetails")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<int>("SetNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("TournamentMatchId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("WinnerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("WinnerName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TournamentMatchId")
+                        .HasDatabaseName("IX_TournamentMatchSets_TournamentMatchId");
+
+                    b.HasIndex("TournamentMatchId", "SetNumber")
+                        .IsUnique()
+                        .HasDatabaseName("IX_TournamentMatchSets_TournamentMatchId_SetNumber");
+
+                    b.ToTable("TournamentMatchSets", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentOfficial", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CoachId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("OfficialName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoachId")
+                        .HasDatabaseName("IX_TournamentOfficials_CoachId");
+
+                    b.HasIndex("Role")
+                        .HasDatabaseName("IX_TournamentOfficials_Role");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentOfficials_TournamentId");
+
+                    b.ToTable("TournamentOfficials", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentParticipant", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AcademyId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AthleteId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ParticipantName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ParticipantType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<int?>("Ranking")
+                        .HasColumnType("integer");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("SeedNumber")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<Guid?>("TeamId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AcademyId")
+                        .HasDatabaseName("IX_TournamentParticipants_AcademyId");
+
+                    b.HasIndex("AthleteId")
+                        .HasDatabaseName("IX_TournamentParticipants_AthleteId");
+
+                    b.HasIndex("CategoryId")
+                        .HasDatabaseName("IX_TournamentParticipants_CategoryId");
+
+                    b.HasIndex("ParticipantType")
+                        .HasDatabaseName("IX_TournamentParticipants_ParticipantType");
+
+                    b.HasIndex("TeamId")
+                        .HasDatabaseName("IX_TournamentParticipants_TeamId");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentParticipants_TournamentId");
+
+                    b.ToTable("TournamentParticipants", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentRanking", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Draws")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("GamesLost")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("GamesWon")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Losses")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MatchesPlayed")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("ParticipantId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Rank")
+                        .HasColumnType("integer");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<int>("SetsLost")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SetsWon")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Wins")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId")
+                        .HasDatabaseName("IX_TournamentRankings_CategoryId");
+
+                    b.HasIndex("ParticipantId")
+                        .HasDatabaseName("IX_TournamentRankings_ParticipantId");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentRankings_TournamentId");
+
+                    b.HasIndex("TournamentId", "ParticipantId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_TournamentRankings_TournamentId_ParticipantId");
+
+                    b.HasIndex("TournamentId", "Rank")
+                        .HasDatabaseName("IX_TournamentRankings_TournamentId_Rank");
+
+                    b.ToTable("TournamentRankings", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentRegistration", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AcademyId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AthleteId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("CheckedInDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DivisionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<decimal?>("FeePaid")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("numeric(10,2)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<DateTime?>("PaymentDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("RegistrantName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("RegistrationStatus")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<Guid?>("TeamId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AcademyId")
+                        .HasDatabaseName("IX_TournamentRegistrations_AcademyId");
+
+                    b.HasIndex("AthleteId")
+                        .HasDatabaseName("IX_TournamentRegistrations_AthleteId");
+
+                    b.HasIndex("CategoryId")
+                        .HasDatabaseName("IX_TournamentRegistrations_CategoryId");
+
+                    b.HasIndex("DivisionId")
+                        .HasDatabaseName("IX_TournamentRegistrations_DivisionId");
+
+                    b.HasIndex("RegistrationStatus")
+                        .HasDatabaseName("IX_TournamentRegistrations_RegistrationStatus");
+
+                    b.HasIndex("TeamId")
+                        .HasDatabaseName("IX_TournamentRegistrations_TeamId");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentRegistrations_TournamentId");
+
+                    b.ToTable("TournamentRegistrations", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentResult", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("AwayScore")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("HomeScore")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("MatchId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("ResultDetails")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("VerifiedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("VerifiedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("WinnerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("WinnerName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MatchId")
+                        .HasDatabaseName("IX_TournamentResults_MatchId");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentResults_TournamentId");
+
+                    b.HasIndex("WinnerId")
+                        .HasDatabaseName("IX_TournamentResults_WinnerId");
+
+                    b.ToTable("TournamentResults", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentRound", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("RoundName")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("RoundNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<DateTime?>("ScheduledDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("TournamentStageId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoundNumber")
+                        .HasDatabaseName("IX_TournamentRounds_RoundNumber");
+
+                    b.HasIndex("TournamentStageId")
+                        .HasDatabaseName("IX_TournamentRounds_TournamentStageId");
+
+                    b.ToTable("TournamentRounds", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentRule", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Category")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("RuleDescription")
+                        .IsRequired()
+                        .HasMaxLength(5000)
+                        .HasColumnType("character varying(5000)");
+
+                    b.Property<string>("RuleName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int>("RuleOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentRules_TournamentId");
+
+                    b.ToTable("TournamentRules", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentSeed", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("ParticipantId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("PreviousRanking")
+                        .HasColumnType("integer");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<int>("SeedPosition")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SeedSource")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId")
+                        .HasDatabaseName("IX_TournamentSeeds_CategoryId");
+
+                    b.HasIndex("ParticipantId")
+                        .HasDatabaseName("IX_TournamentSeeds_ParticipantId");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentSeeds_TournamentId");
+
+                    b.HasIndex("TournamentId", "SeedPosition")
+                        .IsUnique()
+                        .HasDatabaseName("IX_TournamentSeeds_TournamentId_SeedPosition");
+
+                    b.ToTable("TournamentSeeds", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentSponsor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal?>("Amount")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("numeric(12,2)");
+
+                    b.Property<string>("ContactEmail")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ContactPerson")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ContactPhone")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("LogoUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("SponsorName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("SponsorType")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Website")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentSponsors_TournamentId");
+
+                    b.ToTable("TournamentSponsors", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentSport", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPrimary")
+                        .HasColumnType("boolean");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<Guid>("SportId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("SportName")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SportId")
+                        .HasDatabaseName("IX_TournamentSports_SportId");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentSports_TournamentId");
+
+                    b.ToTable("TournamentSports", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentStage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("StageName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("StageOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("StageType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StageOrder")
+                        .HasDatabaseName("IX_TournamentStages_StageOrder");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentStages_TournamentId");
+
+                    b.ToTable("TournamentStages", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentTeam", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AcademyId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("Ranking")
+                        .HasColumnType("integer");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<int?>("SeedNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("TeamCode")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("TeamName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AcademyId")
+                        .HasDatabaseName("IX_TournamentTeams_AcademyId");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentTeams_TournamentId");
+
+                    b.HasIndex("TournamentId", "TeamCode")
+                        .IsUnique()
+                        .HasDatabaseName("IX_TournamentTeams_TournamentId_TeamCode");
+
+                    b.ToTable("TournamentTeams", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentVenue", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("FacilityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPrimary")
+                        .HasColumnType("boolean");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
+
+                    b.Property<Guid>("TournamentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("VenueName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FacilityId")
+                        .HasDatabaseName("IX_TournamentVenues_FacilityId");
+
+                    b.HasIndex("TournamentId")
+                        .HasDatabaseName("IX_TournamentVenues_TournamentId");
+
+                    b.ToTable("TournamentVenues", (string)null);
                 });
 
             modelBuilder.Entity("SportsGurukul.Domain.Entities.TrainingAssessment", b =>
@@ -6763,6 +10254,363 @@ namespace SportsGurukul.Infrastructure.Migrations
                     b.Navigation("FacilityEquipment");
                 });
 
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.Event", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Academy", "Academy")
+                        .WithMany()
+                        .HasForeignKey("AcademyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.EventCategory", "EventCategory")
+                        .WithMany("Events")
+                        .HasForeignKey("EventCategoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.EventTypeEntity", "EventType")
+                        .WithMany("Events")
+                        .HasForeignKey("EventTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Sport", "Sport")
+                        .WithMany()
+                        .HasForeignKey("SportId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Academy");
+
+                    b.Navigation("EventCategory");
+
+                    b.Navigation("EventType");
+
+                    b.Navigation("Sport");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventAgenda", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Event", "Event")
+                        .WithMany("Agendas")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.EventSession", "Session")
+                        .WithMany()
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Event");
+
+                    b.Navigation("Session");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventAnnouncement", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Event", "Event")
+                        .WithMany("Announcements")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventAttendance", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Event", "Event")
+                        .WithMany("Attendances")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.EventParticipant", "Participant")
+                        .WithMany()
+                        .HasForeignKey("ParticipantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.EventSession", "Session")
+                        .WithMany("Attendances")
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Event");
+
+                    b.Navigation("Participant");
+
+                    b.Navigation("Session");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventCertificate", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Event", "Event")
+                        .WithMany("Certificates")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.EventParticipant", "Participant")
+                        .WithMany()
+                        .HasForeignKey("ParticipantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("Participant");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventCoach", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Coach", "Coach")
+                        .WithMany()
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Event", "Event")
+                        .WithMany("Coaches")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Coach");
+
+                    b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventDocument", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Event", "Event")
+                        .WithMany("Documents")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventFeedback", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Event", "Event")
+                        .WithMany("Feedbacks")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.EventParticipant", "Participant")
+                        .WithMany()
+                        .HasForeignKey("ParticipantId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Event");
+
+                    b.Navigation("Participant");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventMedia", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Event", "Event")
+                        .WithMany("Media")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventParticipant", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Athlete", "Athlete")
+                        .WithMany()
+                        .HasForeignKey("AthleteId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Event", "Event")
+                        .WithMany("Participants")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.EventRegistration", "Registration")
+                        .WithMany()
+                        .HasForeignKey("RegistrationId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Athlete");
+
+                    b.Navigation("Event");
+
+                    b.Navigation("Registration");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventRegistration", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Athlete", "Athlete")
+                        .WithMany()
+                        .HasForeignKey("AthleteId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Event", "Event")
+                        .WithMany("Registrations")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Athlete");
+
+                    b.Navigation("Event");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventSchedule", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Event", "Event")
+                        .WithMany("Schedules")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventSession", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.EventCoach", "Coach")
+                        .WithMany()
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Event", "Event")
+                        .WithMany("Sessions")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.EventSpeaker", "Speaker")
+                        .WithMany()
+                        .HasForeignKey("SpeakerId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.EventVenue", "Venue")
+                        .WithMany()
+                        .HasForeignKey("VenueId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Coach");
+
+                    b.Navigation("Event");
+
+                    b.Navigation("Speaker");
+
+                    b.Navigation("Venue");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventSpeaker", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Coach", "Coach")
+                        .WithMany()
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Event", "Event")
+                        .WithMany("Speakers")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Coach");
+
+                    b.Navigation("Event");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventSponsor", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Event", "Event")
+                        .WithMany("Sponsors")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventTicket", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Event", "Event")
+                        .WithMany("Tickets")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventVenue", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Event", "Event")
+                        .WithMany("Venues")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Facility", "Facility")
+                        .WithMany()
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Event");
+
+                    b.Navigation("Facility");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventVolunteer", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Event", "Event")
+                        .WithMany("Volunteers")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Event");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SportsGurukul.Domain.Entities.Facility", b =>
                 {
                     b.HasOne("SportsGurukul.Domain.Entities.Academy", "Academy")
@@ -6988,6 +10836,518 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("SportCategory");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.Tournament", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Academy", "Academy")
+                        .WithMany()
+                        .HasForeignKey("AcademyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Sport", "Sport")
+                        .WithMany()
+                        .HasForeignKey("SportId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Academy");
+
+                    b.Navigation("Sport");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentAward", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentParticipant", "Participant")
+                        .WithMany()
+                        .HasForeignKey("ParticipantId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentTeam", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany("Awards")
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Participant");
+
+                    b.Navigation("Team");
+
+                    b.Navigation("Tournament");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentBracket", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentDivision", "Division")
+                        .WithMany("Brackets")
+                        .HasForeignKey("DivisionId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany()
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Division");
+
+                    b.Navigation("Tournament");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentCategory", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany("Categories")
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tournament");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentCourt", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentVenue", "TournamentVenue")
+                        .WithMany("Courts")
+                        .HasForeignKey("TournamentVenueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TournamentVenue");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentDivision", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentCategory", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany()
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Tournament");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentDocument", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany("Documents")
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tournament");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentFixture", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.FacilityCourt", "Court")
+                        .WithMany()
+                        .HasForeignKey("CourtId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany()
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentStage", "TournamentStage")
+                        .WithMany()
+                        .HasForeignKey("TournamentStageId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Facility", "Venue")
+                        .WithMany()
+                        .HasForeignKey("VenueId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Court");
+
+                    b.Navigation("Tournament");
+
+                    b.Navigation("TournamentStage");
+
+                    b.Navigation("Venue");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentGallery", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany("Gallery")
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tournament");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentMatch", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentParticipant", "AwayParticipant")
+                        .WithMany("AwayMatches")
+                        .HasForeignKey("AwayParticipantId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentParticipant", "HomeParticipant")
+                        .WithMany("HomeMatches")
+                        .HasForeignKey("HomeParticipantId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentCourt", "TournamentCourt")
+                        .WithMany()
+                        .HasForeignKey("TournamentCourtId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentCourt", null)
+                        .WithMany("Matches")
+                        .HasForeignKey("TournamentCourtId1");
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany()
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentRound", "TournamentRound")
+                        .WithMany("Matches")
+                        .HasForeignKey("TournamentRoundId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentStage", "TournamentStage")
+                        .WithMany()
+                        .HasForeignKey("TournamentStageId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentVenue", "TournamentVenue")
+                        .WithMany()
+                        .HasForeignKey("TournamentVenueId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentParticipant", "Winner")
+                        .WithMany("WonMatches")
+                        .HasForeignKey("WinnerId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("AwayParticipant");
+
+                    b.Navigation("HomeParticipant");
+
+                    b.Navigation("Tournament");
+
+                    b.Navigation("TournamentCourt");
+
+                    b.Navigation("TournamentRound");
+
+                    b.Navigation("TournamentStage");
+
+                    b.Navigation("TournamentVenue");
+
+                    b.Navigation("Winner");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentMatchSet", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentMatch", "TournamentMatch")
+                        .WithMany("Sets")
+                        .HasForeignKey("TournamentMatchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TournamentMatch");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentOfficial", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Coach", "Coach")
+                        .WithMany()
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany("Officials")
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Coach");
+
+                    b.Navigation("Tournament");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentParticipant", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Academy", "Academy")
+                        .WithMany()
+                        .HasForeignKey("AcademyId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Athlete", "Athlete")
+                        .WithMany()
+                        .HasForeignKey("AthleteId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentCategory", "Category")
+                        .WithMany("Participants")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentTeam", "Team")
+                        .WithMany("Participants")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany("Participants")
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Academy");
+
+                    b.Navigation("Athlete");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Team");
+
+                    b.Navigation("Tournament");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentRanking", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentCategory", "Category")
+                        .WithMany("Rankings")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentParticipant", "Participant")
+                        .WithMany()
+                        .HasForeignKey("ParticipantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany("Rankings")
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Participant");
+
+                    b.Navigation("Tournament");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentRegistration", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Academy", "Academy")
+                        .WithMany()
+                        .HasForeignKey("AcademyId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Athlete", "Athlete")
+                        .WithMany()
+                        .HasForeignKey("AthleteId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentCategory", "Category")
+                        .WithMany("Registrations")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentDivision", "Division")
+                        .WithMany("Registrations")
+                        .HasForeignKey("DivisionId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentTeam", "Team")
+                        .WithMany("Registrations")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany("Registrations")
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Academy");
+
+                    b.Navigation("Athlete");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Division");
+
+                    b.Navigation("Team");
+
+                    b.Navigation("Tournament");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentResult", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentMatch", "Match")
+                        .WithMany("Results")
+                        .HasForeignKey("MatchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany()
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentParticipant", "Winner")
+                        .WithMany()
+                        .HasForeignKey("WinnerId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Match");
+
+                    b.Navigation("Tournament");
+
+                    b.Navigation("Winner");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentRound", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentStage", "TournamentStage")
+                        .WithMany("Rounds")
+                        .HasForeignKey("TournamentStageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TournamentStage");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentRule", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany("Rules_")
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tournament");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentSeed", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentCategory", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.TournamentParticipant", "Participant")
+                        .WithMany("Seeds")
+                        .HasForeignKey("ParticipantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany()
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Participant");
+
+                    b.Navigation("Tournament");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentSponsor", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany("Sponsors")
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tournament");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentSport", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Sport", "Sport")
+                        .WithMany()
+                        .HasForeignKey("SportId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany("TournamentSports")
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sport");
+
+                    b.Navigation("Tournament");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentStage", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany("Stages")
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tournament");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentTeam", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Academy", "Academy")
+                        .WithMany()
+                        .HasForeignKey("AcademyId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany("Teams")
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Academy");
+
+                    b.Navigation("Tournament");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentVenue", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.Facility", "Facility")
+                        .WithMany()
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.Tournament", "Tournament")
+                        .WithMany("Venues")
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Facility");
+
+                    b.Navigation("Tournament");
                 });
 
             modelBuilder.Entity("SportsGurukul.Domain.Entities.TrainingAssessment", b =>
@@ -7326,6 +11686,58 @@ namespace SportsGurukul.Infrastructure.Migrations
                     b.Navigation("Versions");
                 });
 
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.Event", b =>
+                {
+                    b.Navigation("Agendas");
+
+                    b.Navigation("Announcements");
+
+                    b.Navigation("Attendances");
+
+                    b.Navigation("Certificates");
+
+                    b.Navigation("Coaches");
+
+                    b.Navigation("Documents");
+
+                    b.Navigation("Feedbacks");
+
+                    b.Navigation("Media");
+
+                    b.Navigation("Participants");
+
+                    b.Navigation("Registrations");
+
+                    b.Navigation("Schedules");
+
+                    b.Navigation("Sessions");
+
+                    b.Navigation("Speakers");
+
+                    b.Navigation("Sponsors");
+
+                    b.Navigation("Tickets");
+
+                    b.Navigation("Venues");
+
+                    b.Navigation("Volunteers");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventCategory", b =>
+                {
+                    b.Navigation("Events");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventSession", b =>
+                {
+                    b.Navigation("Attendances");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.EventTypeEntity", b =>
+                {
+                    b.Navigation("Events");
+                });
+
             modelBuilder.Entity("SportsGurukul.Domain.Entities.Facility", b =>
                 {
                     b.Navigation("Amenities");
@@ -7379,6 +11791,98 @@ namespace SportsGurukul.Infrastructure.Migrations
             modelBuilder.Entity("SportsGurukul.Domain.Entities.SportCategory", b =>
                 {
                     b.Navigation("Sports");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.Tournament", b =>
+                {
+                    b.Navigation("Awards");
+
+                    b.Navigation("Categories");
+
+                    b.Navigation("Documents");
+
+                    b.Navigation("Gallery");
+
+                    b.Navigation("Officials");
+
+                    b.Navigation("Participants");
+
+                    b.Navigation("Rankings");
+
+                    b.Navigation("Registrations");
+
+                    b.Navigation("Rules_");
+
+                    b.Navigation("Sponsors");
+
+                    b.Navigation("Stages");
+
+                    b.Navigation("Teams");
+
+                    b.Navigation("TournamentSports");
+
+                    b.Navigation("Venues");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentCategory", b =>
+                {
+                    b.Navigation("Participants");
+
+                    b.Navigation("Rankings");
+
+                    b.Navigation("Registrations");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentCourt", b =>
+                {
+                    b.Navigation("Matches");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentDivision", b =>
+                {
+                    b.Navigation("Brackets");
+
+                    b.Navigation("Registrations");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentMatch", b =>
+                {
+                    b.Navigation("Results");
+
+                    b.Navigation("Sets");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentParticipant", b =>
+                {
+                    b.Navigation("AwayMatches");
+
+                    b.Navigation("HomeMatches");
+
+                    b.Navigation("Seeds");
+
+                    b.Navigation("WonMatches");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentRound", b =>
+                {
+                    b.Navigation("Matches");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentStage", b =>
+                {
+                    b.Navigation("Rounds");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentTeam", b =>
+                {
+                    b.Navigation("Participants");
+
+                    b.Navigation("Registrations");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.TournamentVenue", b =>
+                {
+                    b.Navigation("Courts");
                 });
 
             modelBuilder.Entity("SportsGurukul.Domain.Entities.TrainingAssessment", b =>

@@ -126,6 +126,33 @@ public class InMemoryUnitOfWork : IUnitOfWork, IApplicationDbContext
     public DbSet<TournamentResult> TournamentResults { get; } = null!;
     public DbSet<TournamentAward> TournamentAwards { get; } = null!;
     public DbSet<TournamentOfficial> TournamentOfficials { get; } = null!;
+
+    // Event Management
+    public DbSet<Event> Events { get; } = null!;
+    public DbSet<EventTypeEntity> EventTypes { get; } = null!;
+    public DbSet<EventCategory> EventCategories { get; } = null!;
+    public DbSet<EventSchedule> EventSchedules { get; } = null!;
+    public DbSet<EventVenue> EventVenues { get; } = null!;
+    public DbSet<EventRegistration> EventRegistrations { get; } = null!;
+    public DbSet<EventParticipant> EventParticipants { get; } = null!;
+    public DbSet<EventSpeaker> EventSpeakers { get; } = null!;
+    public DbSet<EventCoach> EventCoaches { get; } = null!;
+    public DbSet<EventVolunteer> EventVolunteers { get; } = null!;
+    public DbSet<EventSponsor> EventSponsors { get; } = null!;
+    public DbSet<EventSession> EventSessions { get; } = null!;
+    public DbSet<EventAgenda> EventAgendas { get; } = null!;
+    public DbSet<EventTicket> EventTickets { get; } = null!;
+    public DbSet<EventAttendance> EventAttendances { get; } = null!;
+    public DbSet<EventCertificate> EventCertificates { get; } = null!;
+    public DbSet<EventFeedback> EventFeedbacks { get; } = null!;
+    public DbSet<EventMedia> EventMedia { get; } = null!;
+    public DbSet<EventDocument> EventDocuments { get; } = null!;
+    public DbSet<EventAnnouncement> EventAnnouncements { get; } = null!;
+
+    // Event Search & Discovery
+    public DbSet<EventSavedSearch> EventSavedSearches { get; } = null!;
+    public DbSet<EventRecentSearch> EventRecentSearches { get; } = null!;
+
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) => Task.FromResult(1);
     public void Dispose() { }
 }
