@@ -3,10 +3,15 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using SportsGurukul.Application.Common.Behaviors;
 using SportsGurukul.Application.Common.Interfaces;
+using SportsGurukul.Application.Common.Interfaces.Finance.Services;
 using SportsGurukul.Application.Features.BookingSchedulingManagement.Calendar.Abstractions;
 using SportsGurukul.Application.Features.BookingSchedulingManagement.Calendar.Ics;
 using SportsGurukul.Application.Features.BookingSchedulingManagement.Services;
 using SportsGurukul.Application.Features.EventManagement.Services;
+using SportsGurukul.Application.Features.FinanceManagement.Services;
+using SportsGurukul.Application.Features.NotificationManagement.BusinessRules;
+using SportsGurukul.Application.Features.NotificationManagement.BusinessRules.Rules;
+using SportsGurukul.Application.Common.Interfaces.Notification.Services;
 using SportsGurukul.Application.Features.TournamentManagement.Services;
 
 namespace SportsGurukul.Application;
@@ -70,6 +75,37 @@ public static class DependencyInjection
         services.AddTransient<Features.EventSearchDiscovery.Engines.IRecommendationStrategy, Features.EventSearchDiscovery.Engines.EventScoringEngine>();
         services.AddTransient<Features.EventSearchDiscovery.Engines.IRecommendationStrategy, Features.EventSearchDiscovery.Engines.PopularityScoringEngine>();
 
+        services.AddTransient<IInvoiceService, InvoiceService>();
+        services.AddTransient<IPaymentService, PaymentService>();
+        services.AddTransient<IRefundService, RefundService>();
+        services.AddTransient<IWalletService, WalletService>();
+        services.AddTransient<ICouponService, CouponService>();
+        services.AddTransient<ILedgerService, LedgerService>();
+        services.AddTransient<ITaxCalculationService, TaxCalculationService>();
+        services.AddTransient<IDiscountService, DiscountService>();
+        services.AddTransient<ISettlementService, SettlementService>();
+
+        RegisterNotificationServices(services);
+
         return services;
+    }
+
+    private static void RegisterNotificationServices(IServiceCollection services)
+    {
+        services.AddTransient<INotificationService, Features.NotificationManagement.Services.NotificationService>();
+        services.AddTransient<ITemplateService, Features.NotificationManagement.Services.TemplateService>();
+        services.AddTransient<IPreferenceService, Features.NotificationManagement.Services.PreferenceService>();
+        services.AddTransient<ICampaignService, Features.NotificationManagement.Services.CampaignService>();
+        services.AddTransient<IDeliveryTrackingService, Features.NotificationManagement.Services.DeliveryTrackingService>();
+        services.AddTransient<INotificationDispatcher, Features.NotificationManagement.Services.NotificationDispatcher>();
+        services.AddTransient<ITemplateRenderer, Features.NotificationManagement.Services.TemplateRenderer>();
+        services.AddTransient<IRecipientResolver, Features.NotificationManagement.Services.RecipientResolver>();
+        services.AddTransient<IQueueService, Features.NotificationManagement.Services.QueueService>();
+
+        services.AddTransient<IBusinessRuleValidator, Features.NotificationManagement.BusinessRules.BusinessRuleValidator>();
+        services.AddTransient<IBusinessRule, Features.NotificationManagement.BusinessRules.QuietHoursRule>();
+        services.AddTransient<IBusinessRule, Features.NotificationManagement.BusinessRules.RateLimitRule>();
+        services.AddTransient<IBusinessRule, Features.NotificationManagement.BusinessRules.TemplateValidationRule>();
+        services.AddTransient<IBusinessRule, Features.NotificationManagement.BusinessRules.DuplicateCheckRule>();
     }
 }
