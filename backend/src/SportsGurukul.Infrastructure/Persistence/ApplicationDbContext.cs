@@ -4,6 +4,9 @@ using SportsGurukul.Application.Common.Interfaces;
 using SportsGurukul.Domain.Common;
 using SportsGurukul.Domain.Entities;
 using SportsGurukul.Domain.Entities.Finance;
+using SportsGurukul.Domain.Entities.Notification;
+using SportsGurukul.Domain.Enums.Notification;
+using NChannel = SportsGurukul.Domain.Entities.Notification.NotificationChannel;
 
 namespace SportsGurukul.Infrastructure.Persistence;
 
@@ -207,6 +210,26 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<CreditNote> CreditNotes => Set<CreditNote>();
     public DbSet<DebitNote> DebitNotes => Set<DebitNote>();
     public DbSet<FinancialAudit> FinancialAudits => Set<FinancialAudit>();
+
+    // Notification Domain
+    public DbSet<Domain.Entities.Notification.Notification> Notifications => Set<Domain.Entities.Notification.Notification>();
+    public DbSet<NotificationRecipient> NotificationRecipients => Set<NotificationRecipient>();
+    public DbSet<NotificationTemplate> NotificationTemplates => Set<NotificationTemplate>();
+    public DbSet<TemplateVersion> TemplateVersions => Set<TemplateVersion>();
+    public DbSet<TemplateVariable> TemplateVariables => Set<TemplateVariable>();
+    public DbSet<NChannel> NotificationChannels => Set<NChannel>();
+    public DbSet<NotificationProvider> NotificationProviders => Set<NotificationProvider>();
+    public DbSet<NotificationPreference> NotificationPreferences => Set<NotificationPreference>();
+    public DbSet<NotificationSubscription> NotificationSubscriptions => Set<NotificationSubscription>();
+    public DbSet<NotificationSchedule> NotificationSchedules => Set<NotificationSchedule>();
+    public DbSet<NotificationQueue> NotificationQueue => Set<NotificationQueue>();
+    public DbSet<NotificationAttachment> NotificationAttachments => Set<NotificationAttachment>();
+    public DbSet<NotificationDelivery> NotificationDeliveries => Set<NotificationDelivery>();
+    public DbSet<NotificationRetry> NotificationRetries => Set<NotificationRetry>();
+    public DbSet<NotificationBatch> NotificationBatches => Set<NotificationBatch>();
+    public DbSet<NotificationCampaign> NotificationCampaigns => Set<NotificationCampaign>();
+    public DbSet<NotificationEvent> NotificationEvents => Set<NotificationEvent>();
+    public DbSet<NotificationAudit> NotificationAudits => Set<NotificationAudit>();
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

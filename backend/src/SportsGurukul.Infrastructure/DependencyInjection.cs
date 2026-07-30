@@ -3,11 +3,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SportsGurukul.Application.Common.Interfaces;
 using SportsGurukul.Application.Common.Interfaces.Finance;
+using SportsGurukul.Application.Common.Interfaces.Notification;
 using SportsGurukul.Infrastructure.Caching;
 using SportsGurukul.Infrastructure.Email;
 using SportsGurukul.Infrastructure.Persistence;
 using SportsGurukul.Infrastructure.Persistence.Repositories;
 using SportsGurukul.Infrastructure.Persistence.Repositories.Finance;
+using SportsGurukul.Infrastructure.Persistence.Repositories.Notification;
 using SportsGurukul.Infrastructure.Storage;
 
 namespace SportsGurukul.Infrastructure;
@@ -118,6 +120,14 @@ public static class DependencyInjection
         services.AddScoped<IWalletRepository, WalletRepository>();
         services.AddScoped<ICouponRepository, CouponRepository>();
         services.AddScoped<ISettlementRepository, SettlementRepository>();
+
+        // Notification Domain
+        services.AddScoped<INotificationRepository, NotificationRepository>();
+        services.AddScoped<ITemplateRepository, TemplateRepository>();
+        services.AddScoped<IPreferenceRepository, PreferenceRepository>();
+        services.AddScoped<IQueueRepository, QueueRepository>();
+        services.AddScoped<IDeliveryRepository, DeliveryRepository>();
+        services.AddScoped<IAuditRepository, AuditRepository>();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SportsGurukul.Domain.Entities;
 using SportsGurukul.Domain.Entities.Finance;
+using SportsGurukul.Domain.Entities.Notification;
 
 namespace SportsGurukul.Application.Common.Interfaces;
 
@@ -77,6 +78,26 @@ public interface IApplicationDbContext
     DbSet<CreditNote> CreditNotes { get; }
     DbSet<DebitNote> DebitNotes { get; }
     DbSet<FinancialAudit> FinancialAudits { get; }
+
+    // Notification Domain
+    DbSet<Domain.Entities.Notification.Notification> Notifications { get; }
+    DbSet<NotificationRecipient> NotificationRecipients { get; }
+    DbSet<NotificationTemplate> NotificationTemplates { get; }
+    DbSet<TemplateVersion> TemplateVersions { get; }
+    DbSet<TemplateVariable> TemplateVariables { get; }
+    DbSet<NotificationChannel> NotificationChannels { get; }
+    DbSet<NotificationProvider> NotificationProviders { get; }
+    DbSet<NotificationPreference> NotificationPreferences { get; }
+    DbSet<NotificationSubscription> NotificationSubscriptions { get; }
+    DbSet<NotificationSchedule> NotificationSchedules { get; }
+    DbSet<NotificationQueue> NotificationQueue { get; }
+    DbSet<NotificationAttachment> NotificationAttachments { get; }
+    DbSet<NotificationDelivery> NotificationDeliveries { get; }
+    DbSet<NotificationRetry> NotificationRetries { get; }
+    DbSet<NotificationBatch> NotificationBatches { get; }
+    DbSet<NotificationCampaign> NotificationCampaigns { get; }
+    DbSet<NotificationEvent> NotificationEvents { get; }
+    DbSet<NotificationAudit> NotificationAudits { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

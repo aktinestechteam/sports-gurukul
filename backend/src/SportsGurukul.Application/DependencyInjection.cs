@@ -9,6 +9,9 @@ using SportsGurukul.Application.Features.BookingSchedulingManagement.Calendar.Ic
 using SportsGurukul.Application.Features.BookingSchedulingManagement.Services;
 using SportsGurukul.Application.Features.EventManagement.Services;
 using SportsGurukul.Application.Features.FinanceManagement.Services;
+using SportsGurukul.Application.Features.NotificationManagement.BusinessRules;
+using SportsGurukul.Application.Features.NotificationManagement.BusinessRules.Rules;
+using SportsGurukul.Application.Common.Interfaces.Notification.Services;
 using SportsGurukul.Application.Features.TournamentManagement.Services;
 
 namespace SportsGurukul.Application;
@@ -82,6 +85,27 @@ public static class DependencyInjection
         services.AddTransient<IDiscountService, DiscountService>();
         services.AddTransient<ISettlementService, SettlementService>();
 
+        RegisterNotificationServices(services);
+
         return services;
+    }
+
+    private static void RegisterNotificationServices(IServiceCollection services)
+    {
+        services.AddTransient<INotificationService, Features.NotificationManagement.Services.NotificationService>();
+        services.AddTransient<ITemplateService, Features.NotificationManagement.Services.TemplateService>();
+        services.AddTransient<IPreferenceService, Features.NotificationManagement.Services.PreferenceService>();
+        services.AddTransient<ICampaignService, Features.NotificationManagement.Services.CampaignService>();
+        services.AddTransient<IDeliveryTrackingService, Features.NotificationManagement.Services.DeliveryTrackingService>();
+        services.AddTransient<INotificationDispatcher, Features.NotificationManagement.Services.NotificationDispatcher>();
+        services.AddTransient<ITemplateRenderer, Features.NotificationManagement.Services.TemplateRenderer>();
+        services.AddTransient<IRecipientResolver, Features.NotificationManagement.Services.RecipientResolver>();
+        services.AddTransient<IQueueService, Features.NotificationManagement.Services.QueueService>();
+
+        services.AddTransient<IBusinessRuleValidator, Features.NotificationManagement.BusinessRules.BusinessRuleValidator>();
+        services.AddTransient<IBusinessRule, Features.NotificationManagement.BusinessRules.QuietHoursRule>();
+        services.AddTransient<IBusinessRule, Features.NotificationManagement.BusinessRules.RateLimitRule>();
+        services.AddTransient<IBusinessRule, Features.NotificationManagement.BusinessRules.TemplateValidationRule>();
+        services.AddTransient<IBusinessRule, Features.NotificationManagement.BusinessRules.DuplicateCheckRule>();
     }
 }
