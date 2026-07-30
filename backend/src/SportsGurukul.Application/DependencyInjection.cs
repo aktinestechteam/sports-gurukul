@@ -3,10 +3,12 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using SportsGurukul.Application.Common.Behaviors;
 using SportsGurukul.Application.Common.Interfaces;
+using SportsGurukul.Application.Common.Interfaces.Finance.Services;
 using SportsGurukul.Application.Features.BookingSchedulingManagement.Calendar.Abstractions;
 using SportsGurukul.Application.Features.BookingSchedulingManagement.Calendar.Ics;
 using SportsGurukul.Application.Features.BookingSchedulingManagement.Services;
 using SportsGurukul.Application.Features.EventManagement.Services;
+using SportsGurukul.Application.Features.FinanceManagement.Services;
 using SportsGurukul.Application.Features.TournamentManagement.Services;
 
 namespace SportsGurukul.Application;
@@ -69,6 +71,16 @@ public static class DependencyInjection
         services.AddTransient<Features.EventSearchDiscovery.Engines.IPersonalizationService, Features.EventSearchDiscovery.Engines.PersonalizationService>();
         services.AddTransient<Features.EventSearchDiscovery.Engines.IRecommendationStrategy, Features.EventSearchDiscovery.Engines.EventScoringEngine>();
         services.AddTransient<Features.EventSearchDiscovery.Engines.IRecommendationStrategy, Features.EventSearchDiscovery.Engines.PopularityScoringEngine>();
+
+        services.AddTransient<IInvoiceService, InvoiceService>();
+        services.AddTransient<IPaymentService, PaymentService>();
+        services.AddTransient<IRefundService, RefundService>();
+        services.AddTransient<IWalletService, WalletService>();
+        services.AddTransient<ICouponService, CouponService>();
+        services.AddTransient<ILedgerService, LedgerService>();
+        services.AddTransient<ITaxCalculationService, TaxCalculationService>();
+        services.AddTransient<IDiscountService, DiscountService>();
+        services.AddTransient<ISettlementService, SettlementService>();
 
         return services;
     }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SportsGurukul.Application.Common.Interfaces;
 using SportsGurukul.Domain.Common;
 using SportsGurukul.Domain.Entities;
+using SportsGurukul.Domain.Entities.Finance;
 
 namespace SportsGurukul.Infrastructure.Persistence;
 
@@ -172,6 +173,40 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     // Event Search & Discovery
     public DbSet<EventSavedSearch> EventSavedSearches => Set<EventSavedSearch>();
     public DbSet<EventRecentSearch> EventRecentSearches => Set<EventRecentSearch>();
+
+    // Finance Domain
+    public DbSet<Invoice> Invoices => Set<Invoice>();
+    public DbSet<InvoiceItem> InvoiceItems => Set<InvoiceItem>();
+    public DbSet<InvoiceTax> InvoiceTaxes => Set<InvoiceTax>();
+    public DbSet<InvoiceDiscount> InvoiceDiscounts => Set<InvoiceDiscount>();
+    public DbSet<InvoicePayment> InvoicePayments => Set<InvoicePayment>();
+    public DbSet<Payment> Payments => Set<Payment>();
+    public DbSet<PaymentMethod> PaymentMethods => Set<PaymentMethod>();
+    public DbSet<PaymentTransaction> PaymentTransactions => Set<PaymentTransaction>();
+    public DbSet<Refund> Refunds => Set<Refund>();
+    public DbSet<RefundItem> RefundItems => Set<RefundItem>();
+    public DbSet<Wallet> Wallets => Set<Wallet>();
+    public DbSet<WalletTransaction> WalletTransactions => Set<WalletTransaction>();
+    public DbSet<Ledger> Ledgers => Set<Ledger>();
+    public DbSet<LedgerEntry> LedgerEntries => Set<LedgerEntry>();
+    public DbSet<Journal> Journals => Set<Journal>();
+    public DbSet<JournalEntry> JournalEntries => Set<JournalEntry>();
+    public DbSet<FeeStructure> FeeStructures => Set<FeeStructure>();
+    public DbSet<FeeCategory> FeeCategories => Set<FeeCategory>();
+    public DbSet<Scholarship> Scholarships => Set<Scholarship>();
+    public DbSet<DiscountPolicy> DiscountPolicies => Set<DiscountPolicy>();
+    public DbSet<Coupon> Coupons => Set<Coupon>();
+    public DbSet<CouponUsage> CouponUsages => Set<CouponUsage>();
+    public DbSet<TaxConfiguration> TaxConfigurations => Set<TaxConfiguration>();
+    public DbSet<PaymentGateway> PaymentGateways => Set<PaymentGateway>();
+    public DbSet<GatewayTransaction> GatewayTransactions_ => Set<GatewayTransaction>();
+    public DbSet<Settlement> Settlements => Set<Settlement>();
+    public DbSet<SettlementBatch> SettlementBatches => Set<SettlementBatch>();
+    public DbSet<PaymentReminder> PaymentReminders => Set<PaymentReminder>();
+    public DbSet<Receipt> Receipts => Set<Receipt>();
+    public DbSet<CreditNote> CreditNotes => Set<CreditNote>();
+    public DbSet<DebitNote> DebitNotes => Set<DebitNote>();
+    public DbSet<FinancialAudit> FinancialAudits => Set<FinancialAudit>();
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

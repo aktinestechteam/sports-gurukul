@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SportsGurukul.Domain\SportsGurukul.Domain.csproj" />
     <ProjectReference Include="..\SportsGurukul.Platform.Competition\SportsGurukul.Platform.Competition.csproj" />
+    <ProjectReference Include="..\SportsGurukul.Platform.PaymentGateway\SportsGurukul.Platform.PaymentGateway.csproj" />
   </ItemGroup>
 
   <ItemGroup>
