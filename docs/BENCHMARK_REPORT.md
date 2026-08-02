@@ -24,4 +24,16 @@ Benchmarks are measured as part of unit tests; all 102 tests pass with total dur
 | Payment Gateway | 102 | 102 | 0 | 0 | 641ms |
 | **Combined** | **191** | **191** | **0** | **0** | **1,326ms** |
 
+## AI & Intelligence Platform
+
+Integration tests run against a real in-memory host backed by a throwaway `postgres:16-alpine` container (schema built from `GenerateCreateScript` + seed inserts stripped + reference data re-seeded). Duration below is the full HTTP integration run.
+
+| Project | Total | Passed | Failed | Skipped | Duration |
+|---------|-------|--------|--------|---------|----------|
+| AI Integration Tests | 73 | 73 | 0 | 0 | ~18s |
+| AI.Application | 234 | 234 | 0 | 0 | ~1s |
+| AI.Domain | 156 | 156 | 0 | 0 | ~3s |
+| AI.Infrastructure | 105 | 105 | 0 | 0 | ~9s |
+| **AI Combined** | **568** | **568** | **0** | **0** | — |
+
 All performance targets are met with significant headroom.

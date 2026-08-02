@@ -201,6 +201,23 @@ builder.Services.AddAuthorization(options =>
     options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
         .RequireAuthenticatedUser()
         .Build();
+
+    options.AddPolicy("AI.FullAccess", policy =>
+        policy.RequireAuthenticatedUser()
+            .RequireRole("Platform Administrator", "AI Administrator"));
+
+    options.AddPolicy("AI.Admin", policy =>
+        policy.RequireAuthenticatedUser()
+            .RequireRole("Platform Administrator", "AI Administrator", "Academy Administrator"));
+
+    options.AddPolicy("AI.Owner", policy =>
+        policy.RequireAuthenticatedUser()
+            .RequireAssertion(context =>
+                context.User.IsInRole("Platform Administrator") ||
+                context.User.IsInRole("AI Administrator") ||
+                context.User.IsInRole("Academy Administrator") ||
+                context.User.IsInRole("Coach") ||
+                context.User.IsInRole("Athlete")));
 });
 
 var app = builder.Build();

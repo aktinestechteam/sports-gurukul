@@ -99,5 +99,33 @@ public interface IApplicationDbContext
     DbSet<NotificationEvent> NotificationEvents { get; }
     DbSet<NotificationAudit> NotificationAudits { get; }
 
+    // AI & Intelligence Domain
+    DbSet<Domain.Entities.AI.AIProvider> AIProviders { get; }
+    DbSet<Domain.Entities.AI.AIModel> AIModels { get; }
+    DbSet<Domain.Entities.AI.AIAssistant> AIAssistants { get; }
+    DbSet<Domain.Entities.AI.Conversation> Conversations { get; }
+    DbSet<Domain.Entities.AI.ConversationMessage> ConversationMessages { get; }
+    DbSet<Domain.Entities.AI.ConversationMemory> ConversationMemories { get; }
+    DbSet<Domain.Entities.AI.PromptTemplate> PromptTemplates { get; }
+    DbSet<Domain.Entities.AI.PromptVersion> PromptVersions { get; }
+    DbSet<Domain.Entities.AI.KnowledgeBase> KnowledgeBases { get; }
+    DbSet<Domain.Entities.AI.KnowledgeSource> KnowledgeSources { get; }
+    DbSet<Domain.Entities.AI.KnowledgeDocument> KnowledgeDocuments { get; }
+    DbSet<Domain.Entities.AI.Embedding> Embeddings { get; }
+    DbSet<Domain.Entities.AI.EmbeddingChunk> EmbeddingChunks { get; }
+    DbSet<Domain.Entities.AI.VectorIndex> VectorIndices { get; }
+    DbSet<Domain.Entities.AI.SemanticSearchRequest> SemanticSearchRequests { get; }
+    DbSet<Domain.Entities.AI.SemanticSearchResult> SemanticSearchResults { get; }
+    DbSet<Domain.Entities.AI.ToolDefinition> ToolDefinitions { get; }
+    DbSet<Domain.Entities.AI.ToolExecution> ToolExecutions { get; }
+    DbSet<Domain.Entities.AI.WorkflowDefinition> WorkflowDefinitions { get; }
+    DbSet<Domain.Entities.AI.WorkflowExecution> WorkflowExecutions { get; }
+    DbSet<Domain.Entities.AI.AgentDefinition> AgentDefinitions { get; }
+    DbSet<Domain.Entities.AI.AgentExecution> AgentExecutions { get; }
+    DbSet<Domain.Entities.AI.AIAuditLog> AIAuditLogs { get; }
+    DbSet<Domain.Entities.AI.AITokenUsage> AITokenUsages { get; }
+    DbSet<Domain.Entities.AI.AIModelConfiguration> AIModelConfigurations { get; }
+    DbSet<Domain.Entities.AI.AIRoutingPolicy> AIRoutingPolicies { get; }
+
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

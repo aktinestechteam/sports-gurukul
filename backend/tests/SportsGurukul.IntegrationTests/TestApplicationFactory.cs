@@ -15,6 +15,8 @@ using SportsGurukul.Application.Common.Interfaces;
 using SportsGurukul.Application.Features.UserManagement.DTOs;
 using SportsGurukul.Domain.Common;
 using SportsGurukul.Domain.Entities;
+using SportsGurukul.Domain.Entities.Finance;
+using SportsGurukul.Domain.Entities.Notification;
 using SportsGurukul.Domain.Enums;
 using SportsGurukul.Infrastructure.Authentication;
 using SportsGurukul.Infrastructure.Storage;
@@ -152,6 +154,88 @@ public class InMemoryUnitOfWork : IUnitOfWork, IApplicationDbContext
     // Event Search & Discovery
     public DbSet<EventSavedSearch> EventSavedSearches { get; } = null!;
     public DbSet<EventRecentSearch> EventRecentSearches { get; } = null!;
+
+    // Finance Domain
+    public DbSet<Invoice> Invoices { get; } = null!;
+    public DbSet<InvoiceItem> InvoiceItems { get; } = null!;
+    public DbSet<InvoiceTax> InvoiceTaxes { get; } = null!;
+    public DbSet<InvoiceDiscount> InvoiceDiscounts { get; } = null!;
+    public DbSet<InvoicePayment> InvoicePayments { get; } = null!;
+    public DbSet<Payment> Payments { get; } = null!;
+    public DbSet<PaymentMethod> PaymentMethods { get; } = null!;
+    public DbSet<PaymentTransaction> PaymentTransactions { get; } = null!;
+    public DbSet<Refund> Refunds { get; } = null!;
+    public DbSet<RefundItem> RefundItems { get; } = null!;
+    public DbSet<Wallet> Wallets { get; } = null!;
+    public DbSet<WalletTransaction> WalletTransactions { get; } = null!;
+    public DbSet<Ledger> Ledgers { get; } = null!;
+    public DbSet<LedgerEntry> LedgerEntries { get; } = null!;
+    public DbSet<Journal> Journals { get; } = null!;
+    public DbSet<JournalEntry> JournalEntries { get; } = null!;
+    public DbSet<FeeStructure> FeeStructures { get; } = null!;
+    public DbSet<FeeCategory> FeeCategories { get; } = null!;
+    public DbSet<Scholarship> Scholarships { get; } = null!;
+    public DbSet<DiscountPolicy> DiscountPolicies { get; } = null!;
+    public DbSet<Coupon> Coupons { get; } = null!;
+    public DbSet<CouponUsage> CouponUsages { get; } = null!;
+    public DbSet<TaxConfiguration> TaxConfigurations { get; } = null!;
+    public DbSet<PaymentGateway> PaymentGateways { get; } = null!;
+    public DbSet<GatewayTransaction> GatewayTransactions_ { get; } = null!;
+    public DbSet<Settlement> Settlements { get; } = null!;
+    public DbSet<SettlementBatch> SettlementBatches { get; } = null!;
+    public DbSet<PaymentReminder> PaymentReminders { get; } = null!;
+    public DbSet<Receipt> Receipts { get; } = null!;
+    public DbSet<CreditNote> CreditNotes { get; } = null!;
+    public DbSet<DebitNote> DebitNotes { get; } = null!;
+    public DbSet<FinancialAudit> FinancialAudits { get; } = null!;
+
+    // Notification Domain
+    public DbSet<Domain.Entities.Notification.Notification> Notifications { get; } = null!;
+    public DbSet<NotificationRecipient> NotificationRecipients { get; } = null!;
+    public DbSet<NotificationTemplate> NotificationTemplates { get; } = null!;
+    public DbSet<TemplateVersion> TemplateVersions { get; } = null!;
+    public DbSet<TemplateVariable> TemplateVariables { get; } = null!;
+    public DbSet<NotificationChannel> NotificationChannels { get; } = null!;
+    public DbSet<NotificationProvider> NotificationProviders { get; } = null!;
+    public DbSet<NotificationPreference> NotificationPreferences { get; } = null!;
+    public DbSet<NotificationSubscription> NotificationSubscriptions { get; } = null!;
+    public DbSet<NotificationSchedule> NotificationSchedules { get; } = null!;
+    public DbSet<NotificationQueue> NotificationQueue { get; } = null!;
+    public DbSet<NotificationAttachment> NotificationAttachments { get; } = null!;
+    public DbSet<NotificationDelivery> NotificationDeliveries { get; } = null!;
+    public DbSet<NotificationRetry> NotificationRetries { get; } = null!;
+    public DbSet<NotificationBatch> NotificationBatches { get; } = null!;
+    public DbSet<NotificationCampaign> NotificationCampaigns { get; } = null!;
+    public DbSet<NotificationEvent> NotificationEvents { get; } = null!;
+    public DbSet<NotificationAudit> NotificationAudits { get; } = null!;
+
+    // AI & Intelligence Domain
+    public DbSet<Domain.Entities.AI.AIProvider> AIProviders { get; } = null!;
+    public DbSet<Domain.Entities.AI.AIModel> AIModels { get; } = null!;
+    public DbSet<Domain.Entities.AI.AIAssistant> AIAssistants { get; } = null!;
+    public DbSet<Domain.Entities.AI.Conversation> Conversations { get; } = null!;
+    public DbSet<Domain.Entities.AI.ConversationMessage> ConversationMessages { get; } = null!;
+    public DbSet<Domain.Entities.AI.ConversationMemory> ConversationMemories { get; } = null!;
+    public DbSet<Domain.Entities.AI.PromptTemplate> PromptTemplates { get; } = null!;
+    public DbSet<Domain.Entities.AI.PromptVersion> PromptVersions { get; } = null!;
+    public DbSet<Domain.Entities.AI.KnowledgeBase> KnowledgeBases { get; } = null!;
+    public DbSet<Domain.Entities.AI.KnowledgeSource> KnowledgeSources { get; } = null!;
+    public DbSet<Domain.Entities.AI.KnowledgeDocument> KnowledgeDocuments { get; } = null!;
+    public DbSet<Domain.Entities.AI.Embedding> Embeddings { get; } = null!;
+    public DbSet<Domain.Entities.AI.EmbeddingChunk> EmbeddingChunks { get; } = null!;
+    public DbSet<Domain.Entities.AI.VectorIndex> VectorIndices { get; } = null!;
+    public DbSet<Domain.Entities.AI.SemanticSearchRequest> SemanticSearchRequests { get; } = null!;
+    public DbSet<Domain.Entities.AI.SemanticSearchResult> SemanticSearchResults { get; } = null!;
+    public DbSet<Domain.Entities.AI.ToolDefinition> ToolDefinitions { get; } = null!;
+    public DbSet<Domain.Entities.AI.ToolExecution> ToolExecutions { get; } = null!;
+    public DbSet<Domain.Entities.AI.WorkflowDefinition> WorkflowDefinitions { get; } = null!;
+    public DbSet<Domain.Entities.AI.WorkflowExecution> WorkflowExecutions { get; } = null!;
+    public DbSet<Domain.Entities.AI.AgentDefinition> AgentDefinitions { get; } = null!;
+    public DbSet<Domain.Entities.AI.AgentExecution> AgentExecutions { get; } = null!;
+    public DbSet<Domain.Entities.AI.AIAuditLog> AIAuditLogs { get; } = null!;
+    public DbSet<Domain.Entities.AI.AITokenUsage> AITokenUsages { get; } = null!;
+    public DbSet<Domain.Entities.AI.AIModelConfiguration> AIModelConfigurations { get; } = null!;
+    public DbSet<Domain.Entities.AI.AIRoutingPolicy> AIRoutingPolicies { get; } = null!;
 
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) => Task.FromResult(1);
     public void Dispose() { }

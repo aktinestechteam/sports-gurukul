@@ -13,6 +13,9 @@ using SportsGurukul.Application.Features.NotificationManagement.BusinessRules;
 using SportsGurukul.Application.Features.NotificationManagement.BusinessRules.Rules;
 using SportsGurukul.Application.Common.Interfaces.Notification.Services;
 using SportsGurukul.Application.Features.TournamentManagement.Services;
+using SportsGurukul.Application.Common.Interfaces.AI.Services;
+using SportsGurukul.Application.Features.AIManagement.Services;
+using SportsGurukul.Application.Features.KnowledgePlatform;
 
 namespace SportsGurukul.Application;
 
@@ -87,6 +90,10 @@ public static class DependencyInjection
 
         RegisterNotificationServices(services);
 
+        RegisterAIServices(services);
+
+        services.AddKnowledgePlatform();
+
         return services;
     }
 
@@ -107,5 +114,18 @@ public static class DependencyInjection
         services.AddTransient<IBusinessRule, Features.NotificationManagement.BusinessRules.RateLimitRule>();
         services.AddTransient<IBusinessRule, Features.NotificationManagement.BusinessRules.TemplateValidationRule>();
         services.AddTransient<IBusinessRule, Features.NotificationManagement.BusinessRules.DuplicateCheckRule>();
+    }
+
+    private static void RegisterAIServices(IServiceCollection services)
+    {
+        services.AddTransient<IConversationService, ConversationService>();
+        services.AddTransient<IAssistantService, AssistantService>();
+        services.AddTransient<IPromptService, PromptService>();
+        services.AddTransient<IKnowledgeService, KnowledgeService>();
+        services.AddTransient<IAgentService, AgentService>();
+        services.AddTransient<IWorkflowService, WorkflowService>();
+        services.AddTransient<ITokenUsageService, TokenUsageService>();
+        services.AddTransient<IAuditService, AuditService>();
+        services.AddTransient<IAIService, AIService>();
     }
 }

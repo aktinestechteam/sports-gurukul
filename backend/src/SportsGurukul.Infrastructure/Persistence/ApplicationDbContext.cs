@@ -5,6 +5,7 @@ using SportsGurukul.Domain.Common;
 using SportsGurukul.Domain.Entities;
 using SportsGurukul.Domain.Entities.Finance;
 using SportsGurukul.Domain.Entities.Notification;
+using SportsGurukul.Domain.Entities.AI;
 using SportsGurukul.Domain.Enums.Notification;
 using NChannel = SportsGurukul.Domain.Entities.Notification.NotificationChannel;
 
@@ -230,6 +231,34 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<NotificationCampaign> NotificationCampaigns => Set<NotificationCampaign>();
     public DbSet<NotificationEvent> NotificationEvents => Set<NotificationEvent>();
     public DbSet<NotificationAudit> NotificationAudits => Set<NotificationAudit>();
+
+    // AI & Intelligence Domain
+    public DbSet<Domain.Entities.AI.AIProvider> AIProviders => Set<Domain.Entities.AI.AIProvider>();
+    public DbSet<Domain.Entities.AI.AIModel> AIModels => Set<Domain.Entities.AI.AIModel>();
+    public DbSet<Domain.Entities.AI.AIAssistant> AIAssistants => Set<Domain.Entities.AI.AIAssistant>();
+    public DbSet<Domain.Entities.AI.Conversation> Conversations => Set<Domain.Entities.AI.Conversation>();
+    public DbSet<Domain.Entities.AI.ConversationMessage> ConversationMessages => Set<Domain.Entities.AI.ConversationMessage>();
+    public DbSet<Domain.Entities.AI.ConversationMemory> ConversationMemories => Set<Domain.Entities.AI.ConversationMemory>();
+    public DbSet<Domain.Entities.AI.PromptTemplate> PromptTemplates => Set<Domain.Entities.AI.PromptTemplate>();
+    public DbSet<Domain.Entities.AI.PromptVersion> PromptVersions => Set<Domain.Entities.AI.PromptVersion>();
+    public DbSet<Domain.Entities.AI.KnowledgeBase> KnowledgeBases => Set<Domain.Entities.AI.KnowledgeBase>();
+    public DbSet<Domain.Entities.AI.KnowledgeSource> KnowledgeSources => Set<Domain.Entities.AI.KnowledgeSource>();
+    public DbSet<Domain.Entities.AI.KnowledgeDocument> KnowledgeDocuments => Set<Domain.Entities.AI.KnowledgeDocument>();
+    public DbSet<Domain.Entities.AI.Embedding> Embeddings => Set<Domain.Entities.AI.Embedding>();
+    public DbSet<Domain.Entities.AI.EmbeddingChunk> EmbeddingChunks => Set<Domain.Entities.AI.EmbeddingChunk>();
+    public DbSet<Domain.Entities.AI.VectorIndex> VectorIndices => Set<Domain.Entities.AI.VectorIndex>();
+    public DbSet<Domain.Entities.AI.SemanticSearchRequest> SemanticSearchRequests => Set<Domain.Entities.AI.SemanticSearchRequest>();
+    public DbSet<Domain.Entities.AI.SemanticSearchResult> SemanticSearchResults => Set<Domain.Entities.AI.SemanticSearchResult>();
+    public DbSet<Domain.Entities.AI.ToolDefinition> ToolDefinitions => Set<Domain.Entities.AI.ToolDefinition>();
+    public DbSet<Domain.Entities.AI.ToolExecution> ToolExecutions => Set<Domain.Entities.AI.ToolExecution>();
+    public DbSet<Domain.Entities.AI.WorkflowDefinition> WorkflowDefinitions => Set<Domain.Entities.AI.WorkflowDefinition>();
+    public DbSet<Domain.Entities.AI.WorkflowExecution> WorkflowExecutions => Set<Domain.Entities.AI.WorkflowExecution>();
+    public DbSet<Domain.Entities.AI.AgentDefinition> AgentDefinitions => Set<Domain.Entities.AI.AgentDefinition>();
+    public DbSet<Domain.Entities.AI.AgentExecution> AgentExecutions => Set<Domain.Entities.AI.AgentExecution>();
+    public DbSet<Domain.Entities.AI.AIAuditLog> AIAuditLogs => Set<Domain.Entities.AI.AIAuditLog>();
+    public DbSet<Domain.Entities.AI.AITokenUsage> AITokenUsages => Set<Domain.Entities.AI.AITokenUsage>();
+    public DbSet<Domain.Entities.AI.AIModelConfiguration> AIModelConfigurations => Set<Domain.Entities.AI.AIModelConfiguration>();
+    public DbSet<Domain.Entities.AI.AIRoutingPolicy> AIRoutingPolicies => Set<Domain.Entities.AI.AIRoutingPolicy>();
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
