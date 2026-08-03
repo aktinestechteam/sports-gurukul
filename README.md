@@ -6,6 +6,7 @@ AI-first digital sports ecosystem connecting athletes, coaches, academies, paren
 
 ```
 sportsgurukul/
+├── .ai/              # AI development governance & knowledge base (read before any change)
 ├── backend/          # ASP.NET Core 9 — Clean Architecture
 ├── ai-services/      # FastAPI (Python) — AI Coach, RAG, LangGraph
 ├── mobile/           # Flutter — Athlete / Coach mobile app
@@ -15,6 +16,32 @@ sportsgurukul/
 ├── docker-compose.yml
 └── README.md
 ```
+
+## AI Development Governance
+
+> **Every AI assistant (OpenCode, Cursor, Claude Code, Copilot) MUST read the
+> entire `.ai/` directory before making any code change.**
+
+The `.ai/` directory is the project's Constitution — the single source of
+truth for AI-driven development. It contains 24 documents covering project
+context, binding rules, architecture, coding/Flutter standards, state
+management, networking, database, design system, backend integration, API
+guidelines, security, performance, testing, git workflow, decisions (ADRs),
+tech debt, changelog, the mandatory prompt template, review checklist, and
+definition of done.
+
+| Document | Purpose |
+| -------- | ------- |
+| `PROMPT_TEMPLATE.md` | The mandatory template for every future AI prompt |
+| `PROJECT_RULES.md` | The 9 non-negotiable rules |
+| `SPRINT_STATUS.md` | Where the project is right now |
+| `DECISIONS.md` | Architecture Decision Records (ADRs) |
+| `TECH_DEBT.md` | Known compromises and pay-down plans |
+| `CHANGELOG.md` | Prompt-by-prompt history |
+| others | Detailed standards (see the directory) |
+
+Authoritative product/technical specs live under `docs/`; mobile sprint docs
+under `mobile/docs/`; the backend contract under `docs/api/openapi.yaml`.
 
 ## Technology Stack
 
