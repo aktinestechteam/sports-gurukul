@@ -1,0 +1,23 @@
+{
+  "@@locale": "en",
+  "appTitle": "Sports Gurukul",
+  "@appTitle": {
+    "description": "The application name displayed in the app bar and launcher."
+  },
+  "appSplashTagline": "Train • Compete • Excel",
+  "@appSplashTagline": {
+    "description": "Tagline shown on the splash screen."
+  },
+  "appInitializing": "Initializing Sports Gurukul…",
+  "@appInitializing": {
+    "description": "Status text shown on the splash screen while the app initializes."
+  },
+  "dashboardInitializedTitle": "Project Initialized Successfully",
+  "@dashboardInitializedTitle": {
+    "description": "Placeholder dashboard heading shown after successful project bootstrap."
+  },
+  "dashboardInitializedMessage": "The Sports Gurukul mobile foundation is ready. Features will be delivered in upcoming sprints.",
+  "@dashboardInitializedMessage": {
+    "description": "Placeholder dashboard body text describing the current project state."
+  }
+}
