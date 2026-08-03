@@ -2,15 +2,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SportsGurukul.Application.Common.Interfaces;
+using SportsGurukul.Application.Common.Interfaces.AI;
 using SportsGurukul.Application.Common.Interfaces.Finance;
 using SportsGurukul.Application.Common.Interfaces.Notification;
 using SportsGurukul.Infrastructure.Caching;
 using SportsGurukul.Infrastructure.Email;
 using SportsGurukul.Infrastructure.Persistence;
 using SportsGurukul.Infrastructure.Persistence.Repositories;
+using SportsGurukul.Infrastructure.Persistence.Repositories.AI;
 using SportsGurukul.Infrastructure.Persistence.Repositories.Finance;
 using SportsGurukul.Infrastructure.Persistence.Repositories.Notification;
 using SportsGurukul.Infrastructure.Storage;
+using NNotificationAuditRepository = SportsGurukul.Infrastructure.Persistence.Repositories.Notification.AuditRepository;
+using NNotificationIAuditRepository = SportsGurukul.Application.Common.Interfaces.Notification.IAuditRepository;
+using AIAuditRepository = SportsGurukul.Infrastructure.Persistence.Repositories.AI.AuditRepository;
+using IAIAuditRepository = SportsGurukul.Application.Common.Interfaces.AI.IAuditRepository;
 
 namespace SportsGurukul.Infrastructure;
 
@@ -127,7 +133,21 @@ public static class DependencyInjection
         services.AddScoped<IPreferenceRepository, PreferenceRepository>();
         services.AddScoped<IQueueRepository, QueueRepository>();
         services.AddScoped<IDeliveryRepository, DeliveryRepository>();
-        services.AddScoped<IAuditRepository, AuditRepository>();
+        services.AddScoped<NNotificationIAuditRepository, NNotificationAuditRepository>();
+
+        // AI & Intelligence Domain
+        services.AddScoped<IAIProviderRepository, AIProviderRepository>();
+        services.AddScoped<IAssistantRepository, AssistantRepository>();
+        services.AddScoped<IConversationRepository, ConversationRepository>();
+        services.AddScoped<IPromptRepository, PromptRepository>();
+        services.AddScoped<IKnowledgeBaseRepository, KnowledgeBaseRepository>();
+        services.AddScoped<IDocumentRepository, DocumentRepository>();
+        services.AddScoped<IEmbeddingRepository, EmbeddingRepository>();
+        services.AddScoped<IVectorIndexRepository, VectorIndexRepository>();
+        services.AddScoped<IAgentRepository, AgentRepository>();
+        services.AddScoped<IWorkflowRepository, WorkflowRepository>();
+        services.AddScoped<ITokenUsageRepository, TokenUsageRepository>();
+        services.AddScoped<IAIAuditRepository, AIAuditRepository>();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 

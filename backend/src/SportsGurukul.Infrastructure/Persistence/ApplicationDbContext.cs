@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SportsGurukul.Application.Common.Interfaces;
 using SportsGurukul.Domain.Common;
 using SportsGurukul.Domain.Entities;
+using SportsGurukul.Domain.Entities.AI;
 using SportsGurukul.Domain.Entities.Finance;
 using SportsGurukul.Domain.Entities.Notification;
 using SportsGurukul.Domain.Enums.Notification;
@@ -230,6 +231,34 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<NotificationCampaign> NotificationCampaigns => Set<NotificationCampaign>();
     public DbSet<NotificationEvent> NotificationEvents => Set<NotificationEvent>();
     public DbSet<NotificationAudit> NotificationAudits => Set<NotificationAudit>();
+
+    // AI & Intelligence Platform
+    public DbSet<AIProvider> AIProviders => Set<AIProvider>();
+    public DbSet<AIModel> AIModels => Set<AIModel>();
+    public DbSet<AIAssistant> AIAssistants => Set<AIAssistant>();
+    public DbSet<PromptTemplate> PromptTemplates => Set<PromptTemplate>();
+    public DbSet<PromptVersion> PromptVersions => Set<PromptVersion>();
+    public DbSet<Conversation> Conversations => Set<Conversation>();
+    public DbSet<ConversationMessage> ConversationMessages => Set<ConversationMessage>();
+    public DbSet<ConversationMemory> ConversationMemories => Set<ConversationMemory>();
+    public DbSet<KnowledgeBase> KnowledgeBases => Set<KnowledgeBase>();
+    public DbSet<KnowledgeSource> KnowledgeSources => Set<KnowledgeSource>();
+    public DbSet<KnowledgeDocument> KnowledgeDocuments => Set<KnowledgeDocument>();
+    public DbSet<Embedding> Embeddings => Set<Embedding>();
+    public DbSet<EmbeddingChunk> EmbeddingChunks => Set<EmbeddingChunk>();
+    public DbSet<VectorIndex> VectorIndexes => Set<VectorIndex>();
+    public DbSet<SemanticSearchRequest> SemanticSearchRequests => Set<SemanticSearchRequest>();
+    public DbSet<SemanticSearchResult> SemanticSearchResults => Set<SemanticSearchResult>();
+    public DbSet<ToolDefinition> ToolDefinitions => Set<ToolDefinition>();
+    public DbSet<ToolExecution> ToolExecutions => Set<ToolExecution>();
+    public DbSet<WorkflowDefinition> WorkflowDefinitions => Set<WorkflowDefinition>();
+    public DbSet<WorkflowExecution> WorkflowExecutions => Set<WorkflowExecution>();
+    public DbSet<AgentDefinition> AgentDefinitions => Set<AgentDefinition>();
+    public DbSet<AgentExecution> AgentExecutions => Set<AgentExecution>();
+    public DbSet<AIAuditLog> AIAuditLogs => Set<AIAuditLog>();
+    public DbSet<AITokenUsage> AITokenUsages => Set<AITokenUsage>();
+    public DbSet<AIModelConfiguration> AIModelConfigurations => Set<AIModelConfiguration>();
+    public DbSet<AIRoutingPolicy> AIRoutingPolicies => Set<AIRoutingPolicy>();
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

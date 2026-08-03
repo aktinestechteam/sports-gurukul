@@ -108,5 +108,21 @@ public class AcademyConfiguration : IEntityTypeConfiguration<Academy>
 
         builder.Ignore(a => a.CreatedBy);
         builder.Ignore(a => a.UpdatedBy);
+
+        builder.HasData(
+            new Academy
+            {
+                Id = Guid.Parse("a1000000-0000-0000-0000-000000000001"),
+                AcademyCode = "ACAD-SEED-001",
+                Name = "Seed Academy",
+                LegalName = "Seed Academy Pvt Ltd",
+                Description = "Seed academy for development and testing.",
+                Email = "academy.seed@sportsgurukul.com",
+                Phone = "+910000000000",
+                Status = AcademyStatus.Active,
+                VerificationStatus = VerificationStatus.Verified,
+                IsDeleted = false
+            }
+        );
     }
 }

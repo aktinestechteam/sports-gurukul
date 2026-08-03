@@ -15,6 +15,8 @@ using SportsGurukul.Application.Common.Interfaces;
 using SportsGurukul.Application.Features.UserManagement.DTOs;
 using SportsGurukul.Domain.Common;
 using SportsGurukul.Domain.Entities;
+using SportsGurukul.Domain.Entities.AI;
+using SportsGurukul.Domain.Entities.Finance;
 using SportsGurukul.Domain.Enums;
 using SportsGurukul.Infrastructure.Authentication;
 using SportsGurukul.Infrastructure.Storage;
@@ -152,6 +154,88 @@ public class InMemoryUnitOfWork : IUnitOfWork, IApplicationDbContext
     // Event Search & Discovery
     public DbSet<EventSavedSearch> EventSavedSearches { get; } = null!;
     public DbSet<EventRecentSearch> EventRecentSearches { get; } = null!;
+
+    // Finance Domain
+    public DbSet<Invoice> Invoices { get; } = null!;
+    public DbSet<InvoiceItem> InvoiceItems { get; } = null!;
+    public DbSet<InvoiceTax> InvoiceTaxes { get; } = null!;
+    public DbSet<InvoiceDiscount> InvoiceDiscounts { get; } = null!;
+    public DbSet<InvoicePayment> InvoicePayments { get; } = null!;
+    public DbSet<Payment> Payments { get; } = null!;
+    public DbSet<PaymentMethod> PaymentMethods { get; } = null!;
+    public DbSet<PaymentTransaction> PaymentTransactions { get; } = null!;
+    public DbSet<Refund> Refunds { get; } = null!;
+    public DbSet<RefundItem> RefundItems { get; } = null!;
+    public DbSet<Wallet> Wallets { get; } = null!;
+    public DbSet<WalletTransaction> WalletTransactions { get; } = null!;
+    public DbSet<Ledger> Ledgers { get; } = null!;
+    public DbSet<LedgerEntry> LedgerEntries { get; } = null!;
+    public DbSet<Journal> Journals { get; } = null!;
+    public DbSet<JournalEntry> JournalEntries { get; } = null!;
+    public DbSet<FeeStructure> FeeStructures { get; } = null!;
+    public DbSet<FeeCategory> FeeCategories { get; } = null!;
+    public DbSet<Scholarship> Scholarships { get; } = null!;
+    public DbSet<DiscountPolicy> DiscountPolicies { get; } = null!;
+    public DbSet<Coupon> Coupons { get; } = null!;
+    public DbSet<CouponUsage> CouponUsages { get; } = null!;
+    public DbSet<TaxConfiguration> TaxConfigurations { get; } = null!;
+    public DbSet<PaymentGateway> PaymentGateways { get; } = null!;
+    public DbSet<GatewayTransaction> GatewayTransactions_ { get; } = null!;
+    public DbSet<Settlement> Settlements { get; } = null!;
+    public DbSet<SettlementBatch> SettlementBatches { get; } = null!;
+    public DbSet<PaymentReminder> PaymentReminders { get; } = null!;
+    public DbSet<Receipt> Receipts { get; } = null!;
+    public DbSet<CreditNote> CreditNotes { get; } = null!;
+    public DbSet<DebitNote> DebitNotes { get; } = null!;
+    public DbSet<FinancialAudit> FinancialAudits { get; } = null!;
+
+    // Notification Domain
+    public DbSet<SportsGurukul.Domain.Entities.Notification.Notification> Notifications { get; } = null!;
+    public DbSet<SportsGurukul.Domain.Entities.Notification.NotificationRecipient> NotificationRecipients { get; } = null!;
+    public DbSet<SportsGurukul.Domain.Entities.Notification.NotificationTemplate> NotificationTemplates { get; } = null!;
+    public DbSet<SportsGurukul.Domain.Entities.Notification.TemplateVersion> TemplateVersions { get; } = null!;
+    public DbSet<SportsGurukul.Domain.Entities.Notification.TemplateVariable> TemplateVariables { get; } = null!;
+    public DbSet<SportsGurukul.Domain.Entities.Notification.NotificationChannel> NotificationChannels { get; } = null!;
+    public DbSet<SportsGurukul.Domain.Entities.Notification.NotificationProvider> NotificationProviders { get; } = null!;
+    public DbSet<SportsGurukul.Domain.Entities.Notification.NotificationPreference> NotificationPreferences { get; } = null!;
+    public DbSet<SportsGurukul.Domain.Entities.Notification.NotificationSubscription> NotificationSubscriptions { get; } = null!;
+    public DbSet<SportsGurukul.Domain.Entities.Notification.NotificationSchedule> NotificationSchedules { get; } = null!;
+    public DbSet<SportsGurukul.Domain.Entities.Notification.NotificationQueue> NotificationQueue { get; } = null!;
+    public DbSet<SportsGurukul.Domain.Entities.Notification.NotificationAttachment> NotificationAttachments { get; } = null!;
+    public DbSet<SportsGurukul.Domain.Entities.Notification.NotificationDelivery> NotificationDeliveries { get; } = null!;
+    public DbSet<SportsGurukul.Domain.Entities.Notification.NotificationRetry> NotificationRetries { get; } = null!;
+    public DbSet<SportsGurukul.Domain.Entities.Notification.NotificationBatch> NotificationBatches { get; } = null!;
+    public DbSet<SportsGurukul.Domain.Entities.Notification.NotificationCampaign> NotificationCampaigns { get; } = null!;
+    public DbSet<SportsGurukul.Domain.Entities.Notification.NotificationEvent> NotificationEvents { get; } = null!;
+    public DbSet<SportsGurukul.Domain.Entities.Notification.NotificationAudit> NotificationAudits { get; } = null!;
+
+    // AI & Intelligence Platform
+    public DbSet<AIProvider> AIProviders { get; } = null!;
+    public DbSet<AIModel> AIModels { get; } = null!;
+    public DbSet<AIAssistant> AIAssistants { get; } = null!;
+    public DbSet<PromptTemplate> PromptTemplates { get; } = null!;
+    public DbSet<PromptVersion> PromptVersions { get; } = null!;
+    public DbSet<Conversation> Conversations { get; } = null!;
+    public DbSet<ConversationMessage> ConversationMessages { get; } = null!;
+    public DbSet<ConversationMemory> ConversationMemories { get; } = null!;
+    public DbSet<KnowledgeBase> KnowledgeBases { get; } = null!;
+    public DbSet<KnowledgeSource> KnowledgeSources { get; } = null!;
+    public DbSet<KnowledgeDocument> KnowledgeDocuments { get; } = null!;
+    public DbSet<Embedding> Embeddings { get; } = null!;
+    public DbSet<EmbeddingChunk> EmbeddingChunks { get; } = null!;
+    public DbSet<VectorIndex> VectorIndexes { get; } = null!;
+    public DbSet<SemanticSearchRequest> SemanticSearchRequests { get; } = null!;
+    public DbSet<SemanticSearchResult> SemanticSearchResults { get; } = null!;
+    public DbSet<ToolDefinition> ToolDefinitions { get; } = null!;
+    public DbSet<ToolExecution> ToolExecutions { get; } = null!;
+    public DbSet<WorkflowDefinition> WorkflowDefinitions { get; } = null!;
+    public DbSet<WorkflowExecution> WorkflowExecutions { get; } = null!;
+    public DbSet<AgentDefinition> AgentDefinitions { get; } = null!;
+    public DbSet<AgentExecution> AgentExecutions { get; } = null!;
+    public DbSet<AIAuditLog> AIAuditLogs { get; } = null!;
+    public DbSet<AITokenUsage> AITokenUsages { get; } = null!;
+    public DbSet<AIModelConfiguration> AIModelConfigurations { get; } = null!;
+    public DbSet<AIRoutingPolicy> AIRoutingPolicies { get; } = null!;
 
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) => Task.FromResult(1);
     public void Dispose() { }

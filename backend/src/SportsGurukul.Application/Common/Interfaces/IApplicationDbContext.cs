@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SportsGurukul.Domain.Entities;
+using SportsGurukul.Domain.Entities.AI;
 using SportsGurukul.Domain.Entities.Finance;
 using SportsGurukul.Domain.Entities.Notification;
 
@@ -98,6 +99,34 @@ public interface IApplicationDbContext
     DbSet<NotificationCampaign> NotificationCampaigns { get; }
     DbSet<NotificationEvent> NotificationEvents { get; }
     DbSet<NotificationAudit> NotificationAudits { get; }
+
+    // AI & Intelligence Platform
+    DbSet<AIProvider> AIProviders { get; }
+    DbSet<AIModel> AIModels { get; }
+    DbSet<AIAssistant> AIAssistants { get; }
+    DbSet<PromptTemplate> PromptTemplates { get; }
+    DbSet<PromptVersion> PromptVersions { get; }
+    DbSet<Conversation> Conversations { get; }
+    DbSet<ConversationMessage> ConversationMessages { get; }
+    DbSet<ConversationMemory> ConversationMemories { get; }
+    DbSet<KnowledgeBase> KnowledgeBases { get; }
+    DbSet<KnowledgeSource> KnowledgeSources { get; }
+    DbSet<KnowledgeDocument> KnowledgeDocuments { get; }
+    DbSet<Embedding> Embeddings { get; }
+    DbSet<EmbeddingChunk> EmbeddingChunks { get; }
+    DbSet<VectorIndex> VectorIndexes { get; }
+    DbSet<SemanticSearchRequest> SemanticSearchRequests { get; }
+    DbSet<SemanticSearchResult> SemanticSearchResults { get; }
+    DbSet<ToolDefinition> ToolDefinitions { get; }
+    DbSet<ToolExecution> ToolExecutions { get; }
+    DbSet<WorkflowDefinition> WorkflowDefinitions { get; }
+    DbSet<WorkflowExecution> WorkflowExecutions { get; }
+    DbSet<AgentDefinition> AgentDefinitions { get; }
+    DbSet<AgentExecution> AgentExecutions { get; }
+    DbSet<AIAuditLog> AIAuditLogs { get; }
+    DbSet<AITokenUsage> AITokenUsages { get; }
+    DbSet<AIModelConfiguration> AIModelConfigurations { get; }
+    DbSet<AIRoutingPolicy> AIRoutingPolicies { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
