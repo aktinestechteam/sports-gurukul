@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'app_colors.dart';
-import 'app_elevation.dart';
-import 'app_radius.dart';
-import 'app_typography.dart';
+import '../app_elevation.dart';
+import '../colors/app_colors.dart';
+import '../radius/app_radius.dart';
+import '../typography/app_typography.dart';
 
 /// Builds the Material 3 theme pair for the Sports Gurukul application.
 ///

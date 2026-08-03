@@ -6,13 +6,15 @@
 ///   Logging → Secure Storage → Database → API → Authentication →
 ///   Analytics → Notifications → Synchronization → Launch App
 ///
-/// Each step is a placeholder for Sprint 0. Steps are wired incrementally
-/// as their owning core modules land (starting with the API layer in P002).
-/// Initialization must never block the UI thread for sensitive work.
-abstract final class AppBootstrap {
+/// Each step is a placeholder for Sprint 0/P002. Steps are wired
+/// incrementally as their owning core modules land (starting with the API
+/// layer in P003). Initialization must never block the UI thread for
+/// sensitive work.
+abstract final class AppInitializer {
   /// Runs the ordered initialization sequence.
   ///
-  /// No-ops for Sprint 0; the sequence structure is the deliverable.
+  /// No-ops for the architecture sprint; the sequence structure is the
+  /// deliverable.
   static Future<void> initialize() async {
     await _initializeLogging();
     await _initializeSecureStorage();

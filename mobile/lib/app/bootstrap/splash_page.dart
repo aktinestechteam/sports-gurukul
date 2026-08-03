@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../l10n/generated/app_localizations.dart';
 import '../router/route_paths.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_spacing.dart';
+import '../theme/colors/app_colors.dart';
+import '../theme/spacing/app_spacing.dart';
 
 /// Entry screen of the application.
 ///

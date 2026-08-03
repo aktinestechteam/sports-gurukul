@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../app/theme/app_colors.dart';
-import '../../../../app/theme/app_spacing.dart';
+import '../../../../app/theme/colors/app_colors.dart';
+import '../../../../app/theme/spacing/app_spacing.dart';
 import '../../../../l10n/generated/app_localizations.dart';
 
 /// Placeholder landing screen for Sprint 0.

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sports_gurukul/app/theme/app_animation.dart';
-import 'package:sports_gurukul/app/theme/app_colors.dart';
 import 'package:sports_gurukul/app/theme/app_elevation.dart';
-import 'package:sports_gurukul/app/theme/app_radius.dart';
-import 'package:sports_gurukul/app/theme/app_spacing.dart';
-import 'package:sports_gurukul/app/theme/app_theme.dart';
+import 'package:sports_gurukul/app/theme/colors/app_colors.dart';
+import 'package:sports_gurukul/app/theme/material_theme/app_theme.dart';
+import 'package:sports_gurukul/app/theme/radius/app_radius.dart';
+import 'package:sports_gurukul/app/theme/spacing/app_spacing.dart';
 
 void main() {
   group('Design tokens', () {

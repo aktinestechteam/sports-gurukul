@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../l10n/generated/app_localizations.dart';
 import 'router/app_router.dart';
-import 'theme/app_theme.dart';
-import 'theme/theme_mode_provider.dart';
+import 'theme/material_theme/app_theme.dart';
+import 'theme/material_theme/theme_mode_provider.dart';
 
 /// Root widget of the Sports Gurukul application.
 ///

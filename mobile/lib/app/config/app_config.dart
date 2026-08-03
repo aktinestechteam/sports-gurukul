@@ -1,4 +1,4 @@
-import 'app_environment.dart';
+import 'environment.dart';
 
 /// Static application-wide configuration.
 ///
