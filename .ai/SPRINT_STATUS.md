@@ -17,14 +17,17 @@ base so feature development can proceed safely.
 | P001 | Project foundation: architecture, folder structure, theming, l10n, routing, CI-ready tooling | Done |
 | P002 | Bootstrap verified: splash -> placeholder dashboard; Riverpod + go_router wired; test baseline | Done |
 | P003 | Engineering foundations: very_good_analysis, freezed/json codegen, dio network layer, drift scaffold, storage, utilities, testing, docs 09-13 | Done |
-| P004 | AI development governance & project knowledge base (`.ai/`) | Done (this prompt) |
+| P004 | AI development governance & project knowledge base (`.ai/`) | Done |
+| SGM-0001 | Bootstrap verification (this task): Flutter project, folder structure, README, `analysis_options.yaml`, `pubspec.yaml`, placeholder splash + dashboard; all gates green; package name stays `sports_gurukul` per governance | Done |
+| SGM-0002 | Enterprise Flutter development environment: reusable `lib/core/` foundation (config/env, constants, failures/exceptions, sealed `Result`/`OperationResult`, logging facade, extensions, validators, utils, result-aware `ApiClient`); app-layer delegates (`AppConfig`, `Environment`, `RoutePaths`) keep existing callers compiling; 171 tests green | Done |
 
 ### Verification status (last run)
 
 - `dart format --set-exit-if-changed` - clean
 - `flutter analyze` - 0 issues
-- `flutter test` - green (37 tests)
+- `flutter test` - green (171 tests)
 - `flutter build web` - success
+- `flutter run` (web-server) - serves `lib/main.dart`; app boots splash -> dashboard
 - `pubspec.lock` - committed (un-ignored in P003)
 
 ### Open items before feature work

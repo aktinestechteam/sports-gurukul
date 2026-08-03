@@ -1,9 +1,8 @@
-/// Centralized route paths for the Sports Gurukul application.
+import 'package:sports_gurukul/core/constants/route_constants.dart';
+
+/// Route paths for the Sports Gurukul application.
 ///
-/// Route paths are snake_case and never hardcoded inside features.
-/// Feature routes are registered by their owning feature in a later sprint;
-/// app-level bootstrap routes (splash, dashboard) live here.
-abstract final class RoutePaths {
-  static const String splash = '/';
-  static const String dashboard = '/dashboard';
-}
+/// Type alias over the core [RouteConstants] so feature and router code can
+/// keep using the shorter `RoutePaths` name while paths stay centralized in
+/// `core/constants`. Feature routes are registered by their owning feature.
+typedef RoutePaths = RouteConstants;

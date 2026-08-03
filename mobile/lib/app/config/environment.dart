@@ -1,18 +1,11 @@
-import 'package:sports_gurukul/app/config/app_config.dart' show AppConfig;
+import 'package:sports_gurukul/core/config/environment.dart' as core;
 
-/// Supported application environments.
+export 'package:sports_gurukul/core/config/environment.dart';
+export 'package:sports_gurukul/core/config/flavor.dart';
+
+/// Backwards-compatible alias for the build flavor.
 ///
-/// Environment selection currently uses the development default
-/// ([AppConfig.environment]). When the API layer lands (P003) the
-/// environment will be resolved per build flavor
-/// (sportsgurukul_dev/qa/uat/prod) and read from environment configuration.
-/// The `dev/`, `qa/`, `uat/` and `production/` subfolders are the homes for
-/// each environment's configuration.
-///
-/// Reference: docs/mobile/09-Implementation/01-Flutter-Project-Architecture.md
-enum AppEnvironment {
-  development,
-  qa,
-  uat,
-  production,
-}
+/// Kept so existing references to the Sprint-0 `AppEnvironment` keep
+/// compiling; new code should use `Flavor` and `Environment` from
+/// `core/config`.
+typedef AppEnvironment = core.Environment;
