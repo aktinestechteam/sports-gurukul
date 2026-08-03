@@ -4,6 +4,7 @@
 /// (Athlete, Parent, Coach, Academy, Super Admin) in a later sprint.
 ///
 /// Reference: docs/mobile/09-Implementation/07-Navigation.md
+// ignore: one_member_abstracts - placeholder contract, gains members in P004
 abstract class RouteGuards {
   const RouteGuards();
 

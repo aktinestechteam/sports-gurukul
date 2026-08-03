@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../l10n/generated/app_localizations.dart';
-import '../router/route_paths.dart';
-import '../theme/colors/app_colors.dart';
-import '../theme/spacing/app_spacing.dart';
+import 'package:sports_gurukul/app/router/route_paths.dart';
+import 'package:sports_gurukul/app/theme/colors/app_colors.dart';
+import 'package:sports_gurukul/app/theme/spacing/app_spacing.dart';
+import 'package:sports_gurukul/l10n/generated/app_localizations.dart';
 
 /// Entry screen of the application.
 ///
-/// Displays branding while [AppBootstrap] completes, then routes to the
+/// Displays branding while the app initializer completes, then routes to the
 /// dashboard. When authentication lands, the splash will route to the
 /// authentication flow instead based on session state.
 class SplashPage extends StatefulWidget {
@@ -45,8 +45,8 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations l10n = AppLocalizations.of(context);
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       body: Center(
@@ -70,9 +70,9 @@ class _SplashPageState extends State<SplashPage> {
             Text(
               l10n.appTitle,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    color: AppColors.primary500,
-                    fontWeight: FontWeight.bold,
-                  ),
+                color: AppColors.primary500,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(

@@ -1,8 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'app.dart';
-import 'app_initializer.dart';
+import 'package:sports_gurukul/app/app.dart';
+import 'package:sports_gurukul/app/app_initializer.dart';
+import 'package:sports_gurukul/app/dependency_container.dart'
+    show DependencyContainer;
 
 /// Application entry point invoked by `main()`.
 ///

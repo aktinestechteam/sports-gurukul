@@ -1,3 +1,5 @@
+import 'package:sports_gurukul/app/config/app_config.dart' show AppConfig;
+
 /// Supported application environments.
 ///
 /// Environment selection currently uses the development default

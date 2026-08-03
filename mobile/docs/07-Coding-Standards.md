@@ -6,8 +6,8 @@ Status: **Adopted** · Owner: Mobile Architecture Team
 
 - Dart code, formatted with `dart format`. CI enforces
   `dart format --set-exit-if-changed`.
-- `analysis_options.yaml` runs Flutter's `flutter_lints` plus
-  `strict-casts`, `strict-inference` and `strict-raw-types`.
+- `analysis_options.yaml` includes `very_good_analysis` (strict lint set;
+  see `docs/09-EngineeringStandards.md` for exclusions and deviations).
   Fix warnings; do not suppress them with ignores.
 - No trailing whitespace; one blank line between logical blocks; no
   unused imports (autofix with `dart fix --apply`).

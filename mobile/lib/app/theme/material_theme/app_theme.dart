@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../app_elevation.dart';
-import '../colors/app_colors.dart';
-import '../radius/app_radius.dart';
-import '../typography/app_typography.dart';
+import 'package:sports_gurukul/app/theme/app_elevation.dart';
+import 'package:sports_gurukul/app/theme/colors/app_colors.dart';
+import 'package:sports_gurukul/app/theme/radius/app_radius.dart';
+import 'package:sports_gurukul/app/theme/typography/app_typography.dart';
 
 /// Builds the Material 3 theme pair for the Sports Gurukul application.
 ///
@@ -20,7 +20,7 @@ abstract final class AppTheme {
   static ThemeData get dark => _build(Brightness.dark);
 
   static ThemeData _build(Brightness brightness) {
-    final ColorScheme colorScheme = ColorScheme.fromSeed(
+    final colorScheme = ColorScheme.fromSeed(
       seedColor: AppColors.primary500,
       brightness: brightness,
     );

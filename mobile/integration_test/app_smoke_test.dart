@@ -11,12 +11,11 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('app bootstraps to the placeholder dashboard', (
-    WidgetTester tester,
+    tester,
   ) async {
     await app.main();
     await tester.pumpAndSettle(
       const Duration(milliseconds: 2000),
-      EnginePhase.sendSemanticsUpdate,
     );
 
     expect(find.text('Project Initialized Successfully'), findsOneWidget);

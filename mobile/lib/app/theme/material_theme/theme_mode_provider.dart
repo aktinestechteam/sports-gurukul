@@ -14,6 +14,9 @@ class ThemeModeNotifier extends Notifier<ThemeMode> {
   @override
   ThemeMode build() => ThemeMode.system;
 
+  /// The active theme mode.
+  ThemeMode get mode => state;
+
   /// Updates the active theme mode.
-  void setMode(ThemeMode mode) => state = mode;
+  set mode(ThemeMode mode) => state = mode;
 }

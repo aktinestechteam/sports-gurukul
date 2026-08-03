@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sports_gurukul/app/app.dart';
 import 'package:sports_gurukul/app/router/route_paths.dart';
-import 'package:go_router/go_router.dart';
 
 /// Verifies the Sprint 0 bootstrap flow:
 /// splash screen renders branding, then routes to the placeholder dashboard.
@@ -17,7 +17,7 @@ void main() {
     await tester.pump();
   }
 
-  testWidgets('shows splash branding on startup', (WidgetTester tester) async {
+  testWidgets('shows splash branding on startup', (tester) async {
     await pumpApp(tester);
 
     expect(find.text('Sports Gurukul'), findsOneWidget);
@@ -26,7 +26,7 @@ void main() {
   });
 
   testWidgets('routes to placeholder dashboard after initialization', (
-    WidgetTester tester,
+    tester,
   ) async {
     await pumpApp(tester);
 
@@ -42,7 +42,7 @@ void main() {
   });
 
   testWidgets('dashboard route is reachable directly', (
-    WidgetTester tester,
+    tester,
   ) async {
     await tester.pumpWidget(
       const ProviderScope(

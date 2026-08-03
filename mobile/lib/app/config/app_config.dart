@@ -1,4 +1,4 @@
-import 'environment.dart';
+import 'package:sports_gurukul/app/config/environment.dart';
 
 /// Static application-wide configuration.
 ///
@@ -10,6 +10,5 @@ abstract final class AppConfig {
   /// Sprint 0 defaults to development.
   static const AppEnvironment environment = AppEnvironment.development;
 
-  static const bool isDebugMode =
-      bool.fromEnvironment('dart.vm.product') == false;
+  static const bool isDebugMode = !bool.fromEnvironment('dart.vm.product');
 }

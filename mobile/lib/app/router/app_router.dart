@@ -1,10 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/dashboard/presentation/pages/dashboard_page.dart';
-import '../bootstrap/splash_page.dart';
-import 'route_names.dart';
-import 'route_paths.dart';
+import 'package:sports_gurukul/app/bootstrap/splash_page.dart';
+import 'package:sports_gurukul/app/router/guards/route_guards.dart';
+import 'package:sports_gurukul/app/router/navigation/shell_routes.dart';
+import 'package:sports_gurukul/app/router/route_names.dart';
+import 'package:sports_gurukul/app/router/route_paths.dart';
+import 'package:sports_gurukul/features/dashboard/presentation/pages/dashboard_page.dart';
 
 /// Application-level [GoRouter] configuration.
 ///
@@ -18,12 +20,12 @@ final appRouterProvider = Provider<GoRouter>((_) {
       GoRoute(
         name: RouteNames.splash,
         path: RoutePaths.splash,
-        builder: (_, __) => const SplashPage(),
+        builder: (_, _) => const SplashPage(),
       ),
       GoRoute(
         name: RouteNames.dashboard,
         path: RoutePaths.dashboard,
-        builder: (_, __) => const DashboardPage(),
+        builder: (_, _) => const DashboardPage(),
       ),
     ],
   );

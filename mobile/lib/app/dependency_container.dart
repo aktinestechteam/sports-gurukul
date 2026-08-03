@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ProviderScope;
+
 /// Composition root for the application's dependency graph.
 ///
 /// Riverpod providers are the dependency container - there is no global

@@ -1,3 +1,5 @@
+import 'package:sports_gurukul/app/router/route_paths.dart' show RoutePaths;
+
 /// Centralized route names for the Sports Gurukul application.
 ///
 /// Route names are used as identifiers and must stay in sync with

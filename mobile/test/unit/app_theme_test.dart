@@ -10,7 +10,7 @@ import 'package:sports_gurukul/app/theme/spacing/app_spacing.dart';
 void main() {
   group('Design tokens', () {
     test('uses an 8-point spacing scale', () {
-      const List<double> scale = <double>[
+      const scale = <double>[
         AppSpacing.none,
         AppSpacing.xs,
         AppSpacing.sm,
@@ -23,7 +23,7 @@ void main() {
         AppSpacing.xxxxxl,
         AppSpacing.huge,
       ];
-      for (final double value in scale) {
+      for (final value in scale) {
         expect(value % 4, 0, reason: '$value is not on the 8-point grid');
       }
     });
@@ -41,20 +41,22 @@ void main() {
 
   group('AppTheme', () {
     test('light theme is Material 3', () {
-      final ThemeData theme = AppTheme.light;
+      final theme = AppTheme.light;
       expect(theme.useMaterial3, isTrue);
       expect(theme.brightness, Brightness.light);
     });
 
     test('dark theme is Material 3 and never manually inverted', () {
-      final ThemeData theme = AppTheme.dark;
+      final theme = AppTheme.dark;
       expect(theme.useMaterial3, isTrue);
       expect(theme.brightness, Brightness.dark);
     });
 
     test('both themes derive from the same seed', () {
-      expect(AppTheme.light.colorScheme.primary,
-          isNot(AppTheme.dark.colorScheme.primary));
+      expect(
+        AppTheme.light.colorScheme.primary,
+        isNot(AppTheme.dark.colorScheme.primary),
+      );
     });
   });
 }

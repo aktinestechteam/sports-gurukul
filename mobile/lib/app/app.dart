@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../l10n/generated/app_localizations.dart';
-import 'router/app_router.dart';
-import 'theme/material_theme/app_theme.dart';
-import 'theme/material_theme/theme_mode_provider.dart';
+import 'package:sports_gurukul/app/router/app_router.dart';
+import 'package:sports_gurukul/app/theme/material_theme/app_theme.dart';
+import 'package:sports_gurukul/app/theme/material_theme/theme_mode_provider.dart';
+import 'package:sports_gurukul/l10n/generated/app_localizations.dart';
 
 /// Root widget of the Sports Gurukul application.
 ///
@@ -17,8 +16,8 @@ class SportsGurukulApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GoRouter router = ref.watch(appRouterProvider);
-    final ThemeMode themeMode = ref.watch(themeModeProvider);
+    final router = ref.watch(appRouterProvider);
+    final themeMode = ref.watch(themeModeProvider);
 
     return MaterialApp.router(
       title: 'Sports Gurukul',
@@ -29,8 +28,7 @@ class SportsGurukulApp extends ConsumerWidget {
       routerConfig: router,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      onGenerateTitle: (BuildContext context) =>
-          AppLocalizations.of(context).appTitle,
+      onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       locale: const Locale('en'),
     );
   }
