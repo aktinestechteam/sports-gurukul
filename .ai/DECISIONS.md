@@ -107,3 +107,16 @@ get an update note). Package-level choices are logged in
   release targets.
 - **Consequences:** Web must compile cleanly; keep mobile-specific APIs
   behind guards if ever introduced.
+
+### ADR-011 - Dev-only permissive CORS for localhost origins
+- **Status:** Accepted
+- **Context:** Mobile login ran as Flutter web on a random localhost port; the
+  fixed CORS allowlist blocked the login preflight.
+- **Decision:** In the Development environment the API allows any
+  `localhost`/`127.0.0.1` origin (any port, credentials allowed). Outside
+  Development the strict `Cors:AllowedOrigins` allowlist applies unchanged.
+- **Consequences:** Flutter web and any local tool work on any port in dev;
+  production is unaffected and stays strict. Do not remove the
+  `IsDevelopment()` guard.
+- **Alternatives:** Fixed `--web-port=3000` workflow (no backend change, but
+  every dev must remember the flag - rejected).

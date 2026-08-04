@@ -8,6 +8,9 @@ abstract final class StorageKeys {
   static const String authToken = 'auth_token';
   static const String refreshToken = 'refresh_token';
 
+  /// Cached authenticated session (secure storage).
+  static const String authSession = 'auth_session';
+
   /// Stable device identifier (secure storage).
   static const String deviceId = 'device_id';
 

@@ -83,7 +83,7 @@ void main() {
     test('configures base url, timeouts and the full interceptor chain', () {
       final dio = ApiClient.create(baseUrl: 'https://api.example.com');
 
-      expect(dio.options.baseUrl, 'https://api.example.com');
+      expect(dio.options.baseUrl, 'https://api.example.com/');
       expect(dio.options.connectTimeout, NetworkConfig.connectTimeout);
       expect(dio.options.receiveTimeout, NetworkConfig.receiveTimeout);
       expect(dio.options.sendTimeout, NetworkConfig.sendTimeout);
@@ -107,6 +107,23 @@ void main() {
         options.headers[NetworkConfig.requestIdHeader],
         isA<String>(),
       );
+    });
+
+    test('base url without a trailing slash gets one appended', () {
+      final dio = ApiClient.create(baseUrl: 'http://localhost:5297');
+
+      expect(
+        dio.options.baseUrl,
+        'http://localhost:5297/',
+        reason: 'Dio concatenates baseUrl + relative path verbatim; without '
+            'the slash it would request http://localhost:5297api/v1/...',
+      );
+    });
+
+    test('base url with a trailing slash is left unchanged', () {
+      final dio = ApiClient.create(baseUrl: 'http://localhost:5297/');
+
+      expect(dio.options.baseUrl, 'http://localhost:5297/');
     });
   });
 }

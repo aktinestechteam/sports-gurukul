@@ -6,10 +6,9 @@
 ///   Logging → Secure Storage → Database → API → Authentication →
 ///   Analytics → Notifications → Synchronization → Launch App
 ///
-/// Each step is a placeholder for Sprint 0/P002. Steps are wired
-/// incrementally as their owning core modules land (starting with the API
-/// layer in P003). Initialization must never block the UI thread for
-/// sensitive work.
+/// Authentication resolves the session state (auto-login or signed out) on
+/// the splash screen so branding stays visible for a minimum duration; the
+/// corresponding provider work happens under the app's `ProviderScope`.
 abstract final class AppInitializer {
   /// Runs the ordered initialization sequence.
   ///

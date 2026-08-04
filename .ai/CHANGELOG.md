@@ -5,6 +5,66 @@ Status: **Living** - Owner: Chief Software Architect
 Chronological record of prompts/sprints. Newest first. Keep entries truthful
 and verifiable.
 
+## SGM-0004 - Mobile Login CORS Fix (2026-08-04)
+
+- Mobile login failed with a CORS error when the Flutter app is run as web
+  (`flutter run -d chrome`): Flutter serves on a random localhost port, which
+  the backend CORS allowlist did not cover (only `localhost:3000`,
+  `localhost:5001`), so the `POST /api/v1/auth/login` preflight was blocked.
+- Verified live: unlisted origin -> 405 with no CORS headers (blocked);
+  `localhost:3000` -> 204 + headers (allowed).
+- Fix: `backend/.../Program.cs` CORS policy now allows **any localhost/127.0.0.1
+  origin in Development only** via `SetIsOriginAllowed`; non-Development keeps
+  the strict `Cors:AllowedOrigins` allowlist (verified in Production run).
+- Also found: login returned 500 because Postgres (`localhost:5432`) was not
+  running - environment issue, not code. Start DB with `docker compose up -d postgres`.
+- Verification: `dotnet build` 0 errors; runtime preflight checks passed for
+  allowed/disallowed origins in Development and Production.
+
+## SGM-0003 - Authentication Feature (2026-08-03)
+
+- Implemented the full Authentication feature under `lib/features/authentication/`
+  (Clean Architecture: presentation / application / domain / infrastructure)
+  consuming ONLY the auth endpoints the completed backend actually exposes
+  (`backend/.../V1/AuthController.cs`, prefix `api/v1/auth`, camelCase).
+- Backend contract verified directly against the controller:
+  `login`, `register` (201), `refresh-token` (NOT `/refresh`), `logout` (204),
+  `forgot-password`, `reset-password` (`{token,newPassword,confirmNewPassword}`,
+  revokes refresh tokens), `send-verification-email`, `verify-email`.
+  Task-listed Verify OTP / Change Password / Current User / Refresh Session are
+  NOT exposed by the backend, so their UI is deliberately absent.
+- Envelope `{success,message,data,errors}`; server errors are RFC 7807
+  ProblemDetails (`detail`/`title`). Schemas `LoginResponse`/`AuthResponse`,
+  `TokenResponse`, `MessageResponse`; passwords 8+ chars with
+  upper/lower/digit/special.
+- Core: `TokenStore` (`SecureStorage` key `authSession`), `SessionEvents`
+  (`onSessionExpired`), providers; rewrote `AuthInterceptor` (async JWT attach,
+  single-flight 401 refresh via `POST api/v1/auth/refresh-token`, retry once,
+  clear tokens + fire `onSessionExpired` on failure, `attach(Dio)`); rewrote
+  `ApiClient.create({baseUrl, authInterceptor})`; added `apiClientProvider`.
+- App wiring: `AuthController` (sealed `AuthState` unknown/unauthenticated/
+  authenticated; restore session, refresh-if-expired, listen `onSessionExpired`
+  -> force logout); splash calls `restoreSession()` after 1200ms window; router
+  rebuilt (5 routes, reset token via query param) with `AuthRouteGuard`;
+  dashboard is a `ConsumerWidget` with logout.
+- Presentation: `LoginPage`, `ForgotPasswordPage`, `ResetPasswordPage`
+  (complexity-validated), `AuthScaffold`, `AuthTextField` (visibility toggle,
+  autofill hints), `AuthMessages`; sealed `Result`/`OperationResult` based.
+- L10n: auth + validation keys added to `app_en/hi/mr.arb`;
+  `flutter gen-l10n` regenerated all 3 locales.
+- Codegen: fixed `ApiResponseDto<T>` with a hand-written generic `fromJson`
+  (freezed redirect cannot target the generic `_$ApiResponseDtoFromJson<T>`);
+  `dart run build_runner build` succeeds.
+- Tests: `+36` new unit/widget tests (date-time converter, auth error mapper,
+  session store, route guard, login page) + updated bootstrap/golden tests
+  (`auth_test_helper.dart` with `FakeAuthController` overrides) -> 207 total.
+  Two `DateTime.utc` mis-slot bugs fixed (7th arg is ms, 8th is us).
+- Divergence note: `docs/api/openapi.yaml` and `docs/api/API_Specifications.md`
+  list only `login` (no `swagger.json`); implementation follows the real
+  controller, recorded in SPRINT_STATUS/CHANGELOG.
+- Verification: format clean, `flutter analyze` 0 issues, `flutter test`
+  green (207/207).
+
 ## SGM-0002 - Enterprise Flutter Development Environment (2026-08-03)
 
 - Built the reusable `lib/core/` foundation for the enterprise dev

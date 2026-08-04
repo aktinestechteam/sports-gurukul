@@ -41,6 +41,36 @@ abstract final class AppColors {
   /// Information.
   static const Color information = Color(0xFF3B82F6);
 
+  /// Login screen reference palette (approved UI mockup).
+  static const Color blue500 = Color(0xFF3B82F6);
+  static const Color blue600 = Color(0xFF2563EB);
+  static const Color violet600 = Color(0xFF7C3AED);
+  static const Color loginFieldFill = Color(0xFF0E192B);
+  static const Color loginSubtitle = Color(0xFFB8BCC8);
+  static const Color rememberTrack = Color(0xFFC1C2CC);
+  static const Color whiteBorder = Color(0x21FFFFFF);
+  static const Color blackOverlay = Color(0x73000000);
+
+  /// Aurora accents for vibrant gradient surfaces (dashboard hero blobs,
+  /// gradient action cards and glow shadows).
+  static const Color violet300 = Color(0xFFA78BFA);
+  static const Color violet500 = Color(0xFF8B5CF6);
+  static const Color violet700 = Color(0xFF6D28D9);
+  static const Color cyan400 = Color(0xFF22D3EE);
+  static const Color cyan500 = Color(0xFF06B6D4);
+  static const Color pink400 = Color(0xFFF472B6);
+  static const Color pink500 = Color(0xFFEC4899);
+
+  /// Deep indigo used as the base of vibrant dark surfaces.
+  static const Color inkDeep = Color(0xFF0A0F24);
+
+  /// Glassmorphism fills and borders.
+  static const Color glassFill = Color(0x14FFFFFF);
+  static const Color glassFillDark = Color(0x33101A2E);
+  static const Color glassFillHi = Color(0x1AFFFFFF);
+  static const Color glassBorderHi = Color(0x26FFFFFF);
+  static const Color glassBorderLo = Color(0x1FFFFFFF);
+
   /// Neutral grays.
   static const Color grey50 = Color(0xFFF9FAFB);
   static const Color grey100 = Color(0xFFF3F4F6);

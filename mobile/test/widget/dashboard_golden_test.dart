@@ -1,7 +1,8 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sports_gurukul/app/app.dart';
+import 'package:sports_gurukul/features/authentication/presentation/providers/auth_controller.dart';
 import 'package:sports_gurukul/features/dashboard/presentation/pages/dashboard_page.dart';
+
+import '../helpers/auth_test_helper.dart';
 
 /// Golden verification of the placeholder dashboard.
 ///
@@ -11,7 +12,9 @@ import 'package:sports_gurukul/features/dashboard/presentation/pages/dashboard_p
 /// `flutter test --update-goldens test/widget/dashboard_golden_test.dart`.
 void main() {
   testWidgets('dashboard matches the golden image', (tester) async {
-    await tester.pumpWidget(const ProviderScope(child: SportsGurukulApp()));
+    await tester.pumpWidget(
+      buildTestApp(state: AuthAuthenticated(testAuthSession())),
+    );
     await tester.pump(const Duration(seconds: 2));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));

@@ -101,7 +101,7 @@ so I can manage today's sessions.
 
          Sports Gurukul
 
- Welcome Back 👋
+ Welcome 👋
 
  Continue your sports journey
 

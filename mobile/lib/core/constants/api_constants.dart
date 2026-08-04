@@ -5,8 +5,15 @@
 /// derived from the backend OpenAPI specification; they are not duplicated
 /// here. Backend routes live under the `api/v1` prefix.
 abstract final class ApiConstants {
-  /// Base URL, injectable at build time through `--dart-define=API_BASE_URL`.
-  static const String baseUrl = String.fromEnvironment('API_BASE_URL');
+  /// Base URL, overridable at build time through
+  /// `--dart-define=API_BASE_URL=...`.
+  ///
+  /// Defaults to the local development API so the app works out of the box;
+  /// point it at the real backend in release builds.
+  static const String baseUrl = String.fromEnvironment(
+    'API_BASE_URL',
+    defaultValue: 'http://localhost:5297',
+  );
 
   /// Version segment of the backend route prefix.
   static const String apiVersion = 'v1';

@@ -16,4 +16,7 @@ abstract final class AppAnimation {
 
   /// Bottom sheets.
   static const Duration bottomSheet = Duration(milliseconds: 300);
+
+  /// Auth screen entrances (background fade, card slide-up, logo fade).
+  static const Duration entrance = Duration(milliseconds: 300);
 }

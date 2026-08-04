@@ -1,45 +1,45 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:sports_gurukul/app/router/route_paths.dart';
 import 'package:sports_gurukul/app/theme/colors/app_colors.dart';
 import 'package:sports_gurukul/app/theme/spacing/app_spacing.dart';
+import 'package:sports_gurukul/features/authentication/presentation/providers/auth_controller.dart';
 import 'package:sports_gurukul/l10n/generated/app_localizations.dart';
 
 /// Entry screen of the application.
 ///
-/// Displays branding while the app initializer completes, then routes to the
-/// dashboard. When authentication lands, the splash will route to the
-/// authentication flow instead based on session state.
-class SplashPage extends StatefulWidget {
+/// Displays branding for a minimum duration, then resolves the session state
+/// (auto-login or signed out). The auth-aware router redirect hands off to
+/// the dashboard or the login screen once the state is known.
+class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
 
   @override
-  State<SplashPage> createState() => _SplashPageState();
+  ConsumerState<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashPageState extends ConsumerState<SplashPage> {
   static const Duration _minimumDisplayDuration = Duration(milliseconds: 1200);
-  Timer? _navigationTimer;
+  Timer? _restoreTimer;
 
   @override
   void initState() {
     super.initState();
-    _navigationTimer = Timer(_minimumDisplayDuration, _navigateToDashboard);
+    _restoreTimer = Timer(_minimumDisplayDuration, _restoreSession);
   }
 
-  void _navigateToDashboard() {
+  void _restoreSession() {
     if (!mounted) {
       return;
     }
-    context.go(RoutePaths.dashboard);
+    unawaited(ref.read(authControllerProvider.notifier).restoreSession());
   }
 
   @override
   void dispose() {
-    _navigationTimer?.cancel();
+    _restoreTimer?.cancel();
     super.dispose();
   }
 

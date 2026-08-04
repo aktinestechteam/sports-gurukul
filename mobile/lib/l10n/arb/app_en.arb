@@ -19,5 +19,338 @@
   "dashboardInitializedMessage": "The Sports Gurukul mobile foundation is ready. Features will be delivered in upcoming sprints.",
   "@dashboardInitializedMessage": {
     "description": "Placeholder dashboard body text describing the current project state."
+  },
+  "dashboardGreetingMorning": "Good morning, {name}",
+  "@dashboardGreetingMorning": {
+    "description": "Dashboard greeting shown before noon.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardGreetingAfternoon": "Good afternoon, {name}",
+  "@dashboardGreetingAfternoon": {
+    "description": "Dashboard greeting shown between noon and evening.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardGreetingEvening": "Good evening, {name}",
+  "@dashboardGreetingEvening": {
+    "description": "Dashboard greeting shown in the evening.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardHeaderSubtitle": "Your performance, one glance away.",
+  "@dashboardHeaderSubtitle": {
+    "description": "Subtitle under the dashboard greeting."
+  },
+  "dashboardStatActiveDays": "Active days",
+  "@dashboardStatActiveDays": {
+    "description": "Label of the active-days stat card."
+  },
+  "dashboardStatAvgIntensity": "Avg intensity",
+  "@dashboardStatAvgIntensity": {
+    "description": "Label of the average-intensity stat card."
+  },
+  "dashboardStatRecovery": "Recovery",
+  "@dashboardStatRecovery": {
+    "description": "Label of the recovery stat card."
+  },
+  "dashboardWeeklyTarget": "Weekly target",
+  "@dashboardWeeklyTarget": {
+    "description": "Title of the weekly-target progress card."
+  },
+  "dashboardWeeklyTargetDone": "18 of 24 sessions completed this week",
+  "@dashboardWeeklyTargetDone": {
+    "description": "Supporting text under the weekly-target progress."
+  },
+  "dashboardQuickActions": "Quick actions",
+  "@dashboardQuickActions": {
+    "description": "Section title for the quick-action cards."
+  },
+  "dashboardActionBookSession": "Book session",
+  "@dashboardActionBookSession": {
+    "description": "Quick action that starts session booking."
+  },
+  "dashboardActionFindCoach": "Find coach",
+  "@dashboardActionFindCoach": {
+    "description": "Quick action that searches for a coach."
+  },
+  "dashboardActionLeaderboards": "Leaderboards",
+  "@dashboardActionLeaderboards": {
+    "description": "Quick action that opens the leaderboards."
+  },
+  "dashboardActionTournaments": "Tournaments",
+  "@dashboardActionTournaments": {
+    "description": "Quick action that lists tournaments."
+  },
+  "dashboardTabOverview": "Overview",
+  "@dashboardTabOverview": {
+    "description": "Dashboard tab showing a weekly snapshot."
+  },
+  "dashboardTabTraining": "Training",
+  "@dashboardTabTraining": {
+    "description": "Dashboard tab showing upcoming training sessions."
+  },
+  "dashboardTabInsights": "Insights",
+  "@dashboardTabInsights": {
+    "description": "Dashboard tab showing performance insights."
+  },
+  "dashboardUpcomingSessions": "Upcoming sessions",
+  "@dashboardUpcomingSessions": {
+    "description": "Title of the upcoming-sessions list."
+  },
+  "dashboardSessionEveningRun": "Evening run",
+  "@dashboardSessionEveningRun": {
+    "description": "Name of an upcoming training session."
+  },
+  "dashboardSessionEveningRunTime": "Today · 6:00 PM",
+  "@dashboardSessionEveningRunTime": {
+    "description": "Date and time of the evening-run session."
+  },
+  "dashboardSessionSquadStrength": "Squad strength",
+  "@dashboardSessionSquadStrength": {
+    "description": "Name of an upcoming training session."
+  },
+  "dashboardSessionSquadStrengthTime": "Wed · 5:30 AM",
+  "@dashboardSessionSquadStrengthTime": {
+    "description": "Date and time of the squad-strength session."
+  },
+  "dashboardInsightRecovery": "Recovery score is up 12% this week",
+  "@dashboardInsightRecovery": {
+    "description": "Insight card describing an improving recovery score."
+  },
+  "dashboardInsightIntensity": "4 days in the target intensity zone",
+  "@dashboardInsightIntensity": {
+    "description": "Insight card describing intensity-zone adherence."
+  },
+  "dashboardInsightRestDay": "Rest day optimized for Wednesday",
+  "@dashboardInsightRestDay": {
+    "description": "Insight card recommending a rest day."
+  },
+  "authLoginTitle": "Welcome!",
+  "@authLoginTitle": {
+    "description": "Heading of the login screen."
+  },
+  "authLoginSubtitle": "Sign in to continue to Sports Gurukul.",
+  "@authLoginSubtitle": {
+    "description": "Supporting text under the login heading."
+  },
+  "authLoginEmailLabel": "Email",
+  "@authLoginEmailLabel": {
+    "description": "Label of the email field on login and forgot-password screens."
+  },
+  "authLoginPasswordLabel": "Password",
+  "@authLoginPasswordLabel": {
+    "description": "Label of the password field on the login screen."
+  },
+  "authLoginSubmit": "Sign in",
+  "@authLoginSubmit": {
+    "description": "Label of the login submit button."
+  },
+  "authLoginForgotPassword": "Forgot password?",
+  "@authLoginForgotPassword": {
+    "description": "Link to the forgot-password screen."
+  },
+  "authLoginRememberMe": "Remember Me",
+  "@authLoginRememberMe": {
+    "description": "Label of the remember-me checkbox on the login screen."
+  },
+  "authLoginOr": "OR",
+  "@authLoginOr": {
+    "description": "Divider label between the primary login action and alternative sign-in options."
+  },
+  "authLoginDontHaveAccount": "Don't have an account?",
+  "@authLoginDontHaveAccount": {
+    "description": "Prompt above the sign-up link on the login screen."
+  },
+  "authLoginSignUp": "Sign Up",
+  "@authLoginSignUp": {
+    "description": "Link to account creation shown on the login screen."
+  },
+  "authSignUpTitle": "Create your account",
+  "@authSignUpTitle": {
+    "description": "Heading of the sign-up screen."
+  },
+  "authSignUpSubtitle": "Create a Sports Gurukul account to start your journey.",
+  "@authSignUpSubtitle": {
+    "description": "Supporting text under the sign-up heading."
+  },
+  "authSignUpNameLabel": "Full name",
+  "@authSignUpNameLabel": {
+    "description": "Label of the full-name field on the sign-up screen."
+  },
+  "authSignUpPhoneLabel": "Phone number",
+  "@authSignUpPhoneLabel": {
+    "description": "Label of the optional phone-number field on the sign-up screen."
+  },
+  "authSignUpConfirmPasswordLabel": "Confirm password",
+  "@authSignUpConfirmPasswordLabel": {
+    "description": "Label of the confirm-password field on the sign-up screen."
+  },
+  "authSignUpSubmit": "Create account",
+  "@authSignUpSubmit": {
+    "description": "Label of the sign-up submit button."
+  },
+  "authSignUpAlreadyHaveAccount": "Already have an account?",
+  "@authSignUpAlreadyHaveAccount": {
+    "description": "Prompt above the sign-in link on the sign-up screen."
+  },
+  "authSignUpSignIn": "Sign In",
+  "@authSignUpSignIn": {
+    "description": "Link to the login screen shown on the sign-up screen."
+  },
+  "authSignUpSuccess": "Account created successfully. You are signed in.",
+  "@authSignUpSuccess": {
+    "description": "Confirmation shown after a successful registration."
+  },
+  "authForgotTitle": "Reset your password",
+  "@authForgotTitle": {
+    "description": "Heading of the forgot-password screen."
+  },
+  "authForgotSubtitle": "Enter your email and we will send you a reset link.",
+  "@authForgotSubtitle": {
+    "description": "Supporting text under the forgot-password heading."
+  },
+  "authForgotSubmit": "Send reset link",
+  "@authForgotSubmit": {
+    "description": "Label of the forgot-password submit button."
+  },
+  "authForgotEmailSent": "If an account with that email exists, a reset link has been sent.",
+  "@authForgotEmailSent": {
+    "description": "Confirmation shown after requesting a password reset email."
+  },
+  "authForgotBackToLogin": "Back to sign in",
+  "@authForgotBackToLogin": {
+    "description": "Link back to the login screen from the forgot/reset screens."
+  },
+  "authResetTitle": "Choose a new password",
+  "@authResetTitle": {
+    "description": "Heading of the reset-password screen."
+  },
+  "authResetSubtitle": "Enter a strong password you have not used before.",
+  "@authResetSubtitle": {
+    "description": "Supporting text under the reset-password heading."
+  },
+  "authResetNewPasswordLabel": "New password",
+  "@authResetNewPasswordLabel": {
+    "description": "Label of the new-password field on the reset screen."
+  },
+  "authResetConfirmPasswordLabel": "Confirm new password",
+  "@authResetConfirmPasswordLabel": {
+    "description": "Label of the confirm-password field on the reset screen."
+  },
+  "authResetSubmit": "Reset password",
+  "@authResetSubmit": {
+    "description": "Label of the reset-password submit button."
+  },
+  "authResetSuccess": "Password reset successfully. Please sign in with your new password.",
+  "@authResetSuccess": {
+    "description": "Confirmation shown after a successful password reset."
+  },
+  "authResetMissingToken": "This reset link is missing a token. Please open it from your email.",
+  "@authResetMissingToken": {
+    "description": "Shown when the reset screen is opened without a token."
+  },
+  "authShowPassword": "Show password",
+  "@authShowPassword": {
+    "description": "Tooltip for the show-password toggle."
+  },
+  "authHidePassword": "Hide password",
+  "@authHidePassword": {
+    "description": "Tooltip for the hide-password toggle."
+  },
+  "authLogout": "Log out",
+  "@authLogout": {
+    "description": "Tooltip and action label for signing out."
+  },
+  "authErrorsInvalidCredentials": "Invalid email or password.",
+  "@authErrorsInvalidCredentials": {
+    "description": "Error shown when login credentials are rejected."
+  },
+  "authErrorsAccountLocked": "Account locked due to too many failed attempts. Try again in 15 minutes.",
+  "@authErrorsAccountLocked": {
+    "description": "Error shown when the account is temporarily locked."
+  },
+  "authErrorsSessionExpired": "Your session has expired. Please sign in again.",
+  "@authErrorsSessionExpired": {
+    "description": "Error shown when a session cannot be refreshed."
+  },
+  "authErrorsBadRequest": "The request could not be processed. Please check your details.",
+  "@authErrorsBadRequest": {
+    "description": "Error shown for a rejected request (HTTP 400)."
+  },
+  "authErrorsNetwork": "You seem to be offline. Check your connection and try again.",
+  "@authErrorsNetwork": {
+    "description": "Error shown when the device has no usable connection."
+  },
+  "authErrorsRateLimited": "Too many attempts. Please try again later.",
+  "@authErrorsRateLimited": {
+    "description": "Error shown when the backend rate-limits a request."
+  },
+  "authErrorsServer": "Something went wrong on our side. Please try again later.",
+  "@authErrorsServer": {
+    "description": "Error shown when the server fails (HTTP 5xx)."
+  },
+  "authErrorsUnknown": "Something went wrong. Please try again.",
+  "@authErrorsUnknown": {
+    "description": "Fallback error message for unexpected failures."
+  },
+  "validationRequired": "This field is required.",
+  "@validationRequired": {
+    "description": "Error shown when a required field is empty."
+  },
+  "validationEmailInvalid": "Enter a valid email address.",
+  "@validationEmailInvalid": {
+    "description": "Error shown when an email address is malformed."
+  },
+  "validationPasswordTooShort": "Password must be at least {min} characters.",
+  "@validationPasswordTooShort": {
+    "description": "Error shown when a password is too short.",
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "validationPasswordTooLong": "Password must be at most {max} characters.",
+  "@validationPasswordTooLong": {
+    "description": "Error shown when a password is too long.",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "validationPasswordUppercase": "Password must contain at least one uppercase letter.",
+  "@validationPasswordUppercase": {
+    "description": "Error shown when a password lacks an uppercase letter."
+  },
+  "validationPasswordLowercase": "Password must contain at least one lowercase letter.",
+  "@validationPasswordLowercase": {
+    "description": "Error shown when a password lacks a lowercase letter."
+  },
+  "validationPasswordDigit": "Password must contain at least one number.",
+  "@validationPasswordDigit": {
+    "description": "Error shown when a password lacks a digit."
+  },
+  "validationPasswordSpecial": "Password must contain at least one special character.",
+  "@validationPasswordSpecial": {
+    "description": "Error shown when a password lacks a special character."
+  },
+  "validationPasswordMismatch": "Passwords do not match.",
+  "@validationPasswordMismatch": {
+    "description": "Error shown when the confirm-password field differs from the password."
+  },
+  "validationPhoneInvalid": "Enter a valid 10-digit mobile number.",
+  "@validationPhoneInvalid": {
+    "description": "Error shown when a phone number is not a valid 10-digit Indian mobile number."
   }
 }
