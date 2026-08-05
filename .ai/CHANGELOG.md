@@ -5,6 +5,59 @@ Status: **Living** - Owner: Chief Software Architect
 Chronological record of prompts/sprints. Newest first. Keep entries truthful
 and verifiable.
 
+## SGM-0007 - User Onboarding Flow (2026-08-05)
+
+- Delivered the onboarding gate for brand-new accounts: a user with no academy
+  association and no business role lands on the `/welcome` screen (never a
+  normal dashboard) with the three onboarding actions - Create My Academy /
+  Join Existing Academy / Explore Application - plus profile header, welcome
+  card and retryable error/loading states.
+- New `lib/features/onboarding/` feature (Clean Architecture): `CurrentUser` /
+  `ApplicationSession` aggregation, `UserState` classifier (business-role rule:
+  any role beyond the default registration role -> academy member),
+  `OnboardingController` (Idle/Loading/Error/Resolved/Completed), current-user
+  resolution from `/users/me`, and shared `OnboardingActions` widget reused by
+  both the welcome screen and the limited new-user dashboard.
+- Router: added welcome/create-academy/join-academy routes; `AuthRouteGuard`
+  extended so incomplete new users and session-resolution failures stay off
+  protected routes (OnboardingError -> welcome), established users never stay
+  on welcome, and the splash hands off to welcome for brand-new users. Every
+  onboarding action completes onboarding; Create/Join navigate to
+  navigation-only placeholder pages (real academy flows are a later sprint),
+  Explore continues to the limited dashboard.
+- Fixed a navigation bug found while verifying: `appRouterProvider` re-created
+  the `GoRouter` on every onboarding state change (it watched the controller),
+  so completing onboarding reset the route stack and swallowed the
+  `/create-academy` handoff. The router now re-evaluates redirects in place via
+  `GoRouter.refreshListenable` driven by `ref.listen`; auth changes still
+  rebuild the router as before.
+- Tests: new onboarding unit/widget coverage - user-state classifier, current
+  user/application-session entities + mapper, onboarding controller, route
+  guard cases, welcome flow, onboarding-aware dashboard and bootstrap routing
+  (42 tests in the onboarding/welcome/dashboard suites) - and corrected the
+  debug keyboard-input tests to use IME `enterText` (synthetic key events carry
+  no printable character). Regenerated the member-dashboard golden. Full suite:
+  305 tests green.
+- Fixed the two real-account onboarding failures found in live testing:
+  - `resolveUserState` no longer treats profile completion as a membership
+    signal: a brand-new user who has partially filled their profile (default
+    Athlete role, no academy, no business role) now reaches the onboarding
+    gate instead of being classified as a member and sent to the dashboard.
+    The `profileCompletionPercentage` parameter was removed from the resolver;
+    membership now requires an academy association or a business role.
+  - A brand-new account with no `UserProfile` no longer shows the
+    "We couldn't load your account" error: registration does not create a
+    profile, so `GET /api/v1/users/me` answers 404. `currentUserProvider` now
+    maps that not-found response to a brand-new user resolved from the auth
+    session (id/name/email + session roles) so the account reaches the
+    welcome gate. Other resolution failures (network/server/session) still
+    surface the retryable error state.
+- Verification: `dart format --set-exit-if-changed` clean, `flutter analyze`
+  0 issues, `flutter test` 307/307, `flutter build web` success.
+- Divergence note: `/users/me` does not expose a profile image, so
+  `CurrentUser.profileImageUrl` stays absent and `academyAssociation` is always
+  null until those fields land in the backend contract (see TECH_DEBT.md).
+
 ## SGM-0004 - Mobile Login CORS Fix (2026-08-04)
 
 - Mobile login failed with a CORS error when the Flutter app is run as web

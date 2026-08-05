@@ -648,5 +648,145 @@
   "profileErrorsUnknown": "Something went wrong. Please try again.",
   "@profileErrorsUnknown": {
     "description": "Fallback error message for unexpected profile failures."
+  },
+  "welcomeTitle": "Welcome to Sports Gurukul!",
+  "@welcomeTitle": {
+    "description": "Heading of the welcome screen for brand-new users."
+  },
+  "welcomeSubtitle": "You're all set. Pick a path to kick-start your sporting journey.",
+  "@welcomeSubtitle": {
+    "description": "Supporting text under the welcome-screen heading."
+  },
+  "welcomeCreateAcademy": "Create My Academy",
+  "@welcomeCreateAcademy": {
+    "description": "Welcome-screen action that starts the create-academy flow."
+  },
+  "welcomeCreateAcademySubtitle": "Set up a new academy and start managing athletes.",
+  "@welcomeCreateAcademySubtitle": {
+    "description": "Supporting text for the create-academy action."
+  },
+  "welcomeJoinAcademy": "Join Existing Academy",
+  "@welcomeJoinAcademy": {
+    "description": "Welcome-screen action that starts the join-academy flow."
+  },
+  "welcomeJoinAcademySubtitle": "Find an academy and join as a member.",
+  "@welcomeJoinAcademySubtitle": {
+    "description": "Supporting text for the join-academy action."
+  },
+  "welcomeExplore": "Explore Application",
+  "@welcomeExplore": {
+    "description": "Welcome-screen action that skips onboarding and opens the dashboard."
+  },
+  "welcomeExploreSubtitle": "Skip the setup and browse the dashboard for now.",
+  "@welcomeExploreSubtitle": {
+    "description": "Supporting text for the explore action."
+  },
+  "welcomeLoading": "Preparing your experience…",
+  "@welcomeLoading": {
+    "description": "Status shown while the application session is being resolved."
+  },
+  "welcomeEmptyMessage": "Nothing to resolve yet.",
+  "@welcomeEmptyMessage": {
+    "description": "Fallback shown when there is no session to resolve."
+  },
+  "welcomeErrorTitle": "We couldn't load your account",
+  "@welcomeErrorTitle": {
+    "description": "Title shown when current-user resolution fails."
+  },
+  "welcomeErrorsNetwork": "You seem to be offline. Check your connection and try again.",
+  "@welcomeErrorsNetwork": {
+    "description": "Error shown when the device has no usable connection."
+  },
+  "welcomeErrorsServer": "Something went wrong on our side. Please try again later.",
+  "@welcomeErrorsServer": {
+    "description": "Error shown when the server fails (HTTP 5xx)."
+  },
+  "welcomeErrorsSessionExpired": "Your session has expired. Please sign in again.",
+  "@welcomeErrorsSessionExpired": {
+    "description": "Error shown when the session can no longer be used."
+  },
+  "welcomeErrorsUnknown": "Something went wrong. Please try again.",
+  "@welcomeErrorsUnknown": {
+    "description": "Fallback error message for unexpected failures."
+  },
+  "welcomeRetry": "Try again",
+  "@welcomeRetry": {
+    "description": "Label of the retry action on the welcome error state."
+  },
+  "academyCreateTitle": "Create Academy",
+  "@academyCreateTitle": {
+    "description": "Heading of the create-academy placeholder screen."
+  },
+  "academyCreateMessage": "Academy setup is coming in a later sprint. You can explore the application in the meantime.",
+  "@academyCreateMessage": {
+    "description": "Body of the create-academy placeholder screen."
+  },
+  "academyJoinTitle": "Join an Academy",
+  "@academyJoinTitle": {
+    "description": "Heading of the join-academy placeholder screen."
+  },
+  "academyJoinMessage": "Finding and joining an academy is coming in a later sprint. You can explore the application in the meantime.",
+  "@academyJoinMessage": {
+    "description": "Body of the join-academy placeholder screen."
+  },
+  "academyBackToDashboard": "Back to dashboard",
+  "@academyBackToDashboard": {
+    "description": "Action that returns to the dashboard from an academy placeholder screen."
+  },
+  "roleLabelPlatformAdministrator": "Platform Administrator",
+  "@roleLabelPlatformAdministrator": {
+    "description": "Role badge label for super-admin and admin roles."
+  },
+  "roleLabelAcademy": "Academy",
+  "@roleLabelAcademy": {
+    "description": "Role badge label for the academy role."
+  },
+  "roleLabelCoach": "Coach",
+  "@roleLabelCoach": {
+    "description": "Role badge label for the coach role."
+  },
+  "roleLabelAthlete": "Athlete",
+  "@roleLabelAthlete": {
+    "description": "Role badge label for the athlete role."
+  },
+  "roleLabelParent": "Parent",
+  "@roleLabelParent": {
+    "description": "Role badge label for the parent role."
+  },
+  "roleLabelScout": "Scout",
+  "@roleLabelScout": {
+    "description": "Role badge label for the scout role."
+  },
+  "roleLabelSponsor": "Sponsor",
+  "@roleLabelSponsor": {
+    "description": "Role badge label for the sponsor role."
+  },
+  "roleLabelAiAdministrator": "AI Administrator",
+  "@roleLabelAiAdministrator": {
+    "description": "Role badge label for the AI-administrator role."
+  },
+  "roleLabelMember": "Member",
+  "@roleLabelMember": {
+    "description": "Role badge fallback when no role is assigned."
+  },
+  "roleLabelNewUser": "New User",
+  "@roleLabelNewUser": {
+    "description": "Profile badge label for a brand-new account that has not joined an academy yet."
+  },
+  "roleLabelRegisteredUser": "Registered User",
+  "@roleLabelRegisteredUser": {
+    "description": "Alternative profile badge label for a brand-new account."
+  },
+  "roleLabelAcademyAdmin": "Academy Admin",
+  "@roleLabelAcademyAdmin": {
+    "description": "Profile badge label for the academy-admin role."
+  },
+  "roleLabelPendingApproval": "Pending Approval",
+  "@roleLabelPendingApproval": {
+    "description": "Profile badge label while a membership request awaits approval."
+  },
+  "roleLabelSystemAdmin": "System Admin",
+  "@roleLabelSystemAdmin": {
+    "description": "Profile badge label for super-admin and admin roles."
   }
 }

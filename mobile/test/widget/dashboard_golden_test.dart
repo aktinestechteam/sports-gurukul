@@ -3,6 +3,7 @@ import 'package:sports_gurukul/features/authentication/presentation/providers/au
 import 'package:sports_gurukul/features/dashboard/presentation/pages/dashboard_page.dart';
 
 import '../helpers/auth_test_helper.dart';
+import '../helpers/onboarding_test_helper.dart';
 
 /// Golden verification of the placeholder dashboard.
 ///
@@ -13,7 +14,10 @@ import '../helpers/auth_test_helper.dart';
 void main() {
   testWidgets('dashboard matches the golden image', (tester) async {
     await tester.pumpWidget(
-      buildTestApp(state: AuthAuthenticated(testAuthSession())),
+      buildTestApp(
+        state: AuthAuthenticated(testAuthSession()),
+        currentUser: testMemberCurrentUser(),
+      ),
     );
     await tester.pump(const Duration(seconds: 2));
     await tester.pump();

@@ -25,8 +25,9 @@ abstract final class AppTheme {
       colorScheme: colorScheme,
       fontFamily: AppTypography.brandFontFamily,
       fontFamilyFallback: AppTypography.brandFontFamilyFallback,
-      scaffoldBackgroundColor:
-          isDark ? AppColors.surfaceDark : AppColors.surface,
+      scaffoldBackgroundColor: isDark
+          ? AppColors.surfaceDark
+          : AppColors.surface,
 
       // ─── AppBar Theme ───────────────────────────────────────────────
       appBarTheme: AppBarTheme(

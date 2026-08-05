@@ -8,8 +8,9 @@ import 'package:sports_gurukul/features/user/infrastructure/repositories/user_pr
 /// Provides the user-profile remote datasource backed by the shared Dio client.
 final userProfileRemoteDataSourceProvider =
     Provider<UserProfileRemoteDataSource>(
-  (ref) => DioUserProfileRemoteDataSource(dio: ref.watch(apiClientProvider)),
-);
+      (ref) =>
+          DioUserProfileRemoteDataSource(dio: ref.watch(apiClientProvider)),
+    );
 
 /// Provides the user-profile repository.
 final userProfileRepositoryProvider = Provider<UserProfileRepository>(

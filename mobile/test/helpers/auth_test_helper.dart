@@ -4,6 +4,8 @@ import 'package:sports_gurukul/app/app.dart';
 import 'package:sports_gurukul/features/authentication/domain/entities/auth_session.dart';
 import 'package:sports_gurukul/features/authentication/domain/entities/auth_user.dart';
 import 'package:sports_gurukul/features/authentication/presentation/providers/auth_controller.dart';
+import 'package:sports_gurukul/features/onboarding/application/onboarding_providers.dart';
+import 'package:sports_gurukul/features/onboarding/domain/entities/current_user.dart';
 
 /// Builds a [AuthSession] for tests.
 AuthSession testAuthSession({String email = 'player@example.com'}) =>
@@ -37,14 +39,15 @@ class FakeAuthController extends AuthController {
 
 /// Wraps the real app with [authControllerProvider] pinned to [state].
 ///
-/// Pass `null` to run the app with real providers (splash-only assertions).
-Widget buildTestApp({AuthState? state}) => ProviderScope(
-  overrides: state == null
-      ? const []
-      : [
-          authControllerProvider.overrideWith(
-            () => FakeAuthController(state),
-          ),
-        ],
-  child: const SportsGurukulApp(),
-);
+/// Pass `null` for [state] to run the app with real providers (splash-only
+/// assertions). Pass [currentUser] to make onboarding resolution
+/// deterministic instead of hitting the real profile endpoint.
+Widget buildTestApp({AuthState? state, CurrentUser? currentUser}) {
+  final overrides = [
+    if (state != null)
+      authControllerProvider.overrideWith(() => FakeAuthController(state)),
+    if (currentUser != null)
+      currentUserProvider.overrideWith((ref) async => currentUser),
+  ];
+  return ProviderScope(overrides: overrides, child: const SportsGurukulApp());
+}

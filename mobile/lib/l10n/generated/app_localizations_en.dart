@@ -510,4 +510,118 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileErrorsUnknown => 'Something went wrong. Please try again.';
+
+  @override
+  String get welcomeTitle => 'Welcome to Sports Gurukul!';
+
+  @override
+  String get welcomeSubtitle =>
+      'You\'re all set. Pick a path to kick-start your sporting journey.';
+
+  @override
+  String get welcomeCreateAcademy => 'Create My Academy';
+
+  @override
+  String get welcomeCreateAcademySubtitle =>
+      'Set up a new academy and start managing athletes.';
+
+  @override
+  String get welcomeJoinAcademy => 'Join Existing Academy';
+
+  @override
+  String get welcomeJoinAcademySubtitle =>
+      'Find an academy and join as a member.';
+
+  @override
+  String get welcomeExplore => 'Explore Application';
+
+  @override
+  String get welcomeExploreSubtitle =>
+      'Skip the setup and browse the dashboard for now.';
+
+  @override
+  String get welcomeLoading => 'Preparing your experience…';
+
+  @override
+  String get welcomeEmptyMessage => 'Nothing to resolve yet.';
+
+  @override
+  String get welcomeErrorTitle => 'We couldn\'t load your account';
+
+  @override
+  String get welcomeErrorsNetwork =>
+      'You seem to be offline. Check your connection and try again.';
+
+  @override
+  String get welcomeErrorsServer =>
+      'Something went wrong on our side. Please try again later.';
+
+  @override
+  String get welcomeErrorsSessionExpired =>
+      'Your session has expired. Please sign in again.';
+
+  @override
+  String get welcomeErrorsUnknown => 'Something went wrong. Please try again.';
+
+  @override
+  String get welcomeRetry => 'Try again';
+
+  @override
+  String get academyCreateTitle => 'Create Academy';
+
+  @override
+  String get academyCreateMessage =>
+      'Academy setup is coming in a later sprint. You can explore the application in the meantime.';
+
+  @override
+  String get academyJoinTitle => 'Join an Academy';
+
+  @override
+  String get academyJoinMessage =>
+      'Finding and joining an academy is coming in a later sprint. You can explore the application in the meantime.';
+
+  @override
+  String get academyBackToDashboard => 'Back to dashboard';
+
+  @override
+  String get roleLabelPlatformAdministrator => 'Platform Administrator';
+
+  @override
+  String get roleLabelAcademy => 'Academy';
+
+  @override
+  String get roleLabelCoach => 'Coach';
+
+  @override
+  String get roleLabelAthlete => 'Athlete';
+
+  @override
+  String get roleLabelParent => 'Parent';
+
+  @override
+  String get roleLabelScout => 'Scout';
+
+  @override
+  String get roleLabelSponsor => 'Sponsor';
+
+  @override
+  String get roleLabelAiAdministrator => 'AI Administrator';
+
+  @override
+  String get roleLabelMember => 'Member';
+
+  @override
+  String get roleLabelNewUser => 'New User';
+
+  @override
+  String get roleLabelRegisteredUser => 'Registered User';
+
+  @override
+  String get roleLabelAcademyAdmin => 'Academy Admin';
+
+  @override
+  String get roleLabelPendingApproval => 'Pending Approval';
+
+  @override
+  String get roleLabelSystemAdmin => 'System Admin';
 }

@@ -19,6 +19,15 @@ abstract final class RouteConstants {
   /// New password entry (token supplied via `?token=...`).
   static const String resetPassword = '/reset-password';
 
+  /// Welcome/onboarding path for brand-new users.
+  static const String welcome = '/welcome';
+
+  /// Create-academy flow (navigation placeholder until the feature lands).
+  static const String createAcademy = '/create-academy';
+
+  /// Join-academy flow (navigation placeholder until the feature lands).
+  static const String joinAcademy = '/join-academy';
+
   /// Placeholder dashboard.
   static const String dashboard = '/dashboard';
 

@@ -26,9 +26,9 @@ Widget _wrap() => ProviderScope(
 
 void main() {
   Future<TextEditingController> focusAndType(
-    WidgetTester tester,
-    bool afterError,
-  ) async {
+    WidgetTester tester, {
+    bool afterError = false,
+  }) async {
     await tester.pumpWidget(_wrap());
     await tester.pumpAndSettle();
     if (afterError) {
@@ -44,11 +44,10 @@ void main() {
     );
     await tester.ensureVisible(editable);
     await tester.pumpAndSettle();
+    // Synthetic key events carry no printable character, so character input
+    // goes through the IME (`enterText`) while backspace is a real key event.
     await tester.showKeyboard(editable);
-    await tester.pump();
-    await tester.sendKeyEvent(LogicalKeyboardKey.keyA);
-    await tester.pump();
-    await tester.sendKeyEvent(LogicalKeyboardKey.keyB);
+    await tester.enterText(editable, 'ab');
     await tester.pump();
     await tester.sendKeyEvent(LogicalKeyboardKey.backspace);
     await tester.pump();
@@ -56,15 +55,15 @@ void main() {
     return ets.widget.controller;
   }
 
-  testWidgets('fresh: hardware keys insert', (tester) async {
-    final c = await focusAndType(tester, false);
-    debugPrint('FRESH after keys: "${c.text}"');
+  testWidgets('fresh: password field accepts input', (tester) async {
+    final c = await focusAndType(tester);
+    debugPrint('FRESH after input: "${c.text}"');
     expect(c.text, 'a');
   });
 
-  testWidgets('after error: hardware keys insert', (tester) async {
-    final c = await focusAndType(tester, true);
-    debugPrint('AFTER-ERROR after keys: "${c.text}"');
+  testWidgets('after error: password field accepts input', (tester) async {
+    final c = await focusAndType(tester, afterError: true);
+    debugPrint('AFTER-ERROR after input: "${c.text}"');
     expect(c.text, 'a');
   });
 }

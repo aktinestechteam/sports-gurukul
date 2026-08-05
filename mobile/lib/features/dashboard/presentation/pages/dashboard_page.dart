@@ -10,6 +10,12 @@ import 'package:sports_gurukul/app/theme/colors/app_colors.dart';
 import 'package:sports_gurukul/app/theme/colors/app_gradients.dart';
 import 'package:sports_gurukul/app/theme/spacing/app_spacing.dart';
 import 'package:sports_gurukul/features/authentication/presentation/providers/auth_controller.dart';
+import 'package:sports_gurukul/features/dashboard/presentation/widgets/new_user_dashboard.dart';
+import 'package:sports_gurukul/features/onboarding/application/onboarding_providers.dart';
+import 'package:sports_gurukul/features/onboarding/domain/entities/user_role.dart';
+import 'package:sports_gurukul/features/onboarding/domain/entities/user_state.dart';
+import 'package:sports_gurukul/features/onboarding/presentation/widgets/role_badge.dart';
+import 'package:sports_gurukul/features/onboarding/presentation/widgets/user_state_badge.dart';
 import 'package:sports_gurukul/l10n/generated/app_localizations.dart';
 import 'package:sports_gurukul/shared/animations/entrance.dart';
 import 'package:sports_gurukul/shared/animations/spring_press.dart';
@@ -25,16 +31,29 @@ import 'package:sports_gurukul/shared/widgets/animated_tab_bar.dart';
 /// actions and an [AnimatedTabBar] switching content through an
 /// [AnimatedSwitcher]. All radii, gradients, shadows and colors come from the
 /// design tokens in `app/theme`.
+///
+/// The dashboard is onboarding-aware: while the resolved user is still in the
+/// [UserState.newUser] classification (no academy, no business role) it shows
+/// the onboarding actions via [NewUserDashboard] instead of the full
+/// dashboard, per the "NEW USER DASHBOARD" requirement.
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    final session = ref.watch(applicationSessionProvider);
+    if (session != null && session.userState == UserState.newUser) {
+      return NewUserDashboard(session: session);
+    }
+
     final state = ref.watch(authControllerProvider);
-    final session = state is AuthAuthenticated ? state.session : null;
-    final name = session?.user.fullName.trim() ?? '';
+    final authSession = state is AuthAuthenticated ? state.session : null;
+    final name = authSession?.user.fullName.trim() ?? '';
     final firstName = name.isEmpty ? '' : name.split(' ').first;
+    final badge = session == null
+        ? null
+        : resolveUserStateBadge(l10n, session);
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -56,6 +75,8 @@ class DashboardPage extends ConsumerWidget {
                   _DashboardHeader(
                     greeting: _greeting(l10n, firstName),
                     name: name,
+                    badgeLabel: badge?.label,
+                    badgeRole: badge?.role,
                     onProfile: () => context.push(RoutePaths.profile),
                     onLogout: () =>
                         ref.read(authControllerProvider.notifier).logout(),
@@ -92,19 +113,27 @@ String _greeting(AppLocalizations l10n, String name) {
   return l10n.dashboardGreetingEvening(name);
 }
 
-/// Greeting row with the user avatar and logout affordance.
+/// Greeting row with the user avatar, role badge and logout affordance.
 class _DashboardHeader extends StatelessWidget {
   const _DashboardHeader({
     required this.greeting,
     required this.name,
     required this.onProfile,
     required this.onLogout,
+    this.badgeLabel,
+    this.badgeRole,
   });
 
   final String greeting;
   final String name;
   final VoidCallback onProfile;
   final VoidCallback onLogout;
+
+  /// The state-driven role-badge label; hidden when null.
+  final String? badgeLabel;
+
+  /// The role driving the badge accent tint (null renders neutral).
+  final UserRole? badgeRole;
 
   @override
   Widget build(BuildContext context) {
@@ -133,6 +162,10 @@ class _DashboardHeader extends StatelessWidget {
                   color: AppColors.grey300,
                 ),
               ),
+              if (badgeLabel != null) ...<Widget>[
+                const SizedBox(height: AppSpacing.sm),
+                RoleBadge(label: badgeLabel!, role: badgeRole),
+              ],
             ],
           ),
         ),

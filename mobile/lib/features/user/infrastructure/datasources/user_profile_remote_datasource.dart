@@ -87,7 +87,10 @@ class DioUserProfileRemoteDataSource implements UserProfileRemoteDataSource {
       'file': MultipartFile.fromBytes(
         fileBytes,
         filename: fileName,
-        contentType: DioMediaType(contentType.split('/').first, contentType.split('/').last),
+        contentType: DioMediaType(
+          contentType.split('/').first,
+          contentType.split('/').last,
+        ),
       ),
     });
     final response = await _guard(

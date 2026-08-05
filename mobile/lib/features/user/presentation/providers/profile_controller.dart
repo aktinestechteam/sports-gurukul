@@ -86,24 +86,26 @@ class ProfileController extends Notifier<ProfileState> {
     String? postalCode,
     String? addressType,
   }) async {
-    final result = await ref.read(updateProfileProvider).call(
-      dateOfBirth: dateOfBirth,
-      gender: gender,
-      bio: bio,
-      height: height,
-      weight: weight,
-      preferredSport: preferredSport,
-      experienceLevel: experienceLevel,
-      primaryPhoneCountryCode: primaryPhoneCountryCode,
-      primaryPhoneNumber: primaryPhoneNumber,
-      addressLine1: addressLine1,
-      addressLine2: addressLine2,
-      city: city,
-      state: region,
-      country: country,
-      postalCode: postalCode,
-      addressType: addressType,
-    );
+    final result = await ref
+        .read(updateProfileProvider)
+        .call(
+          dateOfBirth: dateOfBirth,
+          gender: gender,
+          bio: bio,
+          height: height,
+          weight: weight,
+          preferredSport: preferredSport,
+          experienceLevel: experienceLevel,
+          primaryPhoneCountryCode: primaryPhoneCountryCode,
+          primaryPhoneNumber: primaryPhoneNumber,
+          addressLine1: addressLine1,
+          addressLine2: addressLine2,
+          city: city,
+          state: region,
+          country: country,
+          postalCode: postalCode,
+          addressType: addressType,
+        );
     if (result is Success<UserProfile>) {
       state = ProfileLoaded(result.value);
     }
@@ -125,17 +127,19 @@ class ProfileController extends Notifier<ProfileState> {
     bool? profileVisibility,
     bool? showOnlineStatus,
   }) async {
-    final result = await ref.read(updatePreferencesProvider).call(
-      language: language,
-      theme: theme,
-      timeZone: timeZone,
-      emailNotifications: emailNotifications,
-      pushNotifications: pushNotifications,
-      smsNotifications: smsNotifications,
-      marketingEmails: marketingEmails,
-      profileVisibility: profileVisibility,
-      showOnlineStatus: showOnlineStatus,
-    );
+    final result = await ref
+        .read(updatePreferencesProvider)
+        .call(
+          language: language,
+          theme: theme,
+          timeZone: timeZone,
+          emailNotifications: emailNotifications,
+          pushNotifications: pushNotifications,
+          smsNotifications: smsNotifications,
+          marketingEmails: marketingEmails,
+          profileVisibility: profileVisibility,
+          showOnlineStatus: showOnlineStatus,
+        );
     // After updating preferences, reload the full profile to stay in sync.
     if (result is Success<UserPreference>) {
       await loadProfile();

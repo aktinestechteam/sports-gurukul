@@ -58,8 +58,8 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
 
   UserProfile? get _profile =>
       (ref.read(profileControllerProvider) is ProfileLoaded)
-          ? (ref.read(profileControllerProvider) as ProfileLoaded).profile
-          : null;
+      ? (ref.read(profileControllerProvider) as ProfileLoaded).profile
+      : null;
 
   @override
   void initState() {
@@ -68,10 +68,12 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
     _bioController = TextEditingController(text: profile?.bio);
     _heightController = TextEditingController(text: profile?.height);
     _weightController = TextEditingController(text: profile?.weight);
-    _preferredSportController =
-        TextEditingController(text: profile?.preferredSport);
-    _experienceLevelController =
-        TextEditingController(text: profile?.experienceLevel);
+    _preferredSportController = TextEditingController(
+      text: profile?.preferredSport,
+    );
+    _experienceLevelController = TextEditingController(
+      text: profile?.experienceLevel,
+    );
     _primaryPhoneCountryCodeController = TextEditingController(
       text: profile?.contactInformation?.primaryPhoneCountryCode,
     );

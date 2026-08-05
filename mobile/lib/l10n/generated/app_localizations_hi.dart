@@ -511,4 +511,117 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get profileErrorsUnknown => 'कुछ गलत हो गया। कृपया पुनः प्रयास करें।';
+
+  @override
+  String get welcomeTitle => 'स्पोर्ट्स गुरुकुल में आपका स्वागत है!';
+
+  @override
+  String get welcomeSubtitle =>
+      'आप तैयार हैं। अपनी खेल यात्रा शुरू करने के लिए एक रास्ता चुनें।';
+
+  @override
+  String get welcomeCreateAcademy => 'मेरी अकादमी बनाएँ';
+
+  @override
+  String get welcomeCreateAcademySubtitle =>
+      'नई अकादमी स्थापित करें और एथलीटों का प्रबंधन शुरू करें।';
+
+  @override
+  String get welcomeJoinAcademy => 'मौजूदा अकादमी से जुड़ें';
+
+  @override
+  String get welcomeJoinAcademySubtitle =>
+      'एक अकादमी खोजें और सदस्य के रूप में जुड़ें।';
+
+  @override
+  String get welcomeExplore => 'एप्लिकेशन देखें';
+
+  @override
+  String get welcomeExploreSubtitle => 'सेटअप छोड़ें और अभी डैशबोर्ड देखें।';
+
+  @override
+  String get welcomeLoading => 'आपका अनुभव तैयार हो रहा है…';
+
+  @override
+  String get welcomeEmptyMessage => 'अभी कोई सत्र नहीं है।';
+
+  @override
+  String get welcomeErrorTitle => 'आपका खाता लोड नहीं हो सका';
+
+  @override
+  String get welcomeErrorsNetwork =>
+      'आप ऑफ़लाइन लग रहे हैं। अपना कनेक्शन जाँचकर पुनः प्रयास करें।';
+
+  @override
+  String get welcomeErrorsServer =>
+      'हमारी ओर से कोई समस्या आई। कृपया बाद में पुनः प्रयास करें।';
+
+  @override
+  String get welcomeErrorsSessionExpired =>
+      'आपका सत्र समाप्त हो गया। कृपया फिर से साइन इन करें।';
+
+  @override
+  String get welcomeErrorsUnknown => 'कुछ गलत हो गया। कृपया पुनः प्रयास करें।';
+
+  @override
+  String get welcomeRetry => 'पुनः प्रयास करें';
+
+  @override
+  String get academyCreateTitle => 'अकादमी बनाएँ';
+
+  @override
+  String get academyCreateMessage =>
+      'अकादमी सेटअप आगामी स्प्रिंट में आ रहा है। इस बीच आप एप्लिकेशन देख सकते हैं।';
+
+  @override
+  String get academyJoinTitle => 'किसी अकादमी से जुड़ें';
+
+  @override
+  String get academyJoinMessage =>
+      'अकादमी खोजना और जुड़ना आगामी स्प्रिंट में आ रहा है। इस बीच आप एप्लिकेशन देख सकते हैं।';
+
+  @override
+  String get academyBackToDashboard => 'डैशबोर्ड पर वापस जाएँ';
+
+  @override
+  String get roleLabelPlatformAdministrator => 'प्लेटफ़ॉर्म प्रशासक';
+
+  @override
+  String get roleLabelAcademy => 'अकादमी';
+
+  @override
+  String get roleLabelCoach => 'कोच';
+
+  @override
+  String get roleLabelAthlete => 'एथलीट';
+
+  @override
+  String get roleLabelParent => 'अभिभावक';
+
+  @override
+  String get roleLabelScout => 'स्काउट';
+
+  @override
+  String get roleLabelSponsor => 'प्रायोजक';
+
+  @override
+  String get roleLabelAiAdministrator => 'एआई प्रशासक';
+
+  @override
+  String get roleLabelMember => 'सदस्य';
+
+  @override
+  String get roleLabelNewUser => 'नया उपयोगकर्ता';
+
+  @override
+  String get roleLabelRegisteredUser => 'पंजीकृत उपयोगकर्ता';
+
+  @override
+  String get roleLabelAcademyAdmin => 'अकादमी प्रशासक';
+
+  @override
+  String get roleLabelPendingApproval => 'अनुमोदन लंबित';
+
+  @override
+  String get roleLabelSystemAdmin => 'सिस्टम प्रशासक';
 }

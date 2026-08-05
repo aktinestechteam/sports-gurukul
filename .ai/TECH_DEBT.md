@@ -97,6 +97,20 @@ is only trustworthy if it is honest.
   harness if cross-platform goldens are required.
 - **Status:** Open
 
+### TD-009 - Current user lacks profile image and academy association
+- **Added:** SGM-0007
+- **Impact:** Low (UI only)
+- **Owner:** onboarding/user
+- **Description:** The backend `/users/me` contract does not expose a profile
+  image, so `CurrentUser.profileImageUrl` is absent and the profile header
+  falls back to initials. `ApplicationSession.academyAssociation` is always
+  null until the backend exposes an academy association; user-state
+  classification relies on roles + `hasAcademyAssociation` only.
+- **Pay-down plan:** Extend the `/users/me` contract (profile image URL +
+  academy association) and the mapper/entities, then render the image and use
+  the real association in the classifier.
+- **Status:** Open
+
 ## Closed items
 
 ### TD-C001 - `url_strategy` package avoided (discontinued)

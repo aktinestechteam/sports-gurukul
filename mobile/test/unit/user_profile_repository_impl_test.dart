@@ -167,8 +167,8 @@ void main() {
         );
 
         expect(result, isA<Success<UserProfile>>());
-        final request = remote.capturedRequests.single
-            as UpdateProfileRequestDto;
+        final request =
+            remote.capturedRequests.single as UpdateProfileRequestDto;
         expect(request.bio, 'All-rounder');
         expect(request.preferredSport, 'cricket');
         expect(request.gender, GenderDto.male);
@@ -187,8 +187,8 @@ void main() {
           addressType: 'spaceship',
         );
 
-        final request = remote.capturedRequests.single
-            as UpdateProfileRequestDto;
+        final request =
+            remote.capturedRequests.single as UpdateProfileRequestDto;
         expect(request.gender, GenderDto.preferNotToSay);
         expect(request.addressType, AddressTypeDto.home);
       },
@@ -203,8 +203,8 @@ void main() {
       );
 
       expect(result, isA<Success<UserPreference>>());
-      final request = remote.capturedRequests.single
-          as UpdatePreferencesRequestDto;
+      final request =
+          remote.capturedRequests.single as UpdatePreferencesRequestDto;
       expect(request.theme, ThemeDto.dark);
       expect(request.pushNotifications, isFalse);
     });

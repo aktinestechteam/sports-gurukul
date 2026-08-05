@@ -14,8 +14,7 @@ part 'update_profile_request_dto.g.dart';
 abstract class UpdateProfileRequestDto with _$UpdateProfileRequestDto {
   const factory UpdateProfileRequestDto({
     String? dateOfBirth,
-    @JsonKey(unknownEnumValue: GenderDto.preferNotToSay)
-    GenderDto? gender,
+    @JsonKey(unknownEnumValue: GenderDto.preferNotToSay) GenderDto? gender,
     String? bio,
     String? height,
     String? weight,
@@ -29,8 +28,7 @@ abstract class UpdateProfileRequestDto with _$UpdateProfileRequestDto {
     String? state,
     String? country,
     String? postalCode,
-    @JsonKey(unknownEnumValue: AddressTypeDto.home)
-    AddressTypeDto? addressType,
+    @JsonKey(unknownEnumValue: AddressTypeDto.home) AddressTypeDto? addressType,
   }) = _UpdateProfileRequestDto;
 
   factory UpdateProfileRequestDto.fromJson(Map<String, dynamic> json) =>

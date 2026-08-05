@@ -55,25 +55,27 @@ class _EditPreferencesPageState extends ConsumerState<EditPreferencesPage> {
   @override
   void initState() {
     super.initState();
-    unawaited(Future.microtask(() {
-      if (!mounted) {
-        return;
-      }
-      final preferences = _preferences;
-      if (preferences == null) {
-        return;
-      }
-      setState(() {
-        _language = preferences.language;
-        _theme = preferences.theme.name;
-        _emailNotifications = preferences.emailNotifications;
-        _pushNotifications = preferences.pushNotifications;
-        _smsNotifications = preferences.smsNotifications;
-        _marketingEmails = preferences.marketingEmails;
-        _profileVisibility = preferences.profileVisibility;
-        _showOnlineStatus = preferences.showOnlineStatus;
-      });
-    }));
+    unawaited(
+      Future.microtask(() {
+        if (!mounted) {
+          return;
+        }
+        final preferences = _preferences;
+        if (preferences == null) {
+          return;
+        }
+        setState(() {
+          _language = preferences.language;
+          _theme = preferences.theme.name;
+          _emailNotifications = preferences.emailNotifications;
+          _pushNotifications = preferences.pushNotifications;
+          _smsNotifications = preferences.smsNotifications;
+          _marketingEmails = preferences.marketingEmails;
+          _profileVisibility = preferences.profileVisibility;
+          _showOnlineStatus = preferences.showOnlineStatus;
+        });
+      }),
+    );
   }
 
   Future<void> _save() async {

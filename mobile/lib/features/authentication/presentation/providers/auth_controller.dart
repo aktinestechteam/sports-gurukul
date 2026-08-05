@@ -156,10 +156,12 @@ class AuthController extends Notifier<AuthState> {
 
   Future<void> _persistSession(AuthSession session) async {
     await ref.read(authSessionStoreProvider).write(session);
-    await ref.read(tokenStoreProvider).writeTokens(
-      accessToken: session.accessToken,
-      refreshToken: session.refreshToken,
-    );
+    await ref
+        .read(tokenStoreProvider)
+        .writeTokens(
+          accessToken: session.accessToken,
+          refreshToken: session.refreshToken,
+        );
   }
 }
 

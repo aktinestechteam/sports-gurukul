@@ -103,7 +103,8 @@ class _ProfilePhotoPickerState extends ConsumerState<ProfilePhotoPicker> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final hasPhoto = widget.profile.profileImageUrl != null &&
+    final hasPhoto =
+        widget.profile.profileImageUrl != null &&
         widget.profile.profileImageUrl!.isNotEmpty;
 
     return GlassCard(

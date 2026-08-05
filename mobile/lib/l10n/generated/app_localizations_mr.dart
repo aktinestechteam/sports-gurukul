@@ -511,4 +511,118 @@ class AppLocalizationsMr extends AppLocalizations {
   @override
   String get profileErrorsUnknown =>
       'काहीतरी चूक झाली. कृपया पुन्हा प्रयत्न करा.';
+
+  @override
+  String get welcomeTitle => 'स्पोर्ट्स गुरुकुलमध्ये आपले स्वागत आहे!';
+
+  @override
+  String get welcomeSubtitle =>
+      'तुम्ही तयार आहात. तुमचा क्रीडा प्रवास सुरू करण्यासाठी एक मार्ग निवडा.';
+
+  @override
+  String get welcomeCreateAcademy => 'माझी अकादमी तयार करा';
+
+  @override
+  String get welcomeCreateAcademySubtitle =>
+      'नवीन अकादमी स्थापन करा आणि खेळाडूंचे व्यवस्थापन सुरू करा.';
+
+  @override
+  String get welcomeJoinAcademy => 'विद्यमान अकादमीत सामील व्हा';
+
+  @override
+  String get welcomeJoinAcademySubtitle =>
+      'अकादमी शोधा आणि सदस्य म्हणून सामील व्हा.';
+
+  @override
+  String get welcomeExplore => 'अॅप एक्सप्लोर करा';
+
+  @override
+  String get welcomeExploreSubtitle => 'सेटअप वगळा आणि आत्ताच डॅशबोर्ड पहा.';
+
+  @override
+  String get welcomeLoading => 'तुमचा अनुभव तयार होत आहे…';
+
+  @override
+  String get welcomeEmptyMessage => 'सध्या सत्र नाही.';
+
+  @override
+  String get welcomeErrorTitle => 'तुमचे खाते लोड होऊ शकले नाही';
+
+  @override
+  String get welcomeErrorsNetwork =>
+      'तुम्ही ऑफलाइन आहात असे दिसते. कनेक्शन तपासून पुन्हा प्रयत्न करा.';
+
+  @override
+  String get welcomeErrorsServer =>
+      'आमच्या बाजूने काहीतरी चूक झाली. कृपया नंतर पुन्हा प्रयत्न करा.';
+
+  @override
+  String get welcomeErrorsSessionExpired =>
+      'तुमचे सत्र संपले आहे. कृपया पुन्हा साइन इन करा.';
+
+  @override
+  String get welcomeErrorsUnknown =>
+      'काहीतरी चूक झाली. कृपया पुन्हा प्रयत्न करा.';
+
+  @override
+  String get welcomeRetry => 'पुन्हा प्रयत्न करा';
+
+  @override
+  String get academyCreateTitle => 'अकादमी तयार करा';
+
+  @override
+  String get academyCreateMessage =>
+      'अकादमी सेटअप पुढील स्प्रिंटमध्ये येत आहे. तोपर्यंत तुम्ही अॅप एक्सप्लोर करू शकता.';
+
+  @override
+  String get academyJoinTitle => 'अकादमीत सामील व्हा';
+
+  @override
+  String get academyJoinMessage =>
+      'अकादमी शोधणे आणि सामील होणे पुढील स्प्रिंटमध्ये येत आहे. तोपर्यंत तुम्ही अॅप एक्सप्लोर करू शकता.';
+
+  @override
+  String get academyBackToDashboard => 'डॅशबोर्डवर परत जा';
+
+  @override
+  String get roleLabelPlatformAdministrator => 'प्लॅटफॉर्म प्रशासक';
+
+  @override
+  String get roleLabelAcademy => 'अकादमी';
+
+  @override
+  String get roleLabelCoach => 'कोच';
+
+  @override
+  String get roleLabelAthlete => 'खेळाडू';
+
+  @override
+  String get roleLabelParent => 'पालक';
+
+  @override
+  String get roleLabelScout => 'स्काउट';
+
+  @override
+  String get roleLabelSponsor => 'प्रायोजक';
+
+  @override
+  String get roleLabelAiAdministrator => 'एआय प्रशासक';
+
+  @override
+  String get roleLabelMember => 'सदस्य';
+
+  @override
+  String get roleLabelNewUser => 'नवीन सदस्य';
+
+  @override
+  String get roleLabelRegisteredUser => 'नोंदणीकृत सदस्य';
+
+  @override
+  String get roleLabelAcademyAdmin => 'अकादमी प्रशासक';
+
+  @override
+  String get roleLabelPendingApproval => 'मंजुरी प्रलंबित';
+
+  @override
+  String get roleLabelSystemAdmin => 'सिस्टम प्रशासक';
 }

@@ -7,16 +7,16 @@ class SportsBackground extends StatelessWidget {
   });
 
   static String getAsset(BuildContext context) {
-  final width = MediaQuery.of(context).size.width;
+    final width = MediaQuery.of(context).size.width;
 
-  if (width >= 1200) {
-    return 'images/login_desktop.png';
-  } else if (width >= 700) {
-    return 'images/login_tablet.png';
-  } else {
-    return 'images/login_mobile.png';
+    if (width >= 1200) {
+      return 'assets/images/login_desktop.png';
+    } else if (width >= 700) {
+      return 'assets/images/login_tablet.png';
+    } else {
+      return 'assets/images/login_mobile.png';
+    }
   }
-}
 
   final Widget? child;
 
@@ -28,19 +28,18 @@ class SportsBackground extends StatelessWidget {
         // Full-screen background
         Positioned.fill(
           child: Image.asset(
-                getAsset(context),
-                fit: BoxFit.cover,
-                alignment: Alignment.center,
-                filterQuality: FilterQuality.high,
-                isAntiAlias: true,
-                gaplessPlayback: true,
-              ),
+            getAsset(context),
+            fit: BoxFit.cover,
+            filterQuality: FilterQuality.high,
+            isAntiAlias: true,
+            gaplessPlayback: true,
+          ),
         ),
 
         // Light overlay for readability
         Positioned.fill(
           child: Container(
-            color: Colors.black.withOpacity(0.18),
+            color: Colors.black.withValues(alpha: 0.18),
           ),
         ),
 
@@ -53,7 +52,7 @@ class SportsBackground extends StatelessWidget {
                   radius: 1.25,
                   colors: [
                     Colors.transparent,
-                    Colors.black.withOpacity(.18),
+                    Colors.black.withValues(alpha: 0.18),
                   ],
                   stops: const [
                     0.65,
@@ -65,7 +64,7 @@ class SportsBackground extends StatelessWidget {
           ),
         ),
 
-        if (child != null) child!,
+        ?child,
       ],
     );
   }

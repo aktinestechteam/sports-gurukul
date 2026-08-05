@@ -38,11 +38,13 @@ class _MyProfilePageState extends ConsumerState<MyProfilePage> {
   @override
   void initState() {
     super.initState();
-    unawaited(Future.microtask(() async {
-      if (mounted) {
-        await ref.read(profileControllerProvider.notifier).loadProfile();
-      }
-    }));
+    unawaited(
+      Future.microtask(() async {
+        if (mounted) {
+          await ref.read(profileControllerProvider.notifier).loadProfile();
+        }
+      }),
+    );
   }
 
   Future<void> _onRefresh() =>

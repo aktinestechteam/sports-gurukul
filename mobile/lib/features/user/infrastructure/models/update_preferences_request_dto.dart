@@ -13,8 +13,7 @@ part 'update_preferences_request_dto.g.dart';
 abstract class UpdatePreferencesRequestDto with _$UpdatePreferencesRequestDto {
   const factory UpdatePreferencesRequestDto({
     String? language,
-    @JsonKey(unknownEnumValue: ThemeDto.system)
-    ThemeDto? theme,
+    @JsonKey(unknownEnumValue: ThemeDto.system) ThemeDto? theme,
     String? timeZone,
     bool? emailNotifications,
     bool? pushNotifications,

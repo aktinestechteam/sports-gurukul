@@ -10,6 +10,9 @@ abstract final class RouteNames {
   static const String signUp = 'signUp';
   static const String forgotPassword = 'forgotPassword';
   static const String resetPassword = 'resetPassword';
+  static const String welcome = 'welcome';
+  static const String createAcademy = 'createAcademy';
+  static const String joinAcademy = 'joinAcademy';
   static const String dashboard = 'dashboard';
   static const String profile = 'profile';
   static const String editProfile = 'editProfile';

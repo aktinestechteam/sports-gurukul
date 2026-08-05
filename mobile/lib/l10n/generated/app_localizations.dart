@@ -1035,6 +1035,216 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong. Please try again.'**
   String get profileErrorsUnknown;
+
+  /// Heading of the welcome screen for brand-new users.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Sports Gurukul!'**
+  String get welcomeTitle;
+
+  /// Supporting text under the welcome-screen heading.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re all set. Pick a path to kick-start your sporting journey.'**
+  String get welcomeSubtitle;
+
+  /// Welcome-screen action that starts the create-academy flow.
+  ///
+  /// In en, this message translates to:
+  /// **'Create My Academy'**
+  String get welcomeCreateAcademy;
+
+  /// Supporting text for the create-academy action.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up a new academy and start managing athletes.'**
+  String get welcomeCreateAcademySubtitle;
+
+  /// Welcome-screen action that starts the join-academy flow.
+  ///
+  /// In en, this message translates to:
+  /// **'Join Existing Academy'**
+  String get welcomeJoinAcademy;
+
+  /// Supporting text for the join-academy action.
+  ///
+  /// In en, this message translates to:
+  /// **'Find an academy and join as a member.'**
+  String get welcomeJoinAcademySubtitle;
+
+  /// Welcome-screen action that skips onboarding and opens the dashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore Application'**
+  String get welcomeExplore;
+
+  /// Supporting text for the explore action.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip the setup and browse the dashboard for now.'**
+  String get welcomeExploreSubtitle;
+
+  /// Status shown while the application session is being resolved.
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing your experience…'**
+  String get welcomeLoading;
+
+  /// Fallback shown when there is no session to resolve.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to resolve yet.'**
+  String get welcomeEmptyMessage;
+
+  /// Title shown when current-user resolution fails.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t load your account'**
+  String get welcomeErrorTitle;
+
+  /// Error shown when the device has no usable connection.
+  ///
+  /// In en, this message translates to:
+  /// **'You seem to be offline. Check your connection and try again.'**
+  String get welcomeErrorsNetwork;
+
+  /// Error shown when the server fails (HTTP 5xx).
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong on our side. Please try again later.'**
+  String get welcomeErrorsServer;
+
+  /// Error shown when the session can no longer be used.
+  ///
+  /// In en, this message translates to:
+  /// **'Your session has expired. Please sign in again.'**
+  String get welcomeErrorsSessionExpired;
+
+  /// Fallback error message for unexpected failures.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get welcomeErrorsUnknown;
+
+  /// Label of the retry action on the welcome error state.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get welcomeRetry;
+
+  /// Heading of the create-academy placeholder screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Academy'**
+  String get academyCreateTitle;
+
+  /// Body of the create-academy placeholder screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Academy setup is coming in a later sprint. You can explore the application in the meantime.'**
+  String get academyCreateMessage;
+
+  /// Heading of the join-academy placeholder screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Join an Academy'**
+  String get academyJoinTitle;
+
+  /// Body of the join-academy placeholder screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Finding and joining an academy is coming in a later sprint. You can explore the application in the meantime.'**
+  String get academyJoinMessage;
+
+  /// Action that returns to the dashboard from an academy placeholder screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to dashboard'**
+  String get academyBackToDashboard;
+
+  /// Role badge label for super-admin and admin roles.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform Administrator'**
+  String get roleLabelPlatformAdministrator;
+
+  /// Role badge label for the academy role.
+  ///
+  /// In en, this message translates to:
+  /// **'Academy'**
+  String get roleLabelAcademy;
+
+  /// Role badge label for the coach role.
+  ///
+  /// In en, this message translates to:
+  /// **'Coach'**
+  String get roleLabelCoach;
+
+  /// Role badge label for the athlete role.
+  ///
+  /// In en, this message translates to:
+  /// **'Athlete'**
+  String get roleLabelAthlete;
+
+  /// Role badge label for the parent role.
+  ///
+  /// In en, this message translates to:
+  /// **'Parent'**
+  String get roleLabelParent;
+
+  /// Role badge label for the scout role.
+  ///
+  /// In en, this message translates to:
+  /// **'Scout'**
+  String get roleLabelScout;
+
+  /// Role badge label for the sponsor role.
+  ///
+  /// In en, this message translates to:
+  /// **'Sponsor'**
+  String get roleLabelSponsor;
+
+  /// Role badge label for the AI-administrator role.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Administrator'**
+  String get roleLabelAiAdministrator;
+
+  /// Role badge fallback when no role is assigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get roleLabelMember;
+
+  /// Profile badge label for a brand-new account that has not joined an academy yet.
+  ///
+  /// In en, this message translates to:
+  /// **'New User'**
+  String get roleLabelNewUser;
+
+  /// Alternative profile badge label for a brand-new account.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered User'**
+  String get roleLabelRegisteredUser;
+
+  /// Profile badge label for the academy-admin role.
+  ///
+  /// In en, this message translates to:
+  /// **'Academy Admin'**
+  String get roleLabelAcademyAdmin;
+
+  /// Profile badge label while a membership request awaits approval.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending Approval'**
+  String get roleLabelPendingApproval;
+
+  /// Profile badge label for super-admin and admin roles.
+  ///
+  /// In en, this message translates to:
+  /// **'System Admin'**
+  String get roleLabelSystemAdmin;
 }
 
 class _AppLocalizationsDelegate

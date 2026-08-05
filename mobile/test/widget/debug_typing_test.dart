@@ -37,13 +37,13 @@ void main() {
     );
     await tester.ensureVisible(editable);
     await tester.pumpAndSettle();
-    await tester.tap(editable, warnIfMissed: true);
+    await tester.tap(editable);
     await tester.pump();
     await tester.pump();
     final ets = tester.state<EditableTextState>(editable);
     debugPrint(
-      'EDITABLE hasFocus=${ets.widget.focusNode!.hasFocus} '
-      'canRequestFocus=${ets.widget.focusNode!.canRequestFocus}',
+      'EDITABLE hasFocus=${ets.widget.focusNode.hasFocus} '
+      'canRequestFocus=${ets.widget.focusNode.canRequestFocus}',
     );
     return FocusManager.instance.primaryFocus;
   }

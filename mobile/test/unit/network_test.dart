@@ -115,7 +115,8 @@ void main() {
       expect(
         dio.options.baseUrl,
         'http://localhost:5297/',
-        reason: 'Dio concatenates baseUrl + relative path verbatim; without '
+        reason:
+            'Dio concatenates baseUrl + relative path verbatim; without '
             'the slash it would request http://localhost:5297api/v1/...',
       );
     });
