@@ -352,5 +352,301 @@
   "validationPhoneInvalid": "Enter a valid 10-digit mobile number.",
   "@validationPhoneInvalid": {
     "description": "Error shown when a phone number is not a valid 10-digit Indian mobile number."
+  },
+  "validationDateInvalid": "Enter a valid date.",
+  "@validationDateInvalid": {
+    "description": "Error shown when a date field is malformed."
+  },
+  "validationDateFuture": "Date of birth cannot be in the future.",
+  "@validationDateFuture": {
+    "description": "Error shown when a date of birth is in the future."
+  },
+  "validationNumberInvalid": "Enter a valid number.",
+  "@validationNumberInvalid": {
+    "description": "Error shown when a numeric field is not a number."
+  },
+  "validationPostalCodeInvalid": "Enter a valid postal code.",
+  "@validationPostalCodeInvalid": {
+    "description": "Error shown when a postal code is malformed."
+  },
+  "profileMyProfileTitle": "My Profile",
+  "@profileMyProfileTitle": {
+    "description": "Title of the my-profile screen."
+  },
+  "profileRetry": "Retry",
+  "@profileRetry": {
+    "description": "Label of the retry action on the profile error state."
+  },
+  "profileErrorTitle": "Could not load profile",
+  "@profileErrorTitle": {
+    "description": "Title shown when the profile fails to load."
+  },
+  "profileFullName": "Full name",
+  "@profileFullName": {
+    "description": "Label of the full-name field on the profile screen."
+  },
+  "profileEmail": "Email",
+  "@profileEmail": {
+    "description": "Label of the email field on the profile screen."
+  },
+  "profilePhone": "Phone",
+  "@profilePhone": {
+    "description": "Label of the phone field on the profile screen."
+  },
+  "profilePreferredSport": "Preferred sport",
+  "@profilePreferredSport": {
+    "description": "Label of the preferred-sport field on the profile screen."
+  },
+  "profileExperienceLevel": "Experience level",
+  "@profileExperienceLevel": {
+    "description": "Label of the experience-level field on the profile screen."
+  },
+  "profileHeight": "Height",
+  "@profileHeight": {
+    "description": "Label of the height field on the profile screen."
+  },
+  "profileWeight": "Weight",
+  "@profileWeight": {
+    "description": "Label of the weight field on the profile screen."
+  },
+  "profileEditProfile": "Edit profile",
+  "@profileEditProfile": {
+    "description": "Action that opens the edit-profile screen."
+  },
+  "profileCreateProfile": "Create profile",
+  "@profileCreateProfile": {
+    "description": "Action shown when no profile exists yet; opens the create-profile form."
+  },
+  "profileCreateTitle": "Create profile",
+  "@profileCreateTitle": {
+    "description": "Title of the profile form when the user has no profile yet."
+  },
+  "profileCreateSubtitle": "Tell us a little about yourself.",
+  "@profileCreateSubtitle": {
+    "description": "Subtitle of the profile form when the user has no profile yet."
+  },
+  "profileAboutMe": "About me",
+  "@profileAboutMe": {
+    "description": "Section title for the user bio on the profile screen."
+  },
+  "profileAddresses": "Addresses",
+  "@profileAddresses": {
+    "description": "Section title for the user addresses on the profile screen."
+  },
+  "profileEditTitle": "Edit profile",
+  "@profileEditTitle": {
+    "description": "Title of the edit-profile screen."
+  },
+  "profileEditSubtitle": "Keep your details up to date.",
+  "@profileEditSubtitle": {
+    "description": "Subtitle of the edit-profile screen."
+  },
+  "profileEditBasicInfo": "Basic information",
+  "@profileEditBasicInfo": {
+    "description": "Section heading for the basic-information fields."
+  },
+  "profileGender": "Gender",
+  "@profileGender": {
+    "description": "Label of the gender field on the edit-profile screen."
+  },
+  "profileGenderMale": "Male",
+  "@profileGenderMale": {
+    "description": "Gender option: male."
+  },
+  "profileGenderFemale": "Female",
+  "@profileGenderFemale": {
+    "description": "Gender option: female."
+  },
+  "profileGenderNonBinary": "Non-binary",
+  "@profileGenderNonBinary": {
+    "description": "Gender option: non-binary."
+  },
+  "profileGenderPreferNotToSay": "Prefer not to say",
+  "@profileGenderPreferNotToSay": {
+    "description": "Gender option: prefer not to say."
+  },
+  "profileBio": "Bio",
+  "@profileBio": {
+    "description": "Label of the bio field on the edit-profile screen."
+  },
+  "profileEditContactInfo": "Contact information",
+  "@profileEditContactInfo": {
+    "description": "Section heading for the contact-information fields."
+  },
+  "profileCountryCode": "Code",
+  "@profileCountryCode": {
+    "description": "Label of the phone country-code field."
+  },
+  "profileEditAddress": "Address",
+  "@profileEditAddress": {
+    "description": "Section heading for the address fields."
+  },
+  "profileAddressType": "Address type",
+  "@profileAddressType": {
+    "description": "Label of the address-type field."
+  },
+  "profileAddressTypeHome": "Home",
+  "@profileAddressTypeHome": {
+    "description": "Address type option: home."
+  },
+  "profileAddressTypeWork": "Work",
+  "@profileAddressTypeWork": {
+    "description": "Address type option: work."
+  },
+  "profileAddressTypeAcademy": "Academy",
+  "@profileAddressTypeAcademy": {
+    "description": "Address type option: academy."
+  },
+  "profileAddressTypeOther": "Other",
+  "@profileAddressTypeOther": {
+    "description": "Address type option: other."
+  },
+  "profileAddressLine1": "Address line 1",
+  "@profileAddressLine1": {
+    "description": "Label of the address-line-1 field."
+  },
+  "profileAddressLine2": "Address line 2",
+  "@profileAddressLine2": {
+    "description": "Label of the address-line-2 field."
+  },
+  "profileCity": "City",
+  "@profileCity": {
+    "description": "Label of the city field."
+  },
+  "profileState": "State",
+  "@profileState": {
+    "description": "Label of the state field."
+  },
+  "profileCountry": "Country",
+  "@profileCountry": {
+    "description": "Label of the country field."
+  },
+  "profilePostalCode": "Postal code",
+  "@profilePostalCode": {
+    "description": "Label of the postal-code field."
+  },
+  "profileDateOfBirth": "Date of birth",
+  "@profileDateOfBirth": {
+    "description": "Label of the date-of-birth field."
+  },
+  "profileSave": "Save",
+  "@profileSave": {
+    "description": "Label of the save button on edit forms."
+  },
+  "profileUpdateSuccess": "Profile updated successfully.",
+  "@profileUpdateSuccess": {
+    "description": "Confirmation shown after a successful profile update."
+  },
+  "profilePreferencesTitle": "Preferences",
+  "@profilePreferencesTitle": {
+    "description": "Title of the edit-preferences screen."
+  },
+  "profilePreferencesSubtitle": "Customize notifications, appearance and privacy.",
+  "@profilePreferencesSubtitle": {
+    "description": "Subtitle of the edit-preferences screen."
+  },
+  "profilePreferencesAppearance": "Appearance",
+  "@profilePreferencesAppearance": {
+    "description": "Section heading for the appearance preferences."
+  },
+  "profilePreferencesTheme": "Theme",
+  "@profilePreferencesTheme": {
+    "description": "Label of the theme preference dropdown."
+  },
+  "profileThemeLight": "Light",
+  "@profileThemeLight": {
+    "description": "Theme option: light."
+  },
+  "profileThemeDark": "Dark",
+  "@profileThemeDark": {
+    "description": "Theme option: dark."
+  },
+  "profileThemeSystem": "System",
+  "@profileThemeSystem": {
+    "description": "Theme option: follow system."
+  },
+  "profilePreferencesNotifications": "Notifications",
+  "@profilePreferencesNotifications": {
+    "description": "Section heading for the notification preferences."
+  },
+  "profilePreferenceEmailNotifications": "Email notifications",
+  "@profilePreferenceEmailNotifications": {
+    "description": "Toggle for email notifications."
+  },
+  "profilePreferencePushNotifications": "Push notifications",
+  "@profilePreferencePushNotifications": {
+    "description": "Toggle for push notifications."
+  },
+  "profilePreferenceSmsNotifications": "SMS notifications",
+  "@profilePreferenceSmsNotifications": {
+    "description": "Toggle for SMS notifications."
+  },
+  "profilePreferenceMarketingEmails": "Marketing emails",
+  "@profilePreferenceMarketingEmails": {
+    "description": "Toggle for marketing emails."
+  },
+  "profilePreferencesPrivacy": "Privacy",
+  "@profilePreferencesPrivacy": {
+    "description": "Section heading for the privacy preferences."
+  },
+  "profilePreferenceProfileVisibility": "Profile visibility",
+  "@profilePreferenceProfileVisibility": {
+    "description": "Toggle for whether the profile is visible to other users."
+  },
+  "profilePreferenceShowOnlineStatus": "Show online status",
+  "@profilePreferenceShowOnlineStatus": {
+    "description": "Toggle for whether the online status is visible to other users."
+  },
+  "profilePreferencesSaved": "Preferences saved successfully.",
+  "@profilePreferencesSaved": {
+    "description": "Confirmation shown after a successful preference update."
+  },
+  "profileChangePhoto": "Change photo",
+  "@profileChangePhoto": {
+    "description": "Tooltip and action for changing the profile photo."
+  },
+  "profilePhotoUploaded": "Profile photo uploaded.",
+  "@profilePhotoUploaded": {
+    "description": "Confirmation shown after a successful photo upload."
+  },
+  "profilePhotoRemoved": "Profile photo removed.",
+  "@profilePhotoRemoved": {
+    "description": "Confirmation shown after removing the profile photo."
+  },
+  "profileRemovePhoto": "Remove photo",
+  "@profileRemovePhoto": {
+    "description": "Action that removes the profile photo."
+  },
+  "profileErrorsNotFound": "Profile not found.",
+  "@profileErrorsNotFound": {
+    "description": "Error shown when the profile cannot be found."
+  },
+  "profileErrorsNetwork": "You seem to be offline. Check your connection and try again.",
+  "@profileErrorsNetwork": {
+    "description": "Error shown when the device has no usable connection."
+  },
+  "profileErrorsServer": "Something went wrong on our side. Please try again later.",
+  "@profileErrorsServer": {
+    "description": "Error shown when the server fails (HTTP 5xx)."
+  },
+  "profileErrorsValidation": "The request could not be processed. Please check your details.",
+  "@profileErrorsValidation": {
+    "description": "Error shown for a rejected profile request (HTTP 400/422)."
+  },
+  "profileErrorsPhotoUpload": "The photo could not be uploaded. Please try a JPEG, PNG or WebP image under 5 MB.",
+  "@profileErrorsPhotoUpload": {
+    "description": "Error shown when the profile photo upload fails."
+  },
+  "profileErrorsPhotoNotFound": "No profile photo found.",
+  "@profileErrorsPhotoNotFound": {
+    "description": "Error shown when no profile photo exists."
+  },
+  "profileErrorsPermission": "You do not have permission to perform this action.",
+  "@profileErrorsPermission": {
+    "description": "Error shown when the user lacks permission."
+  },
+  "profileErrorsUnknown": "Something went wrong. Please try again.",
+  "@profileErrorsUnknown": {
+    "description": "Fallback error message for unexpected profile failures."
   }
 }

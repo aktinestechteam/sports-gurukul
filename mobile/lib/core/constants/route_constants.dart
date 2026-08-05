@@ -21,4 +21,13 @@ abstract final class RouteConstants {
 
   /// Placeholder dashboard.
   static const String dashboard = '/dashboard';
+
+  /// Current user's profile.
+  static const String profile = '/profile';
+
+  /// Edit current user's profile.
+  static const String editProfile = '/profile/edit';
+
+  /// Edit current user's preferences.
+  static const String editPreferences = '/profile/preferences';
 }

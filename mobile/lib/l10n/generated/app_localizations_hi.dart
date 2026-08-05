@@ -283,4 +283,232 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get validationPhoneInvalid =>
       'एक मान्य 10-अंकीय मोबाइल नंबर दर्ज करें।';
+
+  @override
+  String get validationDateInvalid => 'एक मान्य तिथि दर्ज करें।';
+
+  @override
+  String get validationDateFuture => 'जन्म तिथि भविष्य में नहीं हो सकती।';
+
+  @override
+  String get validationNumberInvalid => 'एक मान्य संख्या दर्ज करें।';
+
+  @override
+  String get validationPostalCodeInvalid => 'एक मान्य पिन कोड दर्ज करें।';
+
+  @override
+  String get profileMyProfileTitle => 'मेरी प्रोफ़ाइल';
+
+  @override
+  String get profileRetry => 'पुनः प्रयास करें';
+
+  @override
+  String get profileErrorTitle => 'प्रोफ़ाइल लोड नहीं हो सकी';
+
+  @override
+  String get profileFullName => 'पूरा नाम';
+
+  @override
+  String get profileEmail => 'ईमेल';
+
+  @override
+  String get profilePhone => 'फ़ोन';
+
+  @override
+  String get profilePreferredSport => 'पसंदीदा खेल';
+
+  @override
+  String get profileExperienceLevel => 'अनुभव स्तर';
+
+  @override
+  String get profileHeight => 'ऊँचाई';
+
+  @override
+  String get profileWeight => 'वज़न';
+
+  @override
+  String get profileEditProfile => 'प्रोफ़ाइल संपादित करें';
+
+  @override
+  String get profileCreateProfile => 'प्रोफ़ाइल बनाएं';
+
+  @override
+  String get profileCreateTitle => 'प्रोफ़ाइल बनाएं';
+
+  @override
+  String get profileCreateSubtitle => 'अपने बारे में थोड़ी जानकारी दें।';
+
+  @override
+  String get profileAboutMe => 'मेरे बारे में';
+
+  @override
+  String get profileAddresses => 'पते';
+
+  @override
+  String get profileEditTitle => 'प्रोफ़ाइल संपादित करें';
+
+  @override
+  String get profileEditSubtitle => 'अपनी जानकारी अद्यतन रखें।';
+
+  @override
+  String get profileEditBasicInfo => 'मूल जानकारी';
+
+  @override
+  String get profileGender => 'लिंग';
+
+  @override
+  String get profileGenderMale => 'पुरुष';
+
+  @override
+  String get profileGenderFemale => 'महिला';
+
+  @override
+  String get profileGenderNonBinary => 'नॉन-बाइनरी';
+
+  @override
+  String get profileGenderPreferNotToSay => 'कहना पसंद नहीं';
+
+  @override
+  String get profileBio => 'परिचय';
+
+  @override
+  String get profileEditContactInfo => 'संपर्क जानकारी';
+
+  @override
+  String get profileCountryCode => 'कोड';
+
+  @override
+  String get profileEditAddress => 'पता';
+
+  @override
+  String get profileAddressType => 'पते का प्रकार';
+
+  @override
+  String get profileAddressTypeHome => 'घर';
+
+  @override
+  String get profileAddressTypeWork => 'कार्यालय';
+
+  @override
+  String get profileAddressTypeAcademy => 'अकादमी';
+
+  @override
+  String get profileAddressTypeOther => 'अन्य';
+
+  @override
+  String get profileAddressLine1 => 'पता पंक्ति 1';
+
+  @override
+  String get profileAddressLine2 => 'पता पंक्ति 2';
+
+  @override
+  String get profileCity => 'शहर';
+
+  @override
+  String get profileState => 'राज्य';
+
+  @override
+  String get profileCountry => 'देश';
+
+  @override
+  String get profilePostalCode => 'पिन कोड';
+
+  @override
+  String get profileDateOfBirth => 'जन्म तिथि';
+
+  @override
+  String get profileSave => 'सहेजें';
+
+  @override
+  String get profileUpdateSuccess => 'प्रोफ़ाइल सफलतापूर्वक अपडेट हुई।';
+
+  @override
+  String get profilePreferencesTitle => 'प्राथमिकताएँ';
+
+  @override
+  String get profilePreferencesSubtitle =>
+      'सूचनाएँ, दिखावट और गोपनीयता अनुकूलित करें।';
+
+  @override
+  String get profilePreferencesAppearance => 'दिखावट';
+
+  @override
+  String get profilePreferencesTheme => 'थीम';
+
+  @override
+  String get profileThemeLight => 'लाइट';
+
+  @override
+  String get profileThemeDark => 'डार्क';
+
+  @override
+  String get profileThemeSystem => 'सिस्टम';
+
+  @override
+  String get profilePreferencesNotifications => 'सूचनाएँ';
+
+  @override
+  String get profilePreferenceEmailNotifications => 'ईमेल सूचनाएँ';
+
+  @override
+  String get profilePreferencePushNotifications => 'पुश सूचनाएँ';
+
+  @override
+  String get profilePreferenceSmsNotifications => 'एसएमएस सूचनाएँ';
+
+  @override
+  String get profilePreferenceMarketingEmails => 'मार्केटिंग ईमेल';
+
+  @override
+  String get profilePreferencesPrivacy => 'गोपनीयता';
+
+  @override
+  String get profilePreferenceProfileVisibility => 'प्रोफ़ाइल दृश्यता';
+
+  @override
+  String get profilePreferenceShowOnlineStatus => 'ऑनलाइन स्थिति दिखाएँ';
+
+  @override
+  String get profilePreferencesSaved => 'प्राथमिकताएँ सफलतापूर्वक सहेजी गईं।';
+
+  @override
+  String get profileChangePhoto => 'फ़ोटो बदलें';
+
+  @override
+  String get profilePhotoUploaded => 'प्रोफ़ाइल फ़ोटो अपलोड हुई।';
+
+  @override
+  String get profilePhotoRemoved => 'प्रोफ़ाइल फ़ोटो हटाई गई।';
+
+  @override
+  String get profileRemovePhoto => 'फ़ोटो हटाएँ';
+
+  @override
+  String get profileErrorsNotFound => 'प्रोफ़ाइल नहीं मिली।';
+
+  @override
+  String get profileErrorsNetwork =>
+      'आप ऑफ़लाइन लग रहे हैं। अपना कनेक्शन जाँचकर पुनः प्रयास करें।';
+
+  @override
+  String get profileErrorsServer =>
+      'हमारी ओर से कोई समस्या आई। कृपया बाद में पुनः प्रयास करें।';
+
+  @override
+  String get profileErrorsValidation =>
+      'अनुरोध संसाधित नहीं हो सका। कृपया अपनी जानकारी जाँचें।';
+
+  @override
+  String get profileErrorsPhotoUpload =>
+      'फ़ोटो अपलोड नहीं हो सकी। कृपया 5 MB से कम की JPEG, PNG या WebP छवि प्रयास करें।';
+
+  @override
+  String get profileErrorsPhotoNotFound => 'कोई प्रोफ़ाइल फ़ोटो नहीं मिली।';
+
+  @override
+  String get profileErrorsPermission =>
+      'आपके पास यह क्रिया करने की अनुमति नहीं है।';
+
+  @override
+  String get profileErrorsUnknown => 'कुछ गलत हो गया। कृपया पुनः प्रयास करें।';
 }

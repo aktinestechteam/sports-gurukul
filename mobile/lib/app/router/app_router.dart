@@ -11,6 +11,9 @@ import 'package:sports_gurukul/features/authentication/presentation/pages/reset_
 import 'package:sports_gurukul/features/authentication/presentation/pages/sign_up_page.dart';
 import 'package:sports_gurukul/features/authentication/presentation/providers/auth_controller.dart';
 import 'package:sports_gurukul/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:sports_gurukul/features/user/presentation/pages/edit_preferences_page.dart';
+import 'package:sports_gurukul/features/user/presentation/pages/edit_profile_page.dart';
+import 'package:sports_gurukul/features/user/presentation/pages/my_profile_page.dart';
 
 /// Application-level [GoRouter] configuration.
 ///
@@ -60,6 +63,21 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         name: RouteNames.dashboard,
         path: RoutePaths.dashboard,
         builder: (_, _) => const DashboardPage(),
+      ),
+      GoRoute(
+        name: RouteNames.profile,
+        path: RoutePaths.profile,
+        builder: (_, _) => const MyProfilePage(),
+      ),
+      GoRoute(
+        name: RouteNames.editProfile,
+        path: RoutePaths.editProfile,
+        builder: (_, _) => const EditProfilePage(),
+      ),
+      GoRoute(
+        name: RouteNames.editPreferences,
+        path: RoutePaths.editPreferences,
+        builder: (_, _) => const EditPreferencesPage(),
       ),
     ],
   );

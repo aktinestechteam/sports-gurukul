@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import 'package:sports_gurukul/app/router/route_paths.dart';
 import 'package:sports_gurukul/app/theme/app_shadow.dart';
 import 'package:sports_gurukul/app/theme/colors/app_colors.dart';
 import 'package:sports_gurukul/app/theme/colors/app_gradients.dart';
@@ -54,6 +56,7 @@ class DashboardPage extends ConsumerWidget {
                   _DashboardHeader(
                     greeting: _greeting(l10n, firstName),
                     name: name,
+                    onProfile: () => context.push(RoutePaths.profile),
                     onLogout: () =>
                         ref.read(authControllerProvider.notifier).logout(),
                   ),
@@ -94,11 +97,13 @@ class _DashboardHeader extends StatelessWidget {
   const _DashboardHeader({
     required this.greeting,
     required this.name,
+    required this.onProfile,
     required this.onLogout,
   });
 
   final String greeting;
   final String name;
+  final VoidCallback onProfile;
   final VoidCallback onLogout;
 
   @override
@@ -133,6 +138,8 @@ class _DashboardHeader extends StatelessWidget {
         ),
         _GlassCircle(
           size: 44,
+          onTap: onProfile,
+          tooltip: AppLocalizations.of(context).profileMyProfileTitle,
           child: Text(
             initials,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(

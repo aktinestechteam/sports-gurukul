@@ -63,6 +63,7 @@ class AuthController extends Notifier<AuthState> {
       return;
     }
     if (!session.hasExpiredAccessToken) {
+      await _persistSession(session);
       state = AuthAuthenticated(session);
       return;
     }
@@ -70,7 +71,7 @@ class AuthController extends Notifier<AuthState> {
     final result = await ref.read(refreshSessionProvider)(session.refreshToken);
     if (result.isSuccess) {
       final updated = session.withTokenPair(result.requireValue());
-      await store.write(updated);
+      await _persistSession(updated);
       state = AuthAuthenticated(updated);
       return;
     }
@@ -87,7 +88,7 @@ class AuthController extends Notifier<AuthState> {
         .read(loginUserProvider)
         .call(email: email, password: password);
     if (result is Success<AuthSession>) {
-      await ref.read(authSessionStoreProvider).write(result.value);
+      await _persistSession(result.value);
       state = AuthAuthenticated(result.value);
     }
     return result;
@@ -111,7 +112,7 @@ class AuthController extends Notifier<AuthState> {
           phoneNumber: phoneNumber,
         );
     if (result is Success<AuthSession>) {
-      await ref.read(authSessionStoreProvider).write(result.value);
+      await _persistSession(result.value);
       state = AuthAuthenticated(result.value);
     }
     return result;
@@ -151,6 +152,14 @@ class AuthController extends Notifier<AuthState> {
   Future<void> _clearLocalSession() async {
     await ref.read(authSessionStoreProvider).clear();
     await ref.read(tokenStoreProvider).clear();
+  }
+
+  Future<void> _persistSession(AuthSession session) async {
+    await ref.read(authSessionStoreProvider).write(session);
+    await ref.read(tokenStoreProvider).writeTokens(
+      accessToken: session.accessToken,
+      refreshToken: session.refreshToken,
+    );
   }
 }
 

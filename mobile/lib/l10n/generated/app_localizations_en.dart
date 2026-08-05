@@ -282,4 +282,232 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get validationPhoneInvalid => 'Enter a valid 10-digit mobile number.';
+
+  @override
+  String get validationDateInvalid => 'Enter a valid date.';
+
+  @override
+  String get validationDateFuture => 'Date of birth cannot be in the future.';
+
+  @override
+  String get validationNumberInvalid => 'Enter a valid number.';
+
+  @override
+  String get validationPostalCodeInvalid => 'Enter a valid postal code.';
+
+  @override
+  String get profileMyProfileTitle => 'My Profile';
+
+  @override
+  String get profileRetry => 'Retry';
+
+  @override
+  String get profileErrorTitle => 'Could not load profile';
+
+  @override
+  String get profileFullName => 'Full name';
+
+  @override
+  String get profileEmail => 'Email';
+
+  @override
+  String get profilePhone => 'Phone';
+
+  @override
+  String get profilePreferredSport => 'Preferred sport';
+
+  @override
+  String get profileExperienceLevel => 'Experience level';
+
+  @override
+  String get profileHeight => 'Height';
+
+  @override
+  String get profileWeight => 'Weight';
+
+  @override
+  String get profileEditProfile => 'Edit profile';
+
+  @override
+  String get profileCreateProfile => 'Create profile';
+
+  @override
+  String get profileCreateTitle => 'Create profile';
+
+  @override
+  String get profileCreateSubtitle => 'Tell us a little about yourself.';
+
+  @override
+  String get profileAboutMe => 'About me';
+
+  @override
+  String get profileAddresses => 'Addresses';
+
+  @override
+  String get profileEditTitle => 'Edit profile';
+
+  @override
+  String get profileEditSubtitle => 'Keep your details up to date.';
+
+  @override
+  String get profileEditBasicInfo => 'Basic information';
+
+  @override
+  String get profileGender => 'Gender';
+
+  @override
+  String get profileGenderMale => 'Male';
+
+  @override
+  String get profileGenderFemale => 'Female';
+
+  @override
+  String get profileGenderNonBinary => 'Non-binary';
+
+  @override
+  String get profileGenderPreferNotToSay => 'Prefer not to say';
+
+  @override
+  String get profileBio => 'Bio';
+
+  @override
+  String get profileEditContactInfo => 'Contact information';
+
+  @override
+  String get profileCountryCode => 'Code';
+
+  @override
+  String get profileEditAddress => 'Address';
+
+  @override
+  String get profileAddressType => 'Address type';
+
+  @override
+  String get profileAddressTypeHome => 'Home';
+
+  @override
+  String get profileAddressTypeWork => 'Work';
+
+  @override
+  String get profileAddressTypeAcademy => 'Academy';
+
+  @override
+  String get profileAddressTypeOther => 'Other';
+
+  @override
+  String get profileAddressLine1 => 'Address line 1';
+
+  @override
+  String get profileAddressLine2 => 'Address line 2';
+
+  @override
+  String get profileCity => 'City';
+
+  @override
+  String get profileState => 'State';
+
+  @override
+  String get profileCountry => 'Country';
+
+  @override
+  String get profilePostalCode => 'Postal code';
+
+  @override
+  String get profileDateOfBirth => 'Date of birth';
+
+  @override
+  String get profileSave => 'Save';
+
+  @override
+  String get profileUpdateSuccess => 'Profile updated successfully.';
+
+  @override
+  String get profilePreferencesTitle => 'Preferences';
+
+  @override
+  String get profilePreferencesSubtitle =>
+      'Customize notifications, appearance and privacy.';
+
+  @override
+  String get profilePreferencesAppearance => 'Appearance';
+
+  @override
+  String get profilePreferencesTheme => 'Theme';
+
+  @override
+  String get profileThemeLight => 'Light';
+
+  @override
+  String get profileThemeDark => 'Dark';
+
+  @override
+  String get profileThemeSystem => 'System';
+
+  @override
+  String get profilePreferencesNotifications => 'Notifications';
+
+  @override
+  String get profilePreferenceEmailNotifications => 'Email notifications';
+
+  @override
+  String get profilePreferencePushNotifications => 'Push notifications';
+
+  @override
+  String get profilePreferenceSmsNotifications => 'SMS notifications';
+
+  @override
+  String get profilePreferenceMarketingEmails => 'Marketing emails';
+
+  @override
+  String get profilePreferencesPrivacy => 'Privacy';
+
+  @override
+  String get profilePreferenceProfileVisibility => 'Profile visibility';
+
+  @override
+  String get profilePreferenceShowOnlineStatus => 'Show online status';
+
+  @override
+  String get profilePreferencesSaved => 'Preferences saved successfully.';
+
+  @override
+  String get profileChangePhoto => 'Change photo';
+
+  @override
+  String get profilePhotoUploaded => 'Profile photo uploaded.';
+
+  @override
+  String get profilePhotoRemoved => 'Profile photo removed.';
+
+  @override
+  String get profileRemovePhoto => 'Remove photo';
+
+  @override
+  String get profileErrorsNotFound => 'Profile not found.';
+
+  @override
+  String get profileErrorsNetwork =>
+      'You seem to be offline. Check your connection and try again.';
+
+  @override
+  String get profileErrorsServer =>
+      'Something went wrong on our side. Please try again later.';
+
+  @override
+  String get profileErrorsValidation =>
+      'The request could not be processed. Please check your details.';
+
+  @override
+  String get profileErrorsPhotoUpload =>
+      'The photo could not be uploaded. Please try a JPEG, PNG or WebP image under 5 MB.';
+
+  @override
+  String get profileErrorsPhotoNotFound => 'No profile photo found.';
+
+  @override
+  String get profileErrorsPermission =>
+      'You do not have permission to perform this action.';
+
+  @override
+  String get profileErrorsUnknown => 'Something went wrong. Please try again.';
 }

@@ -27,7 +27,13 @@ class AuthRouteGuard {
       RoutePaths.resetPassword => true,
       _ => false,
     };
-    final isProtectedRoute = location == RoutePaths.dashboard;
+    final isProtectedRoute = switch (location) {
+      RoutePaths.dashboard ||
+      RoutePaths.profile ||
+      RoutePaths.editProfile ||
+      RoutePaths.editPreferences => true,
+      _ => false,
+    };
 
     return switch (state) {
       AuthUnknown() => null,

@@ -591,6 +591,450 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter a valid 10-digit mobile number.'**
   String get validationPhoneInvalid;
+
+  /// Error shown when a date field is malformed.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid date.'**
+  String get validationDateInvalid;
+
+  /// Error shown when a date of birth is in the future.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of birth cannot be in the future.'**
+  String get validationDateFuture;
+
+  /// Error shown when a numeric field is not a number.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid number.'**
+  String get validationNumberInvalid;
+
+  /// Error shown when a postal code is malformed.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid postal code.'**
+  String get validationPostalCodeInvalid;
+
+  /// Title of the my-profile screen.
+  ///
+  /// In en, this message translates to:
+  /// **'My Profile'**
+  String get profileMyProfileTitle;
+
+  /// Label of the retry action on the profile error state.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get profileRetry;
+
+  /// Title shown when the profile fails to load.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load profile'**
+  String get profileErrorTitle;
+
+  /// Label of the full-name field on the profile screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get profileFullName;
+
+  /// Label of the email field on the profile screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get profileEmail;
+
+  /// Label of the phone field on the profile screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get profilePhone;
+
+  /// Label of the preferred-sport field on the profile screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred sport'**
+  String get profilePreferredSport;
+
+  /// Label of the experience-level field on the profile screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience level'**
+  String get profileExperienceLevel;
+
+  /// Label of the height field on the profile screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Height'**
+  String get profileHeight;
+
+  /// Label of the weight field on the profile screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get profileWeight;
+
+  /// Action that opens the edit-profile screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get profileEditProfile;
+
+  /// Action shown when no profile exists yet; opens the create-profile form.
+  ///
+  /// In en, this message translates to:
+  /// **'Create profile'**
+  String get profileCreateProfile;
+
+  /// Title of the profile form when the user has no profile yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Create profile'**
+  String get profileCreateTitle;
+
+  /// Subtitle of the profile form when the user has no profile yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us a little about yourself.'**
+  String get profileCreateSubtitle;
+
+  /// Section title for the user bio on the profile screen.
+  ///
+  /// In en, this message translates to:
+  /// **'About me'**
+  String get profileAboutMe;
+
+  /// Section title for the user addresses on the profile screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Addresses'**
+  String get profileAddresses;
+
+  /// Title of the edit-profile screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get profileEditTitle;
+
+  /// Subtitle of the edit-profile screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep your details up to date.'**
+  String get profileEditSubtitle;
+
+  /// Section heading for the basic-information fields.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic information'**
+  String get profileEditBasicInfo;
+
+  /// Label of the gender field on the edit-profile screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get profileGender;
+
+  /// Gender option: male.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get profileGenderMale;
+
+  /// Gender option: female.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get profileGenderFemale;
+
+  /// Gender option: non-binary.
+  ///
+  /// In en, this message translates to:
+  /// **'Non-binary'**
+  String get profileGenderNonBinary;
+
+  /// Gender option: prefer not to say.
+  ///
+  /// In en, this message translates to:
+  /// **'Prefer not to say'**
+  String get profileGenderPreferNotToSay;
+
+  /// Label of the bio field on the edit-profile screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Bio'**
+  String get profileBio;
+
+  /// Section heading for the contact-information fields.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact information'**
+  String get profileEditContactInfo;
+
+  /// Label of the phone country-code field.
+  ///
+  /// In en, this message translates to:
+  /// **'Code'**
+  String get profileCountryCode;
+
+  /// Section heading for the address fields.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get profileEditAddress;
+
+  /// Label of the address-type field.
+  ///
+  /// In en, this message translates to:
+  /// **'Address type'**
+  String get profileAddressType;
+
+  /// Address type option: home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get profileAddressTypeHome;
+
+  /// Address type option: work.
+  ///
+  /// In en, this message translates to:
+  /// **'Work'**
+  String get profileAddressTypeWork;
+
+  /// Address type option: academy.
+  ///
+  /// In en, this message translates to:
+  /// **'Academy'**
+  String get profileAddressTypeAcademy;
+
+  /// Address type option: other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get profileAddressTypeOther;
+
+  /// Label of the address-line-1 field.
+  ///
+  /// In en, this message translates to:
+  /// **'Address line 1'**
+  String get profileAddressLine1;
+
+  /// Label of the address-line-2 field.
+  ///
+  /// In en, this message translates to:
+  /// **'Address line 2'**
+  String get profileAddressLine2;
+
+  /// Label of the city field.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get profileCity;
+
+  /// Label of the state field.
+  ///
+  /// In en, this message translates to:
+  /// **'State'**
+  String get profileState;
+
+  /// Label of the country field.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get profileCountry;
+
+  /// Label of the postal-code field.
+  ///
+  /// In en, this message translates to:
+  /// **'Postal code'**
+  String get profilePostalCode;
+
+  /// Label of the date-of-birth field.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of birth'**
+  String get profileDateOfBirth;
+
+  /// Label of the save button on edit forms.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get profileSave;
+
+  /// Confirmation shown after a successful profile update.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated successfully.'**
+  String get profileUpdateSuccess;
+
+  /// Title of the edit-preferences screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get profilePreferencesTitle;
+
+  /// Subtitle of the edit-preferences screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize notifications, appearance and privacy.'**
+  String get profilePreferencesSubtitle;
+
+  /// Section heading for the appearance preferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get profilePreferencesAppearance;
+
+  /// Label of the theme preference dropdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get profilePreferencesTheme;
+
+  /// Theme option: light.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get profileThemeLight;
+
+  /// Theme option: dark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get profileThemeDark;
+
+  /// Theme option: follow system.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get profileThemeSystem;
+
+  /// Section heading for the notification preferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get profilePreferencesNotifications;
+
+  /// Toggle for email notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Email notifications'**
+  String get profilePreferenceEmailNotifications;
+
+  /// Toggle for push notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Push notifications'**
+  String get profilePreferencePushNotifications;
+
+  /// Toggle for SMS notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS notifications'**
+  String get profilePreferenceSmsNotifications;
+
+  /// Toggle for marketing emails.
+  ///
+  /// In en, this message translates to:
+  /// **'Marketing emails'**
+  String get profilePreferenceMarketingEmails;
+
+  /// Section heading for the privacy preferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get profilePreferencesPrivacy;
+
+  /// Toggle for whether the profile is visible to other users.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile visibility'**
+  String get profilePreferenceProfileVisibility;
+
+  /// Toggle for whether the online status is visible to other users.
+  ///
+  /// In en, this message translates to:
+  /// **'Show online status'**
+  String get profilePreferenceShowOnlineStatus;
+
+  /// Confirmation shown after a successful preference update.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences saved successfully.'**
+  String get profilePreferencesSaved;
+
+  /// Tooltip and action for changing the profile photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Change photo'**
+  String get profileChangePhoto;
+
+  /// Confirmation shown after a successful photo upload.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile photo uploaded.'**
+  String get profilePhotoUploaded;
+
+  /// Confirmation shown after removing the profile photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile photo removed.'**
+  String get profilePhotoRemoved;
+
+  /// Action that removes the profile photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get profileRemovePhoto;
+
+  /// Error shown when the profile cannot be found.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile not found.'**
+  String get profileErrorsNotFound;
+
+  /// Error shown when the device has no usable connection.
+  ///
+  /// In en, this message translates to:
+  /// **'You seem to be offline. Check your connection and try again.'**
+  String get profileErrorsNetwork;
+
+  /// Error shown when the server fails (HTTP 5xx).
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong on our side. Please try again later.'**
+  String get profileErrorsServer;
+
+  /// Error shown for a rejected profile request (HTTP 400/422).
+  ///
+  /// In en, this message translates to:
+  /// **'The request could not be processed. Please check your details.'**
+  String get profileErrorsValidation;
+
+  /// Error shown when the profile photo upload fails.
+  ///
+  /// In en, this message translates to:
+  /// **'The photo could not be uploaded. Please try a JPEG, PNG or WebP image under 5 MB.'**
+  String get profileErrorsPhotoUpload;
+
+  /// Error shown when no profile photo exists.
+  ///
+  /// In en, this message translates to:
+  /// **'No profile photo found.'**
+  String get profileErrorsPhotoNotFound;
+
+  /// Error shown when the user lacks permission.
+  ///
+  /// In en, this message translates to:
+  /// **'You do not have permission to perform this action.'**
+  String get profileErrorsPermission;
+
+  /// Fallback error message for unexpected profile failures.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get profileErrorsUnknown;
 }
 
 class _AppLocalizationsDelegate
