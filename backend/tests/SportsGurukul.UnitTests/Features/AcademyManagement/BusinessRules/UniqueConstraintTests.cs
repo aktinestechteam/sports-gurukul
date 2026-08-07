@@ -14,6 +14,10 @@ namespace SportsGurukul.UnitTests.Features.AcademyManagement.BusinessRules;
 public class UniqueConstraintTests
 {
     private readonly Mock<IAcademyRepository> _academyRepoMock;
+    private readonly Mock<ISportRepository> _sportRepoMock;
+    private readonly Mock<IUserRepository> _userRepoMock;
+    private readonly Mock<IRoleRepository> _roleRepoMock;
+    private readonly Mock<IUserRoleRepository> _userRoleRepoMock;
     private readonly Mock<IAcademyBranchRepository> _branchRepoMock;
     private readonly Mock<IAcademyFacilityRepository> _facilityRepoMock;
     private readonly Mock<IAcademyMembershipRepository> _membershipRepoMock;
@@ -30,6 +34,10 @@ public class UniqueConstraintTests
     public UniqueConstraintTests()
     {
         _academyRepoMock = new Mock<IAcademyRepository>();
+        _sportRepoMock = new Mock<ISportRepository>();
+        _userRepoMock = new Mock<IUserRepository>();
+        _roleRepoMock = new Mock<IRoleRepository>();
+        _userRoleRepoMock = new Mock<IUserRoleRepository>();
         _branchRepoMock = new Mock<IAcademyBranchRepository>();
         _facilityRepoMock = new Mock<IAcademyFacilityRepository>();
         _membershipRepoMock = new Mock<IAcademyMembershipRepository>();
@@ -41,6 +49,10 @@ public class UniqueConstraintTests
 
         _createAcademyHandler = new CreateAcademyCommandHandler(
             _academyRepoMock.Object,
+            _sportRepoMock.Object,
+            _userRepoMock.Object,
+            _roleRepoMock.Object,
+            _userRoleRepoMock.Object,
             _unitOfWorkMock.Object,
             _createAcademyLoggerMock.Object);
 
@@ -88,7 +100,7 @@ public class UniqueConstraintTests
     }
 
     [Fact]
-    public async Task DuplicateAcademyCode_ReturnsError()
+    public async Task Academy_IsCreated_WithGeneratedUniqueCode()
     {
         var existingAcademy = CreateTestAcademy();
 
@@ -97,7 +109,7 @@ public class UniqueConstraintTests
             .ReturnsAsync((Academy?)null);
         _academyRepoMock
             .Setup(r => r.AnyAsync(It.IsAny<System.Linq.Expressions.Expression<Func<Academy, bool>>>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(true);
+            .ReturnsAsync(false);
 
         var command = new CreateAcademyCommand
         {

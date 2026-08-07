@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserProfileDto {
 
- String get id; String get userId; String get fullName; String get email; String get createdAt; String? get phoneNumber; String? get dateOfBirth;@JsonKey(unknownEnumValue: GenderDto.preferNotToSay) GenderDto get gender; String? get bio; String? get profileImageUrl; String? get coverImageUrl; String? get height; String? get weight; String? get preferredSport; String? get experienceLevel;@JsonKey(unknownEnumValue: UserStatusDto.active) UserStatusDto get status; bool get isEmailVerified; String? get updatedAt; int get profileCompletionPercentage; List<AddressDto> get addresses; ContactDto? get contactInformation; UserPreferenceDto? get preferences; List<String> get roles;
+ String get id; String get userId; String get fullName; String get email; String get createdAt; String? get phoneNumber; String? get dateOfBirth;@JsonKey(unknownEnumValue: GenderDto.preferNotToSay) GenderDto get gender; String? get bio; String? get profileImageUrl; String? get coverImageUrl; String? get height; String? get weight; String? get preferredSport; String? get experienceLevel;@JsonKey(unknownEnumValue: UserStatusDto.active) UserStatusDto get status; bool get isEmailVerified; String? get updatedAt; int get profileCompletionPercentage; List<AddressDto> get addresses; ContactDto? get contactInformation; UserPreferenceDto? get preferences; List<String> get roles; bool get hasProfile;
 /// Create a copy of UserProfileDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserProfileDtoCopyWith<UserProfileDto> get copyWith => _$UserProfileDtoCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserProfileDto&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.email, email) || other.email == email)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.profileImageUrl, profileImageUrl) || other.profileImageUrl == profileImageUrl)&&(identical(other.coverImageUrl, coverImageUrl) || other.coverImageUrl == coverImageUrl)&&(identical(other.height, height) || other.height == height)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.preferredSport, preferredSport) || other.preferredSport == preferredSport)&&(identical(other.experienceLevel, experienceLevel) || other.experienceLevel == experienceLevel)&&(identical(other.status, status) || other.status == status)&&(identical(other.isEmailVerified, isEmailVerified) || other.isEmailVerified == isEmailVerified)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.profileCompletionPercentage, profileCompletionPercentage) || other.profileCompletionPercentage == profileCompletionPercentage)&&const DeepCollectionEquality().equals(other.addresses, addresses)&&(identical(other.contactInformation, contactInformation) || other.contactInformation == contactInformation)&&(identical(other.preferences, preferences) || other.preferences == preferences)&&const DeepCollectionEquality().equals(other.roles, roles));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserProfileDto&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.email, email) || other.email == email)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.profileImageUrl, profileImageUrl) || other.profileImageUrl == profileImageUrl)&&(identical(other.coverImageUrl, coverImageUrl) || other.coverImageUrl == coverImageUrl)&&(identical(other.height, height) || other.height == height)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.preferredSport, preferredSport) || other.preferredSport == preferredSport)&&(identical(other.experienceLevel, experienceLevel) || other.experienceLevel == experienceLevel)&&(identical(other.status, status) || other.status == status)&&(identical(other.isEmailVerified, isEmailVerified) || other.isEmailVerified == isEmailVerified)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.profileCompletionPercentage, profileCompletionPercentage) || other.profileCompletionPercentage == profileCompletionPercentage)&&const DeepCollectionEquality().equals(other.addresses, addresses)&&(identical(other.contactInformation, contactInformation) || other.contactInformation == contactInformation)&&(identical(other.preferences, preferences) || other.preferences == preferences)&&const DeepCollectionEquality().equals(other.roles, roles)&&(identical(other.hasProfile, hasProfile) || other.hasProfile == hasProfile));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,userId,fullName,email,createdAt,phoneNumber,dateOfBirth,gender,bio,profileImageUrl,coverImageUrl,height,weight,preferredSport,experienceLevel,status,isEmailVerified,updatedAt,profileCompletionPercentage,const DeepCollectionEquality().hash(addresses),contactInformation,preferences,const DeepCollectionEquality().hash(roles)]);
+int get hashCode => Object.hashAll([runtimeType,id,userId,fullName,email,createdAt,phoneNumber,dateOfBirth,gender,bio,profileImageUrl,coverImageUrl,height,weight,preferredSport,experienceLevel,status,isEmailVerified,updatedAt,profileCompletionPercentage,const DeepCollectionEquality().hash(addresses),contactInformation,preferences,const DeepCollectionEquality().hash(roles),hasProfile]);
 
 @override
 String toString() {
-  return 'UserProfileDto(id: $id, userId: $userId, fullName: $fullName, email: $email, createdAt: $createdAt, phoneNumber: $phoneNumber, dateOfBirth: $dateOfBirth, gender: $gender, bio: $bio, profileImageUrl: $profileImageUrl, coverImageUrl: $coverImageUrl, height: $height, weight: $weight, preferredSport: $preferredSport, experienceLevel: $experienceLevel, status: $status, isEmailVerified: $isEmailVerified, updatedAt: $updatedAt, profileCompletionPercentage: $profileCompletionPercentage, addresses: $addresses, contactInformation: $contactInformation, preferences: $preferences, roles: $roles)';
+  return 'UserProfileDto(id: $id, userId: $userId, fullName: $fullName, email: $email, createdAt: $createdAt, phoneNumber: $phoneNumber, dateOfBirth: $dateOfBirth, gender: $gender, bio: $bio, profileImageUrl: $profileImageUrl, coverImageUrl: $coverImageUrl, height: $height, weight: $weight, preferredSport: $preferredSport, experienceLevel: $experienceLevel, status: $status, isEmailVerified: $isEmailVerified, updatedAt: $updatedAt, profileCompletionPercentage: $profileCompletionPercentage, addresses: $addresses, contactInformation: $contactInformation, preferences: $preferences, roles: $roles, hasProfile: $hasProfile)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserProfileDtoCopyWith<$Res>  {
   factory $UserProfileDtoCopyWith(UserProfileDto value, $Res Function(UserProfileDto) _then) = _$UserProfileDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String userId, String fullName, String email, String createdAt, String? phoneNumber, String? dateOfBirth,@JsonKey(unknownEnumValue: GenderDto.preferNotToSay) GenderDto gender, String? bio, String? profileImageUrl, String? coverImageUrl, String? height, String? weight, String? preferredSport, String? experienceLevel,@JsonKey(unknownEnumValue: UserStatusDto.active) UserStatusDto status, bool isEmailVerified, String? updatedAt, int profileCompletionPercentage, List<AddressDto> addresses, ContactDto? contactInformation, UserPreferenceDto? preferences, List<String> roles
+ String id, String userId, String fullName, String email, String createdAt, String? phoneNumber, String? dateOfBirth,@JsonKey(unknownEnumValue: GenderDto.preferNotToSay) GenderDto gender, String? bio, String? profileImageUrl, String? coverImageUrl, String? height, String? weight, String? preferredSport, String? experienceLevel,@JsonKey(unknownEnumValue: UserStatusDto.active) UserStatusDto status, bool isEmailVerified, String? updatedAt, int profileCompletionPercentage, List<AddressDto> addresses, ContactDto? contactInformation, UserPreferenceDto? preferences, List<String> roles, bool hasProfile
 });
 
 
@@ -65,7 +65,7 @@ class _$UserProfileDtoCopyWithImpl<$Res>
 
 /// Create a copy of UserProfileDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? fullName = null,Object? email = null,Object? createdAt = null,Object? phoneNumber = freezed,Object? dateOfBirth = freezed,Object? gender = null,Object? bio = freezed,Object? profileImageUrl = freezed,Object? coverImageUrl = freezed,Object? height = freezed,Object? weight = freezed,Object? preferredSport = freezed,Object? experienceLevel = freezed,Object? status = null,Object? isEmailVerified = null,Object? updatedAt = freezed,Object? profileCompletionPercentage = null,Object? addresses = null,Object? contactInformation = freezed,Object? preferences = freezed,Object? roles = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? fullName = null,Object? email = null,Object? createdAt = null,Object? phoneNumber = freezed,Object? dateOfBirth = freezed,Object? gender = null,Object? bio = freezed,Object? profileImageUrl = freezed,Object? coverImageUrl = freezed,Object? height = freezed,Object? weight = freezed,Object? preferredSport = freezed,Object? experienceLevel = freezed,Object? status = null,Object? isEmailVerified = null,Object? updatedAt = freezed,Object? profileCompletionPercentage = null,Object? addresses = null,Object? contactInformation = freezed,Object? preferences = freezed,Object? roles = null,Object? hasProfile = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -90,7 +90,8 @@ as int,addresses: null == addresses ? _self.addresses : addresses // ignore: cas
 as List<AddressDto>,contactInformation: freezed == contactInformation ? _self.contactInformation : contactInformation // ignore: cast_nullable_to_non_nullable
 as ContactDto?,preferences: freezed == preferences ? _self.preferences : preferences // ignore: cast_nullable_to_non_nullable
 as UserPreferenceDto?,roles: null == roles ? _self.roles : roles // ignore: cast_nullable_to_non_nullable
-as List<String>,
+as List<String>,hasProfile: null == hasProfile ? _self.hasProfile : hasProfile // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 /// Create a copy of UserProfileDto
@@ -199,10 +200,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userId,  String fullName,  String email,  String createdAt,  String? phoneNumber,  String? dateOfBirth, @JsonKey(unknownEnumValue: GenderDto.preferNotToSay)  GenderDto gender,  String? bio,  String? profileImageUrl,  String? coverImageUrl,  String? height,  String? weight,  String? preferredSport,  String? experienceLevel, @JsonKey(unknownEnumValue: UserStatusDto.active)  UserStatusDto status,  bool isEmailVerified,  String? updatedAt,  int profileCompletionPercentage,  List<AddressDto> addresses,  ContactDto? contactInformation,  UserPreferenceDto? preferences,  List<String> roles)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userId,  String fullName,  String email,  String createdAt,  String? phoneNumber,  String? dateOfBirth, @JsonKey(unknownEnumValue: GenderDto.preferNotToSay)  GenderDto gender,  String? bio,  String? profileImageUrl,  String? coverImageUrl,  String? height,  String? weight,  String? preferredSport,  String? experienceLevel, @JsonKey(unknownEnumValue: UserStatusDto.active)  UserStatusDto status,  bool isEmailVerified,  String? updatedAt,  int profileCompletionPercentage,  List<AddressDto> addresses,  ContactDto? contactInformation,  UserPreferenceDto? preferences,  List<String> roles,  bool hasProfile)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserProfileDto() when $default != null:
-return $default(_that.id,_that.userId,_that.fullName,_that.email,_that.createdAt,_that.phoneNumber,_that.dateOfBirth,_that.gender,_that.bio,_that.profileImageUrl,_that.coverImageUrl,_that.height,_that.weight,_that.preferredSport,_that.experienceLevel,_that.status,_that.isEmailVerified,_that.updatedAt,_that.profileCompletionPercentage,_that.addresses,_that.contactInformation,_that.preferences,_that.roles);case _:
+return $default(_that.id,_that.userId,_that.fullName,_that.email,_that.createdAt,_that.phoneNumber,_that.dateOfBirth,_that.gender,_that.bio,_that.profileImageUrl,_that.coverImageUrl,_that.height,_that.weight,_that.preferredSport,_that.experienceLevel,_that.status,_that.isEmailVerified,_that.updatedAt,_that.profileCompletionPercentage,_that.addresses,_that.contactInformation,_that.preferences,_that.roles,_that.hasProfile);case _:
   return orElse();
 
 }
@@ -220,10 +221,10 @@ return $default(_that.id,_that.userId,_that.fullName,_that.email,_that.createdAt
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userId,  String fullName,  String email,  String createdAt,  String? phoneNumber,  String? dateOfBirth, @JsonKey(unknownEnumValue: GenderDto.preferNotToSay)  GenderDto gender,  String? bio,  String? profileImageUrl,  String? coverImageUrl,  String? height,  String? weight,  String? preferredSport,  String? experienceLevel, @JsonKey(unknownEnumValue: UserStatusDto.active)  UserStatusDto status,  bool isEmailVerified,  String? updatedAt,  int profileCompletionPercentage,  List<AddressDto> addresses,  ContactDto? contactInformation,  UserPreferenceDto? preferences,  List<String> roles)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userId,  String fullName,  String email,  String createdAt,  String? phoneNumber,  String? dateOfBirth, @JsonKey(unknownEnumValue: GenderDto.preferNotToSay)  GenderDto gender,  String? bio,  String? profileImageUrl,  String? coverImageUrl,  String? height,  String? weight,  String? preferredSport,  String? experienceLevel, @JsonKey(unknownEnumValue: UserStatusDto.active)  UserStatusDto status,  bool isEmailVerified,  String? updatedAt,  int profileCompletionPercentage,  List<AddressDto> addresses,  ContactDto? contactInformation,  UserPreferenceDto? preferences,  List<String> roles,  bool hasProfile)  $default,) {final _that = this;
 switch (_that) {
 case _UserProfileDto():
-return $default(_that.id,_that.userId,_that.fullName,_that.email,_that.createdAt,_that.phoneNumber,_that.dateOfBirth,_that.gender,_that.bio,_that.profileImageUrl,_that.coverImageUrl,_that.height,_that.weight,_that.preferredSport,_that.experienceLevel,_that.status,_that.isEmailVerified,_that.updatedAt,_that.profileCompletionPercentage,_that.addresses,_that.contactInformation,_that.preferences,_that.roles);case _:
+return $default(_that.id,_that.userId,_that.fullName,_that.email,_that.createdAt,_that.phoneNumber,_that.dateOfBirth,_that.gender,_that.bio,_that.profileImageUrl,_that.coverImageUrl,_that.height,_that.weight,_that.preferredSport,_that.experienceLevel,_that.status,_that.isEmailVerified,_that.updatedAt,_that.profileCompletionPercentage,_that.addresses,_that.contactInformation,_that.preferences,_that.roles,_that.hasProfile);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -240,10 +241,10 @@ return $default(_that.id,_that.userId,_that.fullName,_that.email,_that.createdAt
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userId,  String fullName,  String email,  String createdAt,  String? phoneNumber,  String? dateOfBirth, @JsonKey(unknownEnumValue: GenderDto.preferNotToSay)  GenderDto gender,  String? bio,  String? profileImageUrl,  String? coverImageUrl,  String? height,  String? weight,  String? preferredSport,  String? experienceLevel, @JsonKey(unknownEnumValue: UserStatusDto.active)  UserStatusDto status,  bool isEmailVerified,  String? updatedAt,  int profileCompletionPercentage,  List<AddressDto> addresses,  ContactDto? contactInformation,  UserPreferenceDto? preferences,  List<String> roles)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userId,  String fullName,  String email,  String createdAt,  String? phoneNumber,  String? dateOfBirth, @JsonKey(unknownEnumValue: GenderDto.preferNotToSay)  GenderDto gender,  String? bio,  String? profileImageUrl,  String? coverImageUrl,  String? height,  String? weight,  String? preferredSport,  String? experienceLevel, @JsonKey(unknownEnumValue: UserStatusDto.active)  UserStatusDto status,  bool isEmailVerified,  String? updatedAt,  int profileCompletionPercentage,  List<AddressDto> addresses,  ContactDto? contactInformation,  UserPreferenceDto? preferences,  List<String> roles,  bool hasProfile)?  $default,) {final _that = this;
 switch (_that) {
 case _UserProfileDto() when $default != null:
-return $default(_that.id,_that.userId,_that.fullName,_that.email,_that.createdAt,_that.phoneNumber,_that.dateOfBirth,_that.gender,_that.bio,_that.profileImageUrl,_that.coverImageUrl,_that.height,_that.weight,_that.preferredSport,_that.experienceLevel,_that.status,_that.isEmailVerified,_that.updatedAt,_that.profileCompletionPercentage,_that.addresses,_that.contactInformation,_that.preferences,_that.roles);case _:
+return $default(_that.id,_that.userId,_that.fullName,_that.email,_that.createdAt,_that.phoneNumber,_that.dateOfBirth,_that.gender,_that.bio,_that.profileImageUrl,_that.coverImageUrl,_that.height,_that.weight,_that.preferredSport,_that.experienceLevel,_that.status,_that.isEmailVerified,_that.updatedAt,_that.profileCompletionPercentage,_that.addresses,_that.contactInformation,_that.preferences,_that.roles,_that.hasProfile);case _:
   return null;
 
 }
@@ -255,7 +256,7 @@ return $default(_that.id,_that.userId,_that.fullName,_that.email,_that.createdAt
 @JsonSerializable()
 
 class _UserProfileDto implements UserProfileDto {
-  const _UserProfileDto({required this.id, required this.userId, required this.fullName, required this.email, required this.createdAt, this.phoneNumber, this.dateOfBirth, @JsonKey(unknownEnumValue: GenderDto.preferNotToSay) this.gender = GenderDto.preferNotToSay, this.bio, this.profileImageUrl, this.coverImageUrl, this.height, this.weight, this.preferredSport, this.experienceLevel, @JsonKey(unknownEnumValue: UserStatusDto.active) this.status = UserStatusDto.active, this.isEmailVerified = false, this.updatedAt, this.profileCompletionPercentage = 0, final  List<AddressDto> addresses = const [], this.contactInformation, this.preferences, final  List<String> roles = const []}): _addresses = addresses,_roles = roles;
+  const _UserProfileDto({required this.id, required this.userId, required this.fullName, required this.email, required this.createdAt, this.phoneNumber, this.dateOfBirth, @JsonKey(unknownEnumValue: GenderDto.preferNotToSay) this.gender = GenderDto.preferNotToSay, this.bio, this.profileImageUrl, this.coverImageUrl, this.height, this.weight, this.preferredSport, this.experienceLevel, @JsonKey(unknownEnumValue: UserStatusDto.active) this.status = UserStatusDto.active, this.isEmailVerified = false, this.updatedAt, this.profileCompletionPercentage = 0, final  List<AddressDto> addresses = const [], this.contactInformation, this.preferences, final  List<String> roles = const [], this.hasProfile = true}): _addresses = addresses,_roles = roles;
   factory _UserProfileDto.fromJson(Map<String, dynamic> json) => _$UserProfileDtoFromJson(json);
 
 @override final  String id;
@@ -293,6 +294,7 @@ class _UserProfileDto implements UserProfileDto {
   return EqualUnmodifiableListView(_roles);
 }
 
+@override@JsonKey() final  bool hasProfile;
 
 /// Create a copy of UserProfileDto
 /// with the given fields replaced by the non-null parameter values.
@@ -307,16 +309,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserProfileDto&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.email, email) || other.email == email)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.profileImageUrl, profileImageUrl) || other.profileImageUrl == profileImageUrl)&&(identical(other.coverImageUrl, coverImageUrl) || other.coverImageUrl == coverImageUrl)&&(identical(other.height, height) || other.height == height)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.preferredSport, preferredSport) || other.preferredSport == preferredSport)&&(identical(other.experienceLevel, experienceLevel) || other.experienceLevel == experienceLevel)&&(identical(other.status, status) || other.status == status)&&(identical(other.isEmailVerified, isEmailVerified) || other.isEmailVerified == isEmailVerified)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.profileCompletionPercentage, profileCompletionPercentage) || other.profileCompletionPercentage == profileCompletionPercentage)&&const DeepCollectionEquality().equals(other._addresses, _addresses)&&(identical(other.contactInformation, contactInformation) || other.contactInformation == contactInformation)&&(identical(other.preferences, preferences) || other.preferences == preferences)&&const DeepCollectionEquality().equals(other._roles, _roles));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserProfileDto&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.email, email) || other.email == email)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.profileImageUrl, profileImageUrl) || other.profileImageUrl == profileImageUrl)&&(identical(other.coverImageUrl, coverImageUrl) || other.coverImageUrl == coverImageUrl)&&(identical(other.height, height) || other.height == height)&&(identical(other.weight, weight) || other.weight == weight)&&(identical(other.preferredSport, preferredSport) || other.preferredSport == preferredSport)&&(identical(other.experienceLevel, experienceLevel) || other.experienceLevel == experienceLevel)&&(identical(other.status, status) || other.status == status)&&(identical(other.isEmailVerified, isEmailVerified) || other.isEmailVerified == isEmailVerified)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.profileCompletionPercentage, profileCompletionPercentage) || other.profileCompletionPercentage == profileCompletionPercentage)&&const DeepCollectionEquality().equals(other._addresses, _addresses)&&(identical(other.contactInformation, contactInformation) || other.contactInformation == contactInformation)&&(identical(other.preferences, preferences) || other.preferences == preferences)&&const DeepCollectionEquality().equals(other._roles, _roles)&&(identical(other.hasProfile, hasProfile) || other.hasProfile == hasProfile));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,userId,fullName,email,createdAt,phoneNumber,dateOfBirth,gender,bio,profileImageUrl,coverImageUrl,height,weight,preferredSport,experienceLevel,status,isEmailVerified,updatedAt,profileCompletionPercentage,const DeepCollectionEquality().hash(_addresses),contactInformation,preferences,const DeepCollectionEquality().hash(_roles)]);
+int get hashCode => Object.hashAll([runtimeType,id,userId,fullName,email,createdAt,phoneNumber,dateOfBirth,gender,bio,profileImageUrl,coverImageUrl,height,weight,preferredSport,experienceLevel,status,isEmailVerified,updatedAt,profileCompletionPercentage,const DeepCollectionEquality().hash(_addresses),contactInformation,preferences,const DeepCollectionEquality().hash(_roles),hasProfile]);
 
 @override
 String toString() {
-  return 'UserProfileDto(id: $id, userId: $userId, fullName: $fullName, email: $email, createdAt: $createdAt, phoneNumber: $phoneNumber, dateOfBirth: $dateOfBirth, gender: $gender, bio: $bio, profileImageUrl: $profileImageUrl, coverImageUrl: $coverImageUrl, height: $height, weight: $weight, preferredSport: $preferredSport, experienceLevel: $experienceLevel, status: $status, isEmailVerified: $isEmailVerified, updatedAt: $updatedAt, profileCompletionPercentage: $profileCompletionPercentage, addresses: $addresses, contactInformation: $contactInformation, preferences: $preferences, roles: $roles)';
+  return 'UserProfileDto(id: $id, userId: $userId, fullName: $fullName, email: $email, createdAt: $createdAt, phoneNumber: $phoneNumber, dateOfBirth: $dateOfBirth, gender: $gender, bio: $bio, profileImageUrl: $profileImageUrl, coverImageUrl: $coverImageUrl, height: $height, weight: $weight, preferredSport: $preferredSport, experienceLevel: $experienceLevel, status: $status, isEmailVerified: $isEmailVerified, updatedAt: $updatedAt, profileCompletionPercentage: $profileCompletionPercentage, addresses: $addresses, contactInformation: $contactInformation, preferences: $preferences, roles: $roles, hasProfile: $hasProfile)';
 }
 
 
@@ -327,7 +329,7 @@ abstract mixin class _$UserProfileDtoCopyWith<$Res> implements $UserProfileDtoCo
   factory _$UserProfileDtoCopyWith(_UserProfileDto value, $Res Function(_UserProfileDto) _then) = __$UserProfileDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String userId, String fullName, String email, String createdAt, String? phoneNumber, String? dateOfBirth,@JsonKey(unknownEnumValue: GenderDto.preferNotToSay) GenderDto gender, String? bio, String? profileImageUrl, String? coverImageUrl, String? height, String? weight, String? preferredSport, String? experienceLevel,@JsonKey(unknownEnumValue: UserStatusDto.active) UserStatusDto status, bool isEmailVerified, String? updatedAt, int profileCompletionPercentage, List<AddressDto> addresses, ContactDto? contactInformation, UserPreferenceDto? preferences, List<String> roles
+ String id, String userId, String fullName, String email, String createdAt, String? phoneNumber, String? dateOfBirth,@JsonKey(unknownEnumValue: GenderDto.preferNotToSay) GenderDto gender, String? bio, String? profileImageUrl, String? coverImageUrl, String? height, String? weight, String? preferredSport, String? experienceLevel,@JsonKey(unknownEnumValue: UserStatusDto.active) UserStatusDto status, bool isEmailVerified, String? updatedAt, int profileCompletionPercentage, List<AddressDto> addresses, ContactDto? contactInformation, UserPreferenceDto? preferences, List<String> roles, bool hasProfile
 });
 
 
@@ -344,7 +346,7 @@ class __$UserProfileDtoCopyWithImpl<$Res>
 
 /// Create a copy of UserProfileDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? fullName = null,Object? email = null,Object? createdAt = null,Object? phoneNumber = freezed,Object? dateOfBirth = freezed,Object? gender = null,Object? bio = freezed,Object? profileImageUrl = freezed,Object? coverImageUrl = freezed,Object? height = freezed,Object? weight = freezed,Object? preferredSport = freezed,Object? experienceLevel = freezed,Object? status = null,Object? isEmailVerified = null,Object? updatedAt = freezed,Object? profileCompletionPercentage = null,Object? addresses = null,Object? contactInformation = freezed,Object? preferences = freezed,Object? roles = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? fullName = null,Object? email = null,Object? createdAt = null,Object? phoneNumber = freezed,Object? dateOfBirth = freezed,Object? gender = null,Object? bio = freezed,Object? profileImageUrl = freezed,Object? coverImageUrl = freezed,Object? height = freezed,Object? weight = freezed,Object? preferredSport = freezed,Object? experienceLevel = freezed,Object? status = null,Object? isEmailVerified = null,Object? updatedAt = freezed,Object? profileCompletionPercentage = null,Object? addresses = null,Object? contactInformation = freezed,Object? preferences = freezed,Object? roles = null,Object? hasProfile = null,}) {
   return _then(_UserProfileDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -369,7 +371,8 @@ as int,addresses: null == addresses ? _self._addresses : addresses // ignore: ca
 as List<AddressDto>,contactInformation: freezed == contactInformation ? _self.contactInformation : contactInformation // ignore: cast_nullable_to_non_nullable
 as ContactDto?,preferences: freezed == preferences ? _self.preferences : preferences // ignore: cast_nullable_to_non_nullable
 as UserPreferenceDto?,roles: null == roles ? _self._roles : roles // ignore: cast_nullable_to_non_nullable
-as List<String>,
+as List<String>,hasProfile: null == hasProfile ? _self.hasProfile : hasProfile // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

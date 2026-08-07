@@ -700,6 +700,12 @@ abstract class AppLocalizations {
   /// **'Tell us a little about yourself.'**
   String get profileCreateSubtitle;
 
+  /// Message shown on the profile screen when the user has not created a profile yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your profile to get started.'**
+  String get profileCreatePrompt;
+
   /// Section title for the user bio on the profile screen.
   ///
   /// In en, this message translates to:
@@ -1161,6 +1167,312 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Back to dashboard'**
   String get academyBackToDashboard;
+
+  /// Subtitle under the create-academy wizard heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us about your academy and set it up in a few steps.'**
+  String get academyCreateSubtitle;
+
+  /// Current step out of the total wizard steps.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current} of {total}'**
+  String academyStepIndicator(int current, int total);
+
+  /// Label of the basic-information wizard step.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic information'**
+  String get academyStepBasics;
+
+  /// Label of the contact-information wizard step.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact information'**
+  String get academyStepContact;
+
+  /// Label of the address wizard step.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get academyStepAddress;
+
+  /// Label of the branding wizard step.
+  ///
+  /// In en, this message translates to:
+  /// **'Branding'**
+  String get academyStepBranding;
+
+  /// Label of the review-and-submit wizard step.
+  ///
+  /// In en, this message translates to:
+  /// **'Review & submit'**
+  String get academyStepReview;
+
+  /// Label of the academy-name field.
+  ///
+  /// In en, this message translates to:
+  /// **'Academy name'**
+  String get academyNameLabel;
+
+  /// Label of the academy description field.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get academyDescriptionLabel;
+
+  /// Label of the academy-type selector.
+  ///
+  /// In en, this message translates to:
+  /// **'Academy type'**
+  String get academyTypeLabel;
+
+  /// Academy type option: focuses on one sport.
+  ///
+  /// In en, this message translates to:
+  /// **'Single-sport'**
+  String get academyTypeSingleSport;
+
+  /// Helper text for the single-sport academy type.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus on one sport.'**
+  String get academyTypeSingleSportHint;
+
+  /// Academy type option: offers several sports.
+  ///
+  /// In en, this message translates to:
+  /// **'Multi-sport'**
+  String get academyTypeMultiSport;
+
+  /// Helper text for the multi-sport academy type.
+  ///
+  /// In en, this message translates to:
+  /// **'Offer several sports.'**
+  String get academyTypeMultiSportHint;
+
+  /// Label of the sports multi-select.
+  ///
+  /// In en, this message translates to:
+  /// **'Sports offered'**
+  String get academySportsLabel;
+
+  /// Error shown when no sport is selected.
+  ///
+  /// In en, this message translates to:
+  /// **'Select at least one sport.'**
+  String get academySelectAtLeastOneSport;
+
+  /// Label of the contact-person field.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact person'**
+  String get academyContactPersonLabel;
+
+  /// Label of the academy contact email field.
+  ///
+  /// In en, this message translates to:
+  /// **'Academy email'**
+  String get academyEmailLabel;
+
+  /// Label of the academy contact mobile-number field.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile number'**
+  String get academyPhoneLabel;
+
+  /// Label of the optional academy website field.
+  ///
+  /// In en, this message translates to:
+  /// **'Website (optional)'**
+  String get academyWebsiteLabel;
+
+  /// Label of the academy country field.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get academyCountryLabel;
+
+  /// Label of the academy state field.
+  ///
+  /// In en, this message translates to:
+  /// **'State'**
+  String get academyStateLabel;
+
+  /// Label of the academy city field.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get academyCityLabel;
+
+  /// Label of the academy address-line field.
+  ///
+  /// In en, this message translates to:
+  /// **'Address line'**
+  String get academyAddressLineLabel;
+
+  /// Label of the optional academy postal-code field.
+  ///
+  /// In en, this message translates to:
+  /// **'Postal code (optional)'**
+  String get academyPostalCodeLabel;
+
+  /// Label of the academy logo picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Academy logo'**
+  String get academyLogoLabel;
+
+  /// Error shown when no logo was selected.
+  ///
+  /// In en, this message translates to:
+  /// **'Please add an academy logo.'**
+  String get academyLogoRequired;
+
+  /// Helper text for the academy logo picker.
+  ///
+  /// In en, this message translates to:
+  /// **'A clear square logo (JPEG, PNG or WebP, under 5 MB).'**
+  String get academyLogoHint;
+
+  /// Label of the academy cover-image picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Cover image'**
+  String get academyCoverLabel;
+
+  /// Helper text for the academy cover-image picker.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. A wide banner image looks best.'**
+  String get academyCoverHint;
+
+  /// Action that opens the gallery to pick an image.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from gallery'**
+  String get academyChooseImage;
+
+  /// Action that replaces the currently picked image.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace'**
+  String get academyReplaceImage;
+
+  /// Action that removes the currently picked image.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get academyRemoveImage;
+
+  /// Heading of the review-and-submit step.
+  ///
+  /// In en, this message translates to:
+  /// **'Review & submit'**
+  String get academyReviewTitle;
+
+  /// Supporting text under the review-and-submit heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Check everything looks right before creating your academy.'**
+  String get academyReviewSubtitle;
+
+  /// Action that jumps back to a wizard step from the review screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get academyReviewEdit;
+
+  /// Placeholder shown in the review screen when a field is empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Not provided'**
+  String get academyReviewNotProvided;
+
+  /// Label of the wizard back button.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get academyBackButton;
+
+  /// Label of the wizard continue button.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get academyNextButton;
+
+  /// Label of the final create-academy button.
+  ///
+  /// In en, this message translates to:
+  /// **'Create academy'**
+  String get academySubmitButton;
+
+  /// Heading of the edit-academy wizard.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Academy'**
+  String get academyEditTitle;
+
+  /// Subtitle under the edit-academy wizard heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Update your academy details and save the changes.'**
+  String get academyEditSubtitle;
+
+  /// Label of the final save button in the edit-academy wizard.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get academyEditSaveButton;
+
+  /// Note shown when the academy type and sports are read-only while editing.
+  ///
+  /// In en, this message translates to:
+  /// **'Academy type and sports cannot be changed after creation.'**
+  String get academyTypeSportsLocked;
+
+  /// Confirmation shown after a successful academy creation.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has been created. Welcome to Sports Gurukul!'**
+  String academySubmitSuccess(String name);
+
+  /// Error shown when the device has no usable connection.
+  ///
+  /// In en, this message translates to:
+  /// **'You seem to be offline. Check your connection and try again.'**
+  String get academyErrorsNetwork;
+
+  /// Error shown when the server fails (HTTP 5xx).
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong on our side. Please try again later.'**
+  String get academyErrorsServer;
+
+  /// Error shown for a rejected academy request (HTTP 400/422).
+  ///
+  /// In en, this message translates to:
+  /// **'The request could not be processed. Please check your details.'**
+  String get academyErrorsValidation;
+
+  /// Error shown when the user lacks permission to create an academy.
+  ///
+  /// In en, this message translates to:
+  /// **'You do not have permission to create an academy.'**
+  String get academyErrorsPermission;
+
+  /// Fallback error message for unexpected academy failures.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get academyErrorsUnknown;
+
+  /// Error shown when a website URL is malformed.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid URL.'**
+  String get validationUrlInvalid;
 
   /// Role badge label for super-admin and admin roles.
   ///

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sports_gurukul/app/app.dart';
+import 'package:sports_gurukul/features/academy/create/application/my_academy_provider.dart';
 import 'package:sports_gurukul/features/authentication/domain/entities/auth_session.dart';
 import 'package:sports_gurukul/features/authentication/domain/entities/auth_user.dart';
 import 'package:sports_gurukul/features/authentication/presentation/providers/auth_controller.dart';
@@ -46,8 +47,12 @@ Widget buildTestApp({AuthState? state, CurrentUser? currentUser}) {
   final overrides = [
     if (state != null)
       authControllerProvider.overrideWith(() => FakeAuthController(state)),
-    if (currentUser != null)
+    if (currentUser != null) ...[
       currentUserProvider.overrideWith((ref) async => currentUser),
+      // Keep the academy-dashboard branding fetch offline in tests; tests that
+      // assert branding override myAcademyProvider themselves.
+      myAcademyProvider.overrideWith((ref) async => null),
+    ],
   ];
   return ProviderScope(overrides: overrides, child: const SportsGurukulApp());
 }

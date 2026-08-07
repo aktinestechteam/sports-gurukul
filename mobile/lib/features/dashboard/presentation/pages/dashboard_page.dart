@@ -8,7 +8,11 @@ import 'package:sports_gurukul/app/router/route_paths.dart';
 import 'package:sports_gurukul/app/theme/app_shadow.dart';
 import 'package:sports_gurukul/app/theme/colors/app_colors.dart';
 import 'package:sports_gurukul/app/theme/colors/app_gradients.dart';
+import 'package:sports_gurukul/app/theme/radius/app_radius.dart';
 import 'package:sports_gurukul/app/theme/spacing/app_spacing.dart';
+import 'package:sports_gurukul/core/constants/api_constants.dart';
+import 'package:sports_gurukul/features/academy/create/application/my_academy_provider.dart';
+import 'package:sports_gurukul/features/academy/create/domain/entities/academy.dart';
 import 'package:sports_gurukul/features/authentication/presentation/providers/auth_controller.dart';
 import 'package:sports_gurukul/features/dashboard/presentation/widgets/new_user_dashboard.dart';
 import 'package:sports_gurukul/features/onboarding/application/onboarding_providers.dart';
@@ -54,6 +58,7 @@ class DashboardPage extends ConsumerWidget {
     final badge = session == null
         ? null
         : resolveUserStateBadge(l10n, session);
+    final academy = ref.watch(myAcademyProvider).value;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -77,6 +82,10 @@ class DashboardPage extends ConsumerWidget {
                     name: name,
                     badgeLabel: badge?.label,
                     badgeRole: badge?.role,
+                    academy: academy,
+                    onEditAcademy: academy != null
+                        ? () => context.push(RoutePaths.editAcademy)
+                        : null,
                     onProfile: () => context.push(RoutePaths.profile),
                     onLogout: () =>
                         ref.read(authControllerProvider.notifier).logout(),
@@ -122,6 +131,8 @@ class _DashboardHeader extends StatelessWidget {
     required this.onLogout,
     this.badgeLabel,
     this.badgeRole,
+    this.academy,
+    this.onEditAcademy,
   });
 
   final String greeting;
@@ -135,9 +146,19 @@ class _DashboardHeader extends StatelessWidget {
   /// The role driving the badge accent tint (null renders neutral).
   final UserRole? badgeRole;
 
+  /// The admin's academy, when resolved. Its name (and logo thumbnail, when
+  /// one exists) take over the header subtitle line; the avatar keeps the
+  /// user's initials.
+  final Academy? academy;
+
+  /// Opens the edit-academy flow; hidden (and the subtitle row becomes
+  /// non-tappable) when null.
+  final VoidCallback? onEditAcademy;
+
   @override
   Widget build(BuildContext context) {
     final initials = _initials(name);
+    final academyName = academy?.name;
     return Row(
       children: <Widget>[
         Expanded(
@@ -154,14 +175,47 @@ class _DashboardHeader extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.xs),
-              Text(
-                AppLocalizations.of(context).dashboardHeaderSubtitle,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.grey300,
+              if (academyName != null && academyName.isNotEmpty)
+                InkWell(
+                  onTap: onEditAcademy,
+                  borderRadius: BorderRadius.circular(AppRadius.small),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      _AcademyLogo(logoUrl: academy?.logoUrl, size: 20),
+                      const SizedBox(width: AppSpacing.xs),
+                      Flexible(
+                        child: Text(
+                          academyName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                color: AppColors.accent,
+                                fontWeight: FontWeight.w700,
+                              ),
+                        ),
+                      ),
+                      if (onEditAcademy != null) ...<Widget>[
+                        const SizedBox(width: AppSpacing.xs),
+                        const Icon(
+                          Icons.edit_outlined,
+                          color: AppColors.accent,
+                          size: 14,
+                        ),
+                      ],
+                    ],
+                  ),
+                )
+              else
+                Text(
+                  AppLocalizations.of(context).dashboardHeaderSubtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: AppColors.grey300,
+                  ),
                 ),
-              ),
               if (badgeLabel != null) ...<Widget>[
                 const SizedBox(height: AppSpacing.sm),
                 RoleBadge(label: badgeLabel!, role: badgeRole),
@@ -173,13 +227,7 @@ class _DashboardHeader extends StatelessWidget {
           size: 44,
           onTap: onProfile,
           tooltip: AppLocalizations.of(context).profileMyProfileTitle,
-          child: Text(
-            initials,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              color: AppColors.surface,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
+          child: _avatar(context, initials),
         ),
         const SizedBox(width: AppSpacing.sm),
         _GlassCircle(
@@ -196,11 +244,71 @@ class _DashboardHeader extends StatelessWidget {
     );
   }
 
+  /// The avatar content: the user's initials. The academy logo is rendered
+  /// separately as a thumbnail beside the academy name, never inside the
+  /// avatar circle.
+  Widget _avatar(BuildContext context, String initials) {
+    return _initialsText(context, initials);
+  }
+
+  Widget _initialsText(BuildContext context, String initials) {
+    return Text(
+      initials,
+      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+        color: AppColors.surface,
+        fontWeight: FontWeight.w800,
+      ),
+    );
+  }
+
   static String _initials(String name) {
     final parts = name.split(RegExp(r'\s+')).where((p) => p.isNotEmpty);
     final letters = parts.map((p) => p[0].toUpperCase());
     return letters.take(2).join();
   }
+}
+
+/// Small circular academy-logo thumbnail shown beside the academy name.
+///
+/// Renders nothing when the academy has no logo or the image fails to load.
+class _AcademyLogo extends StatelessWidget {
+  const _AcademyLogo({required this.logoUrl, required this.size});
+
+  final String? logoUrl;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final url = _resolveLogoUrl(logoUrl);
+    if (url == null) {
+      return const SizedBox.shrink();
+    }
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(size / 2),
+      child: Image.network(
+        url,
+        width: size,
+        height: size,
+        fit: BoxFit.cover,
+        errorBuilder: (_, _, _) => const SizedBox.shrink(),
+      ),
+    );
+  }
+}
+
+/// Resolves a logo location to an absolute URL. Relative storage paths
+/// (e.g. `uploads\images\x.png`) are normalized and prefixed with the API
+/// base URL so they can be loaded over the network.
+String? _resolveLogoUrl(String? logoUrl) {
+  if (logoUrl == null || logoUrl.isEmpty) {
+    return null;
+  }
+  final normalized = logoUrl.replaceAll(r'\', '/');
+  if (normalized.startsWith('http://') ||
+      normalized.startsWith('https://')) {
+    return normalized;
+  }
+  return '${ApiConstants.baseUrl}/$normalized';
 }
 
 /// Circular glass surface; optionally tappable with a tooltip.

@@ -425,6 +425,10 @@
   "@profileCreateSubtitle": {
     "description": "Subtitle of the profile form when the user has no profile yet."
   },
+  "profileCreatePrompt": "Create your profile to get started.",
+  "@profileCreatePrompt": {
+    "description": "Message shown on the profile screen when the user has not created a profile yet."
+  },
   "profileAboutMe": "About me",
   "@profileAboutMe": {
     "description": "Section title for the user bio on the profile screen."
@@ -732,6 +736,223 @@
   "academyBackToDashboard": "Back to dashboard",
   "@academyBackToDashboard": {
     "description": "Action that returns to the dashboard from an academy placeholder screen."
+  },
+  "academyCreateSubtitle": "Tell us about your academy and set it up in a few steps.",
+  "@academyCreateSubtitle": {
+    "description": "Subtitle under the create-academy wizard heading."
+  },
+  "academyStepIndicator": "Step {current} of {total}",
+  "@academyStepIndicator": {
+    "description": "Current step out of the total wizard steps.",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "academyStepBasics": "Basic information",
+  "@academyStepBasics": {
+    "description": "Label of the basic-information wizard step."
+  },
+  "academyStepContact": "Contact information",
+  "@academyStepContact": {
+    "description": "Label of the contact-information wizard step."
+  },
+  "academyStepAddress": "Address",
+  "@academyStepAddress": {
+    "description": "Label of the address wizard step."
+  },
+  "academyStepBranding": "Branding",
+  "@academyStepBranding": {
+    "description": "Label of the branding wizard step."
+  },
+  "academyStepReview": "Review & submit",
+  "@academyStepReview": {
+    "description": "Label of the review-and-submit wizard step."
+  },
+  "academyNameLabel": "Academy name",
+  "@academyNameLabel": {
+    "description": "Label of the academy-name field."
+  },
+  "academyDescriptionLabel": "Description",
+  "@academyDescriptionLabel": {
+    "description": "Label of the academy description field."
+  },
+  "academyTypeLabel": "Academy type",
+  "@academyTypeLabel": {
+    "description": "Label of the academy-type selector."
+  },
+  "academyTypeSingleSport": "Single-sport",
+  "@academyTypeSingleSport": {
+    "description": "Academy type option: focuses on one sport."
+  },
+  "academyTypeSingleSportHint": "Focus on one sport.",
+  "@academyTypeSingleSportHint": {
+    "description": "Helper text for the single-sport academy type."
+  },
+  "academyTypeMultiSport": "Multi-sport",
+  "@academyTypeMultiSport": {
+    "description": "Academy type option: offers several sports."
+  },
+  "academyTypeMultiSportHint": "Offer several sports.",
+  "@academyTypeMultiSportHint": {
+    "description": "Helper text for the multi-sport academy type."
+  },
+  "academySportsLabel": "Sports offered",
+  "@academySportsLabel": {
+    "description": "Label of the sports multi-select."
+  },
+  "academySelectAtLeastOneSport": "Select at least one sport.",
+  "@academySelectAtLeastOneSport": {
+    "description": "Error shown when no sport is selected."
+  },
+  "academyContactPersonLabel": "Contact person",
+  "@academyContactPersonLabel": {
+    "description": "Label of the contact-person field."
+  },
+  "academyEmailLabel": "Academy email",
+  "@academyEmailLabel": {
+    "description": "Label of the academy contact email field."
+  },
+  "academyPhoneLabel": "Mobile number",
+  "@academyPhoneLabel": {
+    "description": "Label of the academy contact mobile-number field."
+  },
+  "academyWebsiteLabel": "Website (optional)",
+  "@academyWebsiteLabel": {
+    "description": "Label of the optional academy website field."
+  },
+  "academyCountryLabel": "Country",
+  "@academyCountryLabel": {
+    "description": "Label of the academy country field."
+  },
+  "academyStateLabel": "State",
+  "@academyStateLabel": {
+    "description": "Label of the academy state field."
+  },
+  "academyCityLabel": "City",
+  "@academyCityLabel": {
+    "description": "Label of the academy city field."
+  },
+  "academyAddressLineLabel": "Address line",
+  "@academyAddressLineLabel": {
+    "description": "Label of the academy address-line field."
+  },
+  "academyPostalCodeLabel": "Postal code (optional)",
+  "@academyPostalCodeLabel": {
+    "description": "Label of the optional academy postal-code field."
+  },
+  "academyLogoLabel": "Academy logo",
+  "@academyLogoLabel": {
+    "description": "Label of the academy logo picker."
+  },
+  "academyLogoRequired": "Please add an academy logo.",
+  "@academyLogoRequired": {
+    "description": "Error shown when no logo was selected."
+  },
+  "academyLogoHint": "A clear square logo (JPEG, PNG or WebP, under 5 MB).",
+  "@academyLogoHint": {
+    "description": "Helper text for the academy logo picker."
+  },
+  "academyCoverLabel": "Cover image",
+  "@academyCoverLabel": {
+    "description": "Label of the academy cover-image picker."
+  },
+  "academyCoverHint": "Optional. A wide banner image looks best.",
+  "@academyCoverHint": {
+    "description": "Helper text for the academy cover-image picker."
+  },
+  "academyChooseImage": "Choose from gallery",
+  "@academyChooseImage": {
+    "description": "Action that opens the gallery to pick an image."
+  },
+  "academyReplaceImage": "Replace",
+  "@academyReplaceImage": {
+    "description": "Action that replaces the currently picked image."
+  },
+  "academyRemoveImage": "Remove",
+  "@academyRemoveImage": {
+    "description": "Action that removes the currently picked image."
+  },
+  "academyReviewTitle": "Review & submit",
+  "@academyReviewTitle": {
+    "description": "Heading of the review-and-submit step."
+  },
+  "academyReviewSubtitle": "Check everything looks right before creating your academy.",
+  "@academyReviewSubtitle": {
+    "description": "Supporting text under the review-and-submit heading."
+  },
+  "academyReviewEdit": "Edit",
+  "@academyReviewEdit": {
+    "description": "Action that jumps back to a wizard step from the review screen."
+  },
+  "academyReviewNotProvided": "Not provided",
+  "@academyReviewNotProvided": {
+    "description": "Placeholder shown in the review screen when a field is empty."
+  },
+  "academyBackButton": "Back",
+  "@academyBackButton": {
+    "description": "Label of the wizard back button."
+  },
+  "academyNextButton": "Continue",
+  "@academyNextButton": {
+    "description": "Label of the wizard continue button."
+  },
+  "academySubmitButton": "Create academy",
+  "@academySubmitButton": {
+    "description": "Label of the final create-academy button."
+  },
+  "academyEditTitle": "Edit Academy",
+  "@academyEditTitle": {
+    "description": "Heading of the edit-academy wizard."
+  },
+  "academyEditSubtitle": "Update your academy details and save the changes.",
+  "@academyEditSubtitle": {
+    "description": "Subtitle under the edit-academy wizard heading."
+  },
+  "academyEditSaveButton": "Save Changes",
+  "@academyEditSaveButton": {
+    "description": "Label of the final save button in the edit-academy wizard."
+  },
+  "academyTypeSportsLocked": "Academy type and sports cannot be changed after creation.",
+  "@academyTypeSportsLocked": {
+    "description": "Note shown when the academy type and sports are read-only while editing."
+  },
+  "academySubmitSuccess": "{name} has been created. Welcome to Sports Gurukul!",
+  "@academySubmitSuccess": {
+    "description": "Confirmation shown after a successful academy creation.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "academyErrorsNetwork": "You seem to be offline. Check your connection and try again.",
+  "@academyErrorsNetwork": {
+    "description": "Error shown when the device has no usable connection."
+  },
+  "academyErrorsServer": "Something went wrong on our side. Please try again later.",
+  "@academyErrorsServer": {
+    "description": "Error shown when the server fails (HTTP 5xx)."
+  },
+  "academyErrorsValidation": "The request could not be processed. Please check your details.",
+  "@academyErrorsValidation": {
+    "description": "Error shown for a rejected academy request (HTTP 400/422)."
+  },
+  "academyErrorsPermission": "You do not have permission to create an academy.",
+  "@academyErrorsPermission": {
+    "description": "Error shown when the user lacks permission to create an academy."
+  },
+  "academyErrorsUnknown": "Something went wrong. Please try again.",
+  "@academyErrorsUnknown": {
+    "description": "Fallback error message for unexpected academy failures."
+  },
+  "validationUrlInvalid": "Enter a valid URL.",
+  "@validationUrlInvalid": {
+    "description": "Error shown when a website URL is malformed."
   },
   "roleLabelPlatformAdministrator": "Platform Administrator",
   "@roleLabelPlatformAdministrator": {

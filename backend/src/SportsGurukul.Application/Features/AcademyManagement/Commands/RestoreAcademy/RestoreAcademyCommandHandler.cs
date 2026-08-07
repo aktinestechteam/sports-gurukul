@@ -26,7 +26,7 @@ public class RestoreAcademyCommandHandler : IRequestHandler<RestoreAcademyComman
     {
         _logger.LogInformation("Restoring academy with Id: {AcademyId}", request.AcademyId);
 
-        var academy = await _academyRepository.GetByIdAsync(request.AcademyId, cancellationToken);
+        var academy = await _academyRepository.GetByIdIncludingDeletedAsync(request.AcademyId, cancellationToken);
         if (academy is null)
             return Result<Unit>.Failure("Academy not found.");
 

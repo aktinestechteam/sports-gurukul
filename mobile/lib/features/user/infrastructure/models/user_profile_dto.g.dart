@@ -55,6 +55,7 @@ _UserProfileDto _$UserProfileDtoFromJson(
   roles:
       (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList() ??
       const [],
+  hasProfile: json['hasProfile'] as bool? ?? true,
 );
 
 Map<String, dynamic> _$UserProfileDtoToJson(_UserProfileDto instance) =>
@@ -82,6 +83,7 @@ Map<String, dynamic> _$UserProfileDtoToJson(_UserProfileDto instance) =>
       'contactInformation': instance.contactInformation,
       'preferences': instance.preferences,
       'roles': instance.roles,
+      'hasProfile': instance.hasProfile,
     };
 
 const _$GenderDtoEnumMap = {

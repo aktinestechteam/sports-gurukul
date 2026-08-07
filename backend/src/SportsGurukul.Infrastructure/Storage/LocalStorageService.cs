@@ -40,7 +40,7 @@ public class LocalStorageService : IFileStorageService
         _logger.LogInformation("File uploaded locally: {FilePath} ({FileSize} bytes)", filePath, fileSize);
 
         var publicUrl = !string.IsNullOrEmpty(_options.BaseUrl)
-            ? $"{_options.BaseUrl.TrimEnd('/')}/{folder}/{storedFileName}"
+            ? $"{_options.BaseUrl.TrimEnd('/')}/{_options.BasePath.Trim('/')}/{folder}/{storedFileName}"
             : null;
 
         return new FileStorageResult
@@ -83,7 +83,7 @@ public class LocalStorageService : IFileStorageService
         {
             var relativePath = Path.GetRelativePath(_options.BasePath, storagePath)
                 .Replace('\\', '/');
-            return $"{_options.BaseUrl.TrimEnd('/')}/{relativePath}";
+            return $"{_options.BaseUrl.TrimEnd('/')}/{_options.BasePath.Trim('/')}/{relativePath}";
         }
 
         return storagePath;

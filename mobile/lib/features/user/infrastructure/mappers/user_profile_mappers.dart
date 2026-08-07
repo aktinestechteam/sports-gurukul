@@ -44,6 +44,7 @@ abstract final class UserProfileMappers {
         ? toPreference(dto.preferences!)
         : null,
     roles: dto.roles,
+    hasProfile: dto.hasProfile,
   );
 
   static Address toAddress(AddressDto dto) => Address(

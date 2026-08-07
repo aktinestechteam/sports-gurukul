@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sports_gurukul/app/router/route_paths.dart';
+import 'package:sports_gurukul/features/academy/create/presentation/pages/create_academy_page.dart';
 import 'package:sports_gurukul/features/authentication/presentation/providers/auth_controller.dart';
 import 'package:sports_gurukul/features/dashboard/presentation/pages/dashboard_page.dart';
-import 'package:sports_gurukul/features/onboarding/presentation/pages/create_academy_page.dart';
 import 'package:sports_gurukul/features/onboarding/presentation/pages/join_academy_page.dart';
 import 'package:sports_gurukul/features/onboarding/presentation/pages/welcome_page.dart';
 

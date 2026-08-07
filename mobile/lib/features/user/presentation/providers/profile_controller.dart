@@ -56,7 +56,9 @@ class ProfileController extends Notifier<ProfileState> {
     state = const ProfileLoading();
     final result = await ref.read(getCurrentProfileProvider).call();
     state = switch (result) {
-      Success(value: final profile) => ProfileLoaded(profile),
+      Success(value: final profile) => profile.hasProfile
+          ? ProfileLoaded(profile)
+          : const ProfileError('', canCreate: true),
       FailureResult(:final failure) => ProfileError(
         failure.message.isNotEmpty ? failure.message : 'Failed to load profile',
         canCreate: failure.code == UserProfileErrorCodes.notFound,

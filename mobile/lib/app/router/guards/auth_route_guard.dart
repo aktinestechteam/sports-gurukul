@@ -38,8 +38,10 @@ class AuthRouteGuard {
     final isProtectedRoute = switch (location) {
       RoutePaths.welcome ||
       RoutePaths.createAcademy ||
+      RoutePaths.editAcademy ||
       RoutePaths.joinAcademy ||
       RoutePaths.dashboard ||
+      RoutePaths.academyDashboard ||
       RoutePaths.profile ||
       RoutePaths.editProfile ||
       RoutePaths.editPreferences => true,

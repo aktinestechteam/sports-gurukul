@@ -19,11 +19,12 @@ import 'package:sports_gurukul/features/user/infrastructure/error/user_profile_e
 /// [CurrentUserResolutionException] carrying the underlying failure so the
 /// onboarding UI can render a retry state.
 ///
-/// A missing profile is not a failure: registration does not create a
-/// `UserProfile`, so `GET /api/v1/users/me` answers 404 for a brand-new
-/// account. That account is resolved from the auth session as a brand-new
-/// user (default identity, no roles from the profile) so it reaches the
-/// onboarding gate instead of an error screen.
+/// The backend answers 200 with an identity-only payload (fresh roles, no
+/// profile data) for accounts without a `UserProfile`, so roles are always
+/// current even right after an academy creation grants a business role. The
+/// auth-session fallback below only guards against a not-found answer from
+/// older/other sources: registration does not create a `UserProfile`, so such
+/// an answer is treated as a brand-new user instead of an error screen.
 final currentUserProvider = FutureProvider<CurrentUser?>((ref) async {
   final authState = ref.watch(authControllerProvider);
   if (authState is! AuthAuthenticated) return null;

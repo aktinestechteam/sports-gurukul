@@ -8,6 +8,7 @@ import 'package:sports_gurukul/core/result/result.dart';
 import 'package:sports_gurukul/features/authentication/presentation/providers/auth_controller.dart';
 import 'package:sports_gurukul/features/onboarding/application/current_user_resolution_exception.dart';
 import 'package:sports_gurukul/features/onboarding/application/onboarding_providers.dart';
+import 'package:sports_gurukul/features/onboarding/domain/entities/user_role.dart';
 import 'package:sports_gurukul/features/onboarding/domain/entities/user_state.dart';
 import 'package:sports_gurukul/features/onboarding/presentation/providers/onboarding_controller.dart';
 import 'package:sports_gurukul/features/user/application/usecases/get_current_profile.dart';
@@ -116,6 +117,78 @@ void main() {
       expect(
         resolveUserState(
           roles: currentUser.roles,
+          hasAcademyAssociation: currentUser.hasAcademyAssociation,
+        ),
+        UserState.newUser,
+      );
+
+      final onboarding = container.read(onboardingControllerProvider);
+      expect(onboarding, isA<OnboardingResolved>());
+      expect((onboarding as OnboardingResolved).session.isNewUser, isTrue);
+    },
+  );
+
+  test(
+    'a profile-less user carrying a fresh Academy Admin role resolves as an '
+    'academy admin',
+    () async {
+      container = buildContainer(
+        Result.success(
+          UserProfile(
+            id: 'user-1',
+            userId: 'user-1',
+            fullName: 'Test Player',
+            email: 'player@example.com',
+            createdAt: DateTime.utc(2026, 2, 3),
+            roles: const <String>['Athlete', 'Academy Admin'],
+            hasProfile: false,
+          ),
+        ),
+      );
+
+      final currentUser = await container.read(currentUserProvider.future);
+
+      expect(currentUser, isNotNull);
+      expect(currentUser!.roles, contains(UserRole.academy));
+      expect(
+        resolveUserState(
+          roles: currentUser.roles,
+          hasAcademyAssociation: currentUser.hasAcademyAssociation,
+        ),
+        UserState.academyAdmin,
+      );
+
+      final onboarding = container.read(onboardingControllerProvider);
+      expect(onboarding, isA<OnboardingResolved>());
+      final session = (onboarding as OnboardingResolved).session;
+      expect(session.userState, UserState.academyAdmin);
+      expect(session.isNewUser, isFalse);
+    },
+  );
+
+  test(
+    'a profile-less brand-new user with only the default role stays a new user',
+    () async {
+      container = buildContainer(
+        Result.success(
+          UserProfile(
+            id: 'user-1',
+            userId: 'user-1',
+            fullName: 'Test Player',
+            email: 'player@example.com',
+            createdAt: DateTime.utc(2026, 2, 3),
+            roles: const <String>['Athlete'],
+            hasProfile: false,
+          ),
+        ),
+      );
+
+      final currentUser = await container.read(currentUserProvider.future);
+
+      expect(currentUser, isNotNull);
+      expect(
+        resolveUserState(
+          roles: currentUser!.roles,
           hasAcademyAssociation: currentUser.hasAcademyAssociation,
         ),
         UserState.newUser,

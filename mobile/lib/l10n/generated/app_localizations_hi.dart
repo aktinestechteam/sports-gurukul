@@ -339,6 +339,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get profileCreateSubtitle => 'अपने बारे में थोड़ी जानकारी दें।';
 
   @override
+  String get profileCreatePrompt => 'आगे बढ़ने के लिए अपनी प्रोफ़ाइल बनाएं।';
+
+  @override
   String get profileAboutMe => 'मेरे बारे में';
 
   @override
@@ -582,6 +585,173 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get academyBackToDashboard => 'डैशबोर्ड पर वापस जाएँ';
+
+  @override
+  String get academyCreateSubtitle =>
+      'हमें अपनी अकादमी के बारे में बताएं और कुछ चरणों में इसे सेट करें।';
+
+  @override
+  String academyStepIndicator(int current, int total) {
+    return 'चरण $current / $total';
+  }
+
+  @override
+  String get academyStepBasics => 'मूल जानकारी';
+
+  @override
+  String get academyStepContact => 'संपर्क जानकारी';
+
+  @override
+  String get academyStepAddress => 'पता';
+
+  @override
+  String get academyStepBranding => 'ब्रांडिंग';
+
+  @override
+  String get academyStepReview => 'समीक्षा करें और सबमिट करें';
+
+  @override
+  String get academyNameLabel => 'अकादमी का नाम';
+
+  @override
+  String get academyDescriptionLabel => 'विवरण';
+
+  @override
+  String get academyTypeLabel => 'अकादमी का प्रकार';
+
+  @override
+  String get academyTypeSingleSport => 'एकल-खेल';
+
+  @override
+  String get academyTypeSingleSportHint => 'एक खेल पर ध्यान केंद्रित करें।';
+
+  @override
+  String get academyTypeMultiSport => 'बहु-खेल';
+
+  @override
+  String get academyTypeMultiSportHint => 'कई खेलों की पेशकश करें।';
+
+  @override
+  String get academySportsLabel => 'उपलब्ध खेल';
+
+  @override
+  String get academySelectAtLeastOneSport => 'कम से कम एक खेल चुनें।';
+
+  @override
+  String get academyContactPersonLabel => 'संपर्क व्यक्ति';
+
+  @override
+  String get academyEmailLabel => 'अकादमी ईमेल';
+
+  @override
+  String get academyPhoneLabel => 'मोबाइल नंबर';
+
+  @override
+  String get academyWebsiteLabel => 'वेबसाइट (वैकल्पिक)';
+
+  @override
+  String get academyCountryLabel => 'देश';
+
+  @override
+  String get academyStateLabel => 'राज्य';
+
+  @override
+  String get academyCityLabel => 'शहर';
+
+  @override
+  String get academyAddressLineLabel => 'पता पंक्ति';
+
+  @override
+  String get academyPostalCodeLabel => 'पोस्टल कोड (वैकल्पिक)';
+
+  @override
+  String get academyLogoLabel => 'अकादमी लोगो';
+
+  @override
+  String get academyLogoRequired => 'कृपया अकादमी लोगो जोड़ें।';
+
+  @override
+  String get academyLogoHint =>
+      'एक स्पष्ट वर्गाकार लोगो (JPEG, PNG या WebP, 5 MB से कम)।';
+
+  @override
+  String get academyCoverLabel => 'कवर छवि';
+
+  @override
+  String get academyCoverHint => 'वैकल्पिक। चौड़ी बैनर छवि सबसे अच्छी लगती है।';
+
+  @override
+  String get academyChooseImage => 'गैलरी से चुनें';
+
+  @override
+  String get academyReplaceImage => 'बदलें';
+
+  @override
+  String get academyRemoveImage => 'हटाएं';
+
+  @override
+  String get academyReviewTitle => 'समीक्षा करें और सबमिट करें';
+
+  @override
+  String get academyReviewSubtitle =>
+      'अपनी अकादमी बनाने से पहले सब कुछ सही है, जांच लें।';
+
+  @override
+  String get academyReviewEdit => 'संपादित करें';
+
+  @override
+  String get academyReviewNotProvided => 'उपलब्ध नहीं है';
+
+  @override
+  String get academyBackButton => 'वापस';
+
+  @override
+  String get academyNextButton => 'जारी रखें';
+
+  @override
+  String get academySubmitButton => 'अकादमी बनाएं';
+
+  @override
+  String get academyEditTitle => 'अकादमी संपादित करें';
+
+  @override
+  String get academyEditSubtitle =>
+      'अपनी अकादमी का विवरण अपडेट करें और बदलाव सहेजें।';
+
+  @override
+  String get academyEditSaveButton => 'बदलाव सहेजें';
+
+  @override
+  String get academyTypeSportsLocked =>
+      'बनाने के बाद अकादमी का प्रकार और खेल नहीं बदले जा सकते।';
+
+  @override
+  String academySubmitSuccess(String name) {
+    return '$name बन गया है। स्पोर्ट्स गुरुकुल में आपका स्वागत है!';
+  }
+
+  @override
+  String get academyErrorsNetwork =>
+      'आप ऑफ़लाइन लगते हैं। अपना कनेक्शन जांचें और फिर से कोशिश करें।';
+
+  @override
+  String get academyErrorsServer =>
+      'हमारी ओर से कुछ गड़बड़ हुई। कृपया बाद में फिर से प्रयास करें।';
+
+  @override
+  String get academyErrorsValidation =>
+      'अनुरोध संसाधित नहीं किया जा सका। कृपया अपनी जानकारी जांचें।';
+
+  @override
+  String get academyErrorsPermission =>
+      'आपके पास अकादमी बनाने की अनुमति नहीं है।';
+
+  @override
+  String get academyErrorsUnknown =>
+      'कुछ गड़बड़ हुई। कृपया फिर से प्रयास करें।';
+
+  @override
+  String get validationUrlInvalid => 'मान्य URL दर्ज करें।';
 
   @override
   String get roleLabelPlatformAdministrator => 'प्लेटफ़ॉर्म प्रशासक';

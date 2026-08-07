@@ -22,10 +22,17 @@ public class AcademyRepository : Repository<Academy>, IAcademyRepository
             .FirstOrDefaultAsync(a => a.Email == email, cancellationToken);
     }
 
+    public async Task<Academy?> GetByIdIncludingDeletedAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await Context.Academies
+            .IgnoreQueryFilters()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
+    }
+
     public async Task<Academy?> GetByIdWithDetailsAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await Context.Academies
-            .AsNoTracking()
             .Include(a => a.Contact)
             .Include(a => a.OperatingHours)
             .Include(a => a.Verification)
@@ -54,6 +61,25 @@ public class AcademyRepository : Repository<Academy>, IAcademyRepository
             .Include(a => a.GalleryImages)
             .AsSplitQuery()
             .FirstOrDefaultAsync(a => a.AcademyCode == academyCode, cancellationToken);
+    }
+
+    public async Task<Academy?> GetByOwnerUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
+    {
+        return await Context.Academies
+            .AsNoTracking()
+            .Include(a => a.Contact)
+            .Include(a => a.OperatingHours)
+            .Include(a => a.Verification)
+            .Include(a => a.Branches)
+            .Include(a => a.AcademySports).ThenInclude(s => s.Sport).ThenInclude(s => s!.SportCategory)
+            .Include(a => a.Facilities)
+            .Include(a => a.Memberships)
+            .Include(a => a.Documents)
+            .Include(a => a.GalleryImages)
+            .AsSplitQuery()
+            .Where(a => a.OwnedByUserId == userId)
+            .OrderByDescending(a => a.CreatedAt)
+            .FirstOrDefaultAsync(cancellationToken);
     }
 
     public async Task<IReadOnlyList<AcademyBranch>> GetBranchesAsync(Guid academyId, CancellationToken cancellationToken = default)

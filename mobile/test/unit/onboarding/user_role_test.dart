@@ -7,6 +7,7 @@ void main() {
       expect(UserRole.fromName('SuperAdmin'), UserRole.superAdmin);
       expect(UserRole.fromName('Admin'), UserRole.admin);
       expect(UserRole.fromName('Academy'), UserRole.academy);
+      expect(UserRole.fromName('Academy Admin'), UserRole.academy);
       expect(UserRole.fromName('Coach'), UserRole.coach);
       expect(UserRole.fromName('Athlete'), UserRole.athlete);
       expect(UserRole.fromName('Parent'), UserRole.parent);
@@ -20,7 +21,8 @@ void main() {
       expect(UserRole.fromName('Super-Admin'), UserRole.superAdmin);
       expect(UserRole.fromName('SUPER_ADMIN'), UserRole.superAdmin);
       expect(UserRole.fromName('ai-admin'), UserRole.aiAdministrator);
-      expect(UserRole.fromName(' AIAdministrator '), UserRole.aiAdministrator);
+      expect(UserRole.fromName(' Academy Admin '), UserRole.academy);
+      expect(UserRole.fromName('AcademyAdmin'), UserRole.academy);
     });
 
     test('returns null for unknown roles', () {

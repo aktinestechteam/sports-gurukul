@@ -38,6 +38,7 @@ abstract class UserProfileDto with _$UserProfileDto {
     ContactDto? contactInformation,
     UserPreferenceDto? preferences,
     @Default([]) List<String> roles,
+    @Default(true) bool hasProfile,
   }) = _UserProfileDto;
 
   factory UserProfileDto.fromJson(Map<String, dynamic> json) =>

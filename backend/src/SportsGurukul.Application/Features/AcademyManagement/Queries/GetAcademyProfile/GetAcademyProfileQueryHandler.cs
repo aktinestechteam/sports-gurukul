@@ -35,7 +35,7 @@ public class GetAcademyProfileQueryHandler : IRequestHandler<GetAcademyProfileQu
         var socialLinks = await _socialLinkRepository.FindAsync(
             s => s.AcademyId == academy.Id, cancellationToken);
 
-        var dto = CreateAcademyCommandHandler.MapToDto(academy);
+        var dto = AcademyDtoMapper.Map(academy);
 
         dto.Branches = academy.Branches?.Select(b => new BranchDto
         {

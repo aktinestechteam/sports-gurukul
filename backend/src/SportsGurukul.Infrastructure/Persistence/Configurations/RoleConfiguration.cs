@@ -107,6 +107,14 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
                 Description = "Administrator managing AI assistants, prompts, knowledge bases, agents, workflows, and model usage",
                 RoleType = RoleType.AIAdministrator,
                 IsDeleted = false
+            },
+            new Role
+            {
+                Id = Guid.Parse("a1b2c3d4-e5f6-7890-abcd-ef1234567810"),
+                Name = "Academy Admin",
+                Description = "User who created and manages an academy",
+                RoleType = RoleType.AcademyAdmin,
+                IsDeleted = false
             });
     }
 }

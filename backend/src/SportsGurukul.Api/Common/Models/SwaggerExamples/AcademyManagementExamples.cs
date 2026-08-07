@@ -22,7 +22,15 @@ public class CreateAcademyRequestExample : IExamplesProvider<CreateAcademyReques
         EstablishedDate = new DateTime(2020, 6, 15),
         Website = "https://mumbaisportsacademy.com",
         Email = "info@mumbaisportsacademy.com",
-        Phone = "+919876543210"
+        Phone = "+919876543210",
+        AcademyType = "MultiSport",
+        PrimaryContactName = "Rajesh Kumar",
+        Address = "123 Sports Avenue, Andheri West",
+        Country = "India",
+        State = "Maharashtra",
+        City = "Mumbai",
+        PostalCode = "400058",
+        SportNames = ["Cricket", "Football"]
     };
 }
 

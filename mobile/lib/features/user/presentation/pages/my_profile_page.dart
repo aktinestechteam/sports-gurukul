@@ -449,7 +449,7 @@ class _ErrorView extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              message,
+              message.isEmpty ? l10n.profileCreatePrompt : message,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: AppTypography.bodyMedium,

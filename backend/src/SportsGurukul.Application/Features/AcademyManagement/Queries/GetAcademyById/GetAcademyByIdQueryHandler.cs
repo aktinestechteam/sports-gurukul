@@ -35,7 +35,7 @@ public class GetAcademyByIdQueryHandler : IRequestHandler<GetAcademyByIdQuery, R
         var socialLinks = await _socialLinkRepository.FindAsync(
             s => s.AcademyId == request.AcademyId, cancellationToken);
 
-        var dto = CreateAcademyCommandHandler.MapToDto(academy);
+        var dto = AcademyDtoMapper.Map(academy);
 
         dto.Branches = academy.Branches?.Select(b => new BranchDto
         {

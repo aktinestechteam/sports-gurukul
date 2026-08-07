@@ -23,7 +23,12 @@ enum UserRole {
   static UserRole? fromName(String name) => switch (name.trim().toLowerCase()) {
     'superadmin' || 'super-admin' || 'super_admin' => UserRole.superAdmin,
     'admin' => UserRole.admin,
-    'academy' => UserRole.academy,
+    'academy' ||
+    'academyadmin' ||
+    'academy admin' ||
+    'academy-admin' ||
+    'academy_admin' =>
+      UserRole.academy,
     'coach' => UserRole.coach,
     'athlete' => UserRole.athlete,
     'parent' => UserRole.parent,

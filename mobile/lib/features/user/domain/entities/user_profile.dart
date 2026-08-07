@@ -41,6 +41,7 @@ class UserProfile {
     this.contactInformation,
     this.preferences,
     this.roles = const [],
+    this.hasProfile = true,
   });
 
   final String id;
@@ -66,6 +67,11 @@ class UserProfile {
   final ContactInformation? contactInformation;
   final UserPreference? preferences;
   final List<String> roles;
+
+  /// Whether the user has completed a `UserProfile` yet. False for
+  /// identity-only responses returned when no profile exists; the role list is
+  /// authoritative regardless of this flag.
+  final bool hasProfile;
 
   @override
   bool operator ==(Object other) =>

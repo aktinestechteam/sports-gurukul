@@ -2844,6 +2844,11 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<string>("AcademyType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
                     b.Property<string>("BannerUrl")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
@@ -2860,8 +2865,8 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<DateTime?>("EstablishedDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly?>("EstablishedDate")
+                        .HasColumnType("date");
 
                     b.Property<string>("GSTNumber")
                         .HasMaxLength(50)
@@ -2882,6 +2887,9 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
+
+                    b.Property<Guid?>("OwnedByUserId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Phone")
                         .IsRequired()
@@ -2929,6 +2937,9 @@ namespace SportsGurukul.Infrastructure.Migrations
                     b.HasIndex("Name")
                         .HasDatabaseName("IX_Academies_Name");
 
+                    b.HasIndex("OwnedByUserId")
+                        .HasDatabaseName("IX_Academies_OwnedByUserId");
+
                     b.HasIndex("Phone")
                         .HasDatabaseName("IX_Academies_Phone");
 
@@ -2953,6 +2964,7 @@ namespace SportsGurukul.Infrastructure.Migrations
                         {
                             Id = new Guid("a1000000-0000-0000-0000-000000000001"),
                             AcademyCode = "ACAD-SEED-001",
+                            AcademyType = "MultiSport",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Seed academy for development and testing.",
                             Email = "academy.seed@sportsgurukul.com",
@@ -12751,6 +12763,15 @@ namespace SportsGurukul.Infrastructure.Migrations
                             IsDeleted = false,
                             Name = "AI Administrator",
                             RoleType = "AIAdministrator"
+                        },
+                        new
+                        {
+                            Id = new Guid("a1b2c3d4-e5f6-7890-abcd-ef1234567810"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "User who created and manages an academy",
+                            IsDeleted = false,
+                            Name = "Academy Admin",
+                            RoleType = "AcademyAdmin"
                         });
                 });
 

@@ -338,6 +338,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileCreateSubtitle => 'Tell us a little about yourself.';
 
   @override
+  String get profileCreatePrompt => 'Create your profile to get started.';
+
+  @override
   String get profileAboutMe => 'About me';
 
   @override
@@ -582,6 +585,172 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get academyBackToDashboard => 'Back to dashboard';
+
+  @override
+  String get academyCreateSubtitle =>
+      'Tell us about your academy and set it up in a few steps.';
+
+  @override
+  String academyStepIndicator(int current, int total) {
+    return 'Step $current of $total';
+  }
+
+  @override
+  String get academyStepBasics => 'Basic information';
+
+  @override
+  String get academyStepContact => 'Contact information';
+
+  @override
+  String get academyStepAddress => 'Address';
+
+  @override
+  String get academyStepBranding => 'Branding';
+
+  @override
+  String get academyStepReview => 'Review & submit';
+
+  @override
+  String get academyNameLabel => 'Academy name';
+
+  @override
+  String get academyDescriptionLabel => 'Description';
+
+  @override
+  String get academyTypeLabel => 'Academy type';
+
+  @override
+  String get academyTypeSingleSport => 'Single-sport';
+
+  @override
+  String get academyTypeSingleSportHint => 'Focus on one sport.';
+
+  @override
+  String get academyTypeMultiSport => 'Multi-sport';
+
+  @override
+  String get academyTypeMultiSportHint => 'Offer several sports.';
+
+  @override
+  String get academySportsLabel => 'Sports offered';
+
+  @override
+  String get academySelectAtLeastOneSport => 'Select at least one sport.';
+
+  @override
+  String get academyContactPersonLabel => 'Contact person';
+
+  @override
+  String get academyEmailLabel => 'Academy email';
+
+  @override
+  String get academyPhoneLabel => 'Mobile number';
+
+  @override
+  String get academyWebsiteLabel => 'Website (optional)';
+
+  @override
+  String get academyCountryLabel => 'Country';
+
+  @override
+  String get academyStateLabel => 'State';
+
+  @override
+  String get academyCityLabel => 'City';
+
+  @override
+  String get academyAddressLineLabel => 'Address line';
+
+  @override
+  String get academyPostalCodeLabel => 'Postal code (optional)';
+
+  @override
+  String get academyLogoLabel => 'Academy logo';
+
+  @override
+  String get academyLogoRequired => 'Please add an academy logo.';
+
+  @override
+  String get academyLogoHint =>
+      'A clear square logo (JPEG, PNG or WebP, under 5 MB).';
+
+  @override
+  String get academyCoverLabel => 'Cover image';
+
+  @override
+  String get academyCoverHint => 'Optional. A wide banner image looks best.';
+
+  @override
+  String get academyChooseImage => 'Choose from gallery';
+
+  @override
+  String get academyReplaceImage => 'Replace';
+
+  @override
+  String get academyRemoveImage => 'Remove';
+
+  @override
+  String get academyReviewTitle => 'Review & submit';
+
+  @override
+  String get academyReviewSubtitle =>
+      'Check everything looks right before creating your academy.';
+
+  @override
+  String get academyReviewEdit => 'Edit';
+
+  @override
+  String get academyReviewNotProvided => 'Not provided';
+
+  @override
+  String get academyBackButton => 'Back';
+
+  @override
+  String get academyNextButton => 'Continue';
+
+  @override
+  String get academySubmitButton => 'Create academy';
+
+  @override
+  String get academyEditTitle => 'Edit Academy';
+
+  @override
+  String get academyEditSubtitle =>
+      'Update your academy details and save the changes.';
+
+  @override
+  String get academyEditSaveButton => 'Save Changes';
+
+  @override
+  String get academyTypeSportsLocked =>
+      'Academy type and sports cannot be changed after creation.';
+
+  @override
+  String academySubmitSuccess(String name) {
+    return '$name has been created. Welcome to Sports Gurukul!';
+  }
+
+  @override
+  String get academyErrorsNetwork =>
+      'You seem to be offline. Check your connection and try again.';
+
+  @override
+  String get academyErrorsServer =>
+      'Something went wrong on our side. Please try again later.';
+
+  @override
+  String get academyErrorsValidation =>
+      'The request could not be processed. Please check your details.';
+
+  @override
+  String get academyErrorsPermission =>
+      'You do not have permission to create an academy.';
+
+  @override
+  String get academyErrorsUnknown => 'Something went wrong. Please try again.';
+
+  @override
+  String get validationUrlInvalid => 'Enter a valid URL.';
 
   @override
   String get roleLabelPlatformAdministrator => 'Platform Administrator';

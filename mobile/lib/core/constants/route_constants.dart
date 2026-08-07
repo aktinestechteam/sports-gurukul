@@ -22,14 +22,21 @@ abstract final class RouteConstants {
   /// Welcome/onboarding path for brand-new users.
   static const String welcome = '/welcome';
 
-  /// Create-academy flow (navigation placeholder until the feature lands).
+  /// Create-academy flow.
   static const String createAcademy = '/create-academy';
+
+  /// Edit-academy flow (academy admins).
+  static const String editAcademy = '/academy/edit';
 
   /// Join-academy flow (navigation placeholder until the feature lands).
   static const String joinAcademy = '/join-academy';
 
   /// Placeholder dashboard.
   static const String dashboard = '/dashboard';
+
+  /// Academy-admin dashboard reached after creating an academy (placeholder
+  /// until the academy dashboard feature lands).
+  static const String academyDashboard = '/academy-dashboard';
 
   /// Current user's profile.
   static const String profile = '/profile';

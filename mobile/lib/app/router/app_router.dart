@@ -6,13 +6,14 @@ import 'package:sports_gurukul/app/bootstrap/splash_page.dart';
 import 'package:sports_gurukul/app/router/guards/auth_route_guard.dart';
 import 'package:sports_gurukul/app/router/route_names.dart';
 import 'package:sports_gurukul/app/router/route_paths.dart';
+import 'package:sports_gurukul/features/academy/create/presentation/pages/create_academy_page.dart';
+import 'package:sports_gurukul/features/academy/create/presentation/pages/edit_academy_page.dart';
 import 'package:sports_gurukul/features/authentication/presentation/pages/forgot_password_page.dart';
 import 'package:sports_gurukul/features/authentication/presentation/pages/login_page.dart';
 import 'package:sports_gurukul/features/authentication/presentation/pages/reset_password_page.dart';
 import 'package:sports_gurukul/features/authentication/presentation/pages/sign_up_page.dart';
 import 'package:sports_gurukul/features/authentication/presentation/providers/auth_controller.dart';
 import 'package:sports_gurukul/features/dashboard/presentation/pages/dashboard_page.dart';
-import 'package:sports_gurukul/features/onboarding/presentation/pages/create_academy_page.dart';
 import 'package:sports_gurukul/features/onboarding/presentation/pages/join_academy_page.dart';
 import 'package:sports_gurukul/features/onboarding/presentation/pages/welcome_page.dart';
 import 'package:sports_gurukul/features/onboarding/presentation/providers/onboarding_controller.dart';
@@ -99,6 +100,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const CreateAcademyPage(),
       ),
       GoRoute(
+        name: RouteNames.editAcademy,
+        path: RoutePaths.editAcademy,
+        builder: (_, _) => const EditAcademyPage(),
+      ),
+      GoRoute(
         name: RouteNames.joinAcademy,
         path: RoutePaths.joinAcademy,
         builder: (_, _) => const JoinAcademyPage(),
@@ -106,6 +112,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         name: RouteNames.dashboard,
         path: RoutePaths.dashboard,
+        builder: (_, _) => const DashboardPage(),
+      ),
+      GoRoute(
+        name: RouteNames.academyDashboard,
+        path: RoutePaths.academyDashboard,
         builder: (_, _) => const DashboardPage(),
       ),
       GoRoute(

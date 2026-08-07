@@ -15,6 +15,7 @@ public class AcademyDto
     public string Phone { get; set; } = string.Empty;
     public string Status { get; set; } = string.Empty;
     public string VerificationStatus { get; set; } = string.Empty;
+    public string AcademyType { get; set; } = string.Empty;
     public string? LogoUrl { get; set; }
     public string? BannerUrl { get; set; }
     public ContactDto? Contact { get; set; }

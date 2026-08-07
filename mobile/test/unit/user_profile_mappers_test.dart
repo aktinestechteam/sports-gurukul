@@ -75,6 +75,7 @@ void main() {
       expect(profile.isEmailVerified, isTrue);
       expect(profile.profileCompletionPercentage, 85);
       expect(profile.roles, <String>['Player', 'Member']);
+      expect(profile.hasProfile, isTrue);
 
       expect(profile.addresses, hasLength(1));
       expect(profile.addresses.first.addressType, AddressType.home);
@@ -96,6 +97,7 @@ void main() {
         fullName: 'Priya',
         email: 'priya@example.com',
         createdAt: '2026-03-01T10:00:00.0000000Z',
+        hasProfile: false,
       );
 
       final profile = UserProfileMappers.toProfile(dto);
@@ -108,6 +110,7 @@ void main() {
       expect(profile.addresses, isEmpty);
       expect(profile.contactInformation, isNull);
       expect(profile.preferences, isNull);
+      expect(profile.hasProfile, isFalse);
     });
 
     test('toPhoto maps photo metadata', () {

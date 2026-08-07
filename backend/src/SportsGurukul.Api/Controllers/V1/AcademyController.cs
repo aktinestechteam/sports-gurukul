@@ -1,4 +1,5 @@
 using System.Net.Mime;
+using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,8 @@ using SportsGurukul.Application.Features.AcademyManagement.Commands.UpdateAcadem
 using SportsGurukul.Application.Features.AcademyManagement.Commands.UpdateContact;
 using SportsGurukul.Application.Features.AcademyManagement.Commands.UpdateOperatingHours;
 using SportsGurukul.Application.Features.AcademyManagement.Commands.UpdateSocialLinks;
+using SportsGurukul.Application.Features.AcademyManagement.Commands.UploadAcademyBanner;
+using SportsGurukul.Application.Features.AcademyManagement.Commands.UploadAcademyLogo;
 using SportsGurukul.Application.Features.AcademyManagement.Commands.VerifyAcademy;
 using SocialLinkInput = SportsGurukul.Application.Features.AcademyManagement.Commands.UpdateSocialLinks.SocialLinkInput;
 using SportsGurukul.Application.Features.AcademyManagement.Commands.AssignSport;
@@ -19,8 +22,10 @@ using SportsGurukul.Application.Features.AcademyManagement.Commands.RemoveSport;
 using SportsGurukul.Application.Features.AcademyManagement.DTOs;
 using SportsGurukul.Application.Features.AcademyManagement.Queries.GetAcademyById;
 using SportsGurukul.Application.Features.AcademyManagement.Queries.GetAcademyProfile;
+using SportsGurukul.Application.Features.AcademyManagement.Queries.GetMyAcademy;
 using SportsGurukul.Application.Features.AcademyManagement.Queries.GetOperatingHours;
 using SportsGurukul.Application.Features.Authentication.DTOs.Responses;
+using SportsGurukul.Domain.Enums;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace SportsGurukul.Api.Controllers.V1;
@@ -60,7 +65,7 @@ public class AcademyController : ControllerBase
     /// <response code="403">Insufficient permissions</response>
     /// <response code="409">Academy with the same email or registration number already exists</response>
     [HttpPost]
-    [Authorize(Roles = "Academy Admin,System Admin")]
+    [Authorize]
     [ProducesResponseType(typeof(ApiResponse<AcademyDto>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
@@ -73,6 +78,9 @@ public class AcademyController : ControllerBase
     {
         _logger.LogInformation("Creating academy: {AcademyName}", request.Name);
 
+        if (!Enum.TryParse<AcademyType>(request.AcademyType, ignoreCase: true, out var academyType))
+            academyType = AcademyType.MultiSport;
+
         var command = new CreateAcademyCommand
         {
             Name = request.Name,
@@ -83,7 +91,16 @@ public class AcademyController : ControllerBase
             EstablishedDate = request.EstablishedDate,
             Website = request.Website,
             Email = request.Email,
-            Phone = request.Phone
+            Phone = request.Phone,
+            AcademyType = academyType,
+            PrimaryContactName = request.PrimaryContactName,
+            Address = request.Address,
+            Country = request.Country,
+            State = request.State,
+            City = request.City,
+            PostalCode = request.PostalCode,
+            SportNames = request.SportNames,
+            UserId = GetUserId()
         };
 
         var result = await _mediator.Send(command, cancellationToken);
@@ -121,6 +138,39 @@ public class AcademyController : ControllerBase
         _logger.LogInformation("Fetching academy by ID: {AcademyId}", academyId);
 
         var result = await _mediator.Send(new GetAcademyByIdQuery { AcademyId = academyId }, cancellationToken);
+
+        if (!result.IsSuccess)
+            return HandleFailure(result.Error!);
+
+        return Ok(ApiResponse<AcademyDto>.SuccessResult(result.Value!, "Academy retrieved successfully."));
+    }
+
+    /// <summary>
+    /// Gets the academy owned by the current user (their most recently created
+    /// academy), for branding the academy-admin dashboard.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Academy profile</returns>
+    /// <response code="200">Academy retrieved successfully</response>
+    /// <response code="401">Not authenticated</response>
+    /// <response code="404">The user does not own an academy</response>
+    [HttpGet("my")]
+    [Authorize(Roles = "Academy Admin,System Admin")]
+    [ProducesResponseType(typeof(ApiResponse<AcademyDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [SwaggerResponseExample(StatusCodes.Status200OK, typeof(AcademyDtoExample))]
+    public async Task<IActionResult> GetMyAcademy(
+        CancellationToken cancellationToken)
+    {
+        var userId = GetUserId();
+        if (userId is null)
+            return Unauthorized();
+
+        _logger.LogInformation("Fetching academy for current user: {UserId}", userId);
+
+        var result = await _mediator.Send(
+            new GetMyAcademyQuery { UserId = userId.Value }, cancellationToken);
 
         if (!result.IsSuccess)
             return HandleFailure(result.Error!);
@@ -275,6 +325,106 @@ public class AcademyController : ControllerBase
         return Ok(ApiResponse<MessageResponse>.SuccessResult(
             new MessageResponse { Message = "Academy restored successfully." },
             "Academy restored."));
+    }
+
+    #endregion
+
+    #region Branding
+
+    /// <summary>
+    /// Uploads a logo image for an academy. Replaces any existing logo.
+    /// </summary>
+    /// <remarks>
+    /// Accepts JPEG, PNG, or WebP images up to 5 MB.
+    /// </remarks>
+    /// <param name="academyId">The academy's unique identifier</param>
+    /// <param name="file">The logo image file to upload</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Updated academy profile</returns>
+    /// <response code="200">Logo uploaded successfully</response>
+    /// <response code="400">Invalid file type or size</response>
+    /// <response code="401">Not authenticated</response>
+    /// <response code="403">Insufficient permissions</response>
+    /// <response code="404">Academy not found</response>
+    [HttpPost("{academyId:guid}/logo")]
+    [Authorize(Roles = "Academy Admin,System Admin")]
+    [RequestSizeLimit(5 * 1024 * 1024)]
+    [ProducesResponseType(typeof(ApiResponse<AcademyDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UploadAcademyLogo(
+        Guid academyId,
+        IFormFile file,
+        CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("Uploading logo for academy: {AcademyId}", academyId);
+
+        var command = new UploadAcademyLogoCommand
+        {
+            AcademyId = academyId,
+            FileName = file.FileName,
+            ContentType = file.ContentType,
+            FileContent = await ReadFileAsync(file, cancellationToken)
+        };
+
+        var result = await _mediator.Send(command, cancellationToken);
+
+        if (!result.IsSuccess)
+            return HandleFailure(result.Error!);
+
+        _logger.LogInformation("Logo uploaded for academy: {AcademyId}", academyId);
+
+        return Ok(ApiResponse<AcademyDto>.SuccessResult(result.Value!, "Academy logo uploaded successfully."));
+    }
+
+    /// <summary>
+    /// Uploads a banner image for an academy. Replaces any existing banner.
+    /// </summary>
+    /// <remarks>
+    /// Accepts JPEG, PNG, or WebP images up to 5 MB.
+    /// </remarks>
+    /// <param name="academyId">The academy's unique identifier</param>
+    /// <param name="file">The banner image file to upload</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Updated academy profile</returns>
+    /// <response code="200">Banner uploaded successfully</response>
+    /// <response code="400">Invalid file type or size</response>
+    /// <response code="401">Not authenticated</response>
+    /// <response code="403">Insufficient permissions</response>
+    /// <response code="404">Academy not found</response>
+    [HttpPost("{academyId:guid}/banner")]
+    [Authorize(Roles = "Academy Admin,System Admin")]
+    [RequestSizeLimit(5 * 1024 * 1024)]
+    [ProducesResponseType(typeof(ApiResponse<AcademyDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UploadAcademyBanner(
+        Guid academyId,
+        IFormFile file,
+        CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("Uploading banner for academy: {AcademyId}", academyId);
+
+        var command = new UploadAcademyBannerCommand
+        {
+            AcademyId = academyId,
+            FileName = file.FileName,
+            ContentType = file.ContentType,
+            FileContent = await ReadFileAsync(file, cancellationToken)
+        };
+
+        var result = await _mediator.Send(command, cancellationToken);
+
+        if (!result.IsSuccess)
+            return HandleFailure(result.Error!);
+
+        _logger.LogInformation("Banner uploaded for academy: {AcademyId}", academyId);
+
+        return Ok(ApiResponse<AcademyDto>.SuccessResult(result.Value!, "Academy banner uploaded successfully."));
     }
 
     #endregion
@@ -657,6 +807,19 @@ public class AcademyController : ControllerBase
     #endregion
 
     #region Helpers
+
+    private static async Task<byte[]> ReadFileAsync(IFormFile file, CancellationToken cancellationToken)
+    {
+        using var memoryStream = new MemoryStream();
+        await file.CopyToAsync(memoryStream, cancellationToken);
+        return memoryStream.ToArray();
+    }
+
+    private Guid? GetUserId()
+    {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        return Guid.TryParse(userIdClaim, out var userId) ? userId : null;
+    }
 
     private IActionResult HandleFailure(string error)
     {
