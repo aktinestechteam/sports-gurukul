@@ -27,4 +27,11 @@ public class UserProfileDto
     public ContactDto? ContactInformation { get; set; }
     public UserPreferenceDto? Preferences { get; set; }
     public IReadOnlyList<string> Roles { get; set; } = [];
+
+    /// <summary>
+    /// Whether the user has a completed <c>UserProfile</c> yet. False when the
+    /// endpoint answers with an identity-only payload because no profile
+    /// exists; roles are always current regardless of this flag.
+    /// </summary>
+    public bool HasProfile { get; set; } = true;
 }

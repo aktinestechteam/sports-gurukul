@@ -53,23 +53,48 @@ public class UpdateUserProfileCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handle_Should_ReturnFailure_When_ProfileNotFound()
+    public async Task Handle_Should_CreateProfile_When_ProfileNotFound()
     {
         var user = CreateTestUser();
+        var createdProfile = new UserProfile
+        {
+            Id = Guid.NewGuid(),
+            UserId = _userId,
+            Gender = Gender.Female,
+            Bio = "New bio",
+            Addresses = new List<Address>(),
+            ContactInformation = null,
+            UserPreference = null
+        };
 
         _userRepositoryMock
             .Setup(r => r.GetByIdAsync(_userId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(user);
         _userProfileRepositoryMock
-            .Setup(r => r.GetFullProfileAsync(_userId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync((UserProfile?)null);
+            .SetupSequence(r => r.GetFullProfileAsync(_userId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync((UserProfile?)null)
+            .ReturnsAsync(createdProfile);
+        _unitOfWorkMock
+            .Setup(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(1);
 
         var result = await _handler.Handle(
-            new UpdateUserProfileCommand { UserId = _userId },
+            new UpdateUserProfileCommand
+            {
+                UserId = _userId,
+                Bio = "New bio",
+                Gender = Gender.Female
+            },
             CancellationToken.None);
 
-        result.IsSuccess.Should().BeFalse();
-        result.Error.Should().Be("Profile not found. Please create a profile first.");
+        result.IsSuccess.Should().BeTrue();
+        _userProfileRepositoryMock.Verify(r => r.AddAsync(
+            It.Is<UserProfile>(p =>
+                p.UserId == _userId &&
+                p.Bio == "New bio" &&
+                p.Gender == Gender.Female),
+            It.IsAny<CancellationToken>()), Times.Once);
+        _userProfileRepositoryMock.Verify(r => r.Update(It.IsAny<UserProfile>()), Times.Never);
     }
 
     [Fact]

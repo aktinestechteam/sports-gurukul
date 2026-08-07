@@ -1,0 +1,1013 @@
+{
+  "@@locale": "en",
+  "appTitle": "Sports Gurukul",
+  "@appTitle": {
+    "description": "The application name displayed in the app bar and launcher."
+  },
+  "appSplashTagline": "Train • Compete • Excel",
+  "@appSplashTagline": {
+    "description": "Tagline shown on the splash screen."
+  },
+  "appInitializing": "Initializing Sports Gurukul…",
+  "@appInitializing": {
+    "description": "Status text shown on the splash screen while the app initializes."
+  },
+  "dashboardInitializedTitle": "Project Initialized Successfully",
+  "@dashboardInitializedTitle": {
+    "description": "Placeholder dashboard heading shown after successful project bootstrap."
+  },
+  "dashboardInitializedMessage": "The Sports Gurukul mobile foundation is ready. Features will be delivered in upcoming sprints.",
+  "@dashboardInitializedMessage": {
+    "description": "Placeholder dashboard body text describing the current project state."
+  },
+  "dashboardGreetingMorning": "Good morning, {name}",
+  "@dashboardGreetingMorning": {
+    "description": "Dashboard greeting shown before noon.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardGreetingAfternoon": "Good afternoon, {name}",
+  "@dashboardGreetingAfternoon": {
+    "description": "Dashboard greeting shown between noon and evening.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardGreetingEvening": "Good evening, {name}",
+  "@dashboardGreetingEvening": {
+    "description": "Dashboard greeting shown in the evening.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardHeaderSubtitle": "Your performance, one glance away.",
+  "@dashboardHeaderSubtitle": {
+    "description": "Subtitle under the dashboard greeting."
+  },
+  "dashboardStatActiveDays": "Active days",
+  "@dashboardStatActiveDays": {
+    "description": "Label of the active-days stat card."
+  },
+  "dashboardStatAvgIntensity": "Avg intensity",
+  "@dashboardStatAvgIntensity": {
+    "description": "Label of the average-intensity stat card."
+  },
+  "dashboardStatRecovery": "Recovery",
+  "@dashboardStatRecovery": {
+    "description": "Label of the recovery stat card."
+  },
+  "dashboardWeeklyTarget": "Weekly target",
+  "@dashboardWeeklyTarget": {
+    "description": "Title of the weekly-target progress card."
+  },
+  "dashboardWeeklyTargetDone": "18 of 24 sessions completed this week",
+  "@dashboardWeeklyTargetDone": {
+    "description": "Supporting text under the weekly-target progress."
+  },
+  "dashboardQuickActions": "Quick actions",
+  "@dashboardQuickActions": {
+    "description": "Section title for the quick-action cards."
+  },
+  "dashboardActionBookSession": "Book session",
+  "@dashboardActionBookSession": {
+    "description": "Quick action that starts session booking."
+  },
+  "dashboardActionFindCoach": "Find coach",
+  "@dashboardActionFindCoach": {
+    "description": "Quick action that searches for a coach."
+  },
+  "dashboardActionLeaderboards": "Leaderboards",
+  "@dashboardActionLeaderboards": {
+    "description": "Quick action that opens the leaderboards."
+  },
+  "dashboardActionTournaments": "Tournaments",
+  "@dashboardActionTournaments": {
+    "description": "Quick action that lists tournaments."
+  },
+  "dashboardTabOverview": "Overview",
+  "@dashboardTabOverview": {
+    "description": "Dashboard tab showing a weekly snapshot."
+  },
+  "dashboardTabTraining": "Training",
+  "@dashboardTabTraining": {
+    "description": "Dashboard tab showing upcoming training sessions."
+  },
+  "dashboardTabInsights": "Insights",
+  "@dashboardTabInsights": {
+    "description": "Dashboard tab showing performance insights."
+  },
+  "dashboardUpcomingSessions": "Upcoming sessions",
+  "@dashboardUpcomingSessions": {
+    "description": "Title of the upcoming-sessions list."
+  },
+  "dashboardSessionEveningRun": "Evening run",
+  "@dashboardSessionEveningRun": {
+    "description": "Name of an upcoming training session."
+  },
+  "dashboardSessionEveningRunTime": "Today · 6:00 PM",
+  "@dashboardSessionEveningRunTime": {
+    "description": "Date and time of the evening-run session."
+  },
+  "dashboardSessionSquadStrength": "Squad strength",
+  "@dashboardSessionSquadStrength": {
+    "description": "Name of an upcoming training session."
+  },
+  "dashboardSessionSquadStrengthTime": "Wed · 5:30 AM",
+  "@dashboardSessionSquadStrengthTime": {
+    "description": "Date and time of the squad-strength session."
+  },
+  "dashboardInsightRecovery": "Recovery score is up 12% this week",
+  "@dashboardInsightRecovery": {
+    "description": "Insight card describing an improving recovery score."
+  },
+  "dashboardInsightIntensity": "4 days in the target intensity zone",
+  "@dashboardInsightIntensity": {
+    "description": "Insight card describing intensity-zone adherence."
+  },
+  "dashboardInsightRestDay": "Rest day optimized for Wednesday",
+  "@dashboardInsightRestDay": {
+    "description": "Insight card recommending a rest day."
+  },
+  "authLoginTitle": "Welcome!",
+  "@authLoginTitle": {
+    "description": "Heading of the login screen."
+  },
+  "authLoginSubtitle": "Sign in to continue to Sports Gurukul.",
+  "@authLoginSubtitle": {
+    "description": "Supporting text under the login heading."
+  },
+  "authLoginEmailLabel": "Email",
+  "@authLoginEmailLabel": {
+    "description": "Label of the email field on login and forgot-password screens."
+  },
+  "authLoginPasswordLabel": "Password",
+  "@authLoginPasswordLabel": {
+    "description": "Label of the password field on the login screen."
+  },
+  "authLoginSubmit": "Sign in",
+  "@authLoginSubmit": {
+    "description": "Label of the login submit button."
+  },
+  "authLoginForgotPassword": "Forgot password?",
+  "@authLoginForgotPassword": {
+    "description": "Link to the forgot-password screen."
+  },
+  "authLoginRememberMe": "Remember Me",
+  "@authLoginRememberMe": {
+    "description": "Label of the remember-me checkbox on the login screen."
+  },
+  "authLoginOr": "OR",
+  "@authLoginOr": {
+    "description": "Divider label between the primary login action and alternative sign-in options."
+  },
+  "authLoginDontHaveAccount": "Don't have an account?",
+  "@authLoginDontHaveAccount": {
+    "description": "Prompt above the sign-up link on the login screen."
+  },
+  "authLoginSignUp": "Sign Up",
+  "@authLoginSignUp": {
+    "description": "Link to account creation shown on the login screen."
+  },
+  "authSignUpTitle": "Create your account",
+  "@authSignUpTitle": {
+    "description": "Heading of the sign-up screen."
+  },
+  "authSignUpSubtitle": "Create a Sports Gurukul account to start your journey.",
+  "@authSignUpSubtitle": {
+    "description": "Supporting text under the sign-up heading."
+  },
+  "authSignUpNameLabel": "Full name",
+  "@authSignUpNameLabel": {
+    "description": "Label of the full-name field on the sign-up screen."
+  },
+  "authSignUpPhoneLabel": "Phone number",
+  "@authSignUpPhoneLabel": {
+    "description": "Label of the optional phone-number field on the sign-up screen."
+  },
+  "authSignUpConfirmPasswordLabel": "Confirm password",
+  "@authSignUpConfirmPasswordLabel": {
+    "description": "Label of the confirm-password field on the sign-up screen."
+  },
+  "authSignUpSubmit": "Create account",
+  "@authSignUpSubmit": {
+    "description": "Label of the sign-up submit button."
+  },
+  "authSignUpAlreadyHaveAccount": "Already have an account?",
+  "@authSignUpAlreadyHaveAccount": {
+    "description": "Prompt above the sign-in link on the sign-up screen."
+  },
+  "authSignUpSignIn": "Sign In",
+  "@authSignUpSignIn": {
+    "description": "Link to the login screen shown on the sign-up screen."
+  },
+  "authSignUpSuccess": "Account created successfully. You are signed in.",
+  "@authSignUpSuccess": {
+    "description": "Confirmation shown after a successful registration."
+  },
+  "authForgotTitle": "Reset your password",
+  "@authForgotTitle": {
+    "description": "Heading of the forgot-password screen."
+  },
+  "authForgotSubtitle": "Enter your email and we will send you a reset link.",
+  "@authForgotSubtitle": {
+    "description": "Supporting text under the forgot-password heading."
+  },
+  "authForgotSubmit": "Send reset link",
+  "@authForgotSubmit": {
+    "description": "Label of the forgot-password submit button."
+  },
+  "authForgotEmailSent": "If an account with that email exists, a reset link has been sent.",
+  "@authForgotEmailSent": {
+    "description": "Confirmation shown after requesting a password reset email."
+  },
+  "authForgotBackToLogin": "Back to sign in",
+  "@authForgotBackToLogin": {
+    "description": "Link back to the login screen from the forgot/reset screens."
+  },
+  "authResetTitle": "Choose a new password",
+  "@authResetTitle": {
+    "description": "Heading of the reset-password screen."
+  },
+  "authResetSubtitle": "Enter a strong password you have not used before.",
+  "@authResetSubtitle": {
+    "description": "Supporting text under the reset-password heading."
+  },
+  "authResetNewPasswordLabel": "New password",
+  "@authResetNewPasswordLabel": {
+    "description": "Label of the new-password field on the reset screen."
+  },
+  "authResetConfirmPasswordLabel": "Confirm new password",
+  "@authResetConfirmPasswordLabel": {
+    "description": "Label of the confirm-password field on the reset screen."
+  },
+  "authResetSubmit": "Reset password",
+  "@authResetSubmit": {
+    "description": "Label of the reset-password submit button."
+  },
+  "authResetSuccess": "Password reset successfully. Please sign in with your new password.",
+  "@authResetSuccess": {
+    "description": "Confirmation shown after a successful password reset."
+  },
+  "authResetMissingToken": "This reset link is missing a token. Please open it from your email.",
+  "@authResetMissingToken": {
+    "description": "Shown when the reset screen is opened without a token."
+  },
+  "authShowPassword": "Show password",
+  "@authShowPassword": {
+    "description": "Tooltip for the show-password toggle."
+  },
+  "authHidePassword": "Hide password",
+  "@authHidePassword": {
+    "description": "Tooltip for the hide-password toggle."
+  },
+  "authLogout": "Log out",
+  "@authLogout": {
+    "description": "Tooltip and action label for signing out."
+  },
+  "authErrorsInvalidCredentials": "Invalid email or password.",
+  "@authErrorsInvalidCredentials": {
+    "description": "Error shown when login credentials are rejected."
+  },
+  "authErrorsAccountLocked": "Account locked due to too many failed attempts. Try again in 15 minutes.",
+  "@authErrorsAccountLocked": {
+    "description": "Error shown when the account is temporarily locked."
+  },
+  "authErrorsSessionExpired": "Your session has expired. Please sign in again.",
+  "@authErrorsSessionExpired": {
+    "description": "Error shown when a session cannot be refreshed."
+  },
+  "authErrorsBadRequest": "The request could not be processed. Please check your details.",
+  "@authErrorsBadRequest": {
+    "description": "Error shown for a rejected request (HTTP 400)."
+  },
+  "authErrorsNetwork": "You seem to be offline. Check your connection and try again.",
+  "@authErrorsNetwork": {
+    "description": "Error shown when the device has no usable connection."
+  },
+  "authErrorsRateLimited": "Too many attempts. Please try again later.",
+  "@authErrorsRateLimited": {
+    "description": "Error shown when the backend rate-limits a request."
+  },
+  "authErrorsServer": "Something went wrong on our side. Please try again later.",
+  "@authErrorsServer": {
+    "description": "Error shown when the server fails (HTTP 5xx)."
+  },
+  "authErrorsUnknown": "Something went wrong. Please try again.",
+  "@authErrorsUnknown": {
+    "description": "Fallback error message for unexpected failures."
+  },
+  "validationRequired": "This field is required.",
+  "@validationRequired": {
+    "description": "Error shown when a required field is empty."
+  },
+  "validationEmailInvalid": "Enter a valid email address.",
+  "@validationEmailInvalid": {
+    "description": "Error shown when an email address is malformed."
+  },
+  "validationPasswordTooShort": "Password must be at least {min} characters.",
+  "@validationPasswordTooShort": {
+    "description": "Error shown when a password is too short.",
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "validationPasswordTooLong": "Password must be at most {max} characters.",
+  "@validationPasswordTooLong": {
+    "description": "Error shown when a password is too long.",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "validationPasswordUppercase": "Password must contain at least one uppercase letter.",
+  "@validationPasswordUppercase": {
+    "description": "Error shown when a password lacks an uppercase letter."
+  },
+  "validationPasswordLowercase": "Password must contain at least one lowercase letter.",
+  "@validationPasswordLowercase": {
+    "description": "Error shown when a password lacks a lowercase letter."
+  },
+  "validationPasswordDigit": "Password must contain at least one number.",
+  "@validationPasswordDigit": {
+    "description": "Error shown when a password lacks a digit."
+  },
+  "validationPasswordSpecial": "Password must contain at least one special character.",
+  "@validationPasswordSpecial": {
+    "description": "Error shown when a password lacks a special character."
+  },
+  "validationPasswordMismatch": "Passwords do not match.",
+  "@validationPasswordMismatch": {
+    "description": "Error shown when the confirm-password field differs from the password."
+  },
+  "validationPhoneInvalid": "Enter a valid 10-digit mobile number.",
+  "@validationPhoneInvalid": {
+    "description": "Error shown when a phone number is not a valid 10-digit Indian mobile number."
+  },
+  "validationDateInvalid": "Enter a valid date.",
+  "@validationDateInvalid": {
+    "description": "Error shown when a date field is malformed."
+  },
+  "validationDateFuture": "Date of birth cannot be in the future.",
+  "@validationDateFuture": {
+    "description": "Error shown when a date of birth is in the future."
+  },
+  "validationNumberInvalid": "Enter a valid number.",
+  "@validationNumberInvalid": {
+    "description": "Error shown when a numeric field is not a number."
+  },
+  "validationPostalCodeInvalid": "Enter a valid postal code.",
+  "@validationPostalCodeInvalid": {
+    "description": "Error shown when a postal code is malformed."
+  },
+  "profileMyProfileTitle": "My Profile",
+  "@profileMyProfileTitle": {
+    "description": "Title of the my-profile screen."
+  },
+  "profileRetry": "Retry",
+  "@profileRetry": {
+    "description": "Label of the retry action on the profile error state."
+  },
+  "profileErrorTitle": "Could not load profile",
+  "@profileErrorTitle": {
+    "description": "Title shown when the profile fails to load."
+  },
+  "profileFullName": "Full name",
+  "@profileFullName": {
+    "description": "Label of the full-name field on the profile screen."
+  },
+  "profileEmail": "Email",
+  "@profileEmail": {
+    "description": "Label of the email field on the profile screen."
+  },
+  "profilePhone": "Phone",
+  "@profilePhone": {
+    "description": "Label of the phone field on the profile screen."
+  },
+  "profilePreferredSport": "Preferred sport",
+  "@profilePreferredSport": {
+    "description": "Label of the preferred-sport field on the profile screen."
+  },
+  "profileExperienceLevel": "Experience level",
+  "@profileExperienceLevel": {
+    "description": "Label of the experience-level field on the profile screen."
+  },
+  "profileHeight": "Height",
+  "@profileHeight": {
+    "description": "Label of the height field on the profile screen."
+  },
+  "profileWeight": "Weight",
+  "@profileWeight": {
+    "description": "Label of the weight field on the profile screen."
+  },
+  "profileEditProfile": "Edit profile",
+  "@profileEditProfile": {
+    "description": "Action that opens the edit-profile screen."
+  },
+  "profileCreateProfile": "Create profile",
+  "@profileCreateProfile": {
+    "description": "Action shown when no profile exists yet; opens the create-profile form."
+  },
+  "profileCreateTitle": "Create profile",
+  "@profileCreateTitle": {
+    "description": "Title of the profile form when the user has no profile yet."
+  },
+  "profileCreateSubtitle": "Tell us a little about yourself.",
+  "@profileCreateSubtitle": {
+    "description": "Subtitle of the profile form when the user has no profile yet."
+  },
+  "profileCreatePrompt": "Create your profile to get started.",
+  "@profileCreatePrompt": {
+    "description": "Message shown on the profile screen when the user has not created a profile yet."
+  },
+  "profileAboutMe": "About me",
+  "@profileAboutMe": {
+    "description": "Section title for the user bio on the profile screen."
+  },
+  "profileAddresses": "Addresses",
+  "@profileAddresses": {
+    "description": "Section title for the user addresses on the profile screen."
+  },
+  "profileEditTitle": "Edit profile",
+  "@profileEditTitle": {
+    "description": "Title of the edit-profile screen."
+  },
+  "profileEditSubtitle": "Keep your details up to date.",
+  "@profileEditSubtitle": {
+    "description": "Subtitle of the edit-profile screen."
+  },
+  "profileEditBasicInfo": "Basic information",
+  "@profileEditBasicInfo": {
+    "description": "Section heading for the basic-information fields."
+  },
+  "profileGender": "Gender",
+  "@profileGender": {
+    "description": "Label of the gender field on the edit-profile screen."
+  },
+  "profileGenderMale": "Male",
+  "@profileGenderMale": {
+    "description": "Gender option: male."
+  },
+  "profileGenderFemale": "Female",
+  "@profileGenderFemale": {
+    "description": "Gender option: female."
+  },
+  "profileGenderNonBinary": "Non-binary",
+  "@profileGenderNonBinary": {
+    "description": "Gender option: non-binary."
+  },
+  "profileGenderPreferNotToSay": "Prefer not to say",
+  "@profileGenderPreferNotToSay": {
+    "description": "Gender option: prefer not to say."
+  },
+  "profileBio": "Bio",
+  "@profileBio": {
+    "description": "Label of the bio field on the edit-profile screen."
+  },
+  "profileEditContactInfo": "Contact information",
+  "@profileEditContactInfo": {
+    "description": "Section heading for the contact-information fields."
+  },
+  "profileCountryCode": "Code",
+  "@profileCountryCode": {
+    "description": "Label of the phone country-code field."
+  },
+  "profileEditAddress": "Address",
+  "@profileEditAddress": {
+    "description": "Section heading for the address fields."
+  },
+  "profileAddressType": "Address type",
+  "@profileAddressType": {
+    "description": "Label of the address-type field."
+  },
+  "profileAddressTypeHome": "Home",
+  "@profileAddressTypeHome": {
+    "description": "Address type option: home."
+  },
+  "profileAddressTypeWork": "Work",
+  "@profileAddressTypeWork": {
+    "description": "Address type option: work."
+  },
+  "profileAddressTypeAcademy": "Academy",
+  "@profileAddressTypeAcademy": {
+    "description": "Address type option: academy."
+  },
+  "profileAddressTypeOther": "Other",
+  "@profileAddressTypeOther": {
+    "description": "Address type option: other."
+  },
+  "profileAddressLine1": "Address line 1",
+  "@profileAddressLine1": {
+    "description": "Label of the address-line-1 field."
+  },
+  "profileAddressLine2": "Address line 2",
+  "@profileAddressLine2": {
+    "description": "Label of the address-line-2 field."
+  },
+  "profileCity": "City",
+  "@profileCity": {
+    "description": "Label of the city field."
+  },
+  "profileState": "State",
+  "@profileState": {
+    "description": "Label of the state field."
+  },
+  "profileCountry": "Country",
+  "@profileCountry": {
+    "description": "Label of the country field."
+  },
+  "profilePostalCode": "Postal code",
+  "@profilePostalCode": {
+    "description": "Label of the postal-code field."
+  },
+  "profileDateOfBirth": "Date of birth",
+  "@profileDateOfBirth": {
+    "description": "Label of the date-of-birth field."
+  },
+  "profileSave": "Save",
+  "@profileSave": {
+    "description": "Label of the save button on edit forms."
+  },
+  "profileUpdateSuccess": "Profile updated successfully.",
+  "@profileUpdateSuccess": {
+    "description": "Confirmation shown after a successful profile update."
+  },
+  "profilePreferencesTitle": "Preferences",
+  "@profilePreferencesTitle": {
+    "description": "Title of the edit-preferences screen."
+  },
+  "profilePreferencesSubtitle": "Customize notifications, appearance and privacy.",
+  "@profilePreferencesSubtitle": {
+    "description": "Subtitle of the edit-preferences screen."
+  },
+  "profilePreferencesAppearance": "Appearance",
+  "@profilePreferencesAppearance": {
+    "description": "Section heading for the appearance preferences."
+  },
+  "profilePreferencesTheme": "Theme",
+  "@profilePreferencesTheme": {
+    "description": "Label of the theme preference dropdown."
+  },
+  "profileThemeLight": "Light",
+  "@profileThemeLight": {
+    "description": "Theme option: light."
+  },
+  "profileThemeDark": "Dark",
+  "@profileThemeDark": {
+    "description": "Theme option: dark."
+  },
+  "profileThemeSystem": "System",
+  "@profileThemeSystem": {
+    "description": "Theme option: follow system."
+  },
+  "profilePreferencesNotifications": "Notifications",
+  "@profilePreferencesNotifications": {
+    "description": "Section heading for the notification preferences."
+  },
+  "profilePreferenceEmailNotifications": "Email notifications",
+  "@profilePreferenceEmailNotifications": {
+    "description": "Toggle for email notifications."
+  },
+  "profilePreferencePushNotifications": "Push notifications",
+  "@profilePreferencePushNotifications": {
+    "description": "Toggle for push notifications."
+  },
+  "profilePreferenceSmsNotifications": "SMS notifications",
+  "@profilePreferenceSmsNotifications": {
+    "description": "Toggle for SMS notifications."
+  },
+  "profilePreferenceMarketingEmails": "Marketing emails",
+  "@profilePreferenceMarketingEmails": {
+    "description": "Toggle for marketing emails."
+  },
+  "profilePreferencesPrivacy": "Privacy",
+  "@profilePreferencesPrivacy": {
+    "description": "Section heading for the privacy preferences."
+  },
+  "profilePreferenceProfileVisibility": "Profile visibility",
+  "@profilePreferenceProfileVisibility": {
+    "description": "Toggle for whether the profile is visible to other users."
+  },
+  "profilePreferenceShowOnlineStatus": "Show online status",
+  "@profilePreferenceShowOnlineStatus": {
+    "description": "Toggle for whether the online status is visible to other users."
+  },
+  "profilePreferencesSaved": "Preferences saved successfully.",
+  "@profilePreferencesSaved": {
+    "description": "Confirmation shown after a successful preference update."
+  },
+  "profileChangePhoto": "Change photo",
+  "@profileChangePhoto": {
+    "description": "Tooltip and action for changing the profile photo."
+  },
+  "profilePhotoUploaded": "Profile photo uploaded.",
+  "@profilePhotoUploaded": {
+    "description": "Confirmation shown after a successful photo upload."
+  },
+  "profilePhotoRemoved": "Profile photo removed.",
+  "@profilePhotoRemoved": {
+    "description": "Confirmation shown after removing the profile photo."
+  },
+  "profileRemovePhoto": "Remove photo",
+  "@profileRemovePhoto": {
+    "description": "Action that removes the profile photo."
+  },
+  "profileErrorsNotFound": "Profile not found.",
+  "@profileErrorsNotFound": {
+    "description": "Error shown when the profile cannot be found."
+  },
+  "profileErrorsNetwork": "You seem to be offline. Check your connection and try again.",
+  "@profileErrorsNetwork": {
+    "description": "Error shown when the device has no usable connection."
+  },
+  "profileErrorsServer": "Something went wrong on our side. Please try again later.",
+  "@profileErrorsServer": {
+    "description": "Error shown when the server fails (HTTP 5xx)."
+  },
+  "profileErrorsValidation": "The request could not be processed. Please check your details.",
+  "@profileErrorsValidation": {
+    "description": "Error shown for a rejected profile request (HTTP 400/422)."
+  },
+  "profileErrorsPhotoUpload": "The photo could not be uploaded. Please try a JPEG, PNG or WebP image under 5 MB.",
+  "@profileErrorsPhotoUpload": {
+    "description": "Error shown when the profile photo upload fails."
+  },
+  "profileErrorsPhotoNotFound": "No profile photo found.",
+  "@profileErrorsPhotoNotFound": {
+    "description": "Error shown when no profile photo exists."
+  },
+  "profileErrorsPermission": "You do not have permission to perform this action.",
+  "@profileErrorsPermission": {
+    "description": "Error shown when the user lacks permission."
+  },
+  "profileErrorsUnknown": "Something went wrong. Please try again.",
+  "@profileErrorsUnknown": {
+    "description": "Fallback error message for unexpected profile failures."
+  },
+  "welcomeTitle": "Welcome to Sports Gurukul!",
+  "@welcomeTitle": {
+    "description": "Heading of the welcome screen for brand-new users."
+  },
+  "welcomeSubtitle": "You're all set. Pick a path to kick-start your sporting journey.",
+  "@welcomeSubtitle": {
+    "description": "Supporting text under the welcome-screen heading."
+  },
+  "welcomeCreateAcademy": "Create My Academy",
+  "@welcomeCreateAcademy": {
+    "description": "Welcome-screen action that starts the create-academy flow."
+  },
+  "welcomeCreateAcademySubtitle": "Set up a new academy and start managing athletes.",
+  "@welcomeCreateAcademySubtitle": {
+    "description": "Supporting text for the create-academy action."
+  },
+  "welcomeJoinAcademy": "Join Existing Academy",
+  "@welcomeJoinAcademy": {
+    "description": "Welcome-screen action that starts the join-academy flow."
+  },
+  "welcomeJoinAcademySubtitle": "Find an academy and join as a member.",
+  "@welcomeJoinAcademySubtitle": {
+    "description": "Supporting text for the join-academy action."
+  },
+  "welcomeExplore": "Explore Application",
+  "@welcomeExplore": {
+    "description": "Welcome-screen action that skips onboarding and opens the dashboard."
+  },
+  "welcomeExploreSubtitle": "Skip the setup and browse the dashboard for now.",
+  "@welcomeExploreSubtitle": {
+    "description": "Supporting text for the explore action."
+  },
+  "welcomeLoading": "Preparing your experience…",
+  "@welcomeLoading": {
+    "description": "Status shown while the application session is being resolved."
+  },
+  "welcomeEmptyMessage": "Nothing to resolve yet.",
+  "@welcomeEmptyMessage": {
+    "description": "Fallback shown when there is no session to resolve."
+  },
+  "welcomeErrorTitle": "We couldn't load your account",
+  "@welcomeErrorTitle": {
+    "description": "Title shown when current-user resolution fails."
+  },
+  "welcomeErrorsNetwork": "You seem to be offline. Check your connection and try again.",
+  "@welcomeErrorsNetwork": {
+    "description": "Error shown when the device has no usable connection."
+  },
+  "welcomeErrorsServer": "Something went wrong on our side. Please try again later.",
+  "@welcomeErrorsServer": {
+    "description": "Error shown when the server fails (HTTP 5xx)."
+  },
+  "welcomeErrorsSessionExpired": "Your session has expired. Please sign in again.",
+  "@welcomeErrorsSessionExpired": {
+    "description": "Error shown when the session can no longer be used."
+  },
+  "welcomeErrorsUnknown": "Something went wrong. Please try again.",
+  "@welcomeErrorsUnknown": {
+    "description": "Fallback error message for unexpected failures."
+  },
+  "welcomeRetry": "Try again",
+  "@welcomeRetry": {
+    "description": "Label of the retry action on the welcome error state."
+  },
+  "academyCreateTitle": "Create Academy",
+  "@academyCreateTitle": {
+    "description": "Heading of the create-academy placeholder screen."
+  },
+  "academyCreateMessage": "Academy setup is coming in a later sprint. You can explore the application in the meantime.",
+  "@academyCreateMessage": {
+    "description": "Body of the create-academy placeholder screen."
+  },
+  "academyJoinTitle": "Join an Academy",
+  "@academyJoinTitle": {
+    "description": "Heading of the join-academy placeholder screen."
+  },
+  "academyJoinMessage": "Finding and joining an academy is coming in a later sprint. You can explore the application in the meantime.",
+  "@academyJoinMessage": {
+    "description": "Body of the join-academy placeholder screen."
+  },
+  "academyBackToDashboard": "Back to dashboard",
+  "@academyBackToDashboard": {
+    "description": "Action that returns to the dashboard from an academy placeholder screen."
+  },
+  "academyCreateSubtitle": "Tell us about your academy and set it up in a few steps.",
+  "@academyCreateSubtitle": {
+    "description": "Subtitle under the create-academy wizard heading."
+  },
+  "academyStepIndicator": "Step {current} of {total}",
+  "@academyStepIndicator": {
+    "description": "Current step out of the total wizard steps.",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "academyStepBasics": "Basic information",
+  "@academyStepBasics": {
+    "description": "Label of the basic-information wizard step."
+  },
+  "academyStepContact": "Contact information",
+  "@academyStepContact": {
+    "description": "Label of the contact-information wizard step."
+  },
+  "academyStepAddress": "Address",
+  "@academyStepAddress": {
+    "description": "Label of the address wizard step."
+  },
+  "academyStepBranding": "Branding",
+  "@academyStepBranding": {
+    "description": "Label of the branding wizard step."
+  },
+  "academyStepReview": "Review & submit",
+  "@academyStepReview": {
+    "description": "Label of the review-and-submit wizard step."
+  },
+  "academyNameLabel": "Academy name",
+  "@academyNameLabel": {
+    "description": "Label of the academy-name field."
+  },
+  "academyDescriptionLabel": "Description",
+  "@academyDescriptionLabel": {
+    "description": "Label of the academy description field."
+  },
+  "academyTypeLabel": "Academy type",
+  "@academyTypeLabel": {
+    "description": "Label of the academy-type selector."
+  },
+  "academyTypeSingleSport": "Single-sport",
+  "@academyTypeSingleSport": {
+    "description": "Academy type option: focuses on one sport."
+  },
+  "academyTypeSingleSportHint": "Focus on one sport.",
+  "@academyTypeSingleSportHint": {
+    "description": "Helper text for the single-sport academy type."
+  },
+  "academyTypeMultiSport": "Multi-sport",
+  "@academyTypeMultiSport": {
+    "description": "Academy type option: offers several sports."
+  },
+  "academyTypeMultiSportHint": "Offer several sports.",
+  "@academyTypeMultiSportHint": {
+    "description": "Helper text for the multi-sport academy type."
+  },
+  "academySportsLabel": "Sports offered",
+  "@academySportsLabel": {
+    "description": "Label of the sports multi-select."
+  },
+  "academySelectAtLeastOneSport": "Select at least one sport.",
+  "@academySelectAtLeastOneSport": {
+    "description": "Error shown when no sport is selected."
+  },
+  "academyContactPersonLabel": "Contact person",
+  "@academyContactPersonLabel": {
+    "description": "Label of the contact-person field."
+  },
+  "academyEmailLabel": "Academy email",
+  "@academyEmailLabel": {
+    "description": "Label of the academy contact email field."
+  },
+  "academyPhoneLabel": "Mobile number",
+  "@academyPhoneLabel": {
+    "description": "Label of the academy contact mobile-number field."
+  },
+  "academyWebsiteLabel": "Website (optional)",
+  "@academyWebsiteLabel": {
+    "description": "Label of the optional academy website field."
+  },
+  "academyCountryLabel": "Country",
+  "@academyCountryLabel": {
+    "description": "Label of the academy country field."
+  },
+  "academyStateLabel": "State",
+  "@academyStateLabel": {
+    "description": "Label of the academy state field."
+  },
+  "academyCityLabel": "City",
+  "@academyCityLabel": {
+    "description": "Label of the academy city field."
+  },
+  "academyAddressLineLabel": "Address line",
+  "@academyAddressLineLabel": {
+    "description": "Label of the academy address-line field."
+  },
+  "academyPostalCodeLabel": "Postal code (optional)",
+  "@academyPostalCodeLabel": {
+    "description": "Label of the optional academy postal-code field."
+  },
+  "academyLogoLabel": "Academy logo",
+  "@academyLogoLabel": {
+    "description": "Label of the academy logo picker."
+  },
+  "academyLogoRequired": "Please add an academy logo.",
+  "@academyLogoRequired": {
+    "description": "Error shown when no logo was selected."
+  },
+  "academyLogoHint": "A clear square logo (JPEG, PNG or WebP, under 5 MB).",
+  "@academyLogoHint": {
+    "description": "Helper text for the academy logo picker."
+  },
+  "academyCoverLabel": "Cover image",
+  "@academyCoverLabel": {
+    "description": "Label of the academy cover-image picker."
+  },
+  "academyCoverHint": "Optional. A wide banner image looks best.",
+  "@academyCoverHint": {
+    "description": "Helper text for the academy cover-image picker."
+  },
+  "academyChooseImage": "Choose from gallery",
+  "@academyChooseImage": {
+    "description": "Action that opens the gallery to pick an image."
+  },
+  "academyReplaceImage": "Replace",
+  "@academyReplaceImage": {
+    "description": "Action that replaces the currently picked image."
+  },
+  "academyRemoveImage": "Remove",
+  "@academyRemoveImage": {
+    "description": "Action that removes the currently picked image."
+  },
+  "academyReviewTitle": "Review & submit",
+  "@academyReviewTitle": {
+    "description": "Heading of the review-and-submit step."
+  },
+  "academyReviewSubtitle": "Check everything looks right before creating your academy.",
+  "@academyReviewSubtitle": {
+    "description": "Supporting text under the review-and-submit heading."
+  },
+  "academyReviewEdit": "Edit",
+  "@academyReviewEdit": {
+    "description": "Action that jumps back to a wizard step from the review screen."
+  },
+  "academyReviewNotProvided": "Not provided",
+  "@academyReviewNotProvided": {
+    "description": "Placeholder shown in the review screen when a field is empty."
+  },
+  "academyBackButton": "Back",
+  "@academyBackButton": {
+    "description": "Label of the wizard back button."
+  },
+  "academyNextButton": "Continue",
+  "@academyNextButton": {
+    "description": "Label of the wizard continue button."
+  },
+  "academySubmitButton": "Create academy",
+  "@academySubmitButton": {
+    "description": "Label of the final create-academy button."
+  },
+  "academyEditTitle": "Edit Academy",
+  "@academyEditTitle": {
+    "description": "Heading of the edit-academy wizard."
+  },
+  "academyEditSubtitle": "Update your academy details and save the changes.",
+  "@academyEditSubtitle": {
+    "description": "Subtitle under the edit-academy wizard heading."
+  },
+  "academyEditSaveButton": "Save Changes",
+  "@academyEditSaveButton": {
+    "description": "Label of the final save button in the edit-academy wizard."
+  },
+  "academyTypeSportsLocked": "Academy type and sports cannot be changed after creation.",
+  "@academyTypeSportsLocked": {
+    "description": "Note shown when the academy type and sports are read-only while editing."
+  },
+  "academySubmitSuccess": "{name} has been created. Welcome to Sports Gurukul!",
+  "@academySubmitSuccess": {
+    "description": "Confirmation shown after a successful academy creation.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "academyErrorsNetwork": "You seem to be offline. Check your connection and try again.",
+  "@academyErrorsNetwork": {
+    "description": "Error shown when the device has no usable connection."
+  },
+  "academyErrorsServer": "Something went wrong on our side. Please try again later.",
+  "@academyErrorsServer": {
+    "description": "Error shown when the server fails (HTTP 5xx)."
+  },
+  "academyErrorsValidation": "The request could not be processed. Please check your details.",
+  "@academyErrorsValidation": {
+    "description": "Error shown for a rejected academy request (HTTP 400/422)."
+  },
+  "academyErrorsPermission": "You do not have permission to create an academy.",
+  "@academyErrorsPermission": {
+    "description": "Error shown when the user lacks permission to create an academy."
+  },
+  "academyErrorsUnknown": "Something went wrong. Please try again.",
+  "@academyErrorsUnknown": {
+    "description": "Fallback error message for unexpected academy failures."
+  },
+  "validationUrlInvalid": "Enter a valid URL.",
+  "@validationUrlInvalid": {
+    "description": "Error shown when a website URL is malformed."
+  },
+  "roleLabelPlatformAdministrator": "Platform Administrator",
+  "@roleLabelPlatformAdministrator": {
+    "description": "Role badge label for super-admin and admin roles."
+  },
+  "roleLabelAcademy": "Academy",
+  "@roleLabelAcademy": {
+    "description": "Role badge label for the academy role."
+  },
+  "roleLabelCoach": "Coach",
+  "@roleLabelCoach": {
+    "description": "Role badge label for the coach role."
+  },
+  "roleLabelAthlete": "Athlete",
+  "@roleLabelAthlete": {
+    "description": "Role badge label for the athlete role."
+  },
+  "roleLabelParent": "Parent",
+  "@roleLabelParent": {
+    "description": "Role badge label for the parent role."
+  },
+  "roleLabelScout": "Scout",
+  "@roleLabelScout": {
+    "description": "Role badge label for the scout role."
+  },
+  "roleLabelSponsor": "Sponsor",
+  "@roleLabelSponsor": {
+    "description": "Role badge label for the sponsor role."
+  },
+  "roleLabelAiAdministrator": "AI Administrator",
+  "@roleLabelAiAdministrator": {
+    "description": "Role badge label for the AI-administrator role."
+  },
+  "roleLabelMember": "Member",
+  "@roleLabelMember": {
+    "description": "Role badge fallback when no role is assigned."
+  },
+  "roleLabelNewUser": "New User",
+  "@roleLabelNewUser": {
+    "description": "Profile badge label for a brand-new account that has not joined an academy yet."
+  },
+  "roleLabelRegisteredUser": "Registered User",
+  "@roleLabelRegisteredUser": {
+    "description": "Alternative profile badge label for a brand-new account."
+  },
+  "roleLabelAcademyAdmin": "Academy Admin",
+  "@roleLabelAcademyAdmin": {
+    "description": "Profile badge label for the academy-admin role."
+  },
+  "roleLabelPendingApproval": "Pending Approval",
+  "@roleLabelPendingApproval": {
+    "description": "Profile badge label while a membership request awaits approval."
+  },
+  "roleLabelSystemAdmin": "System Admin",
+  "@roleLabelSystemAdmin": {
+    "description": "Profile badge label for super-admin and admin roles."
+  }
+}

@@ -1,0 +1,208 @@
+# CHANGELOG
+
+Status: **Living** - Owner: Chief Software Architect
+
+Chronological record of prompts/sprints. Newest first. Keep entries truthful
+and verifiable.
+
+## SGM-0007 - User Onboarding Flow (2026-08-05)
+
+- Delivered the onboarding gate for brand-new accounts: a user with no academy
+  association and no business role lands on the `/welcome` screen (never a
+  normal dashboard) with the three onboarding actions - Create My Academy /
+  Join Existing Academy / Explore Application - plus profile header, welcome
+  card and retryable error/loading states.
+- New `lib/features/onboarding/` feature (Clean Architecture): `CurrentUser` /
+  `ApplicationSession` aggregation, `UserState` classifier (business-role rule:
+  any role beyond the default registration role -> academy member),
+  `OnboardingController` (Idle/Loading/Error/Resolved/Completed), current-user
+  resolution from `/users/me`, and shared `OnboardingActions` widget reused by
+  both the welcome screen and the limited new-user dashboard.
+- Router: added welcome/create-academy/join-academy routes; `AuthRouteGuard`
+  extended so incomplete new users and session-resolution failures stay off
+  protected routes (OnboardingError -> welcome), established users never stay
+  on welcome, and the splash hands off to welcome for brand-new users. Every
+  onboarding action completes onboarding; Create/Join navigate to
+  navigation-only placeholder pages (real academy flows are a later sprint),
+  Explore continues to the limited dashboard.
+- Fixed a navigation bug found while verifying: `appRouterProvider` re-created
+  the `GoRouter` on every onboarding state change (it watched the controller),
+  so completing onboarding reset the route stack and swallowed the
+  `/create-academy` handoff. The router now re-evaluates redirects in place via
+  `GoRouter.refreshListenable` driven by `ref.listen`; auth changes still
+  rebuild the router as before.
+- Tests: new onboarding unit/widget coverage - user-state classifier, current
+  user/application-session entities + mapper, onboarding controller, route
+  guard cases, welcome flow, onboarding-aware dashboard and bootstrap routing
+  (42 tests in the onboarding/welcome/dashboard suites) - and corrected the
+  debug keyboard-input tests to use IME `enterText` (synthetic key events carry
+  no printable character). Regenerated the member-dashboard golden. Full suite:
+  305 tests green.
+- Fixed the two real-account onboarding failures found in live testing:
+  - `resolveUserState` no longer treats profile completion as a membership
+    signal: a brand-new user who has partially filled their profile (default
+    Athlete role, no academy, no business role) now reaches the onboarding
+    gate instead of being classified as a member and sent to the dashboard.
+    The `profileCompletionPercentage` parameter was removed from the resolver;
+    membership now requires an academy association or a business role.
+  - A brand-new account with no `UserProfile` no longer shows the
+    "We couldn't load your account" error: registration does not create a
+    profile, so `GET /api/v1/users/me` answers 404. `currentUserProvider` now
+    maps that not-found response to a brand-new user resolved from the auth
+    session (id/name/email + session roles) so the account reaches the
+    welcome gate. Other resolution failures (network/server/session) still
+    surface the retryable error state.
+- Verification: `dart format --set-exit-if-changed` clean, `flutter analyze`
+  0 issues, `flutter test` 307/307, `flutter build web` success.
+- Divergence note: `/users/me` does not expose a profile image, so
+  `CurrentUser.profileImageUrl` stays absent and `academyAssociation` is always
+  null until those fields land in the backend contract (see TECH_DEBT.md).
+
+## SGM-0004 - Mobile Login CORS Fix (2026-08-04)
+
+- Mobile login failed with a CORS error when the Flutter app is run as web
+  (`flutter run -d chrome`): Flutter serves on a random localhost port, which
+  the backend CORS allowlist did not cover (only `localhost:3000`,
+  `localhost:5001`), so the `POST /api/v1/auth/login` preflight was blocked.
+- Verified live: unlisted origin -> 405 with no CORS headers (blocked);
+  `localhost:3000` -> 204 + headers (allowed).
+- Fix: `backend/.../Program.cs` CORS policy now allows **any localhost/127.0.0.1
+  origin in Development only** via `SetIsOriginAllowed`; non-Development keeps
+  the strict `Cors:AllowedOrigins` allowlist (verified in Production run).
+- Also found: login returned 500 because Postgres (`localhost:5432`) was not
+  running - environment issue, not code. Start DB with `docker compose up -d postgres`.
+- Verification: `dotnet build` 0 errors; runtime preflight checks passed for
+  allowed/disallowed origins in Development and Production.
+
+## SGM-0003 - Authentication Feature (2026-08-03)
+
+- Implemented the full Authentication feature under `lib/features/authentication/`
+  (Clean Architecture: presentation / application / domain / infrastructure)
+  consuming ONLY the auth endpoints the completed backend actually exposes
+  (`backend/.../V1/AuthController.cs`, prefix `api/v1/auth`, camelCase).
+- Backend contract verified directly against the controller:
+  `login`, `register` (201), `refresh-token` (NOT `/refresh`), `logout` (204),
+  `forgot-password`, `reset-password` (`{token,newPassword,confirmNewPassword}`,
+  revokes refresh tokens), `send-verification-email`, `verify-email`.
+  Task-listed Verify OTP / Change Password / Current User / Refresh Session are
+  NOT exposed by the backend, so their UI is deliberately absent.
+- Envelope `{success,message,data,errors}`; server errors are RFC 7807
+  ProblemDetails (`detail`/`title`). Schemas `LoginResponse`/`AuthResponse`,
+  `TokenResponse`, `MessageResponse`; passwords 8+ chars with
+  upper/lower/digit/special.
+- Core: `TokenStore` (`SecureStorage` key `authSession`), `SessionEvents`
+  (`onSessionExpired`), providers; rewrote `AuthInterceptor` (async JWT attach,
+  single-flight 401 refresh via `POST api/v1/auth/refresh-token`, retry once,
+  clear tokens + fire `onSessionExpired` on failure, `attach(Dio)`); rewrote
+  `ApiClient.create({baseUrl, authInterceptor})`; added `apiClientProvider`.
+- App wiring: `AuthController` (sealed `AuthState` unknown/unauthenticated/
+  authenticated; restore session, refresh-if-expired, listen `onSessionExpired`
+  -> force logout); splash calls `restoreSession()` after 1200ms window; router
+  rebuilt (5 routes, reset token via query param) with `AuthRouteGuard`;
+  dashboard is a `ConsumerWidget` with logout.
+- Presentation: `LoginPage`, `ForgotPasswordPage`, `ResetPasswordPage`
+  (complexity-validated), `AuthScaffold`, `AuthTextField` (visibility toggle,
+  autofill hints), `AuthMessages`; sealed `Result`/`OperationResult` based.
+- L10n: auth + validation keys added to `app_en/hi/mr.arb`;
+  `flutter gen-l10n` regenerated all 3 locales.
+- Codegen: fixed `ApiResponseDto<T>` with a hand-written generic `fromJson`
+  (freezed redirect cannot target the generic `_$ApiResponseDtoFromJson<T>`);
+  `dart run build_runner build` succeeds.
+- Tests: `+36` new unit/widget tests (date-time converter, auth error mapper,
+  session store, route guard, login page) + updated bootstrap/golden tests
+  (`auth_test_helper.dart` with `FakeAuthController` overrides) -> 207 total.
+  Two `DateTime.utc` mis-slot bugs fixed (7th arg is ms, 8th is us).
+- Divergence note: `docs/api/openapi.yaml` and `docs/api/API_Specifications.md`
+  list only `login` (no `swagger.json`); implementation follows the real
+  controller, recorded in SPRINT_STATUS/CHANGELOG.
+- Verification: format clean, `flutter analyze` 0 issues, `flutter test`
+  green (207/207).
+
+## SGM-0002 - Enterprise Flutter Development Environment (2026-08-03)
+
+- Built the reusable `lib/core/` foundation for the enterprise dev
+  environment (no business features): `config/` (Environment/Flavor/
+  BuildEnvironment, ApplicationMetadata, AppConfig), `constants/`,
+  `failures/` (sealed `BaseFailure` hierarchy), `exceptions/` (sealed
+  `AppException`), `result/` (sealed `Result<T>`/`OperationResult`),
+  `logging/` (AppLogger facade over `package:logger` + Debug/Release),
+  `extensions/`, `validators/` (composable validator framework),
+  `utils/` (date, formatter, parser, file/image, platform, permission,
+  debouncer).
+- Kept existing app-layer imports compiling via delegates: `AppConfig`,
+  `Environment`/`Flavor` and `RoutePaths` now re-export/typedef the core
+  equivalents.
+- Rewired `ApiClient` to be result-aware (`mapNetworkError` ->
+  `NetworkErrorKind` -> `NetworkFailure`) with the full interceptor chain.
+- Added unit + widget coverage (134 new tests -> 171 total) and kept the
+  existing splash/dashboard/theme golden suite green.
+- Verification: format clean, `flutter analyze` 0 issues, `flutter test`
+  green (171/171).
+
+## SGM-0001 - Flutter Project Bootstrap Verification (2026-08-03)
+
+- Re-verified the existing `mobile/` bootstrap (P001-P004) against the approved
+  `.ai/` governance and this task's deliverables.
+- Confirmed in scope: Flutter project (`mobile/`), folder structure, README,
+  `analysis_options.yaml` (very_good_analysis), `pubspec.yaml` (package name
+  `sports_gurukul`, retained per CODING_STANDARDS), placeholder splash and
+  placeholder dashboard.
+- Confirmed out of scope and not implemented: authentication, API integration,
+  Riverpod business logic, database, notifications, AI.
+- Package name `sports_gurukul_mobile` (task wording) was reconciled with
+  governance: kept `sports_gurukul` after human confirmation (62 imports +
+  adopted standard).
+- Verified: `flutter pub get`, format clean, analyze 0 issues, 37/37 tests,
+  `flutter build web` OK, `flutter run` (web-server) launches successfully.
+
+## P004 - AI Development Governance & Project Knowledge Base (2026-08-03)
+
+- Created `.ai/` governance knowledge base (24 documents).
+- Added project context, rules, architecture, folder structure, coding /
+  Flutter standards, state management, networking, database, design system,
+  UI guidelines, backend integration, API guidelines, security, performance,
+  testing, git workflow, sprint status, tech debt, ADR decisions, changelog,
+  prompt template, review checklist, definition of done.
+- Updated root and mobile READMEs with governance pointers.
+- Verified: format/analyze/test/build-web all green.
+
+## P003 - Engineering Standards & Dependencies (2026-08-03)
+
+- Adopted very_good_analysis (removed flutter_lints); fixed all lint issues;
+  package imports only; l10n generated excluded from analysis.
+- Added freezed 3.2.5 + json_serializable + build_runner; validated codegen
+  with `sample_model.dart`.
+- Deferred riverpod codegen (analyzer conflict; recorded as ADR-004).
+- Added dio 5.11 + logger 2.7: `ApiClient.create()` with RequestId -> Auth ->
+  Logging -> Retry interceptors; `mapNetworkError` -> `NetworkErrorKind`.
+- Added drift 2.34 + drift_flutter + drift_dev; `AppDatabase` scaffold;
+  `OfflineQueue` scaffold.
+- Added storage: `SecureStorage` (keychain) + `PreferenceStorage` (prefs).
+- Added utilities: `ConnectivityService`, `AppInfo`, `DeviceInfoService`,
+  `UniqueId`, `collection`.
+- Added testing: mocktail, `SecureStorage` mock tests, golden test via
+  `matchesGoldenFile`, coverage validated.
+- Authored docs `mobile/docs/09`-`13`; un-ignored `pubspec.lock`.
+- Verification: format clean, analyze 0 issues, 37/37 tests, build web OK.
+
+## P002 - Enterprise Project Architecture (bootstrap verified)
+
+- App boots splash -> placeholder dashboard.
+- Riverpod 3 + go_router wired; centralized routes (RouteNames/RoutePaths)
+  and route guards scaffold.
+- Material 3 theme from seed `Color(0xFF006DFF)`; l10n (en, hi, mr).
+- Test baseline established (app bootstrap + theme tests).
+- `mobile/docs/01`-`08` authored.
+
+## P001 - Project Bootstrap (foundation)
+
+- Flutter project scaffolded under `mobile/`.
+- Clean Architecture + Feature First folder structure.
+- Theming, localization, routing, CI-ready tooling.
+- Core sprint docs and `docs/mobile/` product specs in place.
+
+## Sprint 0 - scope
+
+- P001 foundation -> P002 bootstrap verification -> P003 engineering standards
+  -> P004 AI governance knowledge base.
+- Feature work (auth, role-based modules) begins with Sprint 1 (P005+).

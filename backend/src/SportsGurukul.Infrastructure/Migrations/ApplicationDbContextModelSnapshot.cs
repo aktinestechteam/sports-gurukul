@@ -22,6 +22,2817 @@ namespace SportsGurukul.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AIAssistant", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AssistantType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("AvatarUrl")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("GuardrailsJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("MaxTokens")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("MemoryEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MetadataJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<Guid?>("ModelId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("OwnerType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<Guid?>("OwnerUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<bool>("StreamingEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("SystemPrompt")
+                        .HasColumnType("text");
+
+                    b.Property<double?>("Temperature")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("TopP")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssistantType")
+                        .HasDatabaseName("IX_AIAssistants_AssistantType");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_AIAssistants_IsActive");
+
+                    b.HasIndex("ModelId")
+                        .HasDatabaseName("IX_AIAssistants_ModelId");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("IX_AIAssistants_Name");
+
+                    b.HasIndex("OwnerType")
+                        .HasDatabaseName("IX_AIAssistants_OwnerType");
+
+                    b.HasIndex("OwnerUserId")
+                        .HasDatabaseName("IX_AIAssistants_OwnerUserId");
+
+                    b.ToTable("AIAssistants", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AIAuditLog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("ActorType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<Guid?>("ActorUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AfterJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<string>("BeforeJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<string>("ChangedFieldsJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<string>("CorrelationId")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DetailsJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<Guid?>("EntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("EntityType")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<string>("Severity")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserAgent")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Action")
+                        .HasDatabaseName("IX_AIAuditLogs_Action");
+
+                    b.HasIndex("ActorUserId")
+                        .HasDatabaseName("IX_AIAuditLogs_ActorUserId");
+
+                    b.HasIndex("CorrelationId")
+                        .HasDatabaseName("IX_AIAuditLogs_CorrelationId");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("IX_AIAuditLogs_CreatedAt");
+
+                    b.HasIndex("Severity")
+                        .HasDatabaseName("IX_AIAuditLogs_Severity");
+
+                    b.HasIndex("EntityType", "EntityId")
+                        .HasDatabaseName("IX_AIAuditLogs_EntityType_EntityId");
+
+                    b.ToTable("AIAuditLogs", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AIModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("ContextWindow")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("Family")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<decimal?>("InputCostPerMillionTokens")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("MaxOutputTokens")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<decimal?>("OutputCostPerMillionTokens")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.Property<Guid>("ProviderId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("RateLimitPerMinute")
+                        .HasColumnType("integer");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<bool>("SupportsChat")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("SupportsEmbeddings")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("SupportsFunctionCalling")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("SupportsJsonMode")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("SupportsStreaming")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("SupportsVision")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Family")
+                        .HasDatabaseName("IX_AIModels_Family");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_AIModels_IsActive");
+
+                    b.HasIndex("ProviderId")
+                        .HasDatabaseName("IX_AIModels_ProviderId");
+
+                    b.HasIndex("Name", "Version")
+                        .IsUnique()
+                        .HasDatabaseName("IX_AIModels_Name_Version");
+
+                    b.ToTable("AIModels", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a2000000-0000-0000-0000-000000000001"),
+                            ContextWindow = 128000,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Currency = "USD",
+                            Description = "High-intelligence multimodal flagship model.",
+                            DisplayName = "GPT-4o",
+                            Family = "Gpt",
+                            InputCostPerMillionTokens = 2.50m,
+                            IsActive = true,
+                            IsDeleted = false,
+                            MaxOutputTokens = 16384,
+                            Name = "gpt-4o",
+                            OutputCostPerMillionTokens = 10.00m,
+                            ProviderId = new Guid("a1000000-0000-0000-0000-000000000001"),
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = false,
+                            SupportsFunctionCalling = true,
+                            SupportsJsonMode = true,
+                            SupportsStreaming = true,
+                            SupportsVision = true,
+                            Version = "2024-08-06"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2000000-0000-0000-0000-000000000002"),
+                            ContextWindow = 128000,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Currency = "USD",
+                            Description = "Cost-efficient small model for high-volume tasks.",
+                            DisplayName = "GPT-4o Mini",
+                            Family = "Gpt",
+                            InputCostPerMillionTokens = 0.15m,
+                            IsActive = true,
+                            IsDeleted = false,
+                            MaxOutputTokens = 16384,
+                            Name = "gpt-4o-mini",
+                            OutputCostPerMillionTokens = 0.60m,
+                            ProviderId = new Guid("a1000000-0000-0000-0000-000000000001"),
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = false,
+                            SupportsFunctionCalling = true,
+                            SupportsJsonMode = true,
+                            SupportsStreaming = true,
+                            SupportsVision = true,
+                            Version = "2024-07-18"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2000000-0000-0000-0000-000000000003"),
+                            ContextWindow = 16385,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Currency = "USD",
+                            Description = "Legacy low-latency chat model.",
+                            DisplayName = "GPT-3.5 Turbo",
+                            Family = "Gpt",
+                            InputCostPerMillionTokens = 0.50m,
+                            IsActive = true,
+                            IsDeleted = false,
+                            MaxOutputTokens = 4096,
+                            Name = "gpt-3.5-turbo",
+                            OutputCostPerMillionTokens = 1.50m,
+                            ProviderId = new Guid("a1000000-0000-0000-0000-000000000001"),
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = false,
+                            SupportsFunctionCalling = true,
+                            SupportsJsonMode = true,
+                            SupportsStreaming = true,
+                            SupportsVision = false,
+                            Version = "0125"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2000000-0000-0000-0000-000000000004"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Currency = "USD",
+                            Description = "Efficient text embedding model, 1536 dimensions.",
+                            DisplayName = "Text Embedding 3 Small",
+                            Family = "Embedding",
+                            InputCostPerMillionTokens = 0.02m,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "text-embedding-3-small",
+                            OutputCostPerMillionTokens = 0.00m,
+                            ProviderId = new Guid("a1000000-0000-0000-0000-000000000001"),
+                            RowVersion = new byte[0],
+                            SupportsChat = false,
+                            SupportsEmbeddings = true,
+                            SupportsFunctionCalling = false,
+                            SupportsJsonMode = false,
+                            SupportsStreaming = false,
+                            SupportsVision = false,
+                            Version = "1"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2000000-0000-0000-0000-000000000005"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Currency = "USD",
+                            Description = "High-quality text embedding model, 3072 dimensions.",
+                            DisplayName = "Text Embedding 3 Large",
+                            Family = "Embedding",
+                            InputCostPerMillionTokens = 0.13m,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "text-embedding-3-large",
+                            OutputCostPerMillionTokens = 0.00m,
+                            ProviderId = new Guid("a1000000-0000-0000-0000-000000000001"),
+                            RowVersion = new byte[0],
+                            SupportsChat = false,
+                            SupportsEmbeddings = true,
+                            SupportsFunctionCalling = false,
+                            SupportsJsonMode = false,
+                            SupportsStreaming = false,
+                            SupportsVision = false,
+                            Version = "1"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2000000-0000-0000-0000-000000000006"),
+                            ContextWindow = 128000,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Currency = "USD",
+                            Description = "GPT-4o deployed on Azure OpenAI.",
+                            DisplayName = "GPT-4o (Azure)",
+                            Family = "Gpt",
+                            InputCostPerMillionTokens = 2.50m,
+                            IsActive = true,
+                            IsDeleted = false,
+                            MaxOutputTokens = 16384,
+                            Name = "gpt-4o",
+                            OutputCostPerMillionTokens = 10.00m,
+                            ProviderId = new Guid("a1000000-0000-0000-0000-000000000002"),
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = false,
+                            SupportsFunctionCalling = true,
+                            SupportsJsonMode = true,
+                            SupportsStreaming = true,
+                            SupportsVision = true,
+                            Version = "2024-11-20"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2000000-0000-0000-0000-000000000007"),
+                            ContextWindow = 128000,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Currency = "USD",
+                            Description = "GPT-4o Mini deployed on Azure OpenAI.",
+                            DisplayName = "GPT-4o Mini (Azure)",
+                            Family = "Gpt",
+                            InputCostPerMillionTokens = 0.15m,
+                            IsActive = true,
+                            IsDeleted = false,
+                            MaxOutputTokens = 16384,
+                            Name = "gpt-4o-mini",
+                            OutputCostPerMillionTokens = 0.60m,
+                            ProviderId = new Guid("a1000000-0000-0000-0000-000000000002"),
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = false,
+                            SupportsFunctionCalling = true,
+                            SupportsJsonMode = true,
+                            SupportsStreaming = true,
+                            SupportsVision = true,
+                            Version = "2024-09-03"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2000000-0000-0000-0000-000000000008"),
+                            ContextWindow = 200000,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Currency = "USD",
+                            Description = "Balanced intelligence and speed for production workloads.",
+                            DisplayName = "Claude Sonnet 4",
+                            Family = "Claude",
+                            InputCostPerMillionTokens = 3.00m,
+                            IsActive = true,
+                            IsDeleted = false,
+                            MaxOutputTokens = 64000,
+                            Name = "claude-sonnet-4",
+                            OutputCostPerMillionTokens = 15.00m,
+                            ProviderId = new Guid("a1000000-0000-0000-0000-000000000003"),
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = false,
+                            SupportsFunctionCalling = true,
+                            SupportsJsonMode = true,
+                            SupportsStreaming = true,
+                            SupportsVision = true,
+                            Version = "20250514"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2000000-0000-0000-0000-000000000009"),
+                            ContextWindow = 200000,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Currency = "USD",
+                            Description = "Fast, low-cost model for high-throughput tasks.",
+                            DisplayName = "Claude Haiku 4.5",
+                            Family = "Claude",
+                            InputCostPerMillionTokens = 1.00m,
+                            IsActive = true,
+                            IsDeleted = false,
+                            MaxOutputTokens = 64000,
+                            Name = "claude-haiku-4-5",
+                            OutputCostPerMillionTokens = 5.00m,
+                            ProviderId = new Guid("a1000000-0000-0000-0000-000000000003"),
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = false,
+                            SupportsFunctionCalling = true,
+                            SupportsJsonMode = true,
+                            SupportsStreaming = true,
+                            SupportsVision = true,
+                            Version = "20250514"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2000000-0000-0000-0000-00000000000a"),
+                            ContextWindow = 1048576,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Currency = "USD",
+                            Description = "Google's advanced multimodal reasoning model.",
+                            DisplayName = "Gemini 2.0 Pro",
+                            Family = "Gemini",
+                            InputCostPerMillionTokens = 3.50m,
+                            IsActive = true,
+                            IsDeleted = false,
+                            MaxOutputTokens = 8192,
+                            Name = "gemini-2.0-pro",
+                            OutputCostPerMillionTokens = 15.00m,
+                            ProviderId = new Guid("a1000000-0000-0000-0000-000000000004"),
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = false,
+                            SupportsFunctionCalling = true,
+                            SupportsJsonMode = true,
+                            SupportsStreaming = true,
+                            SupportsVision = true,
+                            Version = "002"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2000000-0000-0000-0000-00000000000b"),
+                            ContextWindow = 1048576,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Currency = "USD",
+                            Description = "Fast, cost-efficient multimodal model.",
+                            DisplayName = "Gemini 2.0 Flash",
+                            Family = "Gemini",
+                            InputCostPerMillionTokens = 0.30m,
+                            IsActive = true,
+                            IsDeleted = false,
+                            MaxOutputTokens = 8192,
+                            Name = "gemini-2.0-flash",
+                            OutputCostPerMillionTokens = 1.50m,
+                            ProviderId = new Guid("a1000000-0000-0000-0000-000000000004"),
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = false,
+                            SupportsFunctionCalling = true,
+                            SupportsJsonMode = true,
+                            SupportsStreaming = true,
+                            SupportsVision = true,
+                            Version = "001"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2000000-0000-0000-0000-00000000000c"),
+                            ContextWindow = 131072,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Currency = "USD",
+                            Description = "Open-source 8B parameter model, self-hosted.",
+                            DisplayName = "Llama 3.1 8B",
+                            Family = "Llama",
+                            IsActive = true,
+                            IsDeleted = false,
+                            MaxOutputTokens = 8192,
+                            Name = "llama3.1:8b",
+                            ProviderId = new Guid("a1000000-0000-0000-0000-000000000005"),
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = false,
+                            SupportsFunctionCalling = true,
+                            SupportsJsonMode = false,
+                            SupportsStreaming = true,
+                            SupportsVision = false,
+                            Version = "8b"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2000000-0000-0000-0000-00000000000d"),
+                            ContextWindow = 131072,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Currency = "USD",
+                            Description = "Open-source 70B parameter model, self-hosted.",
+                            DisplayName = "Llama 3.3 70B",
+                            Family = "Llama",
+                            IsActive = true,
+                            IsDeleted = false,
+                            MaxOutputTokens = 8192,
+                            Name = "llama3.3:70b",
+                            ProviderId = new Guid("a1000000-0000-0000-0000-000000000005"),
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = false,
+                            SupportsFunctionCalling = true,
+                            SupportsJsonMode = false,
+                            SupportsStreaming = true,
+                            SupportsVision = false,
+                            Version = "70b"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2000000-0000-0000-0000-00000000000e"),
+                            ContextWindow = 128000,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Currency = "USD",
+                            Description = "GPT-4o accessible through OpenRouter gateway.",
+                            DisplayName = "GPT-4o (OpenRouter)",
+                            Family = "Gpt",
+                            InputCostPerMillionTokens = 2.50m,
+                            IsActive = true,
+                            IsDeleted = false,
+                            MaxOutputTokens = 16384,
+                            Name = "openai/gpt-4o",
+                            OutputCostPerMillionTokens = 10.00m,
+                            ProviderId = new Guid("a1000000-0000-0000-0000-000000000006"),
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = false,
+                            SupportsFunctionCalling = true,
+                            SupportsJsonMode = true,
+                            SupportsStreaming = true,
+                            SupportsVision = true,
+                            Version = "1"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2000000-0000-0000-0000-00000000000f"),
+                            ContextWindow = 200000,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Currency = "USD",
+                            Description = "Claude Sonnet 4 accessible through OpenRouter gateway.",
+                            DisplayName = "Claude Sonnet 4 (OpenRouter)",
+                            Family = "Claude",
+                            InputCostPerMillionTokens = 3.00m,
+                            IsActive = true,
+                            IsDeleted = false,
+                            MaxOutputTokens = 64000,
+                            Name = "anthropic/claude-sonnet-4",
+                            OutputCostPerMillionTokens = 15.00m,
+                            ProviderId = new Guid("a1000000-0000-0000-0000-000000000006"),
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = false,
+                            SupportsFunctionCalling = true,
+                            SupportsJsonMode = true,
+                            SupportsStreaming = true,
+                            SupportsVision = true,
+                            Version = "1"
+                        });
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AIModelConfiguration", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AgentDefinitionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ApiKeyEncrypted")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("ApiVersion")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<Guid?>("AssistantId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("BaseUrlOverride")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<double?>("FrequencyPenalty")
+                        .HasColumnType("double precision");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("MaxRetries")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MaxTokens")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("ModelId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<double?>("PresencePenalty")
+                        .HasColumnType("double precision");
+
+                    b.Property<Guid?>("ProviderId")
+                        .HasColumnType("uuid");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<string>("StopSequencesJson")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("StreamingEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<double?>("Temperature")
+                        .HasColumnType("double precision");
+
+                    b.Property<int?>("TimeoutSeconds")
+                        .HasColumnType("integer");
+
+                    b.Property<double?>("TopK")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("TopP")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgentDefinitionId")
+                        .HasDatabaseName("IX_AIModelConfigurations_AgentDefinitionId");
+
+                    b.HasIndex("AssistantId")
+                        .HasDatabaseName("IX_AIModelConfigurations_AssistantId");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_AIModelConfigurations_IsActive");
+
+                    b.HasIndex("ModelId")
+                        .HasDatabaseName("IX_AIModelConfigurations_ModelId");
+
+                    b.HasIndex("ProviderId")
+                        .HasDatabaseName("IX_AIModelConfigurations_ProviderId");
+
+                    b.HasIndex("AssistantId", "Name")
+                        .IsUnique()
+                        .HasDatabaseName("IX_AIModelConfigurations_AssistantId_Name");
+
+                    b.ToTable("AIModelConfigurations", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AIProvider", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AuthType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("BaseUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("ConfigurationSchemaJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DefaultApiVersion")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("DocumentationUrl")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("IconUrl")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("ProviderType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<bool>("SupportsChat")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("SupportsEmbeddings")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("SupportsFunctionCalling")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("SupportsVision")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("WebsiteUrl")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_AIProviders_IsActive");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("IX_AIProviders_Name");
+
+                    b.HasIndex("ProviderType")
+                        .HasDatabaseName("IX_AIProviders_ProviderType");
+
+                    b.ToTable("AIProviders", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a1000000-0000-0000-0000-000000000001"),
+                            AuthType = "ApiKey",
+                            BaseUrl = "https://api.openai.com/v1",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "OpenAI GPT and embedding models.",
+                            DisplayName = "OpenAI",
+                            DocumentationUrl = "https://platform.openai.com/docs",
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "openai",
+                            ProviderType = "OpenAi",
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = true,
+                            SupportsFunctionCalling = true,
+                            SupportsVision = true,
+                            WebsiteUrl = "https://openai.com"
+                        },
+                        new
+                        {
+                            Id = new Guid("a1000000-0000-0000-0000-000000000002"),
+                            AuthType = "ApiKey",
+                            BaseUrl = "https://{resource}.openai.azure.com",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "OpenAI models hosted on Microsoft Azure.",
+                            DisplayName = "Azure OpenAI",
+                            DocumentationUrl = "https://learn.microsoft.com/azure/ai-services/openai",
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "azure-openai",
+                            ProviderType = "AzureOpenAi",
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = true,
+                            SupportsFunctionCalling = true,
+                            SupportsVision = true,
+                            WebsiteUrl = "https://azure.microsoft.com/products/ai-services/openai-service"
+                        },
+                        new
+                        {
+                            Id = new Guid("a1000000-0000-0000-0000-000000000003"),
+                            AuthType = "BearerToken",
+                            BaseUrl = "https://api.anthropic.com/v1",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Anthropic Claude models.",
+                            DisplayName = "Anthropic Claude",
+                            DocumentationUrl = "https://docs.anthropic.com",
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "anthropic",
+                            ProviderType = "Anthropic",
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = false,
+                            SupportsFunctionCalling = true,
+                            SupportsVision = true,
+                            WebsiteUrl = "https://www.anthropic.com"
+                        },
+                        new
+                        {
+                            Id = new Guid("a1000000-0000-0000-0000-000000000004"),
+                            AuthType = "ApiKey",
+                            BaseUrl = "https://generativelanguage.googleapis.com/v1",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Google Gemini models.",
+                            DisplayName = "Google Gemini",
+                            DocumentationUrl = "https://ai.google.dev",
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "google",
+                            ProviderType = "Google",
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = true,
+                            SupportsFunctionCalling = true,
+                            SupportsVision = true,
+                            WebsiteUrl = "https://deepmind.google/technologies/gemini"
+                        },
+                        new
+                        {
+                            Id = new Guid("a1000000-0000-0000-0000-000000000005"),
+                            AuthType = "None",
+                            BaseUrl = "http://localhost:11434",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Self-hosted local open-source models via Ollama.",
+                            DisplayName = "Ollama",
+                            DocumentationUrl = "https://github.com/ollama/ollama",
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "ollama",
+                            ProviderType = "Ollama",
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = true,
+                            SupportsFunctionCalling = true,
+                            SupportsVision = true,
+                            WebsiteUrl = "https://ollama.com"
+                        },
+                        new
+                        {
+                            Id = new Guid("a1000000-0000-0000-0000-000000000006"),
+                            AuthType = "ApiKey",
+                            BaseUrl = "https://openrouter.ai/api/v1",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Unified gateway to multiple AI model providers.",
+                            DisplayName = "OpenRouter",
+                            DocumentationUrl = "https://openrouter.ai/docs",
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "openrouter",
+                            ProviderType = "OpenRouter",
+                            RowVersion = new byte[0],
+                            SupportsChat = true,
+                            SupportsEmbeddings = true,
+                            SupportsFunctionCalling = true,
+                            SupportsVision = true,
+                            WebsiteUrl = "https://openrouter.ai"
+                        });
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AIRoutingPolicy", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("AllowFallback")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ConditionsJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DefaultModelId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("FallbackModelIdsJson")
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<decimal?>("MaxCostPerRequest")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.Property<int?>("MaxLatencyMs")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("MetadataJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<double?>("MinScore")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("PreferredModelIdsJson")
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("ProviderId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("RetryCount")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("RoutingStrategy")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DefaultModelId")
+                        .HasDatabaseName("IX_AIRoutingPolicies_DefaultModelId");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_AIRoutingPolicies_IsActive");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("IX_AIRoutingPolicies_Name");
+
+                    b.HasIndex("Priority")
+                        .HasDatabaseName("IX_AIRoutingPolicies_Priority");
+
+                    b.HasIndex("ProviderId")
+                        .HasDatabaseName("IX_AIRoutingPolicies_ProviderId");
+
+                    b.HasIndex("RoutingStrategy")
+                        .HasDatabaseName("IX_AIRoutingPolicies_RoutingStrategy");
+
+                    b.ToTable("AIRoutingPolicies", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AITokenUsage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AssistantId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("CacheReadTokens")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("CacheWriteTokens")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("ConversationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal?>("Cost")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("numeric(18,6)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<DateTime?>("EndedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("InputTokens")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<long?>("LatencyMs")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("ModelId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ModelName")
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<int>("OutputTokens")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("ProviderId")
+                        .HasColumnType("uuid");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<DateTime?>("StartedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("TotalTokens")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UsageType")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("UserType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssistantId")
+                        .HasDatabaseName("IX_AITokenUsages_AssistantId");
+
+                    b.HasIndex("ConversationId")
+                        .HasDatabaseName("IX_AITokenUsages_ConversationId");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("IX_AITokenUsages_CreatedAt");
+
+                    b.HasIndex("ModelId")
+                        .HasDatabaseName("IX_AITokenUsages_ModelId");
+
+                    b.HasIndex("ProviderId")
+                        .HasDatabaseName("IX_AITokenUsages_ProviderId");
+
+                    b.HasIndex("UsageType")
+                        .HasDatabaseName("IX_AITokenUsages_UsageType");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("IX_AITokenUsages_UserId");
+
+                    b.HasIndex("ModelId", "CreatedAt")
+                        .HasDatabaseName("IX_AITokenUsages_ModelId_CreatedAt");
+
+                    b.ToTable("AITokenUsages", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AgentDefinition", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AgentType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("MaxIterations")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("MemoryEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MetadataJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<Guid?>("ModelId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<string>("SystemPrompt")
+                        .HasColumnType("text");
+
+                    b.Property<double?>("Temperature")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("ToolsJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("WorkflowId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgentType")
+                        .HasDatabaseName("IX_AgentDefinitions_AgentType");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_AgentDefinitions_IsActive");
+
+                    b.HasIndex("ModelId")
+                        .HasDatabaseName("IX_AgentDefinitions_ModelId");
+
+                    b.HasIndex("WorkflowId")
+                        .HasDatabaseName("IX_AgentDefinitions_WorkflowId");
+
+                    b.HasIndex("Name", "WorkflowId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_AgentDefinitions_WorkflowId_Name");
+
+                    b.ToTable("AgentDefinitions", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AgentExecution", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AgentDefinitionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("CompletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal?>("Cost")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long?>("DurationMs")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ErrorJson")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("ExecutedByUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("InputJson")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MetadataJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<string>("OutputJson")
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<DateTime?>("StartedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<int?>("TokensUsed")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("WorkflowExecutionId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgentDefinitionId")
+                        .HasDatabaseName("IX_AgentExecutions_AgentDefinitionId");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("IX_AgentExecutions_CreatedAt");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_AgentExecutions_Status");
+
+                    b.HasIndex("WorkflowExecutionId")
+                        .HasDatabaseName("IX_AgentExecutions_WorkflowExecutionId");
+
+                    b.ToTable("AgentExecutions", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.Conversation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ArchivedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("AssistantId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ContextMetadataJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("KnowledgeBaseIdsJson")
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<DateTime?>("LastMessageAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("MessageCount")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ParticipantType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<Guid?>("ParticipantUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<DateTime?>("StartedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("Summary")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<int>("TokenCount")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssistantId")
+                        .HasDatabaseName("IX_Conversations_AssistantId");
+
+                    b.HasIndex("LastMessageAt")
+                        .HasDatabaseName("IX_Conversations_LastMessageAt");
+
+                    b.HasIndex("ParticipantUserId")
+                        .HasDatabaseName("IX_Conversations_ParticipantUserId");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_Conversations_Status");
+
+                    b.HasIndex("AssistantId", "Status")
+                        .HasDatabaseName("IX_Conversations_AssistantId_Status");
+
+                    b.ToTable("Conversations", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.ConversationMemory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ConversationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Importance")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("MemoryType")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("MetadataJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConversationId")
+                        .HasDatabaseName("IX_ConversationMemories_ConversationId");
+
+                    b.HasIndex("ExpiresAt")
+                        .HasDatabaseName("IX_ConversationMemories_ExpiresAt");
+
+                    b.HasIndex("ConversationId", "MemoryType", "Key")
+                        .IsUnique()
+                        .HasDatabaseName("IX_ConversationMemories_Conversation_Type_Key");
+
+                    b.ToTable("ConversationMemories", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.ConversationMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<Guid>("ConversationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("InputTokenCount")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<long?>("LatencyMs")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MetadataJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<string>("ModelName")
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<int?>("OutputTokenCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("PromptVersionUsed")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<int>("SequenceNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ToolCallsJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<string>("ToolResultsJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConversationId")
+                        .HasDatabaseName("IX_ConversationMessages_ConversationId");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("IX_ConversationMessages_CreatedAt");
+
+                    b.HasIndex("Role")
+                        .HasDatabaseName("IX_ConversationMessages_Role");
+
+                    b.HasIndex("ConversationId", "SequenceNumber")
+                        .IsUnique()
+                        .HasDatabaseName("IX_ConversationMessages_Conversation_Sequence");
+
+                    b.ToTable("ConversationMessages", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.Embedding", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ChunkId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Dimension")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("KnowledgeBaseId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("ModelId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ModelName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<double>("Norm")
+                        .HasColumnType("double precision");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.PrimitiveCollection<float[]>("Vector")
+                        .IsRequired()
+                        .HasColumnType("real[]");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChunkId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Embeddings_ChunkId");
+
+                    b.HasIndex("KnowledgeBaseId")
+                        .HasDatabaseName("IX_Embeddings_KnowledgeBaseId");
+
+                    b.HasIndex("ModelId")
+                        .HasDatabaseName("IX_Embeddings_ModelId");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_Embeddings_Status");
+
+                    b.HasIndex("KnowledgeBaseId", "Status")
+                        .HasDatabaseName("IX_Embeddings_KnowledgeBaseId_Status");
+
+                    b.ToTable("Embeddings", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.EmbeddingChunk", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("CharacterCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ChunkIndex")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("DocumentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("KnowledgeBaseId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("MetadataJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<int?>("TokenCount")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentId")
+                        .HasDatabaseName("IX_EmbeddingChunks_DocumentId");
+
+                    b.HasIndex("KnowledgeBaseId")
+                        .HasDatabaseName("IX_EmbeddingChunks_KnowledgeBaseId");
+
+                    b.HasIndex("DocumentId", "ChunkIndex")
+                        .IsUnique()
+                        .HasDatabaseName("IX_EmbeddingChunks_Document_ChunkIndex");
+
+                    b.ToTable("EmbeddingChunks", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.KnowledgeBase", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("ChunkOverlap")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ChunkSize")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ChunkingStrategy")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<int>("EmbeddingDimension")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("EmbeddingModelId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("KnowledgeBaseType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("MetadataSchemaJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("OwnerType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<Guid?>("OwnerUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<string>("StatisticsJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("VectorIndexId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmbeddingModelId")
+                        .HasDatabaseName("IX_KnowledgeBases_EmbeddingModelId");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_KnowledgeBases_IsActive");
+
+                    b.HasIndex("KnowledgeBaseType")
+                        .HasDatabaseName("IX_KnowledgeBases_KnowledgeBaseType");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("IX_KnowledgeBases_Name");
+
+                    b.HasIndex("OwnerUserId")
+                        .HasDatabaseName("IX_KnowledgeBases_OwnerUserId");
+
+                    b.HasIndex("VectorIndexId")
+                        .HasDatabaseName("IX_KnowledgeBases_VectorIndexId");
+
+                    b.ToTable("KnowledgeBases", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.KnowledgeDocument", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContentHash")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DocumentType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("ExternalId")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("KnowledgeBaseId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("KnowledgeSourceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("MetadataJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<string>("MimeType")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int?>("PageCount")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("ProcessedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ProcessedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("StoragePath")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("WordCount")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContentHash")
+                        .HasDatabaseName("IX_KnowledgeDocuments_ContentHash");
+
+                    b.HasIndex("KnowledgeBaseId")
+                        .HasDatabaseName("IX_KnowledgeDocuments_KnowledgeBaseId");
+
+                    b.HasIndex("KnowledgeSourceId")
+                        .HasDatabaseName("IX_KnowledgeDocuments_KnowledgeSourceId");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_KnowledgeDocuments_Status");
+
+                    b.HasIndex("KnowledgeBaseId", "Status")
+                        .HasDatabaseName("IX_KnowledgeDocuments_KnowledgeBaseId_Status");
+
+                    b.ToTable("KnowledgeDocuments", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.KnowledgeSource", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ContentType")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("ErrorDetailsJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<string>("ExternalId")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("IngestionStatus")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("KnowledgeBaseId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("LastIngestedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("MetadataJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int?>("RefreshIntervalMinutes")
+                        .HasColumnType("integer");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<string>("SourceType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("StatusMessage")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Uri")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IngestionStatus")
+                        .HasDatabaseName("IX_KnowledgeSources_IngestionStatus");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_KnowledgeSources_IsActive");
+
+                    b.HasIndex("KnowledgeBaseId")
+                        .HasDatabaseName("IX_KnowledgeSources_KnowledgeBaseId");
+
+                    b.HasIndex("SourceType")
+                        .HasDatabaseName("IX_KnowledgeSources_SourceType");
+
+                    b.HasIndex("KnowledgeBaseId", "Name")
+                        .IsUnique()
+                        .HasDatabaseName("IX_KnowledgeSources_KnowledgeBaseId_Name");
+
+                    b.ToTable("KnowledgeSources", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.PromptTemplate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AssistantId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("CurrentVersion")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("InputSchemaJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MetadataJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("OutputSchemaJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<string>("PromptType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<string>("TemplateText")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("VariablesJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssistantId")
+                        .HasDatabaseName("IX_PromptTemplates_AssistantId");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_PromptTemplates_IsActive");
+
+                    b.HasIndex("PromptType")
+                        .HasDatabaseName("IX_PromptTemplates_PromptType");
+
+                    b.HasIndex("AssistantId", "Name")
+                        .IsUnique()
+                        .HasDatabaseName("IX_PromptTemplates_AssistantId_Name");
+
+                    b.ToTable("PromptTemplates", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.PromptVersion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ChangeSummary")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("CreatedByUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeployedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("EvaluationJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<Guid>("PromptTemplateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("VersionNumber")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_PromptVersions_IsActive");
+
+                    b.HasIndex("PromptTemplateId")
+                        .HasDatabaseName("IX_PromptVersions_PromptTemplateId");
+
+                    b.HasIndex("PromptTemplateId", "VersionNumber")
+                        .IsUnique()
+                        .HasDatabaseName("IX_PromptVersions_Template_Version");
+
+                    b.ToTable("PromptVersions", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.SemanticSearchRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("ConversationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FiltersJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("KnowledgeBaseId")
+                        .HasColumnType("uuid");
+
+                    b.Property<long?>("LatencyMs")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ModelUsed")
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("Query")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.PrimitiveCollection<float[]>("QueryEmbedding")
+                        .HasColumnType("real[]");
+
+                    b.Property<string>("RequestedByType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<Guid?>("RequestedByUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("ResultCount")
+                        .HasColumnType("integer");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<double?>("SimilarityThreshold")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<int>("TopK")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("VectorIndexId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConversationId")
+                        .HasDatabaseName("IX_SemanticSearchRequests_ConversationId");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("IX_SemanticSearchRequests_CreatedAt");
+
+                    b.HasIndex("KnowledgeBaseId")
+                        .HasDatabaseName("IX_SemanticSearchRequests_KnowledgeBaseId");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_SemanticSearchRequests_Status");
+
+                    b.HasIndex("VectorIndexId")
+                        .HasDatabaseName("IX_SemanticSearchRequests_VectorIndexId");
+
+                    b.ToTable("SemanticSearchRequests", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.SemanticSearchResult", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("ChunkId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("DocumentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MetadataJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<int>("Rank")
+                        .HasColumnType("integer");
+
+                    b.Property<double?>("ReRankScore")
+                        .HasColumnType("double precision");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<double>("Score")
+                        .HasColumnType("double precision");
+
+                    b.Property<Guid>("SemanticSearchRequestId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChunkId")
+                        .HasDatabaseName("IX_SemanticSearchResults_ChunkId");
+
+                    b.HasIndex("DocumentId")
+                        .HasDatabaseName("IX_SemanticSearchResults_DocumentId");
+
+                    b.HasIndex("SemanticSearchRequestId")
+                        .HasDatabaseName("IX_SemanticSearchResults_SearchRequestId");
+
+                    b.HasIndex("SemanticSearchRequestId", "Rank")
+                        .HasDatabaseName("IX_SemanticSearchResults_Request_Rank");
+
+                    b.ToTable("SemanticSearchResults", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.ToolDefinition", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AgentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("Endpoint")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("HttpMethod")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<string>("InputSchemaJson")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsSystemTool")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<string>("OutputSchemaJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<bool>("RequiresApproval")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("RetryPolicyJson")
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<int?>("TimeoutSeconds")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ToolType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgentId")
+                        .HasDatabaseName("IX_ToolDefinitions_AgentId");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_ToolDefinitions_IsActive");
+
+                    b.HasIndex("ToolType")
+                        .HasDatabaseName("IX_ToolDefinitions_ToolType");
+
+                    b.HasIndex("AgentId", "Name")
+                        .IsUnique()
+                        .HasDatabaseName("IX_ToolDefinitions_AgentId_Name");
+
+                    b.ToTable("ToolDefinitions", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.ToolExecution", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AgentExecutionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("CompletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal?>("Cost")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long?>("DurationMs")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ErrorMessage")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("RequestJson")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ResponseJson")
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<DateTime?>("StartedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<int?>("TokenCount")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("ToolDefinitionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("WorkflowExecutionId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgentExecutionId")
+                        .HasDatabaseName("IX_ToolExecutions_AgentExecutionId");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("IX_ToolExecutions_CreatedAt");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_ToolExecutions_Status");
+
+                    b.HasIndex("ToolDefinitionId")
+                        .HasDatabaseName("IX_ToolExecutions_ToolDefinitionId");
+
+                    b.HasIndex("WorkflowExecutionId")
+                        .HasDatabaseName("IX_ToolExecutions_WorkflowExecutionId");
+
+                    b.ToTable("ToolExecutions", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.VectorIndex", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ConfigurationJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<int>("Dimension")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("DistanceMetric")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("IndexName")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<long>("ItemCount")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("LastIndexedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Provider")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsActive")
+                        .HasDatabaseName("IX_VectorIndexes_IsActive");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("IX_VectorIndexes_Name");
+
+                    b.HasIndex("Provider")
+                        .HasDatabaseName("IX_VectorIndexes_Provider");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_VectorIndexes_Status");
+
+                    b.ToTable("VectorIndexes", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.WorkflowDefinition", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DefinitionJson")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("EntryNode")
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MetadataJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<int?>("TimeoutSeconds")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("WorkflowType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("IX_WorkflowDefinitions_Name");
+
+                    b.HasIndex("WorkflowType")
+                        .HasDatabaseName("IX_WorkflowDefinitions_WorkflowType");
+
+                    b.HasIndex("IsActive", "IsPublished")
+                        .HasDatabaseName("IX_WorkflowDefinitions_IsActive_IsPublished");
+
+                    b.ToTable("WorkflowDefinitions", (string)null);
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.WorkflowExecution", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("CompletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CorrelationId")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long?>("DurationMs")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ErrorJson")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("ExecutedByUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("InputJson")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("MetadataJson")
+                        .HasMaxLength(8000)
+                        .HasColumnType("character varying(8000)");
+
+                    b.Property<string>("OutputJson")
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
+
+                    b.Property<DateTime?>("StartedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<decimal?>("TotalCost")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<int?>("TotalTokens")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("TriggerType")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("WorkflowDefinitionId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CorrelationId")
+                        .HasDatabaseName("IX_WorkflowExecutions_CorrelationId");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("IX_WorkflowExecutions_CreatedAt");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_WorkflowExecutions_Status");
+
+                    b.HasIndex("TriggerType")
+                        .HasDatabaseName("IX_WorkflowExecutions_TriggerType");
+
+                    b.HasIndex("WorkflowDefinitionId")
+                        .HasDatabaseName("IX_WorkflowExecutions_WorkflowDefinitionId");
+
+                    b.ToTable("WorkflowExecutions", (string)null);
+                });
+
             modelBuilder.Entity("SportsGurukul.Domain.Entities.Academy", b =>
                 {
                     b.Property<Guid>("Id")
@@ -32,6 +2843,11 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<string>("AcademyType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
                     b.Property<string>("BannerUrl")
                         .HasMaxLength(500)
@@ -49,8 +2865,8 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<DateTime?>("EstablishedDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly?>("EstablishedDate")
+                        .HasColumnType("date");
 
                     b.Property<string>("GSTNumber")
                         .HasMaxLength(50)
@@ -71,6 +2887,9 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
+
+                    b.Property<Guid?>("OwnedByUserId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Phone")
                         .IsRequired()
@@ -118,6 +2937,9 @@ namespace SportsGurukul.Infrastructure.Migrations
                     b.HasIndex("Name")
                         .HasDatabaseName("IX_Academies_Name");
 
+                    b.HasIndex("OwnedByUserId")
+                        .HasDatabaseName("IX_Academies_OwnedByUserId");
+
                     b.HasIndex("Phone")
                         .HasDatabaseName("IX_Academies_Phone");
 
@@ -136,6 +2958,24 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .HasDatabaseName("IX_Academies_Status_CreatedAt");
 
                     b.ToTable("Academies", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a1000000-0000-0000-0000-000000000001"),
+                            AcademyCode = "ACAD-SEED-001",
+                            AcademyType = "MultiSport",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Seed academy for development and testing.",
+                            Email = "academy.seed@sportsgurukul.com",
+                            IsDeleted = false,
+                            LegalName = "Seed Academy Pvt Ltd",
+                            Name = "Seed Academy",
+                            Phone = "+910000000000",
+                            RowVersion = new byte[0],
+                            Status = "Active",
+                            VerificationStatus = "Verified"
+                        });
                 });
 
             modelBuilder.Entity("SportsGurukul.Domain.Entities.AcademyBranch", b =>
@@ -3980,7 +6820,8 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -5310,7 +8151,8 @@ namespace SportsGurukul.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
+                        .HasColumnType("bytea")
+                        .HasDefaultValueSql("E'\\\\x00'::bytea");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -9912,6 +12754,24 @@ namespace SportsGurukul.Infrastructure.Migrations
                             IsDeleted = false,
                             Name = "Sponsor",
                             RoleType = "Sponsor"
+                        },
+                        new
+                        {
+                            Id = new Guid("a1b2c3d4-e5f6-7890-abcd-ef1234567809"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Administrator managing AI assistants, prompts, knowledge bases, agents, workflows, and model usage",
+                            IsDeleted = false,
+                            Name = "AI Administrator",
+                            RoleType = "AIAdministrator"
+                        },
+                        new
+                        {
+                            Id = new Guid("a1b2c3d4-e5f6-7890-abcd-ef1234567810"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "User who created and manages an academy",
+                            IsDeleted = false,
+                            Name = "Academy Admin",
+                            RoleType = "AcademyAdmin"
                         });
                 });
 
@@ -13078,6 +15938,384 @@ namespace SportsGurukul.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AIAssistant", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AIModel", "Model")
+                        .WithMany()
+                        .HasForeignKey("ModelId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Model");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AIModel", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AIProvider", "Provider")
+                        .WithMany("Models")
+                        .HasForeignKey("ProviderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Provider");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AIModelConfiguration", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AgentDefinition", "AgentDefinition")
+                        .WithMany("ModelConfigurations")
+                        .HasForeignKey("AgentDefinitionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AIAssistant", "Assistant")
+                        .WithMany("ModelConfigurations")
+                        .HasForeignKey("AssistantId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AIModel", "Model")
+                        .WithMany("ModelConfigurations")
+                        .HasForeignKey("ModelId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AIProvider", "Provider")
+                        .WithMany("ModelConfigurations")
+                        .HasForeignKey("ProviderId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("AgentDefinition");
+
+                    b.Navigation("Assistant");
+
+                    b.Navigation("Model");
+
+                    b.Navigation("Provider");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AIRoutingPolicy", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AIModel", "DefaultModel")
+                        .WithMany("DefaultRoutingPolicies")
+                        .HasForeignKey("DefaultModelId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AIProvider", "Provider")
+                        .WithMany("RoutingPolicies")
+                        .HasForeignKey("ProviderId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("DefaultModel");
+
+                    b.Navigation("Provider");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AITokenUsage", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AIAssistant", "Assistant")
+                        .WithMany("TokenUsages")
+                        .HasForeignKey("AssistantId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.Conversation", "Conversation")
+                        .WithMany("TokenUsages")
+                        .HasForeignKey("ConversationId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AIModel", "Model")
+                        .WithMany("TokenUsages")
+                        .HasForeignKey("ModelId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AIProvider", "Provider")
+                        .WithMany("TokenUsages")
+                        .HasForeignKey("ProviderId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Assistant");
+
+                    b.Navigation("Conversation");
+
+                    b.Navigation("Model");
+
+                    b.Navigation("Provider");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AgentDefinition", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AIModel", "Model")
+                        .WithMany()
+                        .HasForeignKey("ModelId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.WorkflowDefinition", "Workflow")
+                        .WithMany("Agents")
+                        .HasForeignKey("WorkflowId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Model");
+
+                    b.Navigation("Workflow");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AgentExecution", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AgentDefinition", "AgentDefinition")
+                        .WithMany("Executions")
+                        .HasForeignKey("AgentDefinitionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.WorkflowExecution", "WorkflowExecution")
+                        .WithMany("AgentExecutions")
+                        .HasForeignKey("WorkflowExecutionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("AgentDefinition");
+
+                    b.Navigation("WorkflowExecution");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.Conversation", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AIAssistant", "Assistant")
+                        .WithMany("Conversations")
+                        .HasForeignKey("AssistantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Assistant");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.ConversationMemory", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.Conversation", "Conversation")
+                        .WithMany("Memories")
+                        .HasForeignKey("ConversationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Conversation");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.ConversationMessage", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.Conversation", "Conversation")
+                        .WithMany("Messages")
+                        .HasForeignKey("ConversationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Conversation");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.Embedding", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.EmbeddingChunk", "Chunk")
+                        .WithOne("Embedding")
+                        .HasForeignKey("SportsGurukul.Domain.Entities.AI.Embedding", "ChunkId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.KnowledgeBase", "KnowledgeBase")
+                        .WithMany("Embeddings")
+                        .HasForeignKey("KnowledgeBaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AIModel", "Model")
+                        .WithMany("Embeddings")
+                        .HasForeignKey("ModelId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Chunk");
+
+                    b.Navigation("KnowledgeBase");
+
+                    b.Navigation("Model");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.EmbeddingChunk", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.KnowledgeDocument", "Document")
+                        .WithMany("Chunks")
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.KnowledgeBase", "KnowledgeBase")
+                        .WithMany("Chunks")
+                        .HasForeignKey("KnowledgeBaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
+
+                    b.Navigation("KnowledgeBase");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.KnowledgeBase", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AIModel", "EmbeddingModel")
+                        .WithMany()
+                        .HasForeignKey("EmbeddingModelId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.VectorIndex", "VectorIndex")
+                        .WithMany("KnowledgeBases")
+                        .HasForeignKey("VectorIndexId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("EmbeddingModel");
+
+                    b.Navigation("VectorIndex");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.KnowledgeDocument", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.KnowledgeBase", "KnowledgeBase")
+                        .WithMany("Documents")
+                        .HasForeignKey("KnowledgeBaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.KnowledgeSource", "KnowledgeSource")
+                        .WithMany("Documents")
+                        .HasForeignKey("KnowledgeSourceId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("KnowledgeBase");
+
+                    b.Navigation("KnowledgeSource");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.KnowledgeSource", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.KnowledgeBase", "KnowledgeBase")
+                        .WithMany("Sources")
+                        .HasForeignKey("KnowledgeBaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("KnowledgeBase");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.PromptTemplate", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AIAssistant", "Assistant")
+                        .WithMany("PromptTemplates")
+                        .HasForeignKey("AssistantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Assistant");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.PromptVersion", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.PromptTemplate", "PromptTemplate")
+                        .WithMany("Versions")
+                        .HasForeignKey("PromptTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PromptTemplate");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.SemanticSearchRequest", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.Conversation", "Conversation")
+                        .WithMany("SemanticSearchRequests")
+                        .HasForeignKey("ConversationId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.KnowledgeBase", "KnowledgeBase")
+                        .WithMany("SearchRequests")
+                        .HasForeignKey("KnowledgeBaseId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.VectorIndex", "VectorIndex")
+                        .WithMany("SearchRequests")
+                        .HasForeignKey("VectorIndexId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Conversation");
+
+                    b.Navigation("KnowledgeBase");
+
+                    b.Navigation("VectorIndex");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.SemanticSearchResult", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.EmbeddingChunk", "Chunk")
+                        .WithMany("SearchResults")
+                        .HasForeignKey("ChunkId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.KnowledgeDocument", "Document")
+                        .WithMany("SearchResults")
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.SemanticSearchRequest", "SemanticSearchRequest")
+                        .WithMany("Results")
+                        .HasForeignKey("SemanticSearchRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chunk");
+
+                    b.Navigation("Document");
+
+                    b.Navigation("SemanticSearchRequest");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.ToolDefinition", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AgentDefinition", "Agent")
+                        .WithMany("Tools")
+                        .HasForeignKey("AgentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Agent");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.ToolExecution", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.AgentExecution", "AgentExecution")
+                        .WithMany("ToolExecutions")
+                        .HasForeignKey("AgentExecutionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.ToolDefinition", "ToolDefinition")
+                        .WithMany("Executions")
+                        .HasForeignKey("ToolDefinitionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.WorkflowExecution", "WorkflowExecution")
+                        .WithMany("ToolExecutions")
+                        .HasForeignKey("WorkflowExecutionId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("AgentExecution");
+
+                    b.Navigation("ToolDefinition");
+
+                    b.Navigation("WorkflowExecution");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.WorkflowExecution", b =>
+                {
+                    b.HasOne("SportsGurukul.Domain.Entities.AI.WorkflowDefinition", "WorkflowDefinition")
+                        .WithMany("Executions")
+                        .HasForeignKey("WorkflowDefinitionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("WorkflowDefinition");
+                });
+
             modelBuilder.Entity("SportsGurukul.Domain.Entities.AcademyBranch", b =>
                 {
                     b.HasOne("SportsGurukul.Domain.Entities.Academy", "Academy")
@@ -15579,6 +18817,132 @@ namespace SportsGurukul.Infrastructure.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AIAssistant", b =>
+                {
+                    b.Navigation("Conversations");
+
+                    b.Navigation("ModelConfigurations");
+
+                    b.Navigation("PromptTemplates");
+
+                    b.Navigation("TokenUsages");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AIModel", b =>
+                {
+                    b.Navigation("DefaultRoutingPolicies");
+
+                    b.Navigation("Embeddings");
+
+                    b.Navigation("ModelConfigurations");
+
+                    b.Navigation("TokenUsages");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AIProvider", b =>
+                {
+                    b.Navigation("ModelConfigurations");
+
+                    b.Navigation("Models");
+
+                    b.Navigation("RoutingPolicies");
+
+                    b.Navigation("TokenUsages");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AgentDefinition", b =>
+                {
+                    b.Navigation("Executions");
+
+                    b.Navigation("ModelConfigurations");
+
+                    b.Navigation("Tools");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.AgentExecution", b =>
+                {
+                    b.Navigation("ToolExecutions");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.Conversation", b =>
+                {
+                    b.Navigation("Memories");
+
+                    b.Navigation("Messages");
+
+                    b.Navigation("SemanticSearchRequests");
+
+                    b.Navigation("TokenUsages");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.EmbeddingChunk", b =>
+                {
+                    b.Navigation("Embedding");
+
+                    b.Navigation("SearchResults");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.KnowledgeBase", b =>
+                {
+                    b.Navigation("Chunks");
+
+                    b.Navigation("Documents");
+
+                    b.Navigation("Embeddings");
+
+                    b.Navigation("SearchRequests");
+
+                    b.Navigation("Sources");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.KnowledgeDocument", b =>
+                {
+                    b.Navigation("Chunks");
+
+                    b.Navigation("SearchResults");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.KnowledgeSource", b =>
+                {
+                    b.Navigation("Documents");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.PromptTemplate", b =>
+                {
+                    b.Navigation("Versions");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.SemanticSearchRequest", b =>
+                {
+                    b.Navigation("Results");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.ToolDefinition", b =>
+                {
+                    b.Navigation("Executions");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.VectorIndex", b =>
+                {
+                    b.Navigation("KnowledgeBases");
+
+                    b.Navigation("SearchRequests");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.WorkflowDefinition", b =>
+                {
+                    b.Navigation("Agents");
+
+                    b.Navigation("Executions");
+                });
+
+            modelBuilder.Entity("SportsGurukul.Domain.Entities.AI.WorkflowExecution", b =>
+                {
+                    b.Navigation("AgentExecutions");
+
+                    b.Navigation("ToolExecutions");
                 });
 
             modelBuilder.Entity("SportsGurukul.Domain.Entities.Academy", b =>

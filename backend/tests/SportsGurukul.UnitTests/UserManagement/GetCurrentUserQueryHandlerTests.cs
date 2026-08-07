@@ -61,12 +61,13 @@ public class GetCurrentUserQueryHandlerTests
     }
 
     [Fact]
-    public async Task Handle_Should_ReturnFailure_When_ProfileNotFound()
+    public async Task Handle_Should_ReturnIdentityOnly_When_ProfileNotFound()
     {
         _currentUserMock.Setup(c => c.UserId).Returns(_userId);
+        var user = CreateTestUser();
         _userRepositoryMock
             .Setup(r => r.GetByIdAsync(_userId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(CreateTestUser());
+            .ReturnsAsync(user);
         _userProfileRepositoryMock
             .Setup(r => r.GetFullProfileAsync(_userId, It.IsAny<CancellationToken>()))
             .ReturnsAsync((UserProfile?)null);
@@ -75,17 +76,23 @@ public class GetCurrentUserQueryHandlerTests
             new GetCurrentUserQuery(),
             CancellationToken.None);
 
-        result.IsSuccess.Should().BeFalse();
-        result.Error.Should().Be("Profile not found. Please create your profile first.");
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().NotBeNull();
+        result.Value!.HasProfile.Should().BeFalse();
+        result.Value.UserId.Should().Be(_userId);
+        result.Value.FullName.Should().Be("Test User");
+        result.Value.Email.Should().Be("test@example.com");
+        result.Value.Roles.Should().Contain("Athlete");
     }
 
     [Fact]
-    public async Task Handle_Should_ReturnFailure_When_ProfileIsDeleted()
+    public async Task Handle_Should_ReturnIdentityOnly_When_ProfileIsDeleted()
     {
         _currentUserMock.Setup(c => c.UserId).Returns(_userId);
+        var user = CreateTestUser();
         _userRepositoryMock
             .Setup(r => r.GetByIdAsync(_userId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(CreateTestUser());
+            .ReturnsAsync(user);
         _userProfileRepositoryMock
             .Setup(r => r.GetFullProfileAsync(_userId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(new UserProfile { IsDeleted = true, Addresses = new List<Address>() });
@@ -94,8 +101,10 @@ public class GetCurrentUserQueryHandlerTests
             new GetCurrentUserQuery(),
             CancellationToken.None);
 
-        result.IsSuccess.Should().BeFalse();
-        result.Error.Should().Be("Profile not found. Please create your profile first.");
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().NotBeNull();
+        result.Value!.HasProfile.Should().BeFalse();
+        result.Value.UserId.Should().Be(_userId);
     }
 
     [Fact]
@@ -118,7 +127,8 @@ public class GetCurrentUserQueryHandlerTests
 
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().NotBeNull();
-        result.Value!.UserId.Should().Be(_userId);
+        result.Value!.HasProfile.Should().BeTrue();
+        result.Value.UserId.Should().Be(_userId);
         result.Value.FullName.Should().Be("Test User");
         result.Value.Email.Should().Be("test@example.com");
     }

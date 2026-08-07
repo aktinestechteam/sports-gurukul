@@ -47,11 +47,16 @@ public class UserProfileController : ControllerBase
     /// <summary>
     /// Gets the profile of the currently authenticated user.
     /// </summary>
+    /// <remarks>
+    /// Always answers 200 with the user's identity and current roles. When the
+    /// user has not created a profile yet, the payload is identity-only and
+    /// <c>HasProfile</c> is false so clients can prompt the user to create one.
+    /// </remarks>
     /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>The current user's full profile</returns>
-    /// <response code="200">Profile retrieved successfully</response>
+    /// <returns>The current user's full profile, or an identity-only payload when no profile exists</returns>
+    /// <response code="200">Profile (or identity-only payload) retrieved successfully</response>
     /// <response code="401">Not authenticated</response>
-    /// <response code="404">Profile not found for this user</response>
+    /// <response code="404">User not found</response>
     [HttpGet("me")]
     [ProducesResponseType(typeof(ApiResponse<UserProfileDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]

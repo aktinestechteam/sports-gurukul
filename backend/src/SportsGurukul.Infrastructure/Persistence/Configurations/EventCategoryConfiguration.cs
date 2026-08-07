@@ -29,7 +29,8 @@ public class EventCategoryConfiguration : IEntityTypeConfiguration<EventCategory
             .HasMaxLength(30);
 
         builder.Property(e => e.RowVersion)
-            .IsRowVersion();
+            .IsRowVersion()
+            .HasDefaultValueSql("E'\\\\x00'::bytea");
 
         builder.HasIndex(e => e.Code)
             .IsUnique()

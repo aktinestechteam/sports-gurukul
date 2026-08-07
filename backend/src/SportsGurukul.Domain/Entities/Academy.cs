@@ -17,8 +17,10 @@ public class Academy : BaseEntity
     public string Phone { get; set; } = string.Empty;
     public AcademyStatus Status { get; set; } = AcademyStatus.Pending;
     public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.Pending;
+    public AcademyType AcademyType { get; set; } = AcademyType.MultiSport;
     public string? LogoUrl { get; set; }
     public string? BannerUrl { get; set; }
+    public Guid? OwnedByUserId { get; set; }
     public byte[] RowVersion { get; set; } = [];
 
     public AcademyContact? Contact { get; set; }

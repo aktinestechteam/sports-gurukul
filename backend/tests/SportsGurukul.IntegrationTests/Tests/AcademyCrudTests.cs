@@ -167,7 +167,7 @@ public class AcademyCrudTests : AcademyIntegrationTestBase
         var response = await AdminClient.DeleteAsync($"/api/v1/academies/{academyId}");
 
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
-        var dbAcademy = await GetAcademyFromDbAsync(academyId);
+        var dbAcademy = await GetDeletedAcademyFromDbAsync(academyId);
         dbAcademy.Should().NotBeNull();
         dbAcademy!.IsDeleted.Should().BeTrue();
     }
@@ -235,7 +235,7 @@ public class AcademyCrudTests : AcademyIntegrationTestBase
     {
         var academyId = await CreateAcademyViaApiAsync();
 
-        var response = await AdminClient.PostAsJsonAsync($"/api/v1/academies/{academyId}/verify", new
+        var response = await AcademyAdminClient.PostAsJsonAsync($"/api/v1/academies/{academyId}/verify", new
         {
             Remarks = "Verified"
         });

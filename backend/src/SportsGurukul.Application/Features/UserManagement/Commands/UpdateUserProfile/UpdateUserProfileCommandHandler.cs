@@ -4,6 +4,7 @@ using SportsGurukul.Application.Common.Interfaces;
 using SportsGurukul.Application.Common.Models;
 using SportsGurukul.Application.Features.UserManagement.Commands.CreateUserProfile;
 using SportsGurukul.Application.Features.UserManagement.DTOs;
+using SportsGurukul.Domain.Entities;
 using SportsGurukul.Domain.Enums;
 
 namespace SportsGurukul.Application.Features.UserManagement.Commands.UpdateUserProfile;
@@ -45,13 +46,25 @@ public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfile
         }
 
         var profile = await _userProfileRepository.GetFullProfileAsync(request.UserId, cancellationToken);
+        var isNewProfile = profile is null;
         if (profile is null)
         {
-            _logger.LogWarning("Profile not found for user: {UserId}", request.UserId);
-            return Result<UserProfileDto>.Failure("Profile not found. Please create a profile first.");
+            _logger.LogInformation("Profile not found for user, creating via upsert: {UserId}", request.UserId);
+            profile = new UserProfile
+            {
+                Id = Guid.NewGuid(),
+                UserId = request.UserId,
+                DateOfBirth = request.DateOfBirth,
+                Gender = request.Gender,
+                Bio = request.Bio,
+                Height = request.Height,
+                Weight = request.Weight,
+                PreferredSport = request.PreferredSport,
+                ExperienceLevel = request.ExperienceLevel
+            };
+            await _userProfileRepository.AddAsync(profile, cancellationToken);
         }
-
-        if (profile.IsDeleted)
+        else if (profile.IsDeleted)
         {
             _logger.LogWarning("Profile is deleted for user: {UserId}", request.UserId);
             return Result<UserProfileDto>.Failure("Profile has been deleted. Please restore it first.");
@@ -66,7 +79,10 @@ public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfile
         profile.ExperienceLevel = request.ExperienceLevel ?? profile.ExperienceLevel;
         profile.UpdatedAt = DateTime.UtcNow;
 
-        _userProfileRepository.Update(profile);
+        if (!isNewProfile)
+        {
+            _userProfileRepository.Update(profile);
+        }
 
         if (!string.IsNullOrWhiteSpace(request.PrimaryPhoneNumber))
         {

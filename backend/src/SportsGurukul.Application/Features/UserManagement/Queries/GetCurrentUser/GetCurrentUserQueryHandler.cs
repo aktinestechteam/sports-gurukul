@@ -4,6 +4,7 @@ using SportsGurukul.Application.Common.Interfaces;
 using SportsGurukul.Application.Common.Models;
 using SportsGurukul.Application.Features.UserManagement.Commands.CreateUserProfile;
 using SportsGurukul.Application.Features.UserManagement.DTOs;
+using SportsGurukul.Domain.Entities;
 
 namespace SportsGurukul.Application.Features.UserManagement.Queries.GetCurrentUser;
 
@@ -47,8 +48,20 @@ public class GetCurrentUserQueryHandler : IRequestHandler<GetCurrentUserQuery, R
         var profile = await _userProfileRepository.GetFullProfileAsync(userId.Value, cancellationToken);
         if (profile is null || profile.IsDeleted)
         {
-            _logger.LogWarning("Profile not found for current user: {UserId}", userId);
-            return Result<UserProfileDto>.Failure("Profile not found. Please create your profile first.");
+            _logger.LogInformation(
+                "No profile yet for current user: {UserId}; returning identity-only response",
+                userId.Value);
+
+            var identityOnly = new UserProfile
+            {
+                Id = user.Id,
+                UserId = user.Id,
+                CreatedAt = user.CreatedAt,
+                UpdatedAt = user.CreatedAt
+            };
+            var identityDto = CreateUserProfileCommandHandler.MapToDto(identityOnly, user);
+            identityDto.HasProfile = false;
+            return Result<UserProfileDto>.Success(identityDto);
         }
 
         var dto = CreateUserProfileCommandHandler.MapToDto(profile, user);

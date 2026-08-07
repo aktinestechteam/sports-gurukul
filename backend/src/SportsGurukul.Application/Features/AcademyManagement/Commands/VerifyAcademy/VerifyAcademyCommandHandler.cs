@@ -87,6 +87,7 @@ public class VerifyAcademyCommandHandler : IRequestHandler<VerifyAcademyCommand,
             Phone = academy.Phone,
             Status = academy.Status.ToString(),
             VerificationStatus = academy.VerificationStatus.ToString(),
+            AcademyType = academy.AcademyType.ToString(),
             LogoUrl = academy.LogoUrl,
             BannerUrl = academy.BannerUrl,
             Contact = academy.Contact is null ? null : new DTOs.ContactDto

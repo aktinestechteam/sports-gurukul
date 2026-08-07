@@ -137,6 +137,11 @@ options.AddFixedWindowLimiter("default", opt =>
 
 If `Cors:AllowedOrigins` is not configured, falls back to `https://localhost:3000` and `https://localhost:5001`.
 
+> **Development only:** In the Development environment the policy allows any
+> `localhost`/`127.0.0.1` origin on any port. This keeps `flutter run -d chrome`
+> (which serves on a random port) working against the local API. Non-Development
+> environments always use the strict `Cors:AllowedOrigins` allowlist above.
+
 ---
 
 ## Storage Configuration

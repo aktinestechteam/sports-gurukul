@@ -40,6 +40,11 @@ namespace SportsGurukul.Infrastructure.Migrations
                     table.PrimaryKey("PK_Academies", x => x.Id);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Academies",
+                columns: new[] { "Id", "AcademyCode", "BannerUrl", "CreatedAt", "Description", "Email", "EstablishedDate", "GSTNumber", "IsDeleted", "LegalName", "LogoUrl", "Name", "Phone", "RegistrationNumber", "Status", "UpdatedAt", "VerificationStatus", "Website" },
+                values: new object[] { new Guid("a1000000-0000-0000-0000-000000000001"), "ACAD-SEED-001", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed academy for development and testing.", "academy.seed@sportsgurukul.com", null, null, false, "Seed Academy Pvt Ltd", null, "Seed Academy", "+910000000000", null, "Active", null, "Verified", null });
+
             migrationBuilder.CreateTable(
                 name: "AcademyBranches",
                 columns: table => new

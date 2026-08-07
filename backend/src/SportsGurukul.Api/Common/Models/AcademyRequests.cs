@@ -44,6 +44,38 @@ public class CreateAcademyRequest
     /// <summary>Primary contact phone.</summary>
     /// <example>+919876543210</example>
     public string Phone { get; set; } = string.Empty;
+
+    /// <summary>Type of the academy. Supported values: SingleSport, MultiSport.</summary>
+    /// <example>MultiSport</example>
+    public string? AcademyType { get; set; }
+
+    /// <summary>Primary contact person's name.</summary>
+    /// <example>Rajesh Kumar</example>
+    public string? PrimaryContactName { get; set; }
+
+    /// <summary>Street address of the academy.</summary>
+    /// <example>123 Sports Avenue, Andheri West</example>
+    public string? Address { get; set; }
+
+    /// <summary>Country of the academy.</summary>
+    /// <example>India</example>
+    public string? Country { get; set; }
+
+    /// <summary>State or province of the academy.</summary>
+    /// <example>Maharashtra</example>
+    public string? State { get; set; }
+
+    /// <summary>City of the academy.</summary>
+    /// <example>Mumbai</example>
+    public string? City { get; set; }
+
+    /// <summary>Postal code of the academy.</summary>
+    /// <example>400058</example>
+    public string? PostalCode { get; set; }
+
+    /// <summary>Names of the sports offered by the academy. The first entry is treated as the academy's primary sport.</summary>
+    /// <example>["Cricket", "Football"]</example>
+    public List<string> SportNames { get; set; } = [];
 }
 
 /// <summary>

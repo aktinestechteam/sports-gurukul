@@ -140,6 +140,28 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowConfiguredOrigins", policy =>
     {
+        // Development allows any localhost origin (any port). The Flutter web
+        // build serves on a random port during `flutter run -d chrome`, so a
+        // fixed allowlist would break the mobile login preflight. Production
+        // keeps the strict allowlist below.
+        if (builder.Environment.IsDevelopment())
+        {
+            policy.SetIsOriginAllowed(origin =>
+                {
+                    if (string.IsNullOrWhiteSpace(origin))
+                    {
+                        return false;
+                    }
+                    return Uri.TryCreate(origin, UriKind.Absolute, out var uri)
+                        && (uri.Host.Equals("localhost", StringComparison.OrdinalIgnoreCase)
+                            || uri.Host.Equals("127.0.0.1"));
+                })
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+            return;
+        }
+
         var origins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
         if (origins.Length > 0)
         {

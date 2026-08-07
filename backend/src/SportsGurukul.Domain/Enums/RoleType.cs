@@ -9,5 +9,7 @@ public enum RoleType
     Athlete = 4,
     Parent = 5,
     Scout = 6,
-    Sponsor = 7
+    Sponsor = 7,
+    AIAdministrator = 8,
+    AcademyAdmin = 9
 }

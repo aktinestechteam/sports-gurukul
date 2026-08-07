@@ -3,7 +3,11 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using SportsGurukul.Application.Common.Behaviors;
 using SportsGurukul.Application.Common.Interfaces;
+using SportsGurukul.Application.Common.Interfaces.AI.Services;
 using SportsGurukul.Application.Common.Interfaces.Finance.Services;
+using SportsGurukul.Application.Features.AIManagement.ModelRouting;
+using SportsGurukul.Application.Features.AIManagement.Services;
+using SportsGurukul.Application.Features.AIManagement.ToolCalling;
 using SportsGurukul.Application.Features.BookingSchedulingManagement.Calendar.Abstractions;
 using SportsGurukul.Application.Features.BookingSchedulingManagement.Calendar.Ics;
 using SportsGurukul.Application.Features.BookingSchedulingManagement.Services;
@@ -87,7 +91,37 @@ public static class DependencyInjection
 
         RegisterNotificationServices(services);
 
+        RegisterAIServices(services);
+
         return services;
+    }
+
+    private static void RegisterAIServices(IServiceCollection services)
+    {
+        services.AddTransient<IConversationService, ConversationService>();
+        services.AddTransient<IConversationMemoryService, ConversationMemoryService>();
+        services.AddTransient<IAssistantService, AssistantService>();
+        services.AddTransient<IPromptService, PromptService>();
+        services.AddTransient<IPromptRenderer, PromptRenderer>();
+        services.AddTransient<IKnowledgeService, KnowledgeService>();
+        services.AddTransient<IAgentService, AgentService>();
+        services.AddTransient<IWorkflowService, WorkflowService>();
+        services.AddTransient<ITokenUsageService, TokenUsageService>();
+        services.AddTransient<IAuditService, AuditService>();
+        services.AddTransient<IAIService, AIService>();
+
+        services.AddTransient<IModelAvailabilityService, ModelAvailabilityService>();
+        services.AddTransient<IFallbackStrategy, FallbackStrategy>();
+        services.AddTransient<IModelSelectionStrategy, CostBasedModelSelectionStrategy>();
+        services.AddTransient<IModelSelectionStrategy, LatencyBasedModelSelectionStrategy>();
+        services.AddTransient<IModelSelectionStrategy, CapabilityBasedModelSelectionStrategy>();
+        services.AddTransient<IModelSelectionStrategy, BalancedModelSelectionStrategy>();
+        services.AddTransient<IModelRoutingService, ModelRoutingService>();
+
+        services.AddTransient<IToolRegistry, DefaultToolRegistry>();
+        services.AddTransient<IToolResolver, ToolResolver>();
+        services.AddTransient<IToolAuthorizationService, ToolAuthorizationService>();
+        services.AddTransient<IToolExecutor, ToolExecutor>();
     }
 
     private static void RegisterNotificationServices(IServiceCollection services)

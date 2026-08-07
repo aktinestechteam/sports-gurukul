@@ -35,6 +35,12 @@ public class AcademyConfiguration : IEntityTypeConfiguration<Academy>
         builder.Property(a => a.Website)
             .HasMaxLength(500);
 
+        builder.Property(a => a.EstablishedDate)
+            .HasColumnType("date")
+            .HasConversion(
+                v => v.HasValue ? DateOnly.FromDateTime(v.Value) : (DateOnly?)null,
+                v => v.HasValue ? v.Value.ToDateTime(TimeOnly.MinValue) : (DateTime?)null);
+
         builder.Property(a => a.Email)
             .HasMaxLength(200)
             .IsRequired();
@@ -49,11 +55,17 @@ public class AcademyConfiguration : IEntityTypeConfiguration<Academy>
         builder.Property(a => a.BannerUrl)
             .HasMaxLength(500);
 
+        builder.Property(a => a.OwnedByUserId);
+
         builder.Property(a => a.Status)
             .HasConversion<string>()
             .HasMaxLength(30);
 
         builder.Property(a => a.VerificationStatus)
+            .HasConversion<string>()
+            .HasMaxLength(30);
+
+        builder.Property(a => a.AcademyType)
             .HasConversion<string>()
             .HasMaxLength(30);
 
@@ -89,6 +101,9 @@ public class AcademyConfiguration : IEntityTypeConfiguration<Academy>
         builder.HasIndex(a => new { a.Status, a.CreatedAt })
             .HasDatabaseName("IX_Academies_Status_CreatedAt");
 
+        builder.HasIndex(a => a.OwnedByUserId)
+            .HasDatabaseName("IX_Academies_OwnedByUserId");
+
         builder.HasOne(a => a.Contact)
             .WithOne(c => c.Academy)
             .HasForeignKey<AcademyContact>(c => c.AcademyId)
@@ -108,5 +123,21 @@ public class AcademyConfiguration : IEntityTypeConfiguration<Academy>
 
         builder.Ignore(a => a.CreatedBy);
         builder.Ignore(a => a.UpdatedBy);
+
+        builder.HasData(
+            new Academy
+            {
+                Id = Guid.Parse("a1000000-0000-0000-0000-000000000001"),
+                AcademyCode = "ACAD-SEED-001",
+                Name = "Seed Academy",
+                LegalName = "Seed Academy Pvt Ltd",
+                Description = "Seed academy for development and testing.",
+                Email = "academy.seed@sportsgurukul.com",
+                Phone = "+910000000000",
+                Status = AcademyStatus.Active,
+                VerificationStatus = VerificationStatus.Verified,
+                IsDeleted = false
+            }
+        );
     }
 }

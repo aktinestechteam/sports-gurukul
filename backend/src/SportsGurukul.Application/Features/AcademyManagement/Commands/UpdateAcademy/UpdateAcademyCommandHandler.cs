@@ -74,6 +74,6 @@ public class UpdateAcademyCommandHandler : IRequestHandler<UpdateAcademyCommand,
 
         _logger.LogInformation("Academy updated with Id: {AcademyId}", request.AcademyId);
 
-        return Result<AcademyDto>.Success(CreateAcademyCommandHandler.MapToDto(academy));
+        return Result<AcademyDto>.Success(AcademyDtoMapper.Map(academy));
     }
 }
